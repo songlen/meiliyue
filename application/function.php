@@ -967,3 +967,16 @@ function arrayToXml($arr)
     $xml.="</xml>";
     return $xml;
 }
+
+/**
+ * 打印调试
+ */
+function p(){
+    $args = func_get_args();
+    echo '<pre>';
+    foreach ($args as $item) {
+        print_r($item);
+        echo '---------';
+    }
+    die();
+}
