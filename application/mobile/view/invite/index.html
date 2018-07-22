@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>邀约</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+</head>
+<body>
+    <header>
+        <span class="title">邀约</span>
+    </header>
+    <div class="main-content invitation">
+        <div class="view">
+            <a href="javascript:;"><img src="__STATIC__/images/pic/pic2.png"></a>
+        </div>
+        <div class="classify">
+            <div class="options clearfix">
+                <div class="all fl">
+                    <span>全部</span>
+                </div>
+                <ul class="fl">
+                    <li><a href="javascript:;">旅行</a></li>
+                    <li><a href="javascript:;">吃饭</a></li>
+                    <li><a href="javascript:;">电影</a></li>
+                    <li><a href="javascript:;">唱歌</a></li>
+                    <li><a href="javascript:;">运动</a></li>
+                    <li><a href="javascript:;">其他</a></li>
+                </ul>
+            </div>
+            <div class="address clearfix">
+                <span class="fl">北京朝阳 <span class="close"></span> </span>
+                <span class="select fr"><a href="{:U('mobile/invite/filter')}">筛选</a></span>
+            </div>
+        </div>
+        <div class="items">
+            <ul>
+            	<foreach name="lists" item="item">
+                <li>
+                    <!-- <span class="active">顶</span> -->
+                    <div class="top">
+                        <div class="img-box"><img src="{$item.head_pic}"></div>
+                        <div class="details">
+                            <div class="person">
+                                <span class="name">{$item.nickname}</span>
+                                <span class="age">{$item.age}</span>
+                                <!-- <span class="img"><img src="__STATIC__/images/icon/camera.png"></span> -->
+                                <!-- <span class="job">职业经理人</span> -->
+                            </div>
+                            <div class="distance">{$item.distince}km</div>
+                        </div>
+                    </div>
+                    <div class="bottom clearfix">
+                    	<a href="">
+                        <p class="title">{$item.title}</p>
+                        <div class="more">
+                            <ul>
+                                <li>{$item.description}</li>
+                                <li>{$item.time}</li>
+                                <li>{$item.place}</li>
+                            </ul>
+                            <if condition="is_array($item.image)">
+                            <div>
+                                <img src="{$item.image[0]}" alt="">
+                            </div>
+                        	</if>
+                        </div>
+                        </a>
+                    </div>
+                </li>
+                </foreach>
+            </ul>
+        </div>
+        <div class="plus"></div>
+        <div class="_shade"></div>
+        <div class="mask">
+            <div class="title">发起邀约</div>
+            <div class="box-top">
+                <ul>
+                    <li><a href="{:U('mobile/invite/add', array('type'=>1))}"><span></span>旅行</a></li>
+                    <li><a href="{:U('mobile/invite/add', array('type'=>2))}"><span></span>吃饭</a></li>
+                    <li><a href="{:U('mobile/invite/add', array('type'=>3))}"><span></span>电影</a></li>
+                    <li><a href="{:U('mobile/invite/add', array('type'=>4))}"><span></span>唱歌</a></li>
+                </ul>
+            </div>
+            <div class="box-btm">
+                <ul>
+                    <li><a href="{:U('mobile/invite/add', array('type'=>5))}"><span></span>运动</a></li>
+                    <li><a href="{:U('mobile/invite/add', array('type'=>6))}"><span></span>其他</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/common.js"></script>
+</html>

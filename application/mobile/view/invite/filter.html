@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>筛选</title>
+  <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+  <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css">
+  <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">  
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+</head>
+<body>
+  <header>
+    <a href="javascript:history.back(-1)" class="back fl"></a>
+    <span class="title">筛选</span>
+    <a href="javascript:;" class="fr search">搜索</a>
+  </header>
+  <div class="main-content invitation viewOpen selectPage">
+    <div class="tabs">
+      <p class="title">排序</p>
+      <ul class="horizontal fr">
+        <li class="active a1"><a href="#tab-detail1">最近发布</a></li>
+        <li class="a2"><a href="#tab-detail2">近期约会</a></li>
+        <li class="a3"><a href="#tab-detail3">离我最近</a></li>
+      </ul>
+      <p class="title">约会</p>
+      <div class="tab-content items view-list" id="tab-detail1"> 
+        <ul class="opened">
+          <li class="gender clearfix">
+            <span class="fl">性别</span>
+            <span class="fr">
+              <span class="active">全部</span>
+              <span>男</span>
+              <span>女</span>
+            </span>
+          </li>
+          <li class="guojia clearfix">
+            <span class="fl">国家</span>
+            <a href="javascript:;" class="fr">
+              <input type="text" readonly="readonly" value="中国">
+            </a>
+          </li>
+          <li class="diqu clearfix">
+            <span class="fl">地区</span>
+            <a href="javascript:;" class="fr">
+              <input type="text" readonly="readonly" value="北京">
+            </a>
+          </li>
+          <li class="present clearfix">
+            <div class="weui-cell weui-cell_switch">
+              <div class="weui-cell__bd">礼物</div>
+              <div class="weui-cell__ft">
+                <input class="weui-switch" type="checkbox">
+              </div>
+            </div>
+          </li>
+          <li class="select clearfix">
+            <div class="weui-cell weui-cell_switch">
+              <div class="weui-cell__bd">只看视频认证用户</div>
+              <div class="weui-cell__ft">
+                <input class="weui-switch" type="checkbox">
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-content items view-list" id="tab-detail2">
+        <ul class="opened">
+          <li class="gender clearfix">
+            <span class="fl">性别</span>
+            <span class="fr">
+              <span class="active">全部</span>
+              <span>男</span>
+              <span>女</span>
+            </span>
+          </li>
+          <li class="guojia clearfix">
+            <span class="fl">国家</span>
+            <a href="javascript:;" class="fr">
+              <input type="text" readonly="readonly" value="中国">
+            </a>
+          </li>
+          <li class="diqu clearfix">
+            <span class="fl">地区</span>
+            <a href="javascript:;" class="fr">
+              <input type="text" readonly="readonly" value="北京">
+            </a>
+          </li>
+          <li class="present clearfix">
+            <div class="weui-cell weui-cell_switch">
+              <div class="weui-cell__bd">礼物</div>
+              <div class="weui-cell__ft">
+                <input class="weui-switch" type="checkbox">
+              </div>
+            </div>
+          </li>
+          <li class="select clearfix">
+            <div class="weui-cell weui-cell_switch">
+              <div class="weui-cell__bd">只看视频认证用户</div>
+              <div class="weui-cell__ft">
+                <input class="weui-switch" type="checkbox">
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-content items view-list" id="tab-detail3">
+        <ul class="opened">
+          <li class="gender clearfix">
+            <span class="fl">性别</span>
+            <span class="fr">
+              <span class="active">全部</span>
+              <span>男</span>
+              <span>女</span>
+            </span>
+          </li>
+          <li class="present clearfix">
+            <div class="weui-cell weui-cell_switch">
+              <div class="weui-cell__bd">礼物</div>
+              <div class="weui-cell__ft">
+                <input class="weui-switch" type="checkbox">
+              </div>
+            </div>
+          </li>
+          <li class="select clearfix">
+            <div class="weui-cell weui-cell_switch">
+              <div class="weui-cell__bd">只看视频认证用户</div>
+              <div class="weui-cell__ft">
+                <input class="weui-switch" type="checkbox">
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="__STATIC__/js/jquery.tabslet.min.js"></script>
+<script type="text/javascript" src="__STATICS_/js/common.js"></script>
+<script>
+  $(function(){
+    $('.tabs').tabslet();
+  })
+</script>
+</html>

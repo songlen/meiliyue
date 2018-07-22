@@ -22,7 +22,7 @@ return [
         ],
         'view_replace_str'  =>  [
             '__PUBLIC__'=>'/public',
-            '__STATIC__' => '/template/pc/rainbow/static',
+            // '__STATIC__' => '/template/pc/rainbow/static',
             '__ROOT__'=>''
         ]
     ];

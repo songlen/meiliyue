@@ -3,6 +3,7 @@
 namespace app\api\controller;
 use think\Db;
 use app\api\logic\SmsLogic;
+use app\api\logic\FileLogic;
 
 class User extends Base {
 
@@ -12,90 +13,6 @@ class User extends Base {
 
 		parent::__construct();
 	}
-
-
-    /**
-     * 登录
-     */
-    public function login()
-    {
-        $mobile = trim(I('mobile'));
-        $password = trim(I('password'));
-
-        if (!$mobile || !$password) {
-        	response_error('', '请填写账号或密码');
-        }
-        $user = Db::name('users')->where("mobile", $mobile)->find();
-        if (!$user) {
-            response_error('', '账号不存在！');
-        } elseif (encrypt($password) != $user['password']) {
-            response_error('', '密码错误！');
-        } elseif ($user['is_lock'] == 1) {
-            response_error('', '账号异常已被锁定！');
-        }
-        
-        // $res['url'] = htmlspecialchars_decode(I('referurl'));
-        session('user', $res['result']);
-        setcookie('user_id', $res['result']['user_id'], null, '/');
-        setcookie('nickname', urlencode($nickname), null, '/');
-
-        // $orderLogic = new OrderLogic();
-        // $orderLogic->setUserId($res['result']['user_id']);//登录后将超时未支付订单给取消掉
-        // $orderLogic->abolishOrder();
-        
-        $userInfo = $this->getUserInfo($user['user_id']);
-       	response_success($userInfo);
-    }
-
-    /**
-     *  注册
-     */
-    public function register() {
-    	$mobile = I('mobile');
-    	$code = I('code');
-    	$password = trim(I('password'));
-    	// $password_confirm = trim(I('password_confirm'));
-
-    	if(check_mobile($mobile) == false){
-    		response_error('', '手机号格式错误');
-    	}
-
-    	$userInfo = Db::name('users')->where("mobile={$mobile}")->find();
-    	if($userInfo){
-    		response_error('', '该手机号已注册');
-    	}
-
-    	// 验证码检测
-    	$SmsLogic = new SmsLogic();
-        if($SmsLogic->checkCode($mobile, $code, '1', $error) == false) response_error('', $error);
-
-
-    	if(empty($password)){
-    		response_error('', '密码不能为空');
-    	}
-
-    	$map = array(
-    		'mobile' => $mobile,
-    		'password' => encrypt($password),
-    		'nickname' => $mobile,
-    		'reg_time' => time(),
-    		'last_login' => time(),
-    		'token' => md5(time().mt_rand(1,999999999)),
-    	);
-
-    	$user_id = M('users')->insertGetId($map);
-        if($user_id === false){
-           response_error('', '注册失败');
-        }
-        
-        $pay_points = tpCache('basic.reg_integral'); // 会员注册赠送积分
-        if($pay_points > 0){
-            accountLog($user_id, 0,$pay_points, '会员注册赠送积分'); // 记录日志流水
-        }
-        
-        $userInfo = $this->getUserInfo($user_id);
-        return response_success($userInfo, '注册成功');
-    }
 
     public function wx_login(){
         $openid = I('openid');
@@ -122,24 +39,6 @@ class User extends Base {
         $userInfo = $this->getUserInfo($user_id);
 
         response_success($userInfo);
-    }
-
-    /**
-     * [sendMobleCode 发送手机验证码]
-     * @param [scene 1 注册 2 找回密码]
-     * @return [type] [description]
-     */
-    public function sendMobileCode(){
-        $scene = I('scene', 1);
-        $mobile = I('mobile');
-
-        $SmsLogic = new SmsLogic();
-        $code = $SmsLogic->send($mobile, $scene, $error);
-        if($code != false){
-            response_success(array('code'=>$code), '发送成功');
-        } else {
-            response_error('', $error);
-        }
     }
 
     // 忘记密码
@@ -171,113 +70,77 @@ class User extends Base {
         response_success('', '操作成功');
     }
 
-    // 我的积分
-    public function points(){
+    /**
+     * [uploadFile 上传头像/认证视频]
+     * @param [type] $[type] [文件类型 head_pic 头像 auth_video 视频认证]
+     * @param  $[action] [ 默认 add 添加 edit 修改]
+     * @return [type] [description]
+     */
+    public function uploadFile(){
         $user_id = I('user_id/d');
-        $page = I('page/d', 1);
+        $file = $this->request->file('file');
+        $type = I('type'); 
+        $action = I('action', 'add');
 
-        $user = Db::name('users')->field('pay_points')->find($user_id);
+        // $image_upload_limit_size = config('image_upload_limit_size');
+        // 上传路径
+       if($type == 'head_pic'){
+            // $validate = ['ext'=>'jpg,png,gif,jpeg'];
+            $uploadPath = UPLOAD_PATH.'head_pic/';
+       }
+       if($type == 'auth_video'){
+            $uploadPath = UPLOAD_PATH.'auth_video/';
+       }
 
-        $account_log = M('account_log')->where("user_id=" . $user_id." and pay_points!=0 ")
-        ->order('log_id desc')
-        ->field("pay_points, FROM_UNIXTIME(change_time, '%Y-%m-%d %H:%i:%s') change_time, desc, order_sn")
-        ->limit(($page-1)*10 . ', 10')
-        ->select();
-
-        $result['total_points'] = $user['pay_points'];
-        $result['points_log'] = $account_log;
-
-        response_success($result);
-    }
-
-    // 修改昵称
-    public function changeNickname(){
-        $user_id = I('user_id/d');
-        $nickname = I('nickname');
-
-        $updateData = array(
-            'user_id' => $user_id,
-            'nickname' => $nickname,
-        );
-        Db::name('users')->update($updateData);
-
-        response_success('', '操作成功');
-    }
-    // 修改昵称
-    public function changeSex(){
-        $user_id = I('user_id/d');
-        $sex = I('sex');
-
-        $updateData = array(
-            'user_id' => $user_id,
-            'sex' => $sex,
-        );
-        Db::name('users')->update($updateData);
-
-        response_success('', '操作成功');
-    }
-
-    // 头像修改 
-    public function changeHeadPic(){
-        $user_id = I('user_id/d');
-        $file = $this->request->file('head_pic');
-
-        $image_upload_limit_size = config('image_upload_limit_size');
-        $validate = ['size'=>$image_upload_limit_size,'ext'=>'jpg,png,gif,jpeg'];
-        $dir = UPLOAD_PATH.'head_pic/';
-        if (!($_exists = file_exists($dir))){
-            $isMk = mkdir($dir);
+        if (!file_exists($uploadPath)){
+            mkdir($uploadPath, 0777, true);
         }
-        $parentDir = date('Ymd');
-        $info = $file->validate($validate)->move($dir, true);
+        // 执行上传
+        // $file->validate($validate);
+        $info = $file->move($uploadPath, true);
         if($info){
-            $head_pic = '/'.$dir.$parentDir.'/'.$info->getFilename();
-            Db::name('users')->update(array('user_id'=>$user_id, 'head_pic'=>$head_pic));
-            response_success(array('head_pic'=>$head_pic));
+            $parentDir = date('Ymd'); // 系统默认在上传目录下创建了日期目录
+            $fullPath = '/'.$uploadPath.$parentDir.'/'.$info->getFilename();
+            // 修改用户表头像记录
+            if($type == 'head_pic'){
+                Db::name('users')->update(array('user_id'=>$user_id, 'head_pic'=>$fullPath));
+                /************ 更新动态 *********/
+                $dynamics_data = array(
+                    'user_id' => $user_id,
+                    'type' => 2,
+                    'description' => '更新了形象照',
+                    'origin' => 2,
+                    'add_time' => time(),
+                );
+                D('dynamics')->add($data);
+
+                response_success(array('head_pic'=>$fullPath));
+            }
+            // 记录认证视频
+            if($type == 'auth_video' && $action == 'add'){
+                Db::name('users_auth_video')->insert(array('user_id'=>$user_id, 'auth_video_url'=> $fullPath));
+            }
+            // 如果是修改认证视频
+            if($type == 'auth_video' && $action == 'edit'){
+                Db::name('users_auth_video')->update(array('user_id'=>$user_id, 'auth_video_url'=> $fullPath));
+                // 如果需要重新认证还需要修改用户表中的认证字段
+            }
+            /************ 上传形象视频，更新动态 *********/
+            if($type == 'auth_video'){
+                $dynamics_data = array(
+                    'user_id' => $user_id,
+                    'type' => 3,
+                    'description' => '更新了形象照',
+                    'origin' => 3,
+                    'add_time' => time(),
+                );
+                D('dynamics')->add($data);
+            }
+
+            response_success();
         }else{
             response_error('', $file->getError());
         }
-    }
-
-    // 中英文切换
-    public function changeLanguage(){
-        $user_id = I('user_id/d');
-        $language = I('language');
-
-        $result = Db::name('users')->update(array('user_id'=>$user_id, 'language'=>$language));
-
-        if($result){
-            response_success('', '修改成功');
-        } else {
-            response_error('', '需改失败');
-        }
-    }
-
-    public function point_rules(){
-        // $where = array(
-        //     'is_open' => '1',
-        //     'article_id' => '1',
-        // );
-        // $article = M('article')->where($where)->field('content')->find();
-        // $point_rules = html_entity_decode($article['content']);
-        
-
-        response_success(array('link'=>'/web/#/article?id=6'));
-    }
-
-    // 设置页面
-    public function setting(){
-        $user_id = I('user_id');
-
-        $user = Db::name('users')->where("user_id={$user_id}")->field('language')->find();
-        $config = tpCache('basic');
-
-        $result = array(
-            'language' => $user['language'],
-            'hotline' => $config['hotline'],
-        );
-
-        response_success($result);
     }
 
     // 常见问题
@@ -307,9 +170,9 @@ class User extends Base {
      * @param  [type] $user_id [description]
      * @return [type]          [description]
      */
-    private function getUserInfo($user_id){
+    public function getUserInfo($user_id){
     	$userInfo = M('users')->where("user_id", $user_id)
-    		->field('user_id, sex, mobile, nickname, head_pic')
+    		->field('user_id, sex, account_mobile, nickname, head_pic')
     		->find();
        
        return $userInfo;
@@ -344,5 +207,63 @@ class User extends Base {
         }
 
         response_success($message);
+    }
+
+    public function identityAuth(){
+        $user_id = I('user_id');
+
+        $uploadPath =  UPLOAD_PATH.'identityAuth/';
+        $FileLogic = new FileLogic();
+        $uploadResult = $FileLogic->uploadMultiFile('file', $uploadPath);
+        if($uploadResult['status'] == '1'){
+            $image = $uploadResult['image'];
+        }
+
+        $data = array(
+            'user_id' => $user_id,
+            'image' => serialize($image),
+            'add_time' => time(),
+        );
+
+        if(M('identity_auth')->insert($data)){
+            response_success('', '操作成功');
+        } else {
+            response_error('', '操作失败');
+        }
+    }
+
+    // 关注
+    public function attention(){
+        $user_id = I('user_id');
+        $friend_id = I('friend_id');
+
+        // 防止重复关注
+        if(M('friend')->where(array('user_id'=>$user_id, 'friend_id'=>$friend_id))->count()){
+            response_error('', '已关注');
+        }
+
+
+        $data = array(
+            'user_id' => $user_id,
+            'friend_id' => $friend_id,
+            'add_time' => time(),
+        );
+
+        $insert_id = M('friend')->insertGetId($data);
+        if($insert_id){
+             // 查看是否被关注
+            $friend = M('friend')->where(array('user_id'=>$friend_id, 'friend_id'=>$user_id))->find();
+            if($friend){
+                M('friend')->where('id', $insert_id)->whereOr('id', $friend['id'])->setField('twoway', 1);
+            }
+
+            response_success('', '关注成功');
+        } else {
+            response_error('', '关注失败');
+        }
+    }
+
+    public function cancelAttention(){
+        
     }
 }

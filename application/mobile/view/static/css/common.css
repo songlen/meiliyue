@@ -1,0 +1,839 @@
+body{
+  background-color: #f1f1f1;
+}
+/*header*/
+header{
+  background-color: #000;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 10px;
+}
+header > span{
+  display: inline-block;
+  color: #fff;
+  font-size: 16px;
+}
+header > a{
+  display: inline-block;
+  color: #fff;
+  width: 2rem;
+  height: 1rem;
+  background: url(../images/icon/left.png) no-repeat left center;
+  background-size: .7rem;
+  margin-top: 1rem;
+  line-height: 1rem;
+}
+header > a.fr{
+  /*background: url(../images/icon/left.png) no-repeat center;*/
+  /*background-size: .7rem;*/
+}
+header > a.sure{
+  background-image: none;
+}
+.view-detail .horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  width: 12rem;
+  margin: 0 auto;
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+.view-detail .horizontal li{
+  flex: 1;
+}
+.view-detail .horizontal li a{
+  color: #bbb6b6;
+  display: inline-block;
+  height: 1.8rem;
+}
+.view-detail .horizontal li.active a{
+  color: #fff;
+  border-bottom: 3px solid yellow;
+}
+/*footer*/
+footer{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  height: 60px;
+  line-height: 60px;
+  z-index: 1;
+  border-top: 1px solid #ccc;
+}
+footer ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+footer li{
+  width: 25%;
+  text-align: center;
+}
+footer li a{
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: url(../images/icon/xiaolian.png) no-repeat center 8px;
+  background-size: 1.8rem;
+  padding-top: 18px;
+}
+.weui-switch:checked, .weui-switch-cp__input:checked ~ .weui-switch-cp__box{
+  border-color: orange !important;
+  background-color: orange !important;
+}
+
+/*邀约*/
+.plus{
+  width: 40px;
+  height: 40px;
+  background: url(../images/icon/cha.png) no-repeat center;
+  background-size: 2rem;
+  background-color: red;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 5rem;
+  right: 2rem;
+  z-index: 6;
+}
+.indexPage{
+  margin-bottom: 4.5rem
+}
+.invitation .view{
+  background-color: #fff;
+  padding: 1rem 2rem;
+  margin-bottom: 10px;
+} 
+.invitation .view a{
+  display: inline-block; 
+  border-radius: 2rem;
+  overflow: hidden;
+}
+.invitation .options{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 0;  
+  border-bottom: 1px solid #f1f1f1;  
+}
+.invitation .classify{
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+.invitation .classify .all{
+  width: 20%;
+  text-align: center;
+  height: 45px;
+  line-height: 40px;
+  padding-top: 15px;
+  display: inline-block;
+  background: url(../images/icon/xiaolian.png) no-repeat center 0;
+  background-size: 1.5rem;
+}
+.invitation .classify .all span{
+  display: inline-block;
+  background-color: yellow;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 8px;
+  border-radius: 5px;
+}
+.invitation .classify ul{
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  height: 45px;
+  line-height: 40px;
+  overflow: hidden;
+}
+.invitation .classify ul li{
+  width: 25%;
+  text-align: center;
+}
+.invitation .classify ul li a{
+  display: inline-block;
+  padding-top: 15px;
+  width: 100%;
+  background: url(../images/icon/xiaolian.png) no-repeat center 0;
+  background-size: 1.5rem;
+}
+.invitation .address{
+  padding: 10px;
+}
+.invitation .address .select{
+  color: blue;
+}
+.invitation .items li{
+  background-color: #fff;
+  margin-bottom: 10px;
+  padding: 10px;
+  position: relative;
+}
+.invitation .items li .top{
+  display: flex;
+  flex-wrap: wrap;
+}
+.invitation .items li .top .img-box{
+  width: 4rem;
+  height: 4rem; 
+  margin-right: 10px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.invitation .items li .top .details{
+  flex: 1;
+  border-bottom: 1px solid #f1f1f1;
+}
+.invitation .items li .top .person{
+  position: relative;
+}
+.invitation .items li .person .age{
+  margin-left: 10px;
+  width: 3rem;
+  text-align: center;
+  background-color: #f72461;
+  display: inline-block;
+  color: #fff;
+  padding-left: 10px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+.invitation .items li .person .man{
+  background-color: #95c7de;
+}
+.invitation .items li .person .img{
+  width: 1rem;
+  display: inline-block;
+  margin: 0 10px;
+}
+.invitation .items li .person .job{
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: #868080;
+}
+.invitation .items li .distance{
+  margin-top: 10px;
+  font-size: 12px;
+}
+.invitation .items li span.active{
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  color: red;
+}
+.invitation .items li .bottom{
+  line-height: 1rem;
+}
+.invitation .items li .bottom .title{
+  margin-top: .5rem;
+  padding-left: 1.5rem;
+  font-size: 16px;
+  height: 2rem;
+  line-height: 2rem;
+  background: url(../images/icon/checkbox.png) no-repeat 10px center;
+  background-size: 10px;
+}
+.invitation .items li .bottom .more{
+  display: flex;
+  flex-wrap: wrap;
+}
+.invitation .items li .bottom .more ul{
+  flex: 1;
+}
+.invitation .items .bottom .more ul li{
+  margin: 0;
+  padding: 0;
+  max-width: 19rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 1.5rem;
+  line-height: 20px;
+  background: url(../images/icon/checkbox.png) no-repeat 10px center;
+  background-size: 6px;
+}
+.invitation .items li .bottom .more > div{
+  width: 3rem;
+  height: 3rem;
+  overflow: hidden;
+  border: 1px solid #f1f1f1;
+}
+.mask{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  width: 22rem;
+  background-color: #fff;
+  border-radius: 10px;
+  display: none;
+}
+.mask .title{
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  font-size: 16px;
+  border-bottom: 1px solid #f1f1f1;
+}
+.mask ul{
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  margin: 12px 10px;
+}
+.mask ul li {
+  width: 4.5rem;
+  height: 6rem;
+  margin: 0 auto;
+}
+.mask ul li a{
+  display: inline-block;
+  width: 100%;
+}
+.mask ul li a span{
+  display: inline-block;
+  width: 100%;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: url(../images/icon/xiaolian.png) no-repeat center;
+  background-size: 2rem;
+  background-color: #ccc;
+}
+.mask .box-btm ul{
+  margin-left: 3.5rem;
+}
+.mask .box-btm ul li {
+  margin: 0 10px;
+}
+/*邀约详情*/
+.invitation .theme ul{
+  margin-top: 10px;
+}
+.invitation .theme ul li{
+  margin-bottom: 0;
+  border-bottom: 1px solid #f1f1f1;
+  padding: 12px 15px;
+}
+.invitation .theme li.title span{
+  font-weight: 600;
+}
+.invitation .theme li input[type="text"]{
+  text-align: right;
+  background: url(../images/icon/back.png) no-repeat right center;
+  padding-right: 20px;
+}
+.invitation .theme .choose{
+  padding-right: 15px;
+}
+.invitation .theme .choose span{
+  display: inline-block;
+  padding: 0 15px;
+  border-right: 1px solid #f1f1f1;
+}
+.invitation .theme .choose span:last-child{
+  border: none;
+}
+.invitation .theme .choose span.active{
+  position: relative;
+  color: #000;
+}
+.invitation .theme .catch{
+  margin: 0;
+  background-color: #f1f1f1;
+}
+.invitation .theme textarea{
+  width: 100%;
+  height: 6rem;
+  /*border: none;*/
+}
+.invitation .theme div a{
+  width: 5rem;
+  height: 5rem;
+  background-color: #f1f1f1;
+  display: inline-block;
+  float: left;
+  margin-right: 10px;
+  text-align: center;
+}
+.invitation .theme div input[type="file"]{
+  width: 100%;
+  height: 3.5rem;
+}
+.invitation .theme div.speak a{
+  padding-top: 3.6rem;
+  background: url(../images/icon/add.png) no-repeat center 10px;
+  background-size: 3rem;
+  background-color: #f1f1f1;
+}
+/*一对一视频*/
+.main-content > .view{
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 0;
+  margin-bottom: 10px;
+}
+.main-content > .view .open{
+  margin-left: 50%;
+  transform: translateX(-50%);
+  display: inline-block;
+  text-align: center;
+  z-index: 1;
+  background-color: yellow;
+  width: 11rem;
+  padding: 10px 0;
+  border-radius: 3rem;
+}
+.invitation .view-list li{
+  margin-bottom: 0;
+}
+.invitation .view-list li .distance{
+  margin-top: 0;
+}
+.invitation .view-list li .label span{
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 2px 8px;
+  border-radius: 5px;
+  margin-right: 5px;
+  font-size: 12px;
+}
+.invitation .view-list li .label{
+  margin-top: 5px;
+}
+.view-detail .cash{
+  background-color: #fff;
+}
+.view-detail .cash .top{
+  padding: 10px;
+}
+.view-detail .cash .top p{
+  line-height: 30px;
+  color: #b9b8b8;
+}
+.view-detail .cash .top p span{
+  color: #4a4a4a;
+}
+.view-detail .cash .top .money span{
+  color: red;
+}
+.view-detail .cash .top .money a{
+  display: inline-block;
+  background-color: yellow;
+  padding: 0 1rem;
+  border-radius: 20px;
+}
+.view-detail .cash .bottom{
+  padding: 10px;
+  border-top: 1px solid #f1f1f1;
+  color: #b9b8b8;
+}
+.view-detail .none img{
+  width: 8rem;
+  margin: 7rem auto 0;
+}
+.view-detail .none{
+  text-align: center;
+}
+.view-detail .none p{
+  font-size: 16px;
+  margin-top: 2rem;
+}
+/*开通视频*/
+.invitation .input-box{
+  margin: 10px 0;
+  background-color: #fff;
+  height: 2.8rem;
+  line-height: 2.8rem;
+  padding: 0 10px;
+}
+.invitation .input-box input{
+  height: 2rem;
+  line-height: 2rem;
+  margin-top: 8px;  
+}
+.invitation .input-box .close{
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(../images/icon/close.png) no-repeat center;
+  margin-top: 14px;
+}
+.invitation .labels{
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  width: 22rem;
+  margin-top: 1.5rem;
+}
+.invitation .labels li{
+  width: 6.6rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3rem;
+  margin: 0 10px 10px 0;
+}
+.invitation .labels li:nth-child(3n){
+  margin-right: 0;
+}
+.invitation > .details{
+  width: 100%;
+  text-align: center;
+}
+.invitation > .details p{
+  line-height: 30px;
+}
+.invitation .open-now{
+  width: 20rem;
+  background-color: yellow;
+  display: inline-block;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  margin-top: 1rem;
+  line-height: 2.5rem;
+  border-radius: 3rem;
+  font-weight: 600;
+}
+.open-mask{
+  width: 18rem;
+}
+.open-mask .top{
+  padding: 20px 15px;
+  border-bottom: 1px solid #f1f1f1;
+}
+.open-mask .bottom{
+  text-align: center;
+  padding: 18px 0;
+  color: blue;
+}
+.invitation > .price {
+  padding: 1rem 10px;
+}
+.invitation > .price .cost{
+  padding-left: 1.5rem;
+  background: url(../images/icon/price.png) no-repeat left center;
+  background-size: 1rem;
+}
+.invitation > .price .rates{
+  background: url(../images/icon/back.png) no-repeat right center;
+  background-size: .5rem;
+  padding-right: 15px;
+}
+.invitation > .state .title{
+  height: 2rem;
+  line-height: 2rem;
+  padding-left: 10px;
+}
+.invitation > .state .weui-cell_switch{
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+.state .weui-cell__bd{
+  padding-left: 1.2rem;
+  background: url(../images/icon/cha.png) no-repeat left center;
+  background-size: 1rem;
+}
+.view-list .opened .details{
+  border-bottom: 1px solid #f1f1f1;
+  padding-bottom: 10px;
+}
+.viewOpen .mask .top{
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #f1f1f1;
+}
+.viewOpen .mask .top .notice{
+  line-height: 2rem;
+  display: inline-block;
+  margin-top: 1rem;
+}
+.viewOpen .mask .top .detail{
+  text-align: left;
+  line-height: 3rem;
+}
+.viewOpen .mask button{
+  border: none;
+  background-color: #fff;
+  width: 50%;
+  height: 3rem;
+  line-height: 3rem;
+  float: left;
+  border-radius: 10px;
+  font-size: 16px;
+}
+.viewOpen .mask button.disturb{
+  color: red;
+  border-left: 1px solid #f1f1f1;
+}
+/*一对一视频设置*/
+.view.price{
+  border-bottom: 1px solid #f1f1f1;
+}
+.feedback{
+  padding: 10px 10px 10px 1.5rem;
+  background: url(../images/icon/checkbox.png) no-repeat 10px 16px;
+  background-size: 6px;
+}
+.feedback a{
+  color: blue;
+}
+/*视频聊天价格*/
+.view.all-time{
+  background: url(../images/icon/checkbox.png) no-repeat 10px center;
+  background-size: .5rem;
+  background-color: #e2ebf1;
+  color: #a9a5a5;
+  padding-left: 1.6rem;
+}
+.view.all-time .time{
+  color: #000;
+}
+.cost-list li{
+  background-color: #fff;
+  border-bottom: 1px solid #f1f1f1;
+  height: 3rem;
+  line-height: 3rem;
+  padding: 0 10px;
+}
+.cost-list li.active{
+  background: url(../images/icon/checkbox1.png) no-repeat 96% center;
+  background-size: 1rem; 
+  background-color: #fff;
+}
+.cost-list li > span{
+  display: inline-block;
+  margin-left: 1rem;
+  color: #ccc;
+}
+.cost-list li > span span{
+  color: orange;
+}
+/*一对一聊天活跃*/
+.viewOpen .tabs{
+  position: relative;
+}
+.viewOpen .tabs .horizontal{
+  position: absolute;
+  top: -35px;
+  right: 10px;
+  z-index: 2;
+  width: 5rem;
+  margin: 0;
+  left: auto;
+  transform: translateX(0);
+}
+.viewOpen .tabs .horizontal li{
+  float: left;
+  padding-left: 10px;
+}
+.viewOpen .tabs .horizontal li a{
+  color: #000;
+  height: 1.1rem;
+  line-height: 1.1rem;
+}
+.viewOpen .tabs .horizontal li:nth-child(1){
+  border-right: 1px solid #f1f1f1;
+  padding-right: 10px;
+  padding-left: 0;
+}
+.chart-list{
+  background-color: #fff;
+  padding: 0 10px;
+  height: 2.6rem;
+  line-height: 2.6rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+.viewOpen .tabs .horizontal li.active a{
+  border: none;
+  color: blue;
+}
+.invitation .view-list li .label .close{
+  width: 1rem;
+  height: 1rem;
+  border-radius: 4px;
+  background: url(../images/icon/close.png) no-repeat center;
+  margin-top: 5px;
+}
+.invitation .items li .top .person .call{
+  position: absolute;
+  right: 10px;
+  top: 0;
+  width: 5.5rem;
+  height: 2rem;
+  background-color: green;
+  border-radius: 2rem;
+  color: #fff;
+  text-align: center;
+  line-height: 2rem;
+  padding-left: 1.2rem;
+}
+.viewOpen .mask button.buy{
+  color: blue;
+}
+/*筛选*/
+header .search{
+  background: none;
+}
+.selectPage .tabs > .title{
+  height: 2.5rem;
+  line-height: 2.5rem;
+  padding: 0 10px;
+}
+.selectPage .tabs .horizontal{
+  position: relative;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.selectPage .horizontal li{
+  flex: 1;
+  text-align: center;
+}
+.selectPage .horizontal li a{
+  color: #b7b7b7 !important;
+  z-index: 2;
+}
+.selectPage .horizontal li.active a{
+  color: #000 !important;
+}
+.selectPage .tab-content{
+  margin-top: 2.5rem;
+}
+.selectPage .opened{
+  padding: 0 10px;
+  background-color: #fff;
+}
+.selectPage .opened li{
+  padding: 13.5px 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+.selectPage .opened li.present,
+.selectPage .opened li.select{
+  padding: 0;
+}
+.selectPage .opened li .weui-cell_switch{
+  padding-left: 0;
+  padding-right: 0;
+}
+.selectPage .opened .gender .fr {
+  margin-right: -11px;
+}
+.selectPage .opened .gender .fr span{
+  display: inline-block;
+  width: 4rem;
+  border-right: 1px solid #f1f1f1;
+  text-align: center;
+  color: #b7b7b7 ;
+}
+.selectPage .opened .gender .fr span.active{
+  color: #000;
+  position: static;
+}
+.selectPage input[type="text"]{
+  color: #b7b7b7;
+  text-align: right;
+  background: url(../images/icon/back.png) no-repeat right center;
+  background-size: 8px;
+  padding-right: 15px;
+}
+.selectPage .weui-cell:before{
+  border: none;
+}
+/*筛选结果*/
+.invitation .address .fl{
+  position: relative;
+}
+.invitation .address .fl .close{
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  overflow: hidden;
+  border-radius: 50%;
+  background: url(../images/icon/close.png) no-repeat center;
+  background-size: 100%;
+  position: absolute;
+  top: 2px;
+  right: -1.5rem;
+}
+.selectpage .classify ul li{
+  width: 20%;
+}
+/*邀约详情*/
+.invite-detail li .person .distance{
+  margin-top: 0;
+  color: #b7b7b7;
+}
+.invitation .invite-detail li .top .details {
+  border-bottom: none;
+}
+.invitation .invite-detail li .bottom .title{
+  padding-left: 4.6rem;
+  background-position: 1rem center;
+  background-size: 2rem;
+}
+.invite-detail .detail p{
+  height: 2.5rem;
+  line-height: 2.5rem;
+  padding-left: 4.6rem;
+  background: url(../images/icon/checkbox.png) no-repeat 1.8rem center;
+  background-size: 6px;
+}
+.invite-detail .time p{
+  padding-left: 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+.invite-detail.items li.detail{
+  padding: 0;
+}
+.invite-detail.items li.time p{
+  padding-left: 10px;
+}
+.interest{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border: none;
+  background: url(../images/icon/price.png) no-repeat 35% center;
+  background-size: 1.6rem;
+  background-color: orange;
+  height: 3rem;
+  line-height: 3rem;
+  padding-left: 1.6rem;
+}
+._share{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 5;
+  text-align: center;
+  font-size: 16px;
+  display: none;
+}
+._share p{
+  height: 3rem;
+  line-height: 3rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+
+
+

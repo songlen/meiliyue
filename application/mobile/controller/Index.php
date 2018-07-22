@@ -19,45 +19,7 @@ use app\common\logic\wechat\WechatUtil;
 class Index extends MobileBase {
 
     public function index(){
-        $diy_index = M('mobile_template')->where('is_index=1')->field('template_html,block_info')->find();
-        if($diy_index){
-            $html = htmlspecialchars_decode($diy_index['template_html']);
-            $this->assign('html',$html);
-            $this->assign('info',$diy_index['block_info']);
-            return $this->fetch('index2');
-            exit();
-        }
-        /*
-            //获取微信配置
-            $wechat_list = M('wx_user')->select();
-            $wechat_config = $wechat_list[0];
-            $this->weixin_config = $wechat_config;        
-            // 微信Jssdk 操作类 用分享朋友圈 JS            
-            $jssdk = new \Mobile\Logic\Jssdk($this->weixin_config['appid'], $this->weixin_config['appsecret']);
-            $signPackage = $jssdk->GetSignPackage();              
-            print_r($signPackage);
-        */
-        $hot_goods = M('goods')->where("is_hot=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页热卖商品
-        $thems = M('goods_category')->where('level=1')->order('sort_order')->limit(9)->cache(true,TPSHOP_CACHE_TIME)->select();
-        $this->assign('thems',$thems);
-        $this->assign('hot_goods',$hot_goods);
-        $favourite_goods = M('goods')->where("is_recommend=1 and is_on_sale=1")->order('goods_id DESC')->limit(20)->cache(true,TPSHOP_CACHE_TIME)->select();//首页推荐商品
-
-        //秒杀商品
-        $now_time = time();  //当前时间
-        if(is_int($now_time/7200)){      //双整点时间，如：10:00, 12:00
-            $start_time = $now_time;
-        }else{
-            $start_time = floor($now_time/7200)*7200; //取得前一个双整点时间
-        }
-        $end_time = $start_time+7200;   //结束时间
-        $flash_sale_list = M('goods')->alias('g')
-            ->field('g.goods_id,f.price,s.item_id')
-            ->join('flash_sale f','g.goods_id = f.goods_id','LEFT')
-            ->join('__SPEC_GOODS_PRICE__ s','s.prom_id = f.id AND g.goods_id = s.goods_id','LEFT')
-            ->where("start_time = $start_time and end_time = $end_time")
-            ->limit(3)->select();
-        //dump($flash_sale_list);exit();
+        
         $this->assign('flash_sale_list',$flash_sale_list);
         $this->assign('start_time',$start_time);
         $this->assign('end_time',$end_time);

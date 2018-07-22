@@ -255,7 +255,7 @@ return [
         'list_rows' => 15,
     ],
     // 密码加密串
-    'AUTH_CODE' => "TPSHOP", //安装完毕之后不要改变，否则所有密码都会出错
+    'AUTH_CODE' => "meiliyue", 
     
     'ORDER_STATUS' =>[
         0 => '待确认',

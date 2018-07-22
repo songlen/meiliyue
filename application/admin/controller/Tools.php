@@ -339,35 +339,36 @@ class Tools extends Base {
 
 	public function region(){
 
-		$parent_id = I('parent_id',0);
-		if($parent_id == 0){
-			$parent = array('id'=>0,'name'=>"中国省份地区",'level'=>0);
+		$parentCode = I('parentCode','000000');
+		if($parentCode == '000000'){
+			$parent = array('parentCode'=>0,'name'=>"中国省份地区",'level'=>0);
 		}else{
-			$parent = M('region')->where("id" ,$parent_id)->find();
+			$parent = M('region')->where("parentCode" ,$parentCode)->find();
 		}
-		$names = $this->getParentRegionList($parent_id);
-		if(count($names) > 0){
-			$names = array_reverse($names);
-			$parent_path = implode($names, '>');
-		}
-		$region = M('region')->where("parent_id" , $parent_id)->select();
+
+		// $names = $this->getParentRegionList($parentCode);
+		// if(count($names) > 0){
+		// 	$names = array_reverse($names);
+		// 	$parent_path = implode($names, '>');
+		// }
+		$region = M('region')->where("parentCode" , $parentCode)->select();
 		$this->assign('parent',$parent);
-		$this->assign('parent_path',$parent_path);
+		// $this->assign('parent_path',$parent_path);
 		$this->assign('region',$region);
 		return $this->fetch();
 	}
 
 	/**
 	 * 寻找Region_id的父级字段, $column可自己指定
-	 * @param $parent_id
+	 * @param $parentCode
 	 * @return array
 	 */
-	function getParentRegionList($parent_id){
+	function getParentRegionList($parentCode){
 		$names = array();
-		$region =  M('region')->where(array('id'=>$parent_id))->find();
+		$region =  M('region')->where(array('parentCode'=>$parentCode))->find();
 		array_push($names,$region['name']);
-		if($region['parent_id'] != 0){
-			$nregion = $this->getParentRegionList($region['parent_id']);
+		if($region['parentCode'] != '000000'){
+			$nregion = $this->getParentRegionList($region['parentCode']);
 			if(!empty($nregion)){
 				$names = array_merge($names, $nregion);
 			}

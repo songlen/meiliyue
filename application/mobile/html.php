@@ -4,7 +4,7 @@ return [
             // 模板引擎类型 支持 php think 支持扩展
             'type'         => 'Think',
             // 模板路径
-            'view_path'    => './template/mobile/rainbow/',
+            'view_path'    => './application/mobile/view/',
             // 模板后缀
             'view_suffix'  => 'html',
             // 模板文件名分隔符
@@ -17,12 +17,10 @@ return [
             'taglib_begin' => '<',
             // 标签库标签结束标记
             'taglib_end'   => '>',
-            //模板文件名
-            'default_theme'     => 'rainbow',
         ],
         'view_replace_str'  =>  [
             '__PUBLIC__'=>'/public',
-            '__STATIC__' => '/template/mobile/rainbow/static',
+            '__STATIC__' => '/application/mobile/view/static',
             '__ROOT__'=>''
         ]
     ];
