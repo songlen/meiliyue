@@ -256,97 +256,10 @@ return [
     ],
     // 密码加密串
     'AUTH_CODE' => "meiliyue", 
-    
-    'ORDER_STATUS' =>[
-        0 => '待确认',
-        1 => '已确认',
-        2 => '已收货',
-        3 => '已取消',                
-        4 => '已完成',//评价完
-        5 => '已作废',
-    ],
-    'SHIPPING_STATUS' => array(
-        0 => '未发货',
-        1 => '已发货',
-        2 => '部分发货'
-    ),
-    'PAY_STATUS' => array(
-        0 => '未支付',
-        1 => '已支付',
-        2 => '部分支付',
-        3 => '已退款',
-        4 => '拒绝退款'
-    ),
-    'SEX' => [
-        0 => '保密',
-        1 => '男',
-        2 => '女'
-    ],
-    'COUPON_TYPE' => [
-    	0 => '下单赠送',
-        1 => '指定发放',
-        2 => '免费领取',
-        3 => '线下发放',
-    ],
-	'PROM_TYPE' => [
-		0 => '默认',
-		1 => '抢购',
-		2 => '团购',
-		3 => '优惠'			
-	],
-    'TEAM_FOUND_STATUS' => array(
-        '0'=>'待开团',
-        '1'=>'已开团',
-        '2'=>'拼团成功',
-        '3'=>'拼团失败',
-    ),
-    'TEAM_FOLLOW_STATUS' => array(
-        '0'=>'待拼单',
-        '1'=>'拼单成功',
-        '2'=>'成团成功',
-        '3'=>'成团失败',
-    ),
-    'TEAM_TYPE' => [0 => '分享团', 1 => '佣金团', 2 => '抽奖团'],
-    'FREIGHT_TYPE' => [0 => '件数', 1 => '重量', 2 => '体积'],
     // 订单用户端显示状态
     'WAITPAY'=>' AND pay_status = 0 AND order_status = 0 AND pay_code !="cod" ', //订单查询状态 待支付
-    'WAITSEND'=>' AND (pay_status=1 OR pay_code="cod") AND shipping_status !=1 AND order_status in(0,1) ', //订单查询状态 待发货
-    'WAITRECEIVE'=>' AND shipping_status=1 AND order_status = 1 ', //订单查询状态 待收货    
-    'WAITCCOMMENT'=> ' AND order_status=2 ', // 待评价 确认收货     //'FINISHED'=>'  AND order_status=1 ', //订单查询状态 已完成 
-    'FINISH'=> ' AND order_status = 4 ', // 已完成
-    'CANCEL'=> ' AND order_status = 3 ', // 已取消
-    'CANCELLED'=> 'AND order_status = 5 ',//已作废
-    'PAYED'=>' AND (order_status=2 OR (order_status=1 AND pay_status=1) ) ', //虚拟订单状态:已付款
-    
-    'ORDER_STATUS_DESC' => [
-        'WAITPAY' => '待支付',
-        'WAITSEND'=>'待发货',
-        'PORTIONSEND'=>'部分发货',
-        'WAITRECEIVE'=>'待收货',
-        'WAITCCOMMENT'=> '待评价',
-        'CANCEL'=> '已取消',
-        'FINISH'=> '已完成', //
-        'CANCELLED'=> '已作废'
-    ],
+    'WAITSEND'=>' AND (pay_status=1 OR pay_code="cod") AND shipping_status !=1 AND order_status in(0,1) ', 
 
-    'REFUND_STATUS'=>array(
-        -2 => '服务单取消',//会员取消
-        -1 => '审核失败',//不同意
-        0  => '待审核',//卖家审核
-        1  => '审核通过',//同意
-        2  => '买家发货',//买家发货
-        3  => '已收货',//服务单完成
-        4  => '换货完成',
-        5  => '退款完成',
-    ),
-    /**
-     * 售后类型
-     */
-    'RETURN_TYPE'=>array(
-        0=>'仅退款',
-        1=>'退货退款',
-        2=>'换货',
-    ),
     //短信使用场景
     'SEND_SCENE' => array(
         '1'=>array('用户注册','验证码${code}，用户注册新账号, 请勿告诉他人，感谢您的支持!','regis_sms_enable'),

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>邀约</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+</head>
+<body>
+    <header>
+        <a href="javascript:;" class="back fl"></a>
+        <span class="title">邀约</span>
+        <a href="javascript:;" class="fr share"></a>
+    </header>
+    <div class="main-content invitation">
+        <div class="items invite-detail">
+            <ul>
+                <li>
+                    <div class="top">
+                        <div class="img-box"><img src="{$info.head_pic}"></div>
+                        <div class="details">
+                            <div class="person">
+                                <span class="name">{$info.nickname}</span>
+                                <span class="age woman">{$info.age}</span>
+                                <span class="distance fr">{$info.distince}km</span>
+                            </div>
+                            <div class="distance">发布邀约</div>
+                        </div>
+                    </div>
+                    <div class="bottom clearfix">
+                        <p class="title">{$info.title}</p>
+                    </div>
+                </li>
+                <li class="detail">
+
+                    <p>{$info.pay}</p>
+                    <p>{$info.description}</p>
+                    <p>{$info.object}</p>
+                </li>
+                <li class="time detail">
+                    <p>时间：{$info.time}</p>
+                    <p>地点：{$info.place}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="_shade"></div>
+    <div class="_share">
+        <p class="share1">分享到美丽约</p>
+        <p class="report">举报</p>
+    </div>
+    <button class="interest">我感兴趣</button>
+</body>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/common.js"></script>
+</html>

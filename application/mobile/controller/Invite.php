@@ -3,6 +3,7 @@
 namespace app\mobile\controller;
 
 use think\Db;
+use think\Config;
 
  
 class Invite extends Base {
@@ -15,7 +16,7 @@ class Invite extends Base {
         $city = I('city');
         $auth_video = I('auth_video');
         /************************ 要查询的字段 ***************************/
-        $field = 'u.user_id, head_pic, auth_video_status, nickname, u.sex, u.age, i.title, i.description, i.time, i.place, image';
+        $field = 'u.user_id, head_pic, auth_video_status, nickname, u.sex, u.age, i.id invite_id, i.title, i.description, i.time, i.place, image';
         /************************ 排序 ***************************/
         $order_type = I('order_type', 1);
         if($order_type == 1) $order = 'add_time desc';
@@ -109,14 +110,34 @@ class Invite extends Base {
         	response_success('', '操作成功');
         } else {
         	$type = I('type');
+        	$enum = Config::load(APP_PATH.'enum.php');
 
+        	$this->assign('inviteTypeEnum', $enum['invite_type']);
         	$this->assign('type', $type);
         	return $this->fetch();
         }
     }
 
-    public function filter(){
+    public function detail(){
+    	$id = I('id');
 
+    	$where = array(
+    		'id' => $id,
+    		'status' => '2',
+    	);
+    	$info = M('invite')->alias('i')
+    		->join('users u', 'i.user_id=u.user_id', 'left')
+    		->where($where)
+    		->field('u.user_id, head_pic, auth_video_status, nickname, u.sex, u.age, i.id invite_id, i.title, i.description, i.time, i.place, image, i.object, i.pay')
+    		->find();
+
+    	if($info['image']) $info['image'] = unserialize($info['image']);
+
+    	$this->assign('info', $info);
+    	return $this->fetch();
+    }
+
+    public function filter(){
 
     	return $this->fetch();
     }
