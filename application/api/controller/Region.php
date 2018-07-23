@@ -8,7 +8,7 @@ class Region extends Base {
 
 	public function __construct(){
 		// 设置所有方法的默认请求方式
-		$this->method = 'get';
+		$this->method = 'POST';
 
 		parent::__construct();
 	}
@@ -22,8 +22,7 @@ class Region extends Base {
   			$data[$region['code']] = $region;
   		}
 
-      $data = $this->_tree($data);
-      p($data);
+  		$data = $this->_tree($data);
   		response_success($data);
     }
     
@@ -36,11 +35,11 @@ class Region extends Base {
 
    		$tree = array();
    		foreach ($data as $item) {
-         if(isset($data[$item['parentCode']])){
-            $data[$item['parentCode']]['sub'][] = &$data[$item['code']];
-         } else {
-            $tree[] = &$data[$item['code']];
-         }
+               if(isset($data[$item['parentCode']])){
+                  $data[$item['parentCode']]['sub'][] = &$data[$item['code']];
+               } else {
+                  $tree[] = &$data[$item['code']];
+               }
    		}
 
    		return $tree;
