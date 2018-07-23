@@ -16,7 +16,7 @@ namespace app\mobile\controller;
 use Think\Db;
 use app\common\logic\wechat\WechatUtil;
 
-class Index extends MobileBase {
+class Index extends Base {
 
     public function index(){
         
@@ -45,7 +45,7 @@ class Index extends MobileBase {
     public function goods_list_block(){
         $data=I('post.');
         $count=I('post.num');
-        //dump($data);exit();   
+        //dump($data);exit();
 
         if($data['ids']){
             $ids = substr($data['ids'],0,strlen($data['ids'])-1);   //ids是前台传递过来的商品2级分类
