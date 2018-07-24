@@ -1,0 +1,663 @@
+body {
+    background-color: #fff;
+}
+
+
+/*header*/
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #000;
+    display: flex;
+    height: 50px;
+    line-height: 50px;
+}
+
+.index header>div {
+    flex: 1 0 0;
+    text-align: center;
+    color: #999;
+}
+
+.index header>div>select {
+    background-color: transparent;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 13px;
+    text-decoration: none;
+    color: #999999;
+    border-color: red;
+}
+
+
+/*footer*/
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    height: 60px;
+    line-height: 60px;
+    z-index: 1;
+    border-top: 1px solid #ccc;
+}
+
+footer ul {
+    display: flex;
+}
+
+footer li {
+    flex: 1 0 0;
+    text-align: center;
+}
+
+footer li a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background: url(../images/icon/xiaolian.png) no-repeat center 8px;
+    /* background-size: 1.8rem; */
+    background-size: 30px;
+    padding-top: 18px;
+}
+
+.pageWrap {
+    margin-top: 50px;
+    margin-bottom: 60px;
+    border-top: 1px solid transparent;
+}
+
+
+/* 列表页 */
+
+.list-page {
+    margin-top: 0.14rem;
+    margin-left: 0.06rem;
+    margin-right: 0.06rem;
+    border-top: 1px solid #f7f7f8;
+    /* display: none; */
+}
+
+.list-item {
+    padding-top: 0.14rem;
+}
+
+.list-item .item-head {
+    display: flex;
+    padding-left: 0.04rem;
+}
+
+.list-item .item-head img {
+    width: 0.36rem;
+    height: 0.36rem;
+    margin-right: 0.1rem;
+}
+
+.list-item .item-head .item-head-text .listName {
+    font-size: 15px;
+}
+
+.sexAge {
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 0.34rem;
+    height: 0.14rem;
+    border-radius: 2px;
+}
+
+.sexAge .sex {
+    display: inline-block;
+    width: 0.11rem;
+    height: 0.11rem;
+}
+
+.sexAge .age {
+    font-size: 12px;
+    color: #fff;
+}
+
+.female {
+    background-color: #ffa5ce;
+}
+
+.female .sex {
+    background: url(../images/icon/女.png) center center;
+    background-size: 100%;
+}
+
+.male {
+    background-color: #a4c8fe;
+}
+
+.male .sex {
+    background: url(../images/icon/男1.png) center center;
+    background-size: 100%;
+}
+
+.list-item .item-head .item-head-text>span {
+    font-size: 12px;
+    line-height: 30px;
+}
+
+.list-item .item-content {
+    margin-left: 0.49rem;
+    font-size: 14px;
+    color: #000;
+}
+
+.list-item .item-content p {
+    margin-bottom: 0.14rem;
+}
+
+.list-item .item-content img {
+    width: calc(30% - 5px);
+}
+
+.list-item .item-comment {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 0.49rem;
+    padding-bottom: 0.26rem;
+    border-bottom: 1px solid #f7f7f7;
+}
+
+.list-item .item-comment>div {
+    margin-right: 0.36rem;
+}
+
+.list-item .item-comment>div img {
+    width: 0.22rem;
+    height: 0.22rem;
+    vertical-align: middle;
+}
+
+.list-item .item-comment>div.person img {
+    width: 0.3rem;
+    height: 0.2rem;
+    vertical-align: middle;
+}
+
+.list-item .item-comment>div span {
+    vertical-align: middle;
+}
+
+.release {
+    position: fixed;
+    bottom: 76px;
+    right: 15px;
+    z-index: 3;
+    width: 0.49rem;
+    height: 0.49rem;
+    border-radius: 50%;
+    background: url(../images/icon/发布.png) center center no-repeat;
+    background-size: 100%;
+}
+
+.release.actived {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: url(../images/icon/取消2.png) center center no-repeat;
+    background-size: 100%;
+}
+
+.blur {
+    filter: blur(2px);
+    overflow: hidden;
+}
+
+.mask {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #000;
+    opacity: 0.3;
+    z-index: 2;
+}
+
+.release-start {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 3.55rem;
+    height: 3.04rem;
+    background-color: #fff;
+    z-index: 4;
+    transform: translate(-50%, -50%);
+    border-radius: 6px;
+    display: none;
+}
+
+.release-start .triangle {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0.12rem;
+    border-color: #fff #fff transparent transparent;
+    position: absolute;
+    bottom: -0.23rem;
+    right: 0.62rem;
+}
+
+.release-start h5 {
+    height: 0.47rem;
+    line-height: 0.47rem;
+    font-size: 17px;
+    font-family: '微软雅黑';
+    font-weight: 500;
+    color: #000;
+    text-align: center;
+    border-bottom: 1px solid #f7f7f8;
+}
+
+.release-start .release-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.release-start .release-group .release-btn {
+    flex: 33.33333% 0 0;
+    margin-top: 0.26rem;
+    display: table-cell;
+    text-align: center;
+    font-size: 13px;
+}
+
+.release-start .release-group .release-btn img {
+    width: 0.66rem;
+    height: 0.66rem;
+}
+
+
+/* 短视频页 */
+
+.shortVideo-page {
+    margin-top: 0.14rem;
+    margin-left: 0.06rem;
+    margin-right: 0.06rem;
+    display: none;
+}
+
+.shortVideo-page ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.shortVideo-page ul li {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shortVideo-page .mVideo {
+    width: 1.6rem;
+    height: 2.37rem;
+    border-radius: 5px;
+    border: 1px solid red;
+}
+
+
+/* 发动态 */
+
+.edit {
+    background-color: #f1f4fb;
+}
+
+.edit header {
+    display: flex;
+}
+
+.edit header>div {
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+}
+
+.edit header .title {
+    font-size: 17px;
+    flex: 1 0 0;
+}
+
+.edit header .save {
+    color: #dabd48;
+}
+
+.edit header .cancel,
+.edit header .save {
+    width: 0.7rem;
+}
+
+.edit-page {
+    margin-top: 50px;
+}
+
+.edit-page .edit-content {
+    border-top: 1px solid #d8d8d8;
+    /* height: 2rem; */
+    background-color: #fff;
+}
+
+.edit-page .edit-content textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    width: 100%;
+    padding: 10px;
+    min-height: 90px;
+    font-size: 14px;
+    font-family: '微软雅黑';
+}
+
+.edit-page .edit-content .edit-expression {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-page .edit-content .edit-expression .face {
+    display: inline-block;
+    width: 0.34rem;
+    height: 0.34rem;
+    background: url(../images/icon/tx.png) center center no-repeat;
+    background-size: 100%;
+    margin-left: 0.1rem;
+}
+
+.edit-page .edit-content .edit-expression .textCount {
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+.edit-pic {
+    display: flex;
+    background-color: #fff;
+    border-top: 1px solid #f7f7f7;
+    padding: 0.05rem;
+    flex-wrap: wrap;
+}
+
+.edit-pic ul {
+    display: inline-flex;
+}
+
+.edit-pic .edit-pic-item img {
+    width: 0.81rem;
+    height: 0.81rem;
+}
+
+.edit-pic .edit-pic-item {
+    font-size: 0;
+    margin: 0.05rem;
+}
+
+.edit-pic .edit-pic-item .edit-closePic {
+    display: inline-block;
+    width: 0.16rem;
+    height: 0.16rem;
+    background: url(../images/icon/close.png) center center no-repeat;
+    background-size: 100%;
+    position: absolute;
+    margin-left: -0.16rem;
+}
+
+.edit-pic>a {
+    display: inline-block;
+    width: 0.81rem;
+    height: 0.81rem;
+    margin: 0.05rem;
+}
+
+.edit-pic>a>img {
+    width: 0.81rem;
+    height: 0.81rem;
+}
+
+
+/* 详情 */
+
+a.back {
+    display: inline-block;
+    width: 0.2rem;
+    height: 0.16rem;
+    background: url(../images/icon/back-arrow.png) center center no-repeat;
+    background-size: 100%;
+}
+a.operate {
+    display: inline-block;
+    width: 0.2rem;
+    height: 0.2rem;
+    background: url(../images/icon/三个点.png) center center no-repeat;
+    background-size: 100%;
+}
+
+.details {
+    background-color: #f2f4fc;
+}
+.details header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center; 
+   padding: 0 0.15rem;
+}
+.details header .title {
+    color: #fff;
+ }
+
+.details-page {
+    background-color: #f2f4fc;
+    margin-top: 50px;
+    margin-bottom: 49px;
+    padding-top: 0.09rem;
+}
+
+.details-content {
+    background-color: #fff;
+}
+
+.details-content .details-content-head {
+    display: flex;
+    padding-top: 0.09rem;
+}
+
+.details-content .details-content-head img {
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-left: 0.09rem;
+    margin-right: 0.09rem;
+}
+
+.details-content .details-content-head .details-content-head-text {
+    flex: 1 0 0;
+}
+
+.details-content .details-content-head .details-content-head-text .topping {
+    float: right;
+    margin-right: 10px;
+    width: 0.5rem;
+    height: 0.2rem;
+    line-height: 0.2rem;
+    text-align: center;
+    border: 1px solid #ffd800;
+    border-radius: 3px;
+    color: #ffd800;
+}
+
+.details-content .details-content-text {
+    margin-left: 0.66rem;
+    margin-right: 0.15rem;
+}
+
+.details-content .details-content-text img {
+    width: calc(33.3333% - 1px);
+    margin-top: 5px;
+}
+
+.details-content .details-flower {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 0.15rem;
+    padding-bottom: 0.1rem;
+}
+
+.details-content .details-flower img {
+    justify-content: flex-end;
+    width: 0.22rem;
+    height: 0.22rem;
+    margin-right: 5px;
+}
+
+.flowerPool {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #fff;
+    margin-top: 0.12rem;
+}
+
+.flowerPool .flowerItem {
+    flex: 8.33333% 0 0;
+    display: table-cell;
+    text-align: center;
+    margin: 0.05rem 0;
+}
+
+.flowerPool .flowerItem img {
+    width: 0.16rem;
+    height: 0.21rem;
+    vertical-align: middle;
+}
+
+.flowerPool .flowerPool-count {
+    display: inline-block;
+    width: 0.43rem;
+    height: 0.24rem;
+    line-height: 0.24rem;
+    text-align: center;
+    border-radius: 0.12rem;
+    background-color: #f2f4fc;
+    color: #fc6777;
+}
+
+.details .audience ul {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #fff;
+}
+
+.details .audience ul li {
+    flex: 10% 0 0;
+    display: table-cell;
+    text-align: center;
+    margin: 0.04rem 0;
+}
+
+.details .audience ul li img {
+    width: 0.28rem;
+    height: 0.28rem;
+    vertical-align: middle;
+}
+
+.details-comments .details-comments-head {
+    line-height: 50px;
+}
+
+.details-comments .details-comments-head img {
+    width: 0.15rem;
+    height: 0.15rem;
+    vertical-align: middle;
+    margin-left: 0.1rem;
+    margin-right: 0.05rem;
+}
+
+.details-comments ul {
+    background-color: #fff;
+}
+
+.details-comments ul .details-comments-item {
+    display: flex;
+    padding: 0.09rem 0;
+}
+
+.details-comments ul .details-comments-item img {
+    width: 0.5rem;
+    height: 0.5rem;
+    margin: 0 0.1rem;
+}
+
+.details-comments ul .details-comments-item .details-comments-content {
+    flex: 1 0 0;
+}
+
+.details-comments ul .details-comments-item .details-comments-content .detailsTime {
+    margin-right: 0.1rem;
+    font-size: 12px;
+}
+
+.details-comments ul .details-comments-item .details-item-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details-tip {
+    height: 0.53rem;
+    line-height: 0.53rem;
+}
+
+.details-tip img {
+    width: 0.10rem;
+    height: 0.14rem;
+    vertical-align: middle;
+    margin-left: 0.15rem;
+    margin-right: 0.05rem;
+}
+
+.details-input {
+    border-top: 1px solid #f0f0f5;
+    height: 47px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f8fc;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.details-input a {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.3rem;
+    border: 1px solid #dcdde1;
+    border-radius: 0.15rem;
+    line-height: 0.3rem;
+    text-align: center;
+    margin-left: 0.08rem;
+}
+
+.details-input input {
+    flex: 1 0 0;
+    height: 34px;
+    border: 1px solid #efeff0;
+    border-radius: 3px;
+    margin-left: 8px;
+    padding: 0 5px;
+}
+
+.details-input .details-face {
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    margin: 0 8px;
+    background: url(../images/icon/tx.png) center center no-repeat;
+    background-size: 100%;
+}

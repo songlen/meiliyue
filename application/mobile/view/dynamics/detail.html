@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>详情</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/dongtai-common.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <script type="text/javascript">
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
+    </script>
+</head>
+
+<body class="details">
+    <header>
+        <a href="javascript:void(0)" class="back"></a>
+        <div class="title">详情</div>
+        <a href="javascript:void(0)" class="operate"></a>
+    </header>
+
+    <div class="details-page">
+        <div class="details-content">
+            <div class="details-content-head">
+                <img src="{$info.head_pic}" alt="">
+                <div class="details-content-head-text">
+                    <div>
+                        <span>{$info.nickname}</span>
+                        <span class='sexAge <if condition="$info.sex eq 1">male<else />female</if>'>
+                            <i class="sex"></i>
+                            <span class="age">{$info.age}</span>
+                        </span>
+                        <!-- <span class="topping">置顶</span> -->
+                    </div>
+                    <span>{$info.time}</span>
+                </div>
+            </div>
+            <div class="details-content-text">
+                <p>
+                    {$info.content}
+                </p>
+                <if condition="$item['type'] == 2 && !empty($item['image'])">
+                    <foreach name="$item.image" item="image">
+                    <img src="{$image}" alt="">
+                    </foreach>
+                </if>
+            </div>
+            <div class="details-flower">
+                <img src="__STATIC__/images/icon/花1.png" alt="">
+                <span class="flowerCount">{$info.flower_num}</span>
+            </div>
+        </div>
+        
+        <div class="flowerPool">
+            <if condition="$info.flower_num gt 0">
+            <for start="0" end="$info.flower_num">
+            <div class="flowerItem">
+                <img src="__STATIC__/images/icon/花3.png" alt="">
+            </div>
+            </for>
+            </if>
+            <if condition="$info.flower_num gt 99">
+            <span class="flowerPool-count">99+</span>
+            </if>
+        </div>
+
+        <div class="audience">
+            <ul>
+                <if condition="is_array($viewers) && !empty($viewers)">
+                <foreach name="$viewers" item="viewer">
+                <li>
+                    <img src="{$viewer.head_pic}" alt="">
+                </li>
+                </foreach>
+                </if>
+            </ul>
+        </div>
+
+        <div class="details-comments">
+            <div class="details-comments-head">
+                <img src="__STATIC__/images/icon/消息.png" alt="">
+                评论
+            </div>
+            <ul>
+                <if condition="is_array($comments) && !empty($comments)">
+                <foreach name="$comments" item="comment">
+                <li class="details-comments-item">
+                    <img src="{$comment.head_pic}" alt="">
+                    <div class="details-comments-content">
+                        <div class="details-item-head">
+                            <span class="nickname">{$comment.nickname}</span>
+                            <span class="detailsTime">{$comment.add_time}</span>
+                        </div>
+                        <div>
+                            {$comment.content}
+                        </div>
+                    </div>
+                </li>
+                </foreach>
+                </if>
+            </ul>
+        </div>
+
+        <!-- <div class="details-tip">
+            <img src="__STATIC__/images/icon/tx.png" alt="">评论所有人可见，悄悄话仅对方和你可见
+        </div> -->
+
+
+
+    </div>
+
+    <div class="details-input">
+        <a href="javascript:void(0)">悄悄话</a>
+        <input type="text">
+        <span class="details-face"></span>
+    </div>
+
+</body>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+</script>
+
+</html>
