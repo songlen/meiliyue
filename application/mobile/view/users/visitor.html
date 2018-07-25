@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>来访者</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <script type="text/javascript">
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
+    </script>
+</head>
+
+<body class="visitors-page">
+    <header>
+        <a href="javascript:void(0)" class="back"></a>
+        <div class="title">
+            <a href="{:U('mobile/users/visitor')}" <if condition="$type eq 1">class="actived"</if>>来访者</a>
+            <a href="{:U('mobile/users/visitor', array('type'=>'2'))}" <if condition="$type eq 2">class="actived"</if>>我看过的人</a>
+        </div>
+    </header>
+
+    <div class="comments-content">
+
+        <div class="comments-content">
+
+            <ul>
+                <foreach name="lists" item="item">
+                <li class="comments-item">
+                    <div class="comments-avatar">
+                        <div class="comments-avatar-wrap">
+                            <img src="{$item.head_pic}" alt="">
+                        </div>
+                        <span></span>
+                    </div>
+
+                    <div class="comments-text">
+                        <div>
+                            <span class="listName">{$item.nickname}</span>
+                            <span class='sexAge <if condition="$item.sex eq 1">male<else/>female</if>'>
+                                <i class="sex"></i>
+                                <span class="age">{$item.age}</span>
+                            </span>
+                        </div>
+                        <span class="">{$item.add_time}</span>
+                        <p class="signature">{$item.signature}</p>
+                    </div>
+
+                    <img class="visitors-isnew" src="__STATIC__/images/icon/火.png" alt="">
+                </li>
+                </foreach>
+            </ul>
+            
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(function() {})
+</script>
+
+</html>
