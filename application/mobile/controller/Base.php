@@ -8,6 +8,7 @@ use think\Request;
 class Base extends Controller {
 
     public function _initialize() {
+        header("Access-Control-Allow-Origin: *"); // 允许跨域
     }
        
 
