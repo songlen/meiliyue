@@ -75,7 +75,7 @@ class Dynamics extends Base {
             }
         }
 
-        if($this->request->isAjax()){
+        if($this->request->isPost()){
             response_success($lists);
         } else {
             $this->assign('range', $range);
