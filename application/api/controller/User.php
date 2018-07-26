@@ -135,7 +135,7 @@ class User extends Base {
                     'origin' => 3,
                     'add_time' => time(),
                 );
-                D('dynamics')->add($data);
+                D('dynamics')->add($dynamics_data);
             }
 
             response_success();
