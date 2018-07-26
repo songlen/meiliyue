@@ -113,7 +113,7 @@ class User extends Base {
                     'origin' => 2,
                     'add_time' => time(),
                 );
-                D('dynamics')->add($data);
+                D('dynamics')->add($dynamics_data);
 
                 response_success(array('head_pic'=>$fullPath));
             }
