@@ -5,8 +5,7 @@ namespace app\mobile\controller;
 
 use think\db;
 
-class User extends Base
-{
+class User extends Base {
 
     public $user_id = 0;
     public $user = array();
@@ -156,7 +155,14 @@ class User extends Base
     }
 
     // 查看别人主页
-    public function homepage(){
-        $user_id = I('user_id', 1);
+    public function homePage(){
+
+        return $this->fetch();
+    }
+
+    // 我的个人主页
+    public function myHomePage(){
+
+        return $this->fetch();
     }
 }

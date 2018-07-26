@@ -4,6 +4,7 @@ namespace app\api\controller;
 use think\Db;
 use app\api\logic\SmsLogic;
 use app\api\logic\FileLogic;
+use app\api\logic\GeographyLogic;
 
 class User extends Base {
 
@@ -242,7 +243,6 @@ class User extends Base {
             response_error('', '已关注');
         }
 
-
         $data = array(
             'user_id' => $user_id,
             'friend_id' => $friend_id,
@@ -265,5 +265,71 @@ class User extends Base {
 
     public function cancelAttention(){
         
+    }
+
+    public function homePage(){
+        $user_id = I('user_id', 1);
+        $toUserId = I('toUserId', 2);
+        /************ 获得自己的信息 **************/
+        $user = cookie('user');
+
+        /*********** 获得对方信息 ************/
+        $toUserInfo = M('users')->where('user_id', $toUserId)->find();
+        unset($toUserInfo['password']);
+
+        $data['baseinfo'] = $toUserInfo;
+        $data['baseinfo']['province'] = $toUserInfo['province'] ? getRegionName($toUserInfo['province']) : '';
+        $data['baseinfo']['city'] = $toUserInfo['city'] ? getRegionName($toUserInfo['city']) : '';
+        //计算距离
+        $GeographyLogic = new GeographyLogic();
+        $data['baseinfo']['dinstince'] = $GeographyLogic->getDistance($user['longitude'], $user['latitude'], $toUserInfo['longitude'], $toUserInfo['latitude']);
+        
+        /************* 是否关注 *************/
+        $data['baseinfo']['attention'] = 0; // 未关注
+        $friend = M('friend')->where(array('user_id'=>$user['user_id'], 'friend_id'=>$toUserId))->find();
+        if($friend){
+            $data['baseinfo']['attention'] = 1; // 已关注
+            if($friend['twoway']) $data['baseinfo']['attention'] = 3; // 好友
+        } else {
+            $friend = M('friend')->where(array('user_id'=>$toUserId, 'friend_id'=>$user['user_id']))->find();
+            if($friend) $data['baseinfo']['attention'] = 2; // 被关注
+        }
+        
+        /************** 他的邀约 *********/
+        $data['invite'] = M('invite')->where('user_id', $toUserInfo)
+            ->field('id, title')
+            ->order('id desc')
+            ->limit(3)
+            ->select();
+        /************** 他的动态 *********/
+        $data['dynamics'] = M('invite')->where('user_id', $toUserInfo)
+            ->field('id, title')
+            ->order('id desc')
+            ->find();
+
+        response_success($data);
+    }
+
+    public function myHomePage(){
+        $user_id = I('user_id', 1);
+        /************ 获得自己的信息 **************/
+        $user = cookie('user');
+
+        $data['baseinfo'] = $user;
+
+        
+        /************** 我的的邀约 *********/
+        $data['invite'] = M('invite')->where('user_id', $user_id)
+            ->field('id, title')
+            ->order('id desc')
+            ->limit(3)
+            ->select();
+        /************** 我的的动态 *********/
+        $data['dynamics'] = M('invite')->where('user_id', $user_id)
+            ->field('id, title')
+            ->order('id desc')
+            ->find();
+
+        response_success($data);
     }
 }

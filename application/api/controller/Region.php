@@ -31,7 +31,7 @@ class Region extends Base {
    	/**
    	 * 生成目录树结构
    	 */
-	private function _tree($data){
+	  private function _tree($data){
 
    		$tree = array();
    		foreach ($data as $item) {

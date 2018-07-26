@@ -26,6 +26,8 @@ class Dynamics extends Base {
         $range = I('range', 1);
         $attention = I('attention', 0);
         $jizha = I('jizha', 0);
+        $page = I('page', 1);
+
 
         /************** 登录用户信息 ***************/
         $user = M('users')->where('user_id', $user_id)->field('city')->find();
@@ -47,12 +49,15 @@ class Dynamics extends Base {
             $where['d.user_id'] = array('in', $attention_uids);
         }
 
+        /************ 获取列表数据 *************/
+        $limit_start = ($page-1)*10;
         $where['d.status'] = '2';
         $lists = Db::name('dynamics')->alias('d')
             ->join('users u', 'd.user_id=u.user_id', 'left')
             ->where($where)
             ->field('u.user_id, head_pic, nickname, u.sex, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time, d.flower_num')
             ->order('d.id desc')
+            ->limit($limit_start, 10)
             ->select();
 
         if(is_array($lists) && !empty($lists)){
@@ -92,7 +97,7 @@ class Dynamics extends Base {
         $data['user_id'] = I('user_id');
         $data['type'] = I('type');
         $data['content'] = I('content');
-        $data['location'] = I('location');
+        // $data['location'] = I('location');
         // $data['visible'] = I('visible');
 
         $data['status'] = '2';
@@ -124,7 +129,7 @@ class Dynamics extends Base {
         if(D('dynamics')->add($data)){
             response_success('', '操作成功');
         } else {
-            response_success('', '操作成功');
+            response_error('', '操作失败');
         }
     }
 

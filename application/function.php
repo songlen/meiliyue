@@ -980,3 +980,36 @@ function p(){
     }
     die();
 }
+
+
+function response_success($data=[], $msg=''){
+
+    $result = array(
+        'code' => 200,
+        'data' => $data,
+        'msg' => $msg,
+    );
+
+    json($result, 200)->send();
+    exit;
+}
+
+function response_error($data=[], $msg=''){
+    // header('content-type:application/json; charset=utf-8');
+    $result = array(
+        'code' => 400,
+        'data' => $data,
+        'msg' => $msg,
+    );
+
+    json($result, 200)->send();
+    // echo json_encode($result);
+    exit;
+}
+
+
+// 根据code 获取 城市名称
+function getRegionName($code){
+    $region = M('region')->where('code', $code)->field('name')->find();
+    return $region['name'];
+}

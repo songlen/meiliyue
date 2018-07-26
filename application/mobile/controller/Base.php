@@ -7,10 +7,17 @@ use think\Request;
 
 class Base extends Controller {
 
-    public function _initialize() {
+    public function __construct(){
         header("Access-Control-Allow-Origin: *"); // 允许跨域
+        parent::__construct();
+
+        if(!cookie('user')) {
+            $user_id = I('user_id');
+            $user = M('users')->where('user_id', $user_id)->find();
+            unset($user['password']);
+            cookie('user', $user);
+        }
     }
-       
 
     // 网页授权登录获取 OpendId
     public function GetOpenid()
