@@ -18,23 +18,40 @@ class Dynamics extends Base {
 
     /**
      * [index 动态列表]
-     * @param [range] $[range] [范围 1 同城 2 全网 3 关注]
+     * @param [range] $[range] [范围 1 同城 2 全网]
      * @return [type] [description]
      */
     public function index(){
-        $user_id = I('user_id');
+        $user_id = I('user_id', 1);
         $range = I('range', 1);
+        $attention = I('attention', 0);
+        $jizha = I('jizha', 0);
 
         /************** 登录用户信息 ***************/
         $user = M('users')->where('user_id', $user_id)->field('city')->find();
 
-        if($range == 1) $where['u.city'] = $user['city'];
+        /************* 筛选条件 *************/
+        $where = array(
+            'd.status' => '2',
+        );
+        if($range == 1) $where['u.city'] = $user['city']; // 同城
+       /**************** 关注 ***********/
+        if($attention){
+            $attention_users = M('friend')->where('user_id', $user_id)->field('friend_id')->select();
+            $attention_uids = array();
+            if(is_array($attention_users) && !empty($attention_users)){
+                foreach ($attention_users as $a_user) {
+                    $attention_uids[] = $a_user['friend_id'];
+                }
+            }
+            $where['d.user_id'] = array('in', $attention_uids);
+        }
 
         $where['d.status'] = '2';
         $lists = Db::name('dynamics')->alias('d')
             ->join('users u', 'd.user_id=u.user_id', 'left')
             ->where($where)
-            ->field('u.user_id, head_pic, nickname, u.sex, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time')
+            ->field('u.user_id, head_pic, nickname, u.sex, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time, d.flower_num')
             ->order('d.id desc')
             ->select();
 
@@ -58,9 +75,14 @@ class Dynamics extends Base {
                     
                     $item['video_thumb'] = $dynamics_image['image'];
                 }
+
+                // 查看人数
+                $item['viewer_count'] = M('dynamics_viewer')->where('dynamic_id', $item['dynamic_id'])->count();
+                // 评论数 
+                $item['comment_count'] = M('dynamics_comment')->where('dynamic_id', $item['dynamic_id'])->count();
             }
         }
-        response_success($lists);   
+        response_success($lists);
     }
 
     /**

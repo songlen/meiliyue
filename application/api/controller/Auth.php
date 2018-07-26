@@ -42,7 +42,7 @@ class Auth extends Base {
         M('users')->where('user_id', $user['user_id'])->update($updateData);
 
         
-        $userInfo = controller('Api/User')->getUserInfo($user['user_id']);
+        $userInfo = controller('api/User')->getUserInfo($user['user_id']);
        	response_success($userInfo);
     }
 
@@ -127,7 +127,7 @@ class Auth extends Base {
            response_error('', '注册失败');
         }
         
-        $userInfo = controller('Api/User')->getUserInfo($user_id);
+        $userInfo = controller('api/User')->getUserInfo($user_id);
         return response_success($userInfo, '注册成功');
     }
 
