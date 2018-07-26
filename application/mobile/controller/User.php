@@ -5,7 +5,7 @@ namespace app\mobile\controller;
 
 use think\db;
 
-class Users extends Base
+class User extends Base
 {
 
     public $user_id = 0;
@@ -33,10 +33,6 @@ class Users extends Base
             'verifyHandle', 'reg', 'send_sms_reg_code', 'find_pwd', 'check_validate_code',
             'forget_pwd', 'check_captcha', 'check_username', 'send_validate_code', 'express' , 'bind_guide', 'bind_account',
         );*/
-    }
-
-    public function homepage(){
-        $user_id = I('user_id');
     }
 
    
