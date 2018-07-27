@@ -110,6 +110,7 @@ class User extends Base {
                     'user_id' => $user_id,
                     'type' => 2,
                     'description' => '更新了形象照',
+                    'image' => $fullPath,
                     'origin' => 2,
                     'add_time' => time(),
                 );
@@ -131,7 +132,8 @@ class User extends Base {
                 $dynamics_data = array(
                     'user_id' => $user_id,
                     'type' => 3,
-                    'description' => '更新了形象照',
+                    'description' => '更新了形象视频',
+                    'video' => $fullPath,
                     'origin' => 3,
                     'add_time' => time(),
                 );
@@ -278,8 +280,8 @@ class User extends Base {
         unset($toUserInfo['password']);
 
         $data['baseinfo'] = $toUserInfo;
-        $data['baseinfo']['province'] = $toUserInfo['province'] ? getRegionName($toUserInfo['province']) : '';
-        $data['baseinfo']['city'] = $toUserInfo['city'] ? getRegionName($toUserInfo['city']) : '';
+        $data['baseinfo']['province'] = $toUserInfo['province'] ? getRegionNameByCode($toUserInfo['province']) : '';
+        $data['baseinfo']['city'] = $toUserInfo['city'] ? getRegionNameByCode($toUserInfo['city']) : '';
         //计算距离
         $GeographyLogic = new GeographyLogic();
         $data['baseinfo']['dinstince'] = $GeographyLogic->getDistance($user['longitude'], $user['latitude'], $toUserInfo['longitude'], $toUserInfo['latitude']);

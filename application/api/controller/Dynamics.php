@@ -87,6 +87,7 @@ class Dynamics extends Base {
                 $item['comment_count'] = M('dynamics_comment')->where('dynamic_id', $item['dynamic_id'])->count();
             }
         }
+
         response_success($lists);
     }
 
@@ -153,16 +154,62 @@ class Dynamics extends Base {
      */
     public function addComment(){
         $data['dynamic_id'] = I('dynamic_id');
-        $data['user_id'] = I('user_id');
         $data['commentator_id'] = I('commentator_id');
         $data['parent_id'] = I('parent_id', 0);
+        $data['reply_user_id'] = I('reply_user_id', 0);
+        $data['private'] = I('private', 0);
+        $data['content'] = I('content');
 
         $data['add_time'] = time();
 
-        if(M('dynamics')->insert($data)){
+        if(M('dynamics_comment')->insert($data)){
             response_success('', '操作成功');
         } else {
             response_error('', '操作失败');
         }
+    }
+
+    public function getComment(){
+        $dynamic_id = I('dynamic_id');
+
+
+        /*********** 获取评论 ************/
+        $comments = M('dynamics_comment')->alias('dc')
+            ->join('users u1', 'dc.commentator_id=u1.user_id', 'left')
+            ->join('users u2', 'dc.reply_user_id=u2.user_id', 'left')
+            ->where('dynamic_id', $dynamic_id)
+            ->field('u1.head_pic, u1.nickname, dc.id comment_id, commentator_id, dc.content, dc.add_time, u2.nickname reply_nickname, dc.parent_id')
+            ->order('dc.id desc')
+            ->select();
+        
+        $new_comments = array();
+        if(is_array($comments) && !empty($comments)){
+            foreach ($comments as $item) {
+                $new_comments[$item['comment_id']] = $item;
+            }
+        }
+        if(!empty($new_comments)){
+            $new_comments = $this->_tree($new_comments);
+        }
+
+        response_success($new_comments);
+    }
+
+
+    /**
+     * 生成目录树结构
+     */
+      private function _tree($data){
+
+        $tree = array();
+        foreach ($data as $item) {
+               if(isset($data[$item['parent_id']])){
+                  $data[$item['parent_id']]['sub'][] = &$data[$item['comment_id']];
+               } else {
+                  $tree[] = &$data[$item['comment_id']];
+               }
+        }
+
+        return $tree;
     }
 }

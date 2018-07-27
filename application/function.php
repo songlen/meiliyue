@@ -1009,7 +1009,7 @@ function response_error($data=[], $msg=''){
 
 
 // 根据code 获取 城市名称
-function getRegionName($code){
+function getRegionNameByCode($code){
     $region = M('region')->where('code', $code)->field('name')->find();
     return $region['name'];
 }

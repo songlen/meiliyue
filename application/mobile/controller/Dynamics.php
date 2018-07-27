@@ -71,13 +71,6 @@ class Dynamics extends Base {
                 M('dynamics_viewer')->insert(array('dynamic_id'=>$id, 'viewer_id'=>$viewer_id));
             }
         }
-        /*********** 获取评论 ************/
-        $comments = M('dynamics_comment')->alias('dc')
-            ->join('users u', 'dc.commentator_id=u.user_id', 'left')
-            ->where('dynamic_id', $id)
-            ->field('head_pic, nickname, dc.content, dc.add_time')
-            ->order('dc.id desc')
-            ->select();
 
 
         $this->assign('info', $info);
