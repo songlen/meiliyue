@@ -6,224 +6,206 @@
     <title>动态</title>
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/dongtai-common.css">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="__STATIC__/js/vue.js"></script>
+    <script src="__STATIC__/js/Dongtai.js"></script>
 </head>
 
-<body class="index">
-    <div class="allWrap">
-        <header>
-            <div class="tabCut" data-page='list-page'>
-                <select name="range" id="">
-                    <option value="1" <if condition="$range eq 1">selected="selected"</if>>同城</option>
-                    <option value="2" <if condition="$range eq 2">selected="selected"</if>>全网</option>
-                </select>
-            </div>
-            <div class="tabCut" data-page='list-page'>
-                <a href="{:U('dynamics/index', array('attention'=>1))}">关注</a>
-            </div>
-            <div class="tabCut" data-page='shortVideo-page'>
-                叽喳
-            </div>
-        </header>
+<body class="dongtai">
+    <div class="vueWrap" id="dongtaiApp">
 
-        <div class="pageWrap">
-            <div class="list-page">
-                <ul>
-                    <foreach name="lists" item="item">
-                    <li class="list-item">
-                        <div class="item-head">
-                            <img src="{$item.head_pic}" alt="">
-                            <div class="item-head-text">
+        <div class="allWrap" :class="{blur:isReleasing}">
+            <header>
+                <div class="tabCut" v-cloak :class="{actived:nowPage=='area'}" @click="cutTab('area')">
+                    {{nowArea}}
+                    <ul class="mSelect" v-show="isShowArea">
+                        <li @click.stop="cutArea('同城')">
+                            同城
+                        </li>
+                        <li @click.stop="cutArea('全网')">
+                            全网
+                        </li>
+                    </ul>
+                </div>
+                <div class="tabCut" :class="{actived:nowPage=='attended'}" @click="cutTab('attended')">
+                    关注
+                </div>
+                <div class="tabCut" :class="{actived:nowPage=='video'}" @click="cutTab('video')">
+                    叽喳
+                </div>
+            </header>
+
+            <div class="pageWrap">
+
+                <div class="list-page area-page" v-show="nowPage=='area'">
+                    <ul>
+                        <li class="list-item" v-cloak v-for="(item,index) in areaDataList.list" :key="index">
+                            <div class="item-head">
+                                <div class="item-headWrap">
+                                    <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
+                                    <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                                </div>
+                                <div class="item-head-text">
+                                    <div>
+                                        <span class="listName">{{item.nickname}}</span>
+                                        <span class="sexAge" :class="{female:item.sex=='1',male:item.sex=='0'}">
+                                            <i class="sex"></i>
+                                            <span class="age">{{item.age}}</span>
+                                        </span>
+                                    </div>
+                                    <span>{{item.add_time}}</span>
+                                </div>
+                            </div>
+                            <div class="item-content">
+                                <a :href="'http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/'+item.dynamic_id+'.html'">
+                                    <p>{{item.content}}</p>
+                                </a>
+                                <!-- <img v-for="img in item.image" src="__STATIC__/images/icon/tx.png"> -->
+                            </div>
+                            <div class="item-comment">
+                                <div class="person" v-cloak v-if="item.viewer_count>0">
+                                    <img src="__STATIC__/images/icon/kekan.png">
+                                    <span>{{item.viewer_count}}</span>
+                                </div>
                                 <div>
-                                    <span class="listName">{$item.nickname}</span>
-                                    <span class='sexAge  <if condition="$item.sex eq 1">male<else />female</if>'>
+                                    <img src="__STATIC__/images/icon/price.png">
+                                    <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
+                                </div>
+                                <div>
+                                    <div class="flowerWrap" @click="sendFlower">
+                                        <img src="__STATIC__/images/icon/花1.png">
+                                        <img style="display: none;" src="__STATIC__/images/icon/花2.png">
+                                    </div>
+                                    <span class="flowerNum" v-cloak v-if="item.flower_num>0">{{item.flower_num}}</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="list-page attended-page" v-show="nowPage=='attended'">
+                    <ul>
+                        <li class="list-item" v-cloak v-for="(item,index) in attendedDataList.list" :key="index">
+                            <div class="item-head">
+                                <div class="item-headWrap">
+                                    <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
+                                    <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                                </div>
+                                <div class="item-head-text">
+                                    <div>
+                                        <span class="listName">{{item.nickname}}</span>
+                                        <span class="sexAge" :class="{female:item.sex=='1',male:item.sex=='0'}">
+                                            <i class="sex"></i>
+                                            <span class="age">{{item.age}}</span>
+                                        </span>
+                                    </div>
+                                    <span>{{item.add_time}}</span>
+                                </div>
+                            </div>
+                            <div class="item-content">
+                                <a :href="'http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/'+item.dynamic_id+'.html'">
+                                    <p>{{item.content}}</p>
+                                </a>
+                                <!-- <img v-for="img in item.image" src="__STATIC__/images/icon/tx.png"> -->
+                            </div>
+                            <div class="item-comment">
+                                <div class="person" v-cloak v-if="item.viewer_count>0">
+                                    <img src="__STATIC__/images/icon/kekan.png">
+                                    <span>{{item.viewer_count}}</span>
+                                </div>
+                                <div>
+                                    <img src="__STATIC__/images/icon/price.png">
+                                    <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
+                                </div>
+                                <div>
+                                    <div class="flowerWrap" @click="sendFlower">
+                                        <img src="__STATIC__/images/icon/花1.png">
+                                        <img style="display: none;" src="__STATIC__/images/icon/花2.png">
+                                    </div>
+                                    <span class="flowerNum" v-cloak v-if="item.flower_num>0">{{item.flower_num}}</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="shortVideo-page" v-show="nowPage=='video'">
+                    <ul>
+                        <li>
+                            <video class="mVideo" src=""></video>
+                            <div>
+                                <div>
+                                    <span class="name">沫沫</span>
+                                    <span class="sexAge male">
                                         <i class="sex"></i>
-                                        <span class="age">{$item.age}</span>
+                                        <span class="age">23</span>
                                     </span>
                                 </div>
-                                <span>{$item.time}</span>
+
+                                <p class="video-text">
+                                    你为什么这么可爱？
+                                </p>
                             </div>
-                        </div>
-                        <div class="item-content">
-                            <a href="{:U('dynamics/detail', array('id'=>$item['dynamic_id']))}">
-                            <p>
-                                {$item.content}
-                            </p>
-                            <if condition="$item['type'] == 2 && !empty($item['image'])">
-                                <foreach name="$item.image" item="image">
-                                <img src="{$image}" alt="">
-                                </foreach>
-                            </if>
-                            </a>
-                        </div>
-                        <div class="item-comment">
-                            <if condition="$item['viewer_count'] gt 0">
-                            <div class="person">
-                                <img src="__STATIC__/images/icon/kekan.png" alt="">
-                                <span>{$item.viewer_count}</span>
-                            </div>
-                            </if>
-                            <div>
-                                <img src="__STATIC__/images/icon/price.png" alt="">
-                                <span class="item-comment-count"><if condition="$item['comment_count'] gt 0">{$item.comment_count}</if></span>
-                            </div>
-                            <div>
-                                <img src="__STATIC__/images/icon/花1.png" alt="">
-                                <img style="display: none;" src="__STATIC__/images/icon/花2.png" alt="">
-                                <span><if condition="$item['flower_num'] gt 0">{$item.comment_count}</if></span>
-                            </div>
-                        </div>
-                    </li>
-                    </foreach>
-                </ul>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
 
-            <div class="shortVideo-page">
-                <ul>
-                    <li>
-                        <video class="mVideo" src=""></video>
-                        <div>
-                            <div>
-                                <span class="name">沫沫</span>
-                                <span class="sexAge male">
-                                <i class="sex"></i>
-                                <span class="age">23</span>
-                                </span>
-                            </div>
+            <!-- <footer>
+                        <ul>
+                            <li>
+                                <a href="javascript:;">在线</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">邀约</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">动态</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">我的</a>
+                            </li>
+                        </ul>
+                    </footer> -->
 
-                            <p class="video-text">
-                                你为什么这么可爱？
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <video class="mVideo" src=""></video>
-                        <div>
-                            <div>
-                                <span class="name">沫沫</span>
-                                <span class="sexAge male">
-                                <i class="sex"></i>
-                                <span class="age">23</span>
-                                </span>
-                            </div>
+            <div class="mask" v-cloak v-if="isReleasing"></div>
 
-                            <p class="video-text">
-                                你为什么这么可爱？
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <video class="mVideo" src=""></video>
-                        <div>
-                            <div>
-                                <span class="name">沫沫</span>
-                                <span class="sexAge male">
-                                <i class="sex"></i>
-                                <span class="age">23</span>
-                                </span>
-                            </div>
-
-                            <p class="video-text">
-                                你为什么这么可爱？
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <video class="mVideo" src=""></video>
-                        <div>
-                            <div>
-                                <span class="name">沫沫</span>
-                                <span class="sexAge male">
-                                <i class="sex"></i>
-                                <span class="age">23</span>
-                                </span>
-                            </div>
-
-                            <p class="video-text">
-                                你为什么这么可爱？
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <video class="mVideo" src=""></video>
-                        <div>
-                            <div>
-                                <span class="name">沫沫</span>
-                                <span class="sexAge male">
-                                <i class="sex"></i>
-                                <span class="age">23</span>
-                                </span>
-                            </div>
-
-                            <p class="video-text">
-                                你为什么这么可爱？
-                            </p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="release">
-    </div>
-
-    <div class="release-start">
-        <h5>发布动态</h5>
-        <div class="release-group">
-            <div class="release-btn">
-                <img src="__STATIC__/images/icon/tx.png" alt="">
-                <p>文字</p>
-            </div>
-            <div class="release-btn">
-                <img src="__STATIC__/images/icon/tx.png" alt="">
-                <p>选照片</p>
-            </div>
-            <div class="release-btn">
-                <img src="__STATIC__/images/icon/tx.png" alt="">
-                <p>拍照</p>
-            </div>
-            <div class="release-btn">
-                <img src="__STATIC__/images/icon/tx.png" alt="">
-                <p>小视频</p>
-            </div>
         </div>
 
-        <span class="triangle"></span>
+        <!-- 模糊之外 -->
+
+        <div class="release" :class="{actived:isReleasing}" @click="toggleReleasing"></div>
+
+        <div class="release-start" v-cloak v-show="isReleasing">
+            <h5>发布动态</h5>
+            <div class="release-group">
+                <div class="release-btn" @click="openEdit">
+                    <img src="__STATIC__/images/icon/文字@2x.png">
+                    <p>文字</p>
+                </div>
+                <div class="release-btn">
+                    <img src="__STATIC__/images/icon/选照片@2x.png">
+                    <p>选照片</p>
+                </div>
+                <div class="release-btn">
+                    <img src="__STATIC__/images/icon/拍照@2x.png">
+                    <p>拍照</p>
+                </div>
+                <div class="release-btn">
+                    <img src="__STATIC__/images/icon/小视频@2x.png">
+                    <p>小视频</p>
+                </div>
+            </div>
+
+            <span class="triangle"></span>
+        </div>
+
     </div>
-
-
 </body>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    $(function() {
-        // 切换同城/全网
-        $('select[name=range]').change(function(){
-            range = $(this).val();
-            var jump = "{:U('mobile/dynamics/index', array('range'=>range_val))}";
-
-            jump = jump.replace('range_val', range);
-
-            window.location.href = jump;
-        })
-        $('.release').click(function() {
-            var flag = $(this).hasClass('actived')
-            if (flag) { //取消
-                $('.allWrap').removeClass('blur')
-                $(this).removeClass('actived')
-                $('.mask').remove()
-                $('.release-start').hide()
-            } else { //进入发布
-                $('.allWrap').addClass('blur')
-                $(this).addClass('actived')
-                $('body').append('<div class="mask"></div>')
-                $('.release-start').show()
-            }
-        })
-    })
-</script>
 
 </html>

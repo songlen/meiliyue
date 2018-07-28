@@ -110,7 +110,7 @@ class User extends Base {
                     'user_id' => $user_id,
                     'type' => 2,
                     'description' => '更新了形象照',
-                    'image' => $fullPath,
+                    'image' => array($fullPath),
                     'origin' => 2,
                     'add_time' => time(),
                 );
@@ -309,6 +309,14 @@ class User extends Base {
             ->order('id desc')
             ->find();
 
+        /************** 他的照片 *********/
+        $data['photos'] = M('user_photo')->where('user_id', $toUserInfo)
+            ->field('id, thumb, url, type, file_type')
+            ->order('id desc')
+            ->select();
+
+
+
         response_success($data);
     }
 
@@ -319,7 +327,6 @@ class User extends Base {
 
         $data['baseinfo'] = $user;
 
-        
         /************** 我的的邀约 *********/
         $data['invite'] = M('invite')->where('user_id', $user_id)
             ->field('id, title')
@@ -332,6 +339,104 @@ class User extends Base {
             ->order('id desc')
             ->find();
 
+        /************** 我的照片 *********/
+        $data['photos'] = M('user_photo')
+            ->where('user_id', $user_id)
+            ->where('type', 1)
+            ->field('id, thumb, url, type, file_type')
+            ->order('id desc')
+            ->select();
+
+        /************** 我的精华照片 *********/
+        $data['photos'] = M('user_photo')
+            ->where('user_id', $user_id)
+            ->where('type', 2)
+            ->field('id, thumb, url, type, file_type')
+            ->order('id desc')
+            ->select();
+
         response_success($data);
+    }
+
+    /**
+     * [uploadPhoto 上传照片、精华照片]
+     * type 1 普通照片 2  精华照片
+     * file_type 1 图片 2 视频
+     * @return [type] [description]
+     */
+    public function uploadPhoto(){
+        $user_id = I('user_id/d');
+        $type = I('type'); 
+        $file_type = I('file_type', 1); 
+
+        $uploadPath = UPLOAD_PATH.'photo/';
+        $FileLogic = new FileLogic();
+        $uploadResult = $FileLogic->uploadMultiFile('file', $uploadPath);
+
+        if($uploadResult['status'] == '1'){
+            $images = $uploadResult['image'];
+            foreach ($images as $imageUrl) {
+                $photoData = array(
+                    'user_id' => $user_id,
+                    'thumb' => $imageUrl,
+                    'url' => $imageUrl,
+                    'type' => $type,
+                    'add_time' => time(),
+                    'file_type' => $file_type,
+                );
+                M('user_photo')->insert($photoData);
+            }
+            
+            // 发表动态
+            $description = $type == '1' ? '上传了照片到相册' : '上传了精华照片到相册';
+            $dynamics_data = array(
+                'user_id' => $user_id,
+                'type' => 2,
+                'description' => $description,
+                'image' => $images,
+                'origin' => 4,
+                'add_time' => time(),
+            );
+            D('dynamics')->add($dynamics_data);
+
+            response_success(array('files'=>$images));
+
+        }else{
+            response_error('', $file->getError());
+        }
+    }
+
+    /**
+     * [changeLocation 更新位置]
+     * @return [type] [description]
+     */
+    public function changeLocation(){
+        $user_id = I('user_id', 1);
+        $data['province'] = I('province');
+        $data['city'] = I('city');
+        $data['longitude'] = I('longitude');
+        $data['latitude'] = I('latitude');
+
+        if(M('users')->where('user_id', $user_id)->update($data)){
+            response_success('', '操作成功');
+        } else {
+            response_error('', '操作失败');
+        }
+    }
+
+    /**
+     * [changeInfo 编辑个人资料]
+     * @return [type] [description]
+     */
+    public function changeInfo(){
+        $user_id = I('user_id');
+        $field = I('field');
+        $fieldValue = I('fieldValue');
+
+        if(M('users')->where('user_id', $user_id)->setField($field, $fieldValue)){
+            response_success('', '操作成功');
+        } else {
+            response_error('', '操作失败');
+        }
     }
 }

@@ -6,115 +6,165 @@
     <title>详情</title>
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/dongtai-common.css">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="__STATIC__/js/vue.js"></script>
 </head>
 
 <body class="details">
-    <header>
-        <a href="javascript:void(0)" class="back"></a>
-        <div class="title">详情</div>
-        <a href="javascript:void(0)" class="operate"></a>
-    </header>
+    <div class="vueWrap" id="vueApp">
+        <header>
+            <a href="javascript:window.history.bakc(-1)" class="back"></a>
+            <div class="title">详情</div>
+            <a href="javascript:void(0)" class="operate"></a>
+        </header>
 
-    <div class="details-page">
-        <div class="details-content">
-            <div class="details-content-head">
-                <img src="{$info.head_pic}" alt="">
-                <div class="details-content-head-text">
-                    <div>
-                        <span>{$info.nickname}</span>
-                        <span class='sexAge <if condition="$info.sex eq 1">male<else />female</if>'>
-                            <i class="sex"></i>
-                            <span class="age">{$info.age}</span>
-                        </span>
-                        <!-- <span class="topping">置顶</span> -->
+        <div class="details-page">
+            <div class="details-content">
+                <div class="details-content-head">
+                    <img src="{$info.head_pic}" alt="">
+                    <div class="details-content-head-text">
+                        <div>
+                            <span>{$info.nickname}</span>
+                            <span class='sexAge <if condition="$info.sex eq 1">male<else />female</if>'>
+                                <i class="sex"></i>
+                                <span class="age">{$info.age}</span>
+                            </span>
+                            <!-- <span class="topping">置顶</span> -->
+                        </div>
+                        <span>{$info.time}</span>
                     </div>
-                    <span>{$info.time}</span>
+                </div>
+                <div class="details-content-text">
+                    <p>
+                        {$info.content}
+                    </p>
+                    <if condition="$item['type'] == 2 && !empty($item['image'])">
+                        <foreach name="$item.image" item="image">
+                        <img src="{$image}" alt="">
+                        </foreach>
+                    </if>
+                </div>
+                <div class="details-flower">
+                    <div class="giveFlower">
+                        <img class="noFlower" src="../images/icon/花1.png">
+                        <img class="haveFlower" src="../images/icon/花2.png" style="display: none;">
+                    </div>
+                    <span class="flowerCount">{$info.flower_num}</span>
                 </div>
             </div>
-            <div class="details-content-text">
-                <p>
-                    {$info.content}
-                </p>
-                <if condition="$item['type'] == 2 && !empty($item['image'])">
-                    <foreach name="$item.image" item="image">
-                    <img src="{$image}" alt="">
+
+            <div class="flowerPool">
+                <if condition="$info.flower_num gt 0">
+                <for start="0" end="$info.flower_num">
+                <div class="flowerItem">
+                    <img src="__STATIC__/images/icon/花3.png" alt="">
+                </div>
+                </for>
+                </if>
+                <if condition="$info.flower_num gt 99">
+                <span class="flowerPool-count">99+</span>
+                </if>
+            </div>
+
+            <div class="audience">
+                <ul>
+                    <if condition="is_array($viewers) && !empty($viewers)">
+                    <foreach name="$viewers" item="viewer">
+                    <li>
+                        <img src="{$viewer.head_pic}" alt="">
+                    </li>
                     </foreach>
-                </if>
+                    </if>
+                </ul>
             </div>
-            <div class="details-flower">
-                <img src="__STATIC__/images/icon/花1.png" alt="">
-                <span class="flowerCount">{$info.flower_num}</span>
+
+            <!-- 评论列表 -->
+
+            <div class="details-comments">
+                <div class="details-comments-head" style="display: none;">
+                    <img src="../images/icon/消息.png">评论&nbsp;（为保护隐私，评论头像和昵称都是随机生成）
+                </div>
+                <ul>
+                    <li class="details-comments-item" v-cloak v-for="(item,index) in commentsList" :key="index">
+                        <div class="comment-headWrap" @click="applyHomepage">
+                            <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
+                            <!-- <img v-cloak v-else src="../images/icon/tx.png"> -->
+                        </div>
+                        <div class="details-comments-content">
+                            <div class="details-item-head">
+                                <span class="nickname">{{item.nickname}}</span>
+                                <span class="detailsTime">{{item.add_time}}</span>
+                            </div>
+                            <div class="details-comments-text" @click="startComment(1,item)">{{item.content}}</div>
+
+                            <!-- 二级评论 -->
+                            <div class="details-comments-content-second" v-cloak v-if="item.sub&&item.sub.length!==0">
+                                <ul class="comments-second-ul">
+                                    <li v-cloak v-for="(subItem,subIndex) in item.sub" :key="subIndex">
+                                        <div class="details-item-head">
+                                            <span class="nickname">{{subItem.nickname}}</span>
+                                            <span class="detailsTime">{{subItem.add_time}}</span>
+                                        </div>
+                                        <div class="details-comments-text">
+                                            <span class="replyWrap">回复
+                                                <span class="replyPerson">{{subItem.reply_nickname}}</span>：</span>
+                                            <span class="details-second-text" @click="startComment(1,subItem)">{{subItem.content}}</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </div>
-        
-        <div class="flowerPool">
-            <if condition="$info.flower_num gt 0">
-            <for start="0" end="$info.flower_num">
-            <div class="flowerItem">
-                <img src="__STATIC__/images/icon/花3.png" alt="">
+
+            <!-- 评论列表 end -->
+
+            <div class="details-tip">
+                <img src="../images/icon/tx.png">评论所有人可见，悄悄话仅对方和你可见
             </div>
-            </for>
-            </if>
-            <if condition="$info.flower_num gt 99">
-            <span class="flowerPool-count">99+</span>
-            </if>
         </div>
 
-        <div class="audience">
+        <div class="details-input">
+            <a href="javascript:void(0)" style="display: none;">悄悄话</a>
+            <input class="details-realInput" type="text" v-model="inputComment" :placeholder="placeHolder">
+            <span class="details-face" style="display: none;"></span>
+            <span class="sendComment" @click="sendComment">发送</span>
+        </div>
+
+
+        <!-- 模态框 -->
+
+        <!-- 送小花提示窗 -->
+        <div class="flowerDialog" style="display: none;">
+            <p>
+                您已成功送给对方
+                <span class="sendSuccessCount">1</span>朵小花，剩余小花
+                <span class="dialogLeftFlowers">99</span>朵
+            </p>
+            <span class="littleFlower"></span>
+        </div>
+        <!-- 申请查看主页提示窗 -->
+        <div class="avatarOperating" style="display: none;">
             <ul>
-                <if condition="is_array($viewers) && !empty($viewers)">
-                <foreach name="$viewers" item="viewer">
-                <li>
-                    <img src="{$viewer.head_pic}" alt="">
-                </li>
-                </foreach>
-                </if>
+                <li class="">申请查看TA的主页</li>
+                <li class="home-cancel">取消</li>
+            </ul>
+        </div>
+        <!-- 更多操作提示窗 -->
+        <div class="avatarOperating-jubao" style="display: none;">
+            <ul>
+                <li class="">举报</li>
+                <li class="jubao-cancel">取消</li>
             </ul>
         </div>
 
-        <div class="details-comments">
-            <div class="details-comments-head">
-                <img src="__STATIC__/images/icon/消息.png" alt="">
-                评论
-            </div>
-            <ul>
-                <if condition="is_array($comments) && !empty($comments)">
-                <foreach name="$comments" item="comment">
-                <li class="details-comments-item">
-                    <img src="{$comment.head_pic}" alt="">
-                    <div class="details-comments-content">
-                        <div class="details-item-head">
-                            <span class="nickname">{$comment.nickname}</span>
-                            <span class="detailsTime">{$comment.add_time}</span>
-                        </div>
-                        <div>
-                            {$comment.content}
-                        </div>
-                    </div>
-                </li>
-                </foreach>
-                </if>
-            </ul>
-        </div>
-
-        <!-- <div class="details-tip">
-            <img src="__STATIC__/images/icon/tx.png" alt="">评论所有人可见，悄悄话仅对方和你可见
-        </div> -->
-
-
-
     </div>
-
-    <div class="details-input">
-        <a href="javascript:void(0)">悄悄话</a>
-        <input type="text">
-        <span class="details-face"></span>
-    </div>
-
 </body>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script>
