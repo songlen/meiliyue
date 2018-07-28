@@ -166,8 +166,346 @@
 
     </div>
 </body>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
 <script>
+    var Details = {
+        _flowerTimer: null,
+        replyDiv: null,
+        commentType: 1, //1给动态评论  2二级评论
+
+        //送花
+        giveFlower: function () {
+            //用户id  动态id
+            var postData = {
+                user_id: "123",
+                dynamics_id: "12"
+            }
+
+            return
+
+            $.ajax({
+                type: "POST",
+                url: "http://meiliyue.caapa.org/index.php/Api/Dynamics/giveFlower",
+                data: postData,
+                dataType: "json",
+                success: function (result) {
+                    //这里需要更多信息？？
+                    let sendedFlowersCount = 2 //已送2朵小花
+                    let leftFlowersCount = 99 //自己剩余99朵小花
+                    if (result.msg == "操作成功") {
+                        //显示提示弹窗
+                        $(".flowerDialog .sendSuccessCount").text(sendedFlowersCount)
+                        $(".flowerDialog .dialogLeftFlowers").text(leftFlowersCount)
+                        $(".flowerDialog").show().addClass('mfadeout')
+                        clearTimeout(Details._flowerTimer)
+                        Details._flowerTimer = setTimeout(function () {
+                            $('.flowerDialog').hide().removeClass('mfadeout')
+                        }, 1300)
+                        //显示提示弹窗 end
+                        //小花池里增加一朵小花
+                        $(".flowerPool").prepend($(
+                            '<div class="flowerItem"><img src="../images/icon/花3.png"></div>'
+                        ))
+                        //小花池数量加一
+                        $(".flowerPool-count").html(Number($(".flowerPool-count").html()) + 1)
+                        //小花样式
+                        if ($(".haveFlower").css("display") == "none") {
+                            $(".haveFlower").show()
+                            $(".noFlower").hide()
+                        }
+                        //已有小花数量加一
+                        $(".flowerCount").html(Number($(".flowerCount").html()) + 1)
+                    }
+                }
+            })
+        },
+
+        //申请查看主页
+        applyHomepage: function () {
+            console.log(3)
+            $('body').append($('<div class="mask"></div>'))
+            $('.avatarOperating').show()
+            // $('.avatarOperating').show().animate({'bottom':'0'},300)
+            $('body').css('overflow', 'hidden')
+        },
+        initVue: function () {
+            var commentsVm = new Vue({
+                el: "#vueApp",
+                data: {
+                    commentsList: [],
+                    placeHolder: "输入评论",
+                    inputComment: "",
+                    replyItem: null,
+                },
+                beforeMount: function () {
+                    this.getCommentsList()
+                },
+                mounted: function () {
+                    Details.eventsBind()
+                },
+                methods: {
+                    //获取评论列表数据
+                    getCommentsList: function () {
+                        var self = this
+                        var postData = {
+                            dynamic_id: 1
+                        }
+                        $.ajax({
+                            type: "POST",
+                            url: "http://meiliyue.caapa.org/index.php/Api/Dynamics/getComment",
+                            data: postData,
+                            dataType: "json",
+                            success: function (result) {
+                                console.log(result.data)
+                                self.commentsList = result.data
+                            }
+                        })
+                    },
+                    //触发评论 让input focus
+                    startComment: function (type, item) { //0点击动态 1点击评论/回复谁
+                        // console.log(event)
+                        var el = event.target
+                        if (false) { //点击的是自己评论的，提问是否删除 //需要和自己的nickname对比？
+
+                        } else if (type == 0) {
+                            this.placeHolder = "输入评论"
+                            this.replyItem = null
+                            $(".details-realInput").focus()
+
+                            //记录点击的评论
+                            Details.replyDiv = el
+                            Details.commentType = 1
+                        } else if (type == 1) {
+                            this.placeHolder = "回复" + item.nickname
+                            this.replyItem = item
+                            $(".details-realInput").focus()
+
+                            //记录点击的评论
+                            Details.replyDiv = el
+                            Details.commentType = 2
+                        }
+                    },
+                    //发送评论
+                    sendComment: function () {
+                        console.log(this.replyItem)
+
+                        var self = this
+                        var itemIndex //父评论的index
+
+                        if (this.inputComment.trim() == "") {
+                            return
+                        }
+
+                        if (this.replyItem) {
+
+                            //获取父评论的index
+                            if (self.replyItem.parent_id == 0) {
+                                itemIndex = self.commentsList.indexOf(self.replyItem)
+                            } else { //点的是二级评论
+                                self.commentsList.forEach(function (item, index) {
+                                    if (item.sub) {
+                                        if (item.sub.indexOf(self.replyItem) > -1) {
+                                            itemIndex = index
+                                            return
+                                        }
+                                    }
+                                })
+                            }
+
+                            var postData = {
+                                reply_user_id: 11, //这条动态的发布人？
+                                dynamic_id: 1,
+                                commentator_id: 123, //评论者id
+
+                                parent_id: this.commentsList[itemIndex].comment_id,
+                                content: this.inputComment,
+                                private: null //悄悄话
+                            }
+                        } else {
+                            //给这条动态评论
+                            var postData = {
+                                reply_user_id: 11, //这条动态的发布人？
+                                dynamic_id: 1,
+                                commentator_id: 123, //评论者id
+
+                                parent_id: "0",
+                                content: this.inputComment,
+                                private: null //悄悄话
+                            }
+                        }
+
+                        // ---------------------
+
+                        if (self.replyItem) {
+
+                            if (!self.commentsList[itemIndex].sub) {
+                                self.commentsList[itemIndex].sub = []
+                            }
+
+                            var addItem = {
+                                add_time: "122222222",
+                                comment_id: "23232",
+                                commentator_id: "99",
+                                head_pic: "sdfsfsdf",
+
+                                content: self.inputComment,
+                                parent_id: self.commentsList[itemIndex].comment_id,
+
+                                nickname: "我自己",
+                                reply_nickname: "我自己？"
+                            }
+                            self.commentsList[itemIndex].sub.push(addItem)
+                        } else {
+                            var addItem = {
+                                add_time: "122222222",
+                                comment_id: "23232",
+                                commentator_id: "99",
+                                head_pic: "sdfsfsdf",
+
+                                content: self.inputComment,
+                                parent_id: "0",
+
+                                nickname: "我自己",
+                                reply_nickname: "我自己？"
+                            }
+                            self.commentsList.push(addItem)
+                        }
+
+                        //send完评论，重置data
+                        self.inputComment = ""
+                        self.placeHolder = "输入评论"
+                        self.replyItem = null
+
+                        return
+
+                        $.ajax({
+                            type: "POST",
+                            url: "http://meiliyue.caapa.org/index.php/Api/dynamics/addComment",
+                            data: postData,
+                            dataType: "json",
+                            success: function (result) {
+                                //放数据？
+                                if (result.msg == "操作成功") {
+
+                                    if (self.replyItem) {
+
+                                        if (!self.commentsList[itemIndex].sub) {
+                                            self.commentsList[itemIndex].sub = []
+                                        }
+
+                                        var addItem = {
+                                            add_time: "122222222",
+                                            comment_id: "23232",
+                                            commentator_id: "99",
+                                            head_pic: "sdfsfsdf",
+
+                                            content: self.inputComment,
+                                            parent_id: self.commentsList[itemIndex]
+                                                .comment_id,
+
+                                            nickname: "我自己",
+                                            reply_nickname: "我自己？"
+                                        }
+                                        self.commentsList[itemIndex].sub.push(addItem)
+                                    }
+
+                                    //send完评论，重置data
+                                    self.inputComment = ""
+                                    self.placeHolder = "输入评论"
+                                    self.replyItem = null
+
+                                    //二级评论
+                                    // var $commentDiv = $(Details.replyDiv).closest(
+                                    //     ".details-comments-content") //当前这条评论
+                                    // var isHaveSecond = $commentDiv.find(
+                                    //         ".details-comments-content-second")
+                                    //     .length //是否已经有二级评论了
+                                    // if (!isHaveSecond) { //还没有二级评论
+                                    //     $commentDiv.append($(
+                                    //         '<div class="details-comments-content-second"><ul></ul></div>'
+                                    //     ))
+                                    // }
+                                    // //加一条评论div
+                                    // $commentDiv.find(
+                                    //     ".details-comments-content-second ul").append(
+                                    //     $(
+                                    //         `
+                                    //             <li>
+                                    //                 <div class="details-item-head">
+                                    //                     <span class="nickname">怕黑的萌物</span>
+                                    //                     <span class="detailsTime">2016-12-16 22:55</span>
+                                    //                 </div>
+                                    //                 <div class="details-comments-text">
+                                    //                     <span class="replyWrap">回复
+                                    //                         <span class="replyPerson">佟舟</span>：</span>
+                                    //                     <span class="details-second-text">可以可以</span>
+                                    //                 </div>
+                                    //             </li>
+                                    //         `
+                                    //     ))
+                                    // $(".details-realInput").val("").attr("placeholder",
+                                    //     "输入评论")
+                                    //二级评论 end
+                                }
+                            }
+                        })
+                    },
+                    //头像加载失败，默认图片
+                    defaultImg: function (event) {
+                        event.target.src = "../images/icon/tx.png"
+                    },
+                    applyHomepage: function () {
+                        console.log(3)
+                        $('body').append($('<div class="mask"></div>'))
+                        $('.avatarOperating').show()
+                        // $('.avatarOperating').show().animate({'bottom':'0'},300)
+                        $('body').css('overflow', 'hidden')
+                    }
+                }
+            })
+        },
+        eventsBind: function () {
+            //点击送花
+            $(".giveFlower").click(function () {
+                console.log(555)
+                Details.giveFlower()
+            })
+            //点击头像打开个人主页
+            $(".details-headImgWrap").click(function () {
+                //打开个人主页
+            })
+            //申请查看主页-取消
+            $(".home-cancel").click(function () {
+                $('.mask').remove()
+                // $('.avatarOperating').animate({'bottom':'-2rem'},300,function(){
+                $('.avatarOperating').hide()
+                // })
+                $('body').css('overflow', 'auto')
+            })
+            //更多操作 举报
+            $(".operate").click(function () {
+                $('body').append($('<div class="mask"></div>'))
+                $('.avatarOperating-jubao').show()
+                // $('.avatarOperating').show().animate({'bottom':'0'},300)
+                $('body').css('overflow', 'hidden')
+            })
+            //更多操作 举报-取消
+            $(".jubao-cancel").click(function(){
+                $('.mask').remove()
+                // $('.avatarOperating').animate({'bottom':'-2rem'},300,function(){
+                $('.avatarOperating-jubao').hide()
+                // })
+                $('body').css('overflow', 'auto')
+            })
+        },
+        init: function () {
+            Details.initVue()
+            //Details.eventsBind()
+        }
+    }
+    $(function () {
+        Details.init()
+    })
 </script>
 
 </html>
