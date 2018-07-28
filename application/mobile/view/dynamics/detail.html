@@ -50,8 +50,8 @@
                 </div>
                 <div class="details-flower">
                     <div class="giveFlower">
-                        <img class="noFlower" src="../images/icon/花1.png">
-                        <img class="haveFlower" src="../images/icon/花2.png" style="display: none;">
+                        <img class="noFlower" src="__STATIC__/images/icon/花1.png">
+                        <img class="haveFlower" src="__STATIC__/images/icon/花2.png" style="display: none;">
                     </div>
                     <span class="flowerCount">{$info.flower_num}</span>
                 </div>
@@ -86,13 +86,13 @@
 
             <div class="details-comments">
                 <div class="details-comments-head" style="display: none;">
-                    <img src="../images/icon/消息.png">评论&nbsp;（为保护隐私，评论头像和昵称都是随机生成）
+                    <img src="__STATIC__/images/icon/消息.png">评论&nbsp;（为保护隐私，评论头像和昵称都是随机生成）
                 </div>
                 <ul>
                     <li class="details-comments-item" v-cloak v-for="(item,index) in commentsList" :key="index">
                         <div class="comment-headWrap" @click="applyHomepage">
                             <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
-                            <!-- <img v-cloak v-else src="../images/icon/tx.png"> -->
+                            <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
                         </div>
                         <div class="details-comments-content">
                             <div class="details-item-head">
@@ -126,7 +126,7 @@
             <!-- 评论列表 end -->
 
             <div class="details-tip">
-                <img src="../images/icon/tx.png">评论所有人可见，悄悄话仅对方和你可见
+                <img src="__STATIC__/images/icon/tx.png">评论所有人可见，悄悄话仅对方和你可见
             </div>
         </div>
 
