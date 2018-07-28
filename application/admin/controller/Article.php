@@ -111,9 +111,9 @@ class Article extends Base {
         	}
         	$r = M('article_cat')->where("cat_id",$data['cat_id'])->save($data);
         } elseif ($data['act'] == 'del') {
-        	if($data['cat_id']<9){
+        	/*if($data['cat_id']<9){
         		$this->ajaxReturn(['status' => -1, 'msg' => '系统默认分类不得删除']);
-        	}
+        	}*/
         	if (M('article_cat')->where('parent_id', $data['cat_id'])->count()>0)
         	{
         		$this->ajaxReturn(['status' => -1, 'msg' => '还有子分类，不能删除']);

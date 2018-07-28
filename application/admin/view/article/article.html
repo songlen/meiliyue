@@ -43,20 +43,10 @@ html, body {overflow: visible;}
             {$cat_select} 
         </select>        
           <span class="err" id="err_cat_id"></span>
-          <p class="notic">当选择发布"商城公告"时，还需要设置下面的"出现位置"项</p>
         </dd>
       </dl>    
-	  <dl class="row">
-        <dt class="tit">
-          <label for="articleForm">seo关键字</label>
-        </dt>
-        <dd class="opt">
-          <input type="text" name="keywords"  value="{$info.keywords}" class="input-txt">
-          <span class="err"></span>
-          <p class="notic">用于seo 搜索引擎友好</p>
-        </dd>
-      </dl>        
-      <dl class="row">
+    
+      <!-- <dl class="row">
         <dt class="tit">
           <label for="articleForm">链接</label>
         </dt>
@@ -65,7 +55,7 @@ html, body {overflow: visible;}
           <span class="err" id="err_link"></span>
           <p class="notic">当填写"链接"后点击文章标题将直接跳转至链接地址，不显示文章内容。链接格式请以http://开头</p>
         </dd>
-      </dl>
+      </dl> -->
 	  <dl class="row">
         <dt class="tit">
           <label for="articleForm">发布时间</label>
@@ -112,7 +102,7 @@ html, body {overflow: visible;}
             <p class="notic"></p>
         </dd>
       </dl>
-        <dl class="row">
+        <!-- <dl class="row">
             <dt class="tit">
                 <label>图片上传</label>
             </dt>
@@ -123,7 +113,7 @@ html, body {overflow: visible;}
                                 <i id="img_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$info.thumb}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
                             </a>
                         </span>
-           	            <span class="type-file-box">
+                         <span class="type-file-box">
                             <input type="text" id="thumb" name="thumb" value="{$info.thumb}" class="type-file-text">
                             <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
                             <input class="type-file-file" onClick="GetUploadify(1,'','article','img_call_back')" size="30" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
@@ -132,7 +122,7 @@ html, body {overflow: visible;}
                 <span class="err"></span>
                 <p class="notic">请上传图片格式文件</p>
             </dd>
-        </dl>
+        </dl> -->
       <div class="bot"><a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
     </div>
         <input type="hidden" name="act" value="{$act}">

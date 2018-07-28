@@ -33,23 +33,10 @@
                 </empty>                                 
             </select>        
           <span class="err"></span>
-          <p class="notic">如果选择上级分类，那么新增的分类则为被选择上级分类的子分类</p>
-        </dd>
-      </dl>      
-		<dl class="row">
-        <dt class="tit">
-          <label>导航显示</label>
-        </dt>
-        <dd class="opt">
-          <div class="onoff">
-            <label for="article_show1" class="cb-enable <if condition="$cat_info[show_in_nav] eq 1">selected</if>">是</label>
-            <label for="article_show0" class="cb-disable <if condition="$cat_info[show_in_nav] eq 0">selected</if>">否</label>
-            <input id="article_show1" name="show_in_nav" value="1" type="radio" <if condition="$cat_info[show_in_nav] eq 1"> checked="checked"</if>>
-            <input id="article_show0" name="show_in_nav" value="0" type="radio" <if condition="$cat_info[show_in_nav] eq 0"> checked="checked"</if>>
-          </div>
           <p class="notic"></p>
         </dd>
-      </dl>		       
+      </dl>      
+	       
       <dl class="row">
         <dt class="tit">
           <label for="ac_sort">排序</label>
@@ -60,26 +47,7 @@
           <p class="notic"></p>
         </dd>
       </dl>
-	  <dl class="row">
-        <dt class="tit">
-          <label for="ac_sort">搜索关键字</label>
-        </dt>
-        <dd class="opt">
-          <input type="text" placeholder="关键字" name="keywords" value="{$cat_info.keywords}" class="input-txt">
-          <span class="err"></span>
-          <p class="notic"></p>
-        </dd>
-      </dl>
-	    <dl class="row">
-        <dt class="tit">
-          <label for="ac_sort">搜索描述</label>
-        </dt>
-        <dd class="opt">
-          <input type="text" placeholder="搜索描述" name="cat_desc" value="{$cat_info.cat_desc}" class="input-txt">
-          <span class="err"></span>
-          <p class="notic"></p>
-        </dd>
-      </dl>            
+          
       <div class="bot"><a href="JavaScript:void(0);" onClick="submitForm()" class="ncap-btn-big ncap-btn-green" id="submitBtn">确认提交</a></div>
     </div>
             <input type="hidden" name="act" value="{$act}">

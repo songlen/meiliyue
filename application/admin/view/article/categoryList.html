@@ -16,8 +16,7 @@
       <span id="explanationZoom" title="收起提示"></span>
     </div>
     <ul>
-      <li>新增文章时，可选择文章分类。文章分类将在前台文章列表页显示</li>
-      <li>系统文章分类不可以删除</li>
+      
     </ul>
   </div>
   <form method="post">
@@ -90,10 +89,10 @@
                   <ul>
                      <li><a href="{:U('Article/category',array('act'=>'edit','cat_id'=>$vo['cat_id']))}">编辑分类信息</a></li>                  
                                      
-                     <li><a href="{:U('Article/category',array('parent_id'=>$vo['cat_id']))}">新增下级分类</a></li>
-                     <if condition="$vo['cat_id'] gt 8">
+                     <!-- <li><a href="{:U('Article/category',array('parent_id'=>$vo['cat_id']))}">新增下级分类</a></li> -->
+
 	                     <li><a href="javascript:void(0)" data-url="{:U('Article/categoryHandle')}" data-id="{$vo.cat_id}" onClick="delfun(this)">删除当前分类</a></li>
-                     </if>                                        
+                                  
                   </ul>
                   </span>
                 </div>
