@@ -1,20 +1,24 @@
-body{
+body {
   background-color: #f1f1f1;
 }
+
 /*header*/
-header{
+
+header {
   background-color: #000;
   text-align: center;
   height: 50px;
   line-height: 50px;
   padding: 0 10px;
 }
-header > span{
+
+header>span {
   display: inline-block;
   color: #fff;
   font-size: 16px;
 }
-header > a{
+
+header>a {
   display: inline-block;
   color: #fff;
   width: 2rem;
@@ -24,13 +28,16 @@ header > a{
   margin-top: 1rem;
   line-height: 1rem;
 }
-header > a.fr{
+
+header>a.fr {
   /*background: url(../images/icon/left.png) no-repeat center;*/
   /*background-size: .7rem;*/
 }
-header > a.sure{
+
+header>a.sure {
   background-image: none;
 }
+
 .view-detail .horizontal {
   display: flex;
   flex-wrap: wrap;
@@ -42,20 +49,25 @@ header > a.sure{
   transform: translateX(-50%);
   text-align: center;
 }
-.view-detail .horizontal li{
+
+.view-detail .horizontal li {
   flex: 1;
 }
-.view-detail .horizontal li a{
+
+.view-detail .horizontal li a {
   color: #bbb6b6;
   display: inline-block;
   height: 1.8rem;
 }
-.view-detail .horizontal li.active a{
+
+.view-detail .horizontal li.active a {
   color: #fff;
   border-bottom: 3px solid yellow;
 }
+
 /*footer*/
-footer{
+
+footer {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -66,15 +78,18 @@ footer{
   z-index: 1;
   border-top: 1px solid #ccc;
 }
+
 footer ul {
   display: flex;
   flex-wrap: wrap;
 }
-footer li{
+
+footer li {
   width: 25%;
   text-align: center;
 }
-footer li a{
+
+footer li a {
   display: inline-block;
   width: 100%;
   height: 100%;
@@ -82,48 +97,87 @@ footer li a{
   background-size: 1.8rem;
   padding-top: 18px;
 }
-.weui-switch:checked, .weui-switch-cp__input:checked ~ .weui-switch-cp__box{
+
+.weui-switch:checked,
+.weui-switch-cp__input:checked~.weui-switch-cp__box {
   border-color: orange !important;
   background-color: orange !important;
 }
 
 /*邀约*/
-.plus{
+
+.plus {
   width: 40px;
   height: 40px;
-  background: url(../images/icon/cha.png) no-repeat center;
-  background-size: 2rem;
+  background: url(../images/icon/发布.png) no-repeat center;
+  background-size: 100%;
   background-color: red;
   border-radius: 50%;
   position: fixed;
   bottom: 5rem;
   right: 2rem;
   z-index: 6;
+  transition: all 0.2s;
+  box-shadow: 0 0 5px #000;
 }
-.indexPage{
-  margin-bottom: 4.5rem
+
+.plus.actived {
+  transform: rotate(45deg);
 }
-.invitation .view{
+
+.indexPage {
+  /* margin-bottom: 4.5rem */
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  transition:
+}
+
+.invitation .view {
   background-color: #fff;
-  padding: 1rem 2rem;
+  padding: 1rem;
   margin-bottom: 10px;
-} 
-.invitation .view a{
-  display: inline-block; 
-  border-radius: 2rem;
-  overflow: hidden;
+  /* height: 6.7rem; */
+  height: 108px;
 }
-.invitation .options{
+
+.invitation .view a {
+  display: inline-block;
+  border-radius: 1rem;
+  overflow: hidden;
+  height: 100%;
+}
+
+.invitation .view a>img {
+  /* width: 100%;
+  height: 100%; */
+}
+
+.invitation .optionsWrap {
+  /* height: 5.5rem; */
+  height: 88px;
+  overflow: hidden;
+  border-bottom: 1px solid #f0f2f7;
+}
+
+.invitation .options {
   display: flex;
   flex-wrap: wrap;
-  padding: 1rem 0;  
-  border-bottom: 1px solid #f1f1f1;  
+  padding: 1rem 0;
+  border-bottom: 1px solid #f1f1f1;
+  overflow-x: auto;
+  height: calc(100% + 20px);
 }
-.invitation .classify{
+
+.invitation .classify {
   background-color: #fff;
   margin-bottom: 10px;
 }
-.invitation .classify .all{
+
+.invitation .classify .all {
   width: 20%;
   text-align: center;
   height: 45px;
@@ -133,7 +187,8 @@ footer li a{
   background: url(../images/icon/xiaolian.png) no-repeat center 0;
   background-size: 1.5rem;
 }
-.invitation .classify .all span{
+
+.invitation .classify .all span {
   display: inline-block;
   background-color: yellow;
   height: 20px;
@@ -141,56 +196,135 @@ footer li a{
   padding: 0 8px;
   border-radius: 5px;
 }
-.invitation .classify ul{
+
+.invitation .classify ul {
   display: flex;
-  flex-wrap: wrap;
-  flex: 1;
-  height: 45px;
+  flex-wrap: nowrap;
+  /* height: 45px; */
+  height: 3.2rem;
   line-height: 40px;
-  overflow: hidden;
 }
-.invitation .classify ul li{
-  width: 25%;
+
+.invitation .classify ul li {
+  width: 4.2rem;
   text-align: center;
 }
-.invitation .classify ul li a{
+
+.invitation .classify ul li a {
   display: inline-block;
-  padding-top: 15px;
+  padding-top: 20px;
   width: 100%;
-  background: url(../images/icon/xiaolian.png) no-repeat center 0;
-  background-size: 1.5rem;
 }
-.invitation .address{
+
+/* optionsBtn */
+
+.invitation .classify ul li a.allBtn {
+  background: url(../images/icon/全部@2x.png) no-repeat center 0;
+  background-size: 24px;
+}
+
+.invitation .classify ul li a.travelBtn {
+  background: url(../images/icon/旅行@2x.png) no-repeat center 0;
+  background-size: 24px;
+}
+
+.invitation .classify ul li a.foodBtn {
+  background: url(../images/icon/吃饭@2x.png) no-repeat center 0;
+  background-size: 33px;
+}
+
+.invitation .classify ul li a.movieBtn {
+  background: url(../images/icon/电影院@2x.png) no-repeat center 0;
+  background-size: 24px;
+}
+
+.invitation .classify ul li a.singBtn {
+  background: url(../images/icon/唱歌@2x.png) no-repeat center 0;
+  background-size: 24px;
+}
+
+.invitation .classify ul li a.sportBtn {
+  background: url(../images/icon/运动健身@2x.png) no-repeat center 0;
+  background-size: 24px;
+}
+
+.invitation .classify ul li a.otherBtn {
+  background: url(../images/icon/其他@2x.png) no-repeat center 0;
+  background-size: 24px;
+}
+
+.invitation .classify ul li .optionsBtn span {
+  padding: 1px 5px;
+  font-family: "微软雅黑";
+}
+
+.invitation .classify ul li .optionsBtn span.actived {
+  border-radius: 10px;
+  background-color: #ffe456;
+  color: #000;
+  font-weight: bold;
+}
+
+.invitation .address {
   padding: 10px;
 }
-.invitation .address .select{
-  color: blue;
+
+.invitation .address .select {
+  color: #6692fe;
 }
-.invitation .items li{
+
+.invitation .address .cancelSelected {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: url(../images/icon/cha.png) center center no-repeat;
+  background-size: 100%;
+  vertical-align: middle;
+  margin-top: -2px;
+  margin-left: 2px;
+}
+
+.invitation .items li {
   background-color: #fff;
   margin-bottom: 10px;
   padding: 10px;
   position: relative;
 }
-.invitation .items li .top{
+
+.invitation .items li .top {
   display: flex;
   flex-wrap: wrap;
 }
-.invitation .items li .top .img-box{
+
+.invitation .items li .top .img-box {
   width: 4rem;
-  height: 4rem; 
+  height: 4rem;
   margin-right: 10px;
   overflow: hidden;
   border-radius: 50%;
-}
-.invitation .items li .top .details{
-  flex: 1;
-  border-bottom: 1px solid #f1f1f1;
-}
-.invitation .items li .top .person{
   position: relative;
 }
-.invitation .items li .person .age{
+
+.invitation .items li .top .img-box>img {
+  width: 120%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.invitation .items li .top .details {
+  flex: 1;
+  border-bottom: 1px solid #f1f1f1;
+  padding-top: 10px;
+}
+
+.invitation .items li .top .person {
+  position: relative;
+}
+
+/* .invitation .items li .person .age {
   margin-left: 10px;
   width: 3rem;
   text-align: center;
@@ -200,16 +334,19 @@ footer li a{
   padding-left: 10px;
   border-radius: 3px;
   font-size: 12px;
-}
-.invitation .items li .person .man{
+} */
+
+.invitation .items li .person .man {
   background-color: #95c7de;
 }
-.invitation .items li .person .img{
+
+.invitation .items li .person .img {
   width: 1rem;
   display: inline-block;
   margin: 0 10px;
 }
-.invitation .items li .person .job{
+
+.invitation .items li .person .job {
   display: inline-block;
   border: 1px solid #ccc;
   padding: 2px 10px;
@@ -217,144 +354,238 @@ footer li a{
   font-size: 12px;
   color: #868080;
 }
-.invitation .items li .distance{
+
+.invitation .items li .distance {
   margin-top: 10px;
   font-size: 12px;
 }
-.invitation .items li span.active{
+
+.invitation .items li span.active {
   position: absolute;
   top: 0;
   right: 0;
   z-index: 1;
   color: red;
 }
-.invitation .items li .bottom{
+
+.invitation .items li .bottom {
   line-height: 1rem;
 }
-.invitation .items li .bottom .title{
+
+.invitation .items li .bottom .title {
   margin-top: .5rem;
-  padding-left: 1.5rem;
+  /* padding-left: 1.5rem; */
   font-size: 16px;
   height: 2rem;
   line-height: 2rem;
-  background: url(../images/icon/checkbox.png) no-repeat 10px center;
-  background-size: 10px;
+  /* background: url(../images/icon/checkbox.png) no-repeat 10px center;
+  background-size: 10px; */
+  color: #000;
 }
-.invitation .items li .bottom .more{
+
+.invitation .items li .bottom .more {
   display: flex;
   flex-wrap: wrap;
 }
-.invitation .items li .bottom .more ul{
+
+.invitation .items li .bottom .more ul {
   flex: 1;
 }
-.invitation .items .bottom .more ul li{
+
+.invitation .items .bottom .more ul li {
   margin: 0;
   padding: 0;
   max-width: 19rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-left: 1.5rem;
+  /* padding-left: 1.5rem; */
   line-height: 20px;
-  background: url(../images/icon/checkbox.png) no-repeat 10px center;
-  background-size: 6px;
+  /* background: url(../images/icon/checkbox.png) no-repeat 10px center;
+  background-size: 6px; */
 }
-.invitation .items li .bottom .more > div{
+
+.bigDot,
+.smallDot {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  vertical-align: middle;
+  margin-right: 5px;
+  background: url(../images/icon/checkbox.png) center center no-repeat;
+}
+
+.bigDot {
+  background-size: 10px 10px;
+}
+
+.smallDot {
+  background-size: 6px 6px;
+}
+
+.invitation .items li .bottom .more>div {
   width: 3rem;
   height: 3rem;
   overflow: hidden;
   border: 1px solid #f1f1f1;
 }
-.mask{
+
+.mask {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 6;
-  width: 22rem;
+  /* width: 22rem; */
+  width: 90%;
   background-color: #fff;
   border-radius: 10px;
-  display: none;
+  /* display: none; */
 }
-.mask .title{
+
+.mask .title {
   text-align: center;
   height: 50px;
   line-height: 50px;
   font-size: 16px;
   border-bottom: 1px solid #f1f1f1;
+  color: #000;
 }
-.mask ul{
+
+.mask ul {
   display: flex;
   flex-wrap: wrap;
   text-align: center;
   margin: 12px 10px;
+  justify-content: flex-start;
 }
+
 .mask ul li {
-  width: 4.5rem;
-  height: 6rem;
+  /* width: 4.5rem; */
+  flex: 0 0 33.3333%;
+  height: 5.5rem;
   margin: 0 auto;
 }
-.mask ul li a{
+
+.mask ul li a {
   display: inline-block;
   width: 100%;
 }
-.mask ul li a span{
-  display: inline-block;
-  width: 100%;
-  height: 4.5rem;
+
+.mask ul li a span {
+  display: block;
+  width: 0;
+  /* height: 4.5rem; */
+  padding: 33%;
+  margin: 0 auto;
   border-radius: 50%;
-  background: url(../images/icon/xiaolian.png) no-repeat center;
-  background-size: 2rem;
+  overflow: hidden;
   background-color: #ccc;
 }
-.mask .box-btm ul{
+
+.mask ul li a span.travel {
+  background: url(../images/icon/旅行1@3x.png) center center no-repeat;
+  background-size: 100%;
+}
+
+.mask ul li a span.food {
+  background: url(../images/icon/吃饭1@3x.png) center center no-repeat;
+  background-size: 100%;
+}
+
+.mask ul li a span.movie {
+  background: url(../images/icon/电影1@3x.png) center center no-repeat;
+  background-size: 100%;
+}
+
+.mask ul li a span.sing {
+  background: url(../images/icon/唱歌1@3x.png) center center no-repeat;
+  background-size: 100%;
+}
+
+.mask ul li a span.sport {
+  background: url(../images/icon/运动1@3x.png) center center no-repeat;
+  background-size: 100%;
+}
+
+.mask ul li a span.other {
+  background: url(../images/icon/m其他.png) center center no-repeat;
+  background-size: 100%;
+}
+
+.mask .box-btm ul {
   margin-left: 3.5rem;
 }
+
 .mask .box-btm ul li {
   margin: 0 10px;
 }
+
+.maskTrgle {
+  display: inline-block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 14px solid;
+  border-color: #fff #fff transparent transparent;
+  right: 70px;
+  bottom: -27px;
+}
+
 /*邀约详情*/
-.invitation .theme ul{
+
+.invitation .theme ul {
   margin-top: 10px;
 }
-.invitation .theme ul li{
+
+.invitation .theme ul li {
   margin-bottom: 0;
   border-bottom: 1px solid #f1f1f1;
   padding: 12px 15px;
 }
-.invitation .theme li.title span{
+
+.invitation .theme li.title span {
   font-weight: 600;
 }
-.invitation .theme li input[type="text"]{
+
+.invitation .theme li input[type="text"] {
   text-align: right;
   background: url(../images/icon/back.png) no-repeat right center;
   padding-right: 20px;
 }
-.invitation .theme .choose{
+
+.invitation .theme .choose {
   padding-right: 15px;
 }
-.invitation .theme .choose span{
+
+.invitation .theme .choose span {
   display: inline-block;
   padding: 0 15px;
-  border-right: 1px solid #f1f1f1;
+  border-right: 1px solid #dbdbdb;
 }
-.invitation .theme .choose span:last-child{
+
+.invitation .theme .choose span:last-child {
   border: none;
 }
-.invitation .theme .choose span.active{
+
+.invitation .theme .choose span.active {
   position: relative;
   color: #000;
 }
-.invitation .theme .catch{
+
+.invitation .theme .catch {
   margin: 0;
   background-color: #f1f1f1;
 }
-.invitation .theme textarea{
+
+.invitation .theme textarea {
   width: 100%;
   height: 6rem;
   /*border: none;*/
 }
-.invitation .theme div a{
+
+.invitation .theme div a {
   width: 5rem;
   height: 5rem;
   background-color: #f1f1f1;
@@ -363,24 +594,29 @@ footer li a{
   margin-right: 10px;
   text-align: center;
 }
-.invitation .theme div input[type="file"]{
+
+.invitation .theme div input[type="file"] {
   width: 100%;
   height: 3.5rem;
 }
-.invitation .theme div.speak a{
+
+.invitation .theme div.speak a {
   padding-top: 3.6rem;
   background: url(../images/icon/add.png) no-repeat center 10px;
   background-size: 3rem;
   background-color: #f1f1f1;
 }
+
 /*一对一视频*/
-.main-content > .view{
+
+.main-content>.view {
   width: 100%;
   background-color: #fff;
   margin-bottom: 0;
   margin-bottom: 10px;
 }
-.main-content > .view .open{
+
+.main-content>.view .open {
   margin-left: 50%;
   transform: translateX(-50%);
   display: inline-block;
@@ -391,13 +627,16 @@ footer li a{
   padding: 10px 0;
   border-radius: 3rem;
 }
-.invitation .view-list li{
+
+.invitation .view-list li {
   margin-bottom: 0;
 }
-.invitation .view-list li .distance{
+
+.invitation .view-list li .distance {
   margin-top: 0;
 }
-.invitation .view-list li .label span{
+
+.invitation .view-list li .label span {
   display: inline-block;
   border: 1px solid #ccc;
   padding: 2px 8px;
@@ -405,68 +644,84 @@ footer li a{
   margin-right: 5px;
   font-size: 12px;
 }
-.invitation .view-list li .label{
+
+.invitation .view-list li .label {
   margin-top: 5px;
 }
-.view-detail .cash{
+
+.view-detail .cash {
   background-color: #fff;
 }
-.view-detail .cash .top{
+
+.view-detail .cash .top {
   padding: 10px;
 }
-.view-detail .cash .top p{
+
+.view-detail .cash .top p {
   line-height: 30px;
   color: #b9b8b8;
 }
-.view-detail .cash .top p span{
+
+.view-detail .cash .top p span {
   color: #4a4a4a;
 }
-.view-detail .cash .top .money span{
+
+.view-detail .cash .top .money span {
   color: red;
 }
-.view-detail .cash .top .money a{
+
+.view-detail .cash .top .money a {
   display: inline-block;
   background-color: yellow;
   padding: 0 1rem;
   border-radius: 20px;
 }
-.view-detail .cash .bottom{
+
+.view-detail .cash .bottom {
   padding: 10px;
   border-top: 1px solid #f1f1f1;
   color: #b9b8b8;
 }
-.view-detail .none img{
+
+.view-detail .none img {
   width: 8rem;
   margin: 7rem auto 0;
 }
-.view-detail .none{
+
+.view-detail .none {
   text-align: center;
 }
-.view-detail .none p{
+
+.view-detail .none p {
   font-size: 16px;
   margin-top: 2rem;
 }
+
 /*开通视频*/
-.invitation .input-box{
+
+.invitation .input-box {
   margin: 10px 0;
   background-color: #fff;
   height: 2.8rem;
   line-height: 2.8rem;
   padding: 0 10px;
 }
-.invitation .input-box input{
+
+.invitation .input-box input {
   height: 2rem;
   line-height: 2rem;
-  margin-top: 8px;  
+  margin-top: 8px;
 }
-.invitation .input-box .close{
+
+.invitation .input-box .close {
   display: inline-block;
   width: 1rem;
   height: 1rem;
   background: url(../images/icon/close.png) no-repeat center;
   margin-top: 14px;
 }
-.invitation .labels{
+
+.invitation .labels {
   display: flex;
   flex-wrap: wrap;
   margin-left: 50%;
@@ -474,7 +729,8 @@ footer li a{
   width: 22rem;
   margin-top: 1.5rem;
 }
-.invitation .labels li{
+
+.invitation .labels li {
   width: 6.6rem;
   height: 2rem;
   line-height: 2rem;
@@ -484,17 +740,21 @@ footer li a{
   border-radius: 3rem;
   margin: 0 10px 10px 0;
 }
-.invitation .labels li:nth-child(3n){
+
+.invitation .labels li:nth-child(3n) {
   margin-right: 0;
 }
-.invitation > .details{
+
+.invitation>.details {
   width: 100%;
   text-align: center;
 }
-.invitation > .details p{
+
+.invitation>.details p {
   line-height: 30px;
 }
-.invitation .open-now{
+
+.invitation .open-now {
   width: 20rem;
   background-color: yellow;
   display: inline-block;
@@ -506,64 +766,78 @@ footer li a{
   border-radius: 3rem;
   font-weight: 600;
 }
-.open-mask{
+
+.open-mask {
   width: 18rem;
 }
-.open-mask .top{
+
+.open-mask .top {
   padding: 20px 15px;
   border-bottom: 1px solid #f1f1f1;
 }
-.open-mask .bottom{
+
+.open-mask .bottom {
   text-align: center;
   padding: 18px 0;
   color: blue;
 }
-.invitation > .price {
+
+.invitation>.price {
   padding: 1rem 10px;
 }
-.invitation > .price .cost{
+
+.invitation>.price .cost {
   padding-left: 1.5rem;
   background: url(../images/icon/price.png) no-repeat left center;
   background-size: 1rem;
 }
-.invitation > .price .rates{
+
+.invitation>.price .rates {
   background: url(../images/icon/back.png) no-repeat right center;
   background-size: .5rem;
   padding-right: 15px;
 }
-.invitation > .state .title{
+
+.invitation>.state .title {
   height: 2rem;
   line-height: 2rem;
   padding-left: 10px;
 }
-.invitation > .state .weui-cell_switch{
+
+.invitation>.state .weui-cell_switch {
   background-color: #fff;
   margin-bottom: 10px;
 }
-.state .weui-cell__bd{
+
+.state .weui-cell__bd {
   padding-left: 1.2rem;
   background: url(../images/icon/cha.png) no-repeat left center;
   background-size: 1rem;
 }
-.view-list .opened .details{
+
+.view-list .opened .details {
   border-bottom: 1px solid #f1f1f1;
   padding-bottom: 10px;
 }
-.viewOpen .mask .top{
+
+.viewOpen .mask .top {
   padding: 1rem;
   text-align: center;
   border-bottom: 1px solid #f1f1f1;
 }
-.viewOpen .mask .top .notice{
+
+.viewOpen .mask .top .notice {
   line-height: 2rem;
   display: inline-block;
   margin-top: 1rem;
 }
-.viewOpen .mask .top .detail{
+
+.viewOpen .mask .top .detail {
   text-align: left;
   line-height: 3rem;
 }
-.viewOpen .mask button{
+
+.viewOpen .mask button {
   border: none;
   background-color: #fff;
   width: 50%;
@@ -573,58 +847,73 @@ footer li a{
   border-radius: 10px;
   font-size: 16px;
 }
-.viewOpen .mask button.disturb{
+
+.viewOpen .mask button.disturb {
   color: red;
   border-left: 1px solid #f1f1f1;
 }
+
 /*一对一视频设置*/
-.view.price{
+
+.view.price {
   border-bottom: 1px solid #f1f1f1;
 }
-.feedback{
+
+.feedback {
   padding: 10px 10px 10px 1.5rem;
   background: url(../images/icon/checkbox.png) no-repeat 10px 16px;
   background-size: 6px;
 }
-.feedback a{
+
+.feedback a {
   color: blue;
 }
+
 /*视频聊天价格*/
-.view.all-time{
+
+.view.all-time {
   background: url(../images/icon/checkbox.png) no-repeat 10px center;
   background-size: .5rem;
   background-color: #e2ebf1;
   color: #a9a5a5;
   padding-left: 1.6rem;
 }
-.view.all-time .time{
+
+.view.all-time .time {
   color: #000;
 }
-.cost-list li{
+
+.cost-list li {
   background-color: #fff;
   border-bottom: 1px solid #f1f1f1;
   height: 3rem;
   line-height: 3rem;
   padding: 0 10px;
 }
-.cost-list li.active{
+
+.cost-list li.active {
   background: url(../images/icon/checkbox1.png) no-repeat 96% center;
-  background-size: 1rem; 
+  background-size: 1rem;
   background-color: #fff;
 }
-.cost-list li > span{
+
+.cost-list li>span {
   display: inline-block;
   margin-left: 1rem;
   color: #ccc;
 }
-.cost-list li > span span{
+
+.cost-list li>span span {
   color: orange;
 }
+
 /*一对一聊天活跃*/
-.viewOpen .tabs{
+
+.viewOpen .tabs {
   position: relative;
 }
-.viewOpen .tabs .horizontal{
+
+.viewOpen .tabs .horizontal {
   position: absolute;
   top: -35px;
   right: 10px;
@@ -634,39 +923,46 @@ footer li a{
   left: auto;
   transform: translateX(0);
 }
-.viewOpen .tabs .horizontal li{
+
+.viewOpen .tabs .horizontal li {
   float: left;
   padding-left: 10px;
 }
-.viewOpen .tabs .horizontal li a{
+
+.viewOpen .tabs .horizontal li a {
   color: #000;
   height: 1.1rem;
   line-height: 1.1rem;
 }
-.viewOpen .tabs .horizontal li:nth-child(1){
+
+.viewOpen .tabs .horizontal li:nth-child(1) {
   border-right: 1px solid #f1f1f1;
   padding-right: 10px;
   padding-left: 0;
 }
-.chart-list{
+
+.chart-list {
   background-color: #fff;
   padding: 0 10px;
   height: 2.6rem;
   line-height: 2.6rem;
   border-bottom: 1px solid #f1f1f1;
 }
-.viewOpen .tabs .horizontal li.active a{
+
+.viewOpen .tabs .horizontal li.active a {
   border: none;
   color: blue;
 }
-.invitation .view-list li .label .close{
+
+.invitation .view-list li .label .close {
   width: 1rem;
   height: 1rem;
   border-radius: 4px;
   background: url(../images/icon/close.png) no-repeat center;
   margin-top: 5px;
 }
-.invitation .items li .top .person .call{
+
+.invitation .items li .top .person .call {
   position: absolute;
   right: 10px;
   top: 0;
@@ -679,19 +975,38 @@ footer li a{
   line-height: 2rem;
   padding-left: 1.2rem;
 }
-.viewOpen .mask button.buy{
+
+.viewOpen .mask button.buy {
   color: blue;
 }
+
 /*筛选*/
-header .search{
+
+.select-page {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 110vh;
+  background-color: #efefef;
+  z-index: 10;
+  transition: top 0.3s;
+}
+
+.select-page.actived {
+  top: 0;
+}
+
+header .search {
   background: none;
 }
-.selectPage .tabs > .title{
+
+.selectPage .tabs>.title {
   height: 2.5rem;
   line-height: 2.5rem;
   padding: 0 10px;
 }
-.selectPage .tabs .horizontal{
+
+.selectPage .tabs .horizontal {
   position: relative;
   width: 100%;
   top: 0;
@@ -701,65 +1016,102 @@ header .search{
   display: flex;
   flex-wrap: wrap;
 }
-.selectPage .horizontal li{
+
+.selectPage .horizontal li {
   flex: 1;
   text-align: center;
 }
-.selectPage .horizontal li a{
+
+.selectPage .horizontal li a {
   color: #b7b7b7 !important;
   z-index: 2;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 5px 12px;
 }
-.selectPage .horizontal li.active a{
+
+.selectPage .horizontal li.active a {
   color: #000 !important;
+  font-size: 15px
 }
-.selectPage .tab-content{
+
+.selectPage .tab-content {
   margin-top: 2.5rem;
 }
-.selectPage .opened{
+
+.selectPage .opened {
   padding: 0 10px;
   background-color: #fff;
 }
-.selectPage .opened li{
+
+.selectPage .opened li {
   padding: 13.5px 0;
   border-bottom: 1px solid #f1f1f1;
 }
+
 .selectPage .opened li.present,
-.selectPage .opened li.select{
+.selectPage .opened li.select {
   padding: 0;
 }
-.selectPage .opened li .weui-cell_switch{
+
+.selectPage .opened li .weui-cell_switch {
   padding-left: 0;
   padding-right: 0;
 }
+
 .selectPage .opened .gender .fr {
   margin-right: -11px;
 }
-.selectPage .opened .gender .fr span{
+
+.selectPage .opened .gender .fr span {
   display: inline-block;
   width: 4rem;
   border-right: 1px solid #f1f1f1;
   text-align: center;
-  color: #b7b7b7 ;
+  color: #b7b7b7;
 }
-.selectPage .opened .gender .fr span.active{
+
+.selectPage .opened .gender .fr span.active {
   color: #000;
   position: static;
 }
-.selectPage input[type="text"]{
+
+.selectPage input[type="text"] {
   color: #b7b7b7;
   text-align: right;
   background: url(../images/icon/back.png) no-repeat right center;
   background-size: 8px;
   padding-right: 15px;
 }
-.selectPage .weui-cell:before{
+
+.selectPage .weui-cell:before {
   border: none;
 }
+
 /*筛选结果*/
-.invitation .address .fl{
+
+.invitation .addressWrap {
+  height: 40px;
+}
+
+.invitation .address {
+  background-color: #fff;
+  border-bottom: 1px solid #e8e9ee;
+}
+
+.invitation .address.addressFixed {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
+  z-index: 4;
+}
+
+.invitation .address .fl {
   position: relative;
 }
-.invitation .address .fl .close{
+
+.invitation .address .fl .close {
   display: inline-block;
   width: 1rem;
   height: 1rem;
@@ -771,40 +1123,50 @@ header .search{
   top: 2px;
   right: -1.5rem;
 }
-.selectpage .classify ul li{
+
+.selectpage .classify ul li {
   width: 20%;
 }
+
 /*邀约详情*/
-.invite-detail li .person .distance{
+
+.invite-detail li .person .distance {
   margin-top: 0;
   color: #b7b7b7;
 }
+
 .invitation .invite-detail li .top .details {
   border-bottom: none;
 }
-.invitation .invite-detail li .bottom .title{
+
+.invitation .invite-detail li .bottom .title {
   padding-left: 4.6rem;
   background-position: 1rem center;
   background-size: 2rem;
 }
-.invite-detail .detail p{
+
+.invite-detail .detail p {
   height: 2.5rem;
   line-height: 2.5rem;
   padding-left: 4.6rem;
   background: url(../images/icon/checkbox.png) no-repeat 1.8rem center;
   background-size: 6px;
 }
-.invite-detail .time p{
+
+.invite-detail .time p {
   padding-left: 0;
   border-bottom: 1px solid #f1f1f1;
 }
-.invite-detail.items li.detail{
+
+.invite-detail.items li.detail {
   padding: 0;
 }
-.invite-detail.items li.time p{
+
+.invite-detail.items li.time p {
   padding-left: 10px;
 }
-.interest{
+
+.interest {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -817,7 +1179,8 @@ header .search{
   line-height: 3rem;
   padding-left: 1.6rem;
 }
-._share{
+
+._share {
   width: 100%;
   position: fixed;
   bottom: 0;
@@ -828,12 +1191,152 @@ header .search{
   font-size: 16px;
   display: none;
 }
-._share p{
+
+._share p {
   height: 3rem;
   line-height: 3rem;
   border-bottom: 1px solid #f1f1f1;
 }
 
+/* ------------------- */
 
+/* 2018.7.27 */
 
+/* indexPage */
 
+[v-cloak] {
+  display: none;
+}
+
+body.yaoyueIndex {
+  height: 100vh;
+}
+
+.sexAge {
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 34px;
+  height: 14px;
+  border-radius: 2px;
+}
+
+.sexAge .sex {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+}
+
+.sexAge .age {
+  font-size: 12px;
+  color: #fff;
+}
+
+.female {
+  background-color: #ffa5ce;
+}
+
+.female .sex {
+  background: url(../images/icon/女.png) center center;
+  background-size: 100%;
+}
+
+.male {
+  background-color: #a4c8fe;
+}
+
+.male .sex {
+  background: url(../images/icon/男1.png) center center;
+  background-size: 100%;
+}
+
+.mInviteList-item .ding {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border: 14px solid;
+  border-color: #fc6676 #fc6676 transparent transparent;
+}
+
+.mInviteList-item .ding .dingText {
+  position: absolute;
+  color: #fff;
+  right: -13px;
+  top: -15px;
+  font-size: 12px;
+}
+
+.m_shade {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  background-color: rgba(0, 0, 0, .3);
+  /* display: none; */
+}
+
+/* m筛选 */
+
+.closeSelect {
+  transform: rotate(-90deg);
+  margin-top: 0px;
+  /* margin-left: -3px; */
+  height: 100%;
+  background: url(../images/icon/left.png) 9px center no-repeat;
+}
+
+.blur {
+  height: 100%;
+  filter: blur(2px);
+}
+
+/* 发布邀约 */
+
+.releInvite-page .invitation .theme ul li {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+#descriptionWrap-li {
+  padding-left: 0;
+  padding-right: 0;
+  min-height: 180px;
+}
+
+.descriptionWrap {
+  margin: 0 15px;
+  position: relative;
+}
+
+.descriptionWrap .textCountWrap {
+  display: block;
+  position: absolute;
+  right: 25px;
+  bottom: -15px;
+}
+
+#descripTextarea {
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.releInvite-page .detailPlace {
+  display: flex;
+}
+
+.releInvite-page .detailPlace .detailPlace-title {
+  margin-right: 15px;
+}
+
+.releInvite-page .detailPlace .detailPlace-inputWrap {
+  flex: 1 0 0;
+}
+
+.releInvite-page .detailPlace .detailPlace-inputWrap input {
+  background: none !important;
+  text-align: left !important;
+  width: 100%;
+}

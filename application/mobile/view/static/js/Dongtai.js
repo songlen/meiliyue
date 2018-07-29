@@ -29,15 +29,67 @@ $(function () {
             }
         },
         beforeMount() {
+
+            // //先查session,把session的值放到data里
+            // if (sessionStorage.getItem("dongtaiPage")) {
+            //     let dongtaiPageData = JSON.parse(sessionStorage.getItem("dongtaiPage"))
+            //     console.log(dongtaiPageData)
+
+            //     this.user_id = dongtaiPageData.user_id
+            //     this.nowPage = dongtaiPageData.nowPage
+            //     this.nowArea = dongtaiPageData.nowArea
+            //     this.areaDataList = dongtaiPageData.areaDataList
+            //     this.attendedDataList = dongtaiPageData.attendedDataList
+            //     this.videoDataList = dongtaiPageData.videoDataList
+
+            //     //滚动位置
+            //     document.getElementsByClassName('pageWrap')[0].scrollTop = dongtaiPageData.pageScrollTop
+
+            //     return
+            // }
+
+
+            // this.user_id = "1"
+
+            // this.getListData("areaDataList", false, {
+            //     user_id: this.user_id,
+            //     range: 1
+            // })
+        },
+        mounted: function () {
+
+            document.getElementsByClassName('pageWrap')[0].addEventListener('scroll', this.handleScroll)
+
+            //先查session,把session的值放到data里
+            if (sessionStorage.getItem("dongtaiPage")) {
+                let dongtaiPageData = JSON.parse(sessionStorage.getItem("dongtaiPage"))
+                console.log(dongtaiPageData)
+
+                this.user_id = dongtaiPageData.user_id
+                this.nowPage = dongtaiPageData.nowPage
+                this.nowArea = dongtaiPageData.nowArea
+                this.areaDataList = dongtaiPageData.areaDataList
+                this.attendedDataList = dongtaiPageData.attendedDataList
+                this.videoDataList = dongtaiPageData.videoDataList
+
+                //滚动位置
+                setTimeout(function () {
+                    document.getElementsByClassName('pageWrap')[0].scrollTop = dongtaiPageData.pageScrollTop
+                }, 1)
+
+                return
+            }
+
+
             this.user_id = "1"
 
             this.getListData("areaDataList", false, {
                 user_id: this.user_id,
                 range: 1
             })
-        },
-        mounted: function () {
-            document.getElementsByClassName('pageWrap')[0].addEventListener('scroll', this.handleScroll)
+
+
+
         },
         methods: {
             cutTab(pageStr) {
@@ -108,9 +160,10 @@ $(function () {
             },
             handleScroll() {
                 let scrollTop = document.getElementsByClassName('pageWrap')[0].scrollTop
+                console.log(scrollTop)
                 let wrapHeight = document.getElementsByClassName('pageWrap')[0].clientHeight
                 let ulHeight = document.getElementsByClassName(this.nowPage + "-page")[0].clientHeight
-                console.log(ulHeight)
+                // console.log(ulHeight)
                 if (scrollTop > 0 && scrollTop + wrapHeight > ulHeight) {
                     console.log(this.nowDataList)
                     let postData = {}
@@ -143,11 +196,31 @@ $(function () {
                 }
             },
             openEdit() {
-                window.open("edit.html?user_id=" + 1)
+                //window.location("edit.html?user_id=" + 123)
+                this.savePageToSession()
+
+                window.location.href = "edit.html"
+                //  /mobile/dynamics/add 这里地址怎么写？
             },
             //头像加载失败，默认图片
-            defaultImg: function (event) {
-                event.target.src = "/application/mobile/view/static/images/icon/tx.png"
+            defaultImg(event) {
+                event.target.src = "../images/icon/tx.png"
+            },
+            //跳转之前存数据到session
+            savePageToSession() {
+                //key : dongtaiPage
+                let pageData = {
+                    user_id: this.user_id,
+                    nowPage: this.nowPage,
+                    nowArea: this.nowArea,
+                    areaDataList: this.areaDataList,
+                    attendedDataList: this.attendedDataList,
+                    videoDataList: this.videoDataList,
+                    pageScrollTop: document.getElementsByClassName('pageWrap')[0].scrollTop
+                }
+                console.log(pageData)
+
+                sessionStorage.setItem('dongtaiPage', JSON.stringify(pageData))
             }
         }
     });

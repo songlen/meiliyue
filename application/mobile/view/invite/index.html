@@ -1,98 +1,515 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>邀约</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- jquery-weui-css -->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
+    <link rel="stylesheet" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
+    <!-- my-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
 </head>
-<body>
+
+<body class="yaoyueIndex">
     <header>
         <span class="title">邀约</span>
     </header>
-    <div class="main-content invitation">
-        <div class="view">
-            <a href="javascript:;"><img src="__STATIC__/images/pic/pic2.png"></a>
-        </div>
-        <div class="classify">
-            <div class="options clearfix">
-                <div class="all fl">
-                    <span>全部</span>
+
+    <div class="main-content invitation indexPage" id="indexPageApp">
+
+        <div :class="{blur:isPlusing}">
+
+            <div class="view">
+                <a href="javascript:void(0)">
+                    <img src="__STATIC__/images/pic/pic2.png">
+                </a>
+            </div>
+            <div class="classify">
+                <div class="optionsWrap">
+                    <div class="options clearfix">
+                        <ul class="fl">
+                            <li>
+                                <a href="javascript:void(0)" class="optionsBtn allBtn" @click="handleOption('allBtn')">
+                                    <span :class="{actived:nowOptionBtn=='allBtn'}">全部</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="optionsBtn travelBtn" @click="handleOption('travelBtn')">
+                                    <span :class="{actived:nowOptionBtn=='travelBtn'}">旅行</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="optionsBtn foodBtn" @click="handleOption('foodBtn')">
+                                    <span :class="{actived:nowOptionBtn=='foodBtn'}">吃饭</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="optionsBtn movieBtn" @click="handleOption('movieBtn')">
+                                    <span :class="{actived:nowOptionBtn=='movieBtn'}">电影</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="optionsBtn singBtn" @click="handleOption('singBtn')">
+                                    <span :class="{actived:nowOptionBtn=='singBtn'}">唱歌</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="optionsBtn sportBtn" @click="handleOption('sportBtn')">
+                                    <span :class="{actived:nowOptionBtn=='sportBtn'}">运动</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="optionsBtn otherBtn" @click="handleOption('otherBtn')">
+                                    <span :class="{actived:nowOptionBtn=='otherBtn'}">其他</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="fl">
-                    <li><a href="javascript:;">旅行</a></li>
-                    <li><a href="javascript:;">吃饭</a></li>
-                    <li><a href="javascript:;">电影</a></li>
-                    <li><a href="javascript:;">唱歌</a></li>
-                    <li><a href="javascript:;">运动</a></li>
-                    <li><a href="javascript:;">其他</a></li>
-                </ul>
-            </div>
-            <div class="address clearfix">
-                <span class="fl">北京朝阳 <span class="close"></span> </span>
-                <span class="select fr"><a href="{:U('mobile/invite/filter')}">筛选</a></span>
-            </div>
-        </div>
-        <div class="items">
-            <ul>
-            	<foreach name="lists" item="item">
-                <li>
-                    <!-- <span class="active">顶</span> -->
-                    <div class="top">
-                        <div class="img-box"><img src="{$item.head_pic}"></div>
-                        <div class="details">
-                            <div class="person">
-                                <span class="name">{$item.nickname}</span>
-                                <span class="age">{$item.age}</span>
-                                <!-- <span class="img"><img src="__STATIC__/images/icon/camera.png"></span> -->
-                                <!-- <span class="job">职业经理人</span> -->
-                            </div>
-                            <div class="distance">{$item.distince}km</div>
-                        </div>
+
+                <div class="addressWrap">
+                    <div class="address clearfix" :class={addressFixed:addressFixed} @click="opentSelect">
+                        <span class="fl" @click.stop="cancelSelectList">{{selectedText}}
+                            <span class="cancelSelected" v-cloak v-if="selectedText!=='辽宁'"></span>
+                        </span>
+                        <span class="select fr">筛选</span>
                     </div>
-                    <div class="bottom clearfix">
-                    	<a href="{:U('mobile/invite/detail', array('id'=>$item.invite_id))}">
-                        <p class="title">{$item.title}</p>
-                        <div class="more">
-                            <ul>
-                                <li>{$item.description}</li>
-                                <li>{$item.time}</li>
-                                <li>{$item.place}</li>
-                            </ul>
-                            <if condition="is_array($item.image)">
-                            <div>
-                                <img src="{$item.image[0]}" alt="">
+                </div>
+            </div>
+
+            <!-- 列表--------------------- -->
+
+            <div class="dropRefresh">
+                <div class="items mInviteList">
+                    <ul>
+                        <li class="mInviteList-item" v-cloak v-for="(item,index) in inviteList" :key="index">
+                            <span class="active ding">
+                                <span class="dingText">顶</span>
+                            </span>
+                            <div class="top">
+                                <div class="img-box">
+                                    <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
+                                </div>
+                                <div class="details">
+                                    <div class="person">
+                                        <span class="name">{{item.nickname}}</span>
+                                        <span class="sexAge" :class="{female:item.sex=='2',male:item.sex=='1'}">
+                                            <i class="sex"></i>
+                                            <span class="age">23</span>
+                                        </span>
+                                        <span class="img">
+                                            <img v-cloak v-if="item.auth_video_status==1" src="__STATIC__/images/icon/camera.png">
+                                        </span>
+                                        <span class="job" style="display: none;">职业经理人</span>
+                                    </div>
+                                    <div class="distance">{{item.distince}}km</div>
+                                </div>
                             </div>
-                        	</if>
-                        </div>
-                        </a>
-                    </div>
-                </li>
-                </foreach>
-            </ul>
+                            <div class="bottom clearfix">
+                                <p class="title">
+                                    <span class="bigDot"></span>{{item.title}}</p>
+                                <div class="more" @click="openInviteDetail">
+                                    <ul>
+                                        <li v-cloak v-if="item.description&&item.description!==''">
+                                            <span class="smallDot"></span>{{item.description}}</li>
+                                        <li v-cloak v-if="item.time&&item.time!==''">
+                                            <span class="smallDot"></span>{{item.time}}</li>
+                                        <li v-cloak v-if="item.place&&item.place!==''">
+                                            <span class="smallDot"></span>{{item.place}}</li>
+                                    </ul>
+                                    <div v-cloak v-if="item.image&&item.image!==''">
+                                        <img :src="'http://meiliyue.caapa.org'+item.image">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
-        <div class="plus"></div>
-        <div class="_shade"></div>
-        <div class="mask">
+        <!-- 模糊end-->
+
+        <!-- 模糊之外 -->
+
+        <!-- 模态框及其他 -->
+
+        <div class="plus" :class="{actived:isPlusing}" @click="isPlusing=!isPlusing"></div>
+
+        <div class="m_shade" v-cloak v-if="isPlusing"></div>
+
+        <div class="mask" v-show="isPlusing">
             <div class="title">发起邀约</div>
             <div class="box-top">
                 <ul>
-                    <li><a href="{:U('mobile/invite/add', array('type'=>1))}"><span></span>旅行</a></li>
-                    <li><a href="{:U('mobile/invite/add', array('type'=>2))}"><span></span>吃饭</a></li>
-                    <li><a href="{:U('mobile/invite/add', array('type'=>3))}"><span></span>电影</a></li>
-                    <li><a href="{:U('mobile/invite/add', array('type'=>4))}"><span></span>唱歌</a></li>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(1)">
+                            <span class="travel"></span>旅行</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(2)">
+                            <span class="food"></span>吃饭</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(3)">
+                            <span class="movie"></span>电影</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(4)">
+                            <span class="sing"></span>唱歌</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(5)">
+                            <span class="sport"></span>运动</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(6)">
+                            <span class="other"></span>其他</a>
+                    </li>
                 </ul>
             </div>
-            <div class="box-btm">
-                <ul>
-                    <li><a href="{:U('mobile/invite/add', array('type'=>5))}"><span></span>运动</a></li>
-                    <li><a href="{:U('mobile/invite/add', array('type'=>6))}"><span></span>其他</a></li>
-                </ul>
+
+            <span class="maskTrgle"></span>
+        </div>
+
+        <!-- 筛选弹窗 -->
+        <div class="select-page" :class="{actived:showSelect}">
+            <header>
+                <a href="javascript:void(0)" class="back fl closeSelect" @click="closeSelect"></a>
+                <span class="title">筛选</span>
+                <a href="javascript:void(0)" class="fr search" @click="searchBySelect">搜索</a>
+            </header>
+            <div class="main-content invitation viewOpen selectPage">
+                <div class="tabs">
+                    <p class="title">排序</p>
+                    <ul class="horizontal fr">
+                        <li v-cloak v-for="(item,index) in sortList" :class="{active:index==nowSortIndex}" :key="index" @click="cutSort(index)">
+                            <a href="javascript:void(0)">{{item}}</a>
+                        </li>
+                    </ul>
+
+                    <p class="title">约会</p>
+
+                    <!-- 筛选列表 -->
+                    <div class="tab-content items view-list" id="tab-detail1">
+                        <ul class="opened">
+                            <li class="gender clearfix">
+                                <span class="fl">性别</span>
+                                <span class="fr">
+                                    <span :class="{active:nowSex=='全部'}" @click="cutSex('全部')">全部</span>
+                                    <span :class="{active:nowSex=='男'}" @click="cutSex('男')">男</span>
+                                    <span :class="{active:nowSex=='女'}" @click="cutSex('女')">女</span>
+                                </span>
+                            </li>
+                            <!-- <li class="guojia clearfix">
+                                <span class="fl">国家</span>
+                                <a href="javascript:void(0)" class="fr">
+                                    <input type="text" readonly="readonly" value="中国">
+                                </a>
+                            </li> -->
+                            <li class="diqu clearfix" v-cloak v-show="nowSortIndex!==2">
+                                <span class="fl">地区</span>
+                                <a href="javascript:void(0)" class="fr">
+                                    <!-- <input type="text" readonly="readonly" value="北京"> -->
+                                    <input type="text" id='city-picker' />
+                                </a>
+                            </li>
+                            <li class="present clearfix">
+                                <div class="weui-cell weui-cell_switch">
+                                    <div class="weui-cell__bd">礼物</div>
+                                    <div class="weui-cell__ft">
+                                        <input class="weui-switch" type="checkbox">
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="select clearfix">
+                                <div class="weui-cell weui-cell_switch">
+                                    <div class="weui-cell__bd">只看视频认证用户</div>
+                                    <div class="weui-cell__ft">
+                                        <input class="weui-switch onlyVideo" type="checkbox" v-model="onlyVideo">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
+
+    <!-- -------------------------------------------------------------- -->
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- vue-js -->
+    <script src="__STATIC__/js/vue.js"></script>
+    <!-- jquery-weui-js -->
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
+    <!-- my-js -->
+    <script>
+        $(function () {
+            //页面宽高
+            $(".options li").width($(".optionsWrap").width() / 6)
+
+            //vm
+            let yaoyueIndexVm = new Vue({
+                el: "#indexPageApp",
+                data: {
+                    //条件
+                    nowOptionBtn: "allBtn",
+                    optionsList: ["allBtn", "travelBtn", "foodBtn", "movieBtn", "singBtn", "sportBtn",
+                        "otherBtn"
+                    ],
+
+                    addressFixed: false,
+                    showSelect: false,
+                    inviteList: [],
+                    isPlusing: false,
+
+                    selectedText: "辽宁", //目前 默认值 辽宁
+
+                    //筛选页面
+                    sortList: ["最近发布", "近期约会", "离我最近"],
+                    nowSortIndex: 0,
+                    nowSex: "全部", //当前性别： 全部 男 女
+                    onlyGift: false,
+                    onlyVideo: false,
+                },
+                computed: {
+                    type() {
+                        return this.optionsList.indexOf(this.nowOptionBtn) == 0 ? null : this.optionsList
+                            .indexOf(this.nowOptionBtn)
+                    }
+                },
+                beforeMount() {
+                    // this.getInviteList()
+                },
+                mounted() {
+                    //监听scrollTop，改变筛选条样式
+                    document.getElementsByClassName('indexPage')[0].addEventListener('scroll', this.handleAddress)
+
+                    //city picker
+                    $("#city-picker").cityPicker({
+                        title: "请选择地区",
+                        showDistrict: false
+                    });
+
+                    //先查session,把session的值放到data里
+                    if (sessionStorage.getItem("inviIndexPage")) {
+                        let inviIndexPageData = JSON.parse(sessionStorage.getItem("inviIndexPage"))
+                        console.log(inviIndexPageData)
+
+                        this.nowOptionBtn = inviIndexPageData.nowOptionBtn
+                        this.inviteList = inviIndexPageData.inviteList
+
+                        this.selectedText = inviIndexPageData.selectedText
+
+                        //滚动位置
+                        setTimeout(function () {
+                            document.getElementsByClassName('indexPage')[0].scrollTop =
+                                inviIndexPageData.pageScrollTop
+                        }, 1)
+
+                        return
+                    }
+
+                    this.getInviteList()
+                },
+                methods: {
+                    //获取邀约列表
+                    getInviteList({
+                        longitude = "41",
+                        latitude = "123",
+                        type = null,
+                        sex = null,
+                        province = null,
+                        city = null,
+                        auth_video = null
+                    } = {}) {
+                        //
+                        let _self = this
+                        let postDataTemp = {
+                            longitude: longitude,
+                            latitude: latitude,
+                            type: type,
+                            sex: sex,
+                            province: province,
+                            city: city,
+                            auth_video: auth_video
+                        }
+                        console.log(postDataTemp)
+                        $.ajax({
+                            type: "POST",
+                            url: "http://meiliyue.caapa.org/index.php/Api/Invite/index",
+                            data: postDataTemp,
+                            dataType: "json",
+                            success: function (result) {
+                                console.log(result.data)
+                                _self.inviteList = result.data
+                                //测试用
+                                _self.inviteList = _self.inviteList.concat(_self.inviteList)
+                            }
+                        })
+                    },
+                    //点击option
+                    handleOption(btnStr) {
+                        this.nowOptionBtn = btnStr
+                        let type = this.optionsList.indexOf(btnStr)
+                        this.getInviteList({
+                            type: type !== 0 ? type : null
+                        })
+                    },
+                    //默认img
+                    defaultImg(event) {
+                        event.target.src = "__STATIC__/images/icon/tx.png"
+                    },
+                    //获取地理位置
+                    getLocalAddress() {
+
+                    },
+                    //打开邀约详情页面
+                    openInviteDetail() {
+
+                    },
+                    //控制筛选栏的位置
+                    handleAddress() {
+                        console.log(document.getElementsByClassName('indexPage')[0].scrollTop)
+                        let indexPageScroll = document.getElementsByClassName('indexPage')[0].scrollTop
+                        if (indexPageScroll >= 204) {
+                            this.addressFixed = true
+                        } else {
+                            this.addressFixed = false
+                        }
+                    },
+                    //弹出筛选页面
+                    opentSelect() {
+                        this.resetSelectPage()
+
+                        this.showSelect = true
+                    },
+                    //初始化筛选页面
+                    resetSelectPage() {
+                        this.nowSortIndex = 0
+                        this.nowSex = "全部"
+                        this.onlyGift = false
+                        this.onlyVideo = false
+                        $("#city-picker").val("")
+                    },
+                    //取消筛选条件，加载所有数据
+                    cancelSelectList() {
+                        if (this.selectedText !== "辽宁") {
+                            let type = this.type
+                            this.getInviteList({
+                                type: type
+                            })
+
+                            // document.getElementsByClassName('indexPage')[0].scrollTop = 0
+                            $(".indexPage").animate({
+                                scrollTop: 0
+                            }, 300)
+
+                            this.selectedText = "辽宁"
+                        }
+                    },
+                    //跳到邀约发布页面
+                    openReleaseInvite(type) { //type number 邀约类型
+                        this.savePageToSession()
+
+                        window.location.href = "http://meiliyue.localhost.com/index.php/mobile/invite/add/type/" + type //传邀约类型
+                    },
+                    //跳转页面之前，保存页面信息
+                    savePageToSession() {
+                        //key : inviIndexPage
+                        let pageData = {
+                            nowOptionBtn: this.nowOptionBtn,
+                            // addressFixed: this.addressFixed,
+                            inviteList: this.inviteList,
+                            selectedText: this.selectedText,
+
+                            pageScrollTop: document.getElementsByClassName('indexPage')[0].scrollTop
+                        }
+                        console.log(pageData)
+
+                        sessionStorage.setItem('inviIndexPage', JSON.stringify(pageData))
+                    },
+
+                    //筛选页面-----------------------------------------------
+
+                    //切换排序
+                    cutSort(index) {
+                        this.nowSortIndex = index
+                    },
+                    //切换性别
+                    cutSex(sexStr) {
+                        this.nowSex = sexStr
+                    },
+                    //关闭筛选页面
+                    closeSelect() {
+                        this.showSelect = false
+                    },
+                    //点击筛选页面的 搜索
+                    searchBySelect() {
+
+                        //关闭筛选页面
+                        this.closeSelect()
+
+                        //更新list
+                        let type = this.type
+                        let sex
+                        switch (this.nowSex) {
+                            case "全部":
+                                sex = null
+                                break;
+                            case "男":
+                                sex = "1"
+                                break;
+                            case "女":
+                                sex = "2"
+                                break;
+                            default:
+                                break;
+                        }
+                        let cityCodes = $("#city-picker").attr("data-codes")
+                        let provinceCode, cityCode
+                        if (cityCodes) {
+                            provinceCode = cityCodes.split(",")[0]
+                            cityCode = cityCodes.split(",")[1]
+                        }
+                        let onlyGift = this.onlyGift
+                        let onlyVideo = this.onlyVideo
+
+                        //回到顶部
+                        $(".indexPage").animate({
+                            scrollTop: 0
+                        }, 300)
+
+                        //更新筛选条件text
+                        let cityTemp = $("#city-picker").val()
+                        console.log(cityTemp)
+                        let textTemp = cityTemp + (this.nowSex == "全部" ? "" : " " + this.nowSex) + (
+                            onlyVideo ? " 已认证" : "") + (onlyGift ? " 参加礼物" : "")
+
+                        console.log(textTemp)
+
+                        this.selectedText = textTemp.trim() == "" ? "辽宁" : textTemp
+                        //更新筛选条件text end
+
+                        this.getInviteList({
+                            type: type,
+                            sex: sex,
+                            province: provinceCode,
+                            city: cityCode,
+                            auth_video: onlyVideo ? "1" : "0"
+                        })
+                    }
+                }
+            })
+        })
+    </script>
+
 </body>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="__STATIC__/js/common.js"></script>
+
 </html>

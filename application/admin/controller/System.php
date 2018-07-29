@@ -31,10 +31,9 @@ class System extends Base
 		$group_list = [
             'shop_info' => '网站信息',
             'tag'       => '标签设置',
-            'basic'     => '基本设置',
-            'sms'       => '短信设置',
-            'smtp'      => '邮件设置',
-            'push'      => '推送设置',
+            // 'basic'     => '基本设置',
+            // 'smtp'      => '邮件设置',
+            // 'push'      => '推送设置',
         ];		
 		$this->assign('group_list',$group_list);
 		$inc_type =  I('get.inc_type','shop_info');

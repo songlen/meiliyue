@@ -136,9 +136,4 @@ class Invite extends Base {
     	$this->assign('info', $info);
     	return $this->fetch();
     }
-
-    public function filter(){
-
-    	return $this->fetch();
-    }
 }

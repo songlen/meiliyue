@@ -1,92 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>邀约详情</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- jquery-weui-css -->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
+    <link rel="stylesheet" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
+    <!-- my-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
 </head>
-<body>
+
+<body class="releInvite-page">
     <header>
-        <span class="fl cancle" onclick="javascript:history.back(-1);">取消</span>
+        <span class="fl cancle">取消</span>
         <span class="fr publish">发布</span>
     </header>
     <div class="main-content invitation">
-      <form action="">
-        <div class="theme items">
-          <ul>
-            <li class="clearfix title"><span class="fl">主题</span><span class="fr">{$inviteTypeEnum[$type]}</span></li>
-            <li class="clearfix">
-              <span class="fl">地点</span>
-              <span class="fr"><input type="text" readonly="readonly" placeholder="选择时间"></span>
-            </li>
-            <li class="clearfix">
-              <span class="fl">地点</span>
-              <span class="fr"><input type="text" readonly="readonly" placeholder="选择时间"></span>
-            </li>
-          </ul>
-          <ul>
-            <li class="clearfix">
-              <span class="fl">对象</span>
-              <span class="fr choose">
-                <span class="active">男</span>
-                <span>女</span>
-                <span>不限</span>
-              </span>
-            </li>
-            <li class="clearfix">
-              <span class="fl">买单</span>
-              <span class="fr choose">
-                <span>AA</span>
-                <span class="active">当然你买</span>
-              </span>
-            </li>
-            <li class="clearfix catch">
-              <span class="fl">
-                <input type="checkbox" id="myCheck">
-                <label for="myCheck"></label>
-                需要接送我
-              </span>
-              <span class="fr">
-                <input type="checkbox" id="myCheck1">
-                <label for="myCheck1"></label>
-                对方可携带三两好友
-              </span>
-            </li>
-          </ul>
-          <ul>
-            <li class="clearfix">
-              <textarea name="" id="" cols="30" rows="10" onkeyup="checkLen(this)" placeholder="空白的说明是没有人报名的"></textarea>
-              <div class="add">
-                <a href="javascript:;">
-                  <input type="file" readonly="readonly">
-                  添加
-                </a>
-              </div>
-              <div class="speak">
-                <a href="javascript:;">
-                  按住说话
-                </a>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <input type="hidden" name="type" value="{$type}">
-      </form>
-    </div>
-    <footer>
-        <ul>
-            <li><a href="javascript:;">在线</a></li>
-            <li><a href="javascript:;">邀约</a></li>
-            <li><a href="javascript:;">动态</a></li>
-            <li><a href="javascript:;">我的</a></li>
-        </ul>
-    </footer>
-</body>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="__STATIC__/js/common.js"></script>
-<script type="text/javascript"> 
+        <form action="">
+            <div class="theme items">
+                <ul>
+                    <li class="clearfix title">
+                        <span class="fl">主题</span>
+                        <span class="fr inviteTheme"></span>
+                    </li>
+                    <li class="clearfix">
+                        <span class="fl">地点</span>
+                        <span class="fr">
+                            <!-- <input type="text" id='city-picker' value="辽宁省 沈阳市" /> -->
+                            <input type="text" id='city-picker' />
+                        </span>
+                    </li>
+                    <li class="detailPlace">
+                        <div class="detailPlace-title">
+                            详细地点
+                        </div>
+                        <div class="detailPlace-inputWrap">
+                            <input type="text" placeholder="填写详细地点..." />
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <span class="fl">时间</span>
+                        <span class="fr">
+                            <input type="text" id='datetime-picker' />
+                        </span>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="detailSelect clearfix otherSide">
+                        <span class="fl">对象</span>
+                        <span class="fr choose">
+                            <span class="active">男</span>
+                            <span>女</span>
+                            <span>不限</span>
+                        </span>
+                    </li>
+                    <li class="detailSelect clearfix payMoney">
+                        <span class="fl">买单</span>
+                        <span class="fr choose">
+                            <span>AA</span>
+                            <span class="active">当然你买</span>
+                        </span>
+                    </li>
+                    <li class="clearfix catch">
+                        <span class="fl">
+                            <input type="checkbox" checked="checked" id="myCheck">
+                            <label for="myCheck"></label>
+                            <label for="myCheck">需要接送我</label>
+                        </span>
+                        <span class="fr">
+                            <input type="checkbox" checked="checked" id="myCheck1">
+                            <label for="myCheck1"></label>
+                            <label for="myCheck1">对方可携带三两好友</label>
+                        </span>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="clearfix" id="descriptionWrap-li">
+                        <div class="descriptionWrap">
+                            <textarea id="descripTextarea" placeholder="空泛的说明，是没有人报名的..."></textarea>
 
-</script>
+                            <span class="textCountWrap">
+                                <span class="textCount">0</span>/200</span>
+                        </div>
+
+                        <!-- <div>
+                            <div class="add">
+                                <a href="javascript:;">
+                                    <input type="file" readonly="readonly"> 添加
+                                </a>
+                            </div>
+                            <div class="speak">
+                                <a href="javascript:;">
+                                    按住说话
+                                </a>
+                            </div>
+                        </div> -->
+
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- jquery-weui-js -->
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
+    <!-- my-js -->
+    <script type="text/javascript">
+        var ReleInvite = {
+            inviteList: [{
+                title: "旅行",
+                type: 1
+            }, {
+                title: "吃饭",
+                type: 2
+            }, {
+                title: "电影",
+                type: 3
+            }, {
+                title: "唱歌",
+                type: 4
+            }, {
+                title: "运动",
+                type: 5
+            }, {
+                title: "其他",
+                type: 6
+            }],
+
+            _type: "",
+            _theme: "",
+
+            _user_id: "",
+            _user_sex: "",
+
+            //处理ulr参数func,返回obj
+            getUrlOptions: function (urlOptionStr) { //urlOptionStr = window.location.search
+                var requestObj = {}
+                var str = urlOptionStr.substr(1);
+                var strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    requestObj[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1])
+                }
+                return requestObj
+            },
+            //获取一些页面参数 ??? 进行一些操作
+            getPageData: function () {
+                //处理url参数
+                var urlOptionStr = window.location.search
+                urlOptionStr = "?type=2" //测试用
+
+                if (urlOptionStr.indexOf("?") != -1) {
+                    var urlOptionObj = ReleInvite.getUrlOptions(urlOptionStr)
+
+                    console.log(urlOptionObj)
+                    //得到type theme
+                    ReleInvite._type = urlOptionObj.type
+                    ReleInvite.inviteList.forEach(function (obj) {
+                        if (obj.type == ReleInvite._type) {
+                            ReleInvite._theme = obj.title
+                        }
+                    })
+
+                    console.log(ReleInvite._theme, ReleInvite._type)
+                }
+
+                $(".inviteTheme").html(ReleInvite._theme)
+
+                //用户信息 id 性别
+                ReleInvite._user_id = "1" //测试用
+                ReleInvite._user_sex = "2" //测试用
+                //知道性别后，改变页面的“我买单”“当然你买单”“需要接送” ???
+
+
+                //
+            },
+            //用传过来的地址，改变 地址 选择器默认值
+            setAreaDefault: function () {
+
+            },
+            //限制字数
+            bindLimitCount: function () {
+                let textarea = document.getElementById('descripTextarea')
+                textarea.onchange = function () {
+                    limitCount(this)
+                }
+                textarea.onkeydown = function () {
+                    limitCount(this)
+                }
+                textarea.onkeyup = function () {
+                    limitCount(this)
+                }
+
+                function limitCount(el) {
+                    let vInnerHtml = el.value
+                    el.value = el.value.substring(0, 200) //限制字数
+                    let count = vInnerHtml.length
+                    document.getElementsByClassName('textCount')[0].innerHTML = count
+                    if (count >= 200) {
+                        alert("最多输入200个字")
+                    }
+                }
+            },
+            //发布邀约
+            publishInvit: function () {
+                //省市code
+                let cityCodes = $("#city-picker").attr("data-codes")
+                let provinceCode, cityCode
+                if (cityCodes) {
+                    provinceCode = cityCodes.split(",")[0]
+                    cityCode = cityCodes.split(",")[1]
+                }
+
+                var propsData = {
+                    user_id: ReleInvite._user_id,
+                    user_sex: ReleInvite._user_sex,
+                    type: ReleInvite._type,
+                    title: ReleInvite._theme,
+                    description: $("#descripTextarea").val(),
+                    time: $("#datetime-picker").val(),
+                    province: provinceCode,
+                    city: cityCode,
+                    place: $(".detailPlace-inputWrap>input").val(),
+                    longitude: "", ///////////
+                    latitudu: "", ////////////
+                    object: $(".otherSide .choose .active").text(),
+                    pay: $(".payMoney .choose .active").text(),
+                    is_jiesong: $("#myCheck").is(':checked') ? "1" : "0",
+                    width_confidante: $("#myCheck1").is(':checked') ? "1" : "0"
+                }
+
+                console.log(propsData)
+
+                return //测试用
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://meiliyue.caapa.org/index.php/Api/Dynamics/add",
+                    data: postData,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+
+                        if (result.msg == "操作成功") {
+                            //关闭 返回
+                            window.history.back(-1)
+                        }
+
+                    }
+                })
+            },
+            eventsBind: function () {
+                //取消发布
+                $(".cancle").click(function () {
+                    window.history.back(-1)
+                })
+                //切换男女,切换买单
+                $(".detailSelect .choose>span").click(function () {
+                    $(this).addClass('active').siblings().removeClass('active')
+                })
+                //让textarea限制字数
+                ReleInvite.bindLimitCount()
+                //发布邀约
+                $(".publish").click(function () {
+                    ReleInvite.publishInvit()
+                })
+            },
+            init: function () {
+                ReleInvite.getPageData()
+
+                //初始化 地点 时间 选择器
+                $("#city-picker").cityPicker({
+                    title: "请选择地区",
+                    showDistrict: false
+                });
+                $("#datetime-picker").datetimePicker();
+
+                //
+                ReleInvite.eventsBind()
+            }
+        }
+
+        $(function () {
+            ReleInvite.init()
+        })
+    </script>
+</body>
+
 </html>

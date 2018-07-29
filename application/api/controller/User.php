@@ -211,6 +211,7 @@ class User extends Base {
         response_success($message);
     }
 
+    // 身份认证
     public function identityAuth(){
         $user_id = I('user_id');
 
