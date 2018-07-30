@@ -8,6 +8,7 @@ use think\Config;
  
 class Invite extends Base {
 	public function index(){
+        cookie('co_name', '11111111');
         $user_longitude = I('longitude');
         $user_latitude = I('latitude');
         $type = I('type');
@@ -69,6 +70,8 @@ class Invite extends Base {
         if($this->request->isAjax()){
         	response_success($list);
         } else {
+
+            $this->assign('co_name', cookie('co_name'));
 	        $this->assign('lists', $lists);
 	        return $this->fetch();
         }

@@ -482,8 +482,9 @@ footer li a {
     flex-wrap: wrap;
 }
 
-.edit-pic ul {
+.edit-pic ul.showPicUl {
     display: inline-flex;
+    flex-wrap: wrap;
 }
 
 .edit-pic .edit-pic-item img {
@@ -506,7 +507,7 @@ footer li a {
     margin-left: -0.16rem;
 }
 
-.edit-pic>a {
+.edit-pic ul.showPicUl a.addPic {
     display: inline-block;
     width: 0.81rem;
     height: 0.81rem;
@@ -805,6 +806,8 @@ a.operate {
     bottom: 0;
 }
 
+/* 悄悄话 */
+
 .details-input a {
     display: inline-block;
     width: 0.7rem;
@@ -814,6 +817,11 @@ a.operate {
     line-height: 0.3rem;
     text-align: center;
     margin-left: 0.08rem;
+}
+
+.details-input a.actived {
+    background-color: #ffe455;
+    color: #000;
 }
 
 .details-input input {
@@ -945,4 +953,78 @@ a.operate {
 .avatarOperating li:last-of-type {
     border-top: 0.05rem solid #eae9ef;
     color: #7e7e7e;
+}
+
+/* 小视频全屏 */
+
+.dongtai .fullScreen {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 6;
+    background-color: #000;
+}
+
+.dongtai .fullScreen .progressBar {
+    display: block;
+    position: absolute;
+    top: 0;
+    height: 5px;
+    width: 0%;
+    background-color: #fff;
+}
+
+.dongtai .fullScreen .fullScreenScroll {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    font-size: 0;
+}
+
+.dongtai .fullScreen .fullScreenScroll .fullScreenWrap {
+    width: 100vw;
+    height: 100vh;
+}
+
+.fullScreen .closeFullScreen {
+    display: block;
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    left: 40px;
+    top: 25px;
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.fullScreen .closeFullScreen::before {
+    content: '';
+    display: block;
+    border-top: 1px solid #e8e7e9;
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fullScreen .closeFullScreen::after {
+    content: '';
+    display: block;
+    border-left: 1px solid #e8e7e9;
+    position: absolute;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* 修改dongtai下拉刷新 */
+
+.pageWrap.weui-pull-to-refresh {
+    margin-top: 0;
 }

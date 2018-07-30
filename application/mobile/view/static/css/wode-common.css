@@ -62,17 +62,6 @@ a.back {
     opacity: 0.3;
 }
 
-.head .head-title {
-    /* position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    color: #fff;
-    height: 0.45rem;
-    align-items: center;
-    padding: 0 0.11rem; */
-}
-
 .head .head-title .title {
     font-size: 17px;
 }
@@ -455,7 +444,6 @@ a.close {
     z-index: 2;
 }
 
-
 /* 评论 */
 
 .visitors-page,
@@ -573,7 +561,6 @@ a.close {
     height: 100%;
 }
 
-
 /* 回复评论 */
 
 .commentsReply-content {
@@ -635,7 +622,6 @@ a.close {
     font-size: 17px;
 }
 
-
 /* 来访者 */
 
 .visitors-page header .title>a {
@@ -658,7 +644,6 @@ a.close {
     height: 0.1rem;
     margin-right: 0.12rem;
 }
-
 
 /* 好友 */
 
@@ -771,7 +756,6 @@ a.close {
     border-bottom: 1px solid #f8f9fd;
 }
 
-
 /* 添加好友 */
 
 .addfriends-content {
@@ -787,7 +771,6 @@ a.close {
     line-height: 0.36rem;
     padding-left: 0.3rem;
 }
-
 
 /* 搜索好友 */
 
@@ -844,7 +827,6 @@ a.close {
 .searchfriends-content {
     margin-top: 0.5rem;
 }
-
 
 /* 个人主页 */
 
@@ -1156,14 +1138,12 @@ a.operate {
     }
 }
 
-
 /* 模糊 */
 
 .blur {
     height: 100%;
     filter: blur(5px);
 }
-
 
 /* 举报 */
 

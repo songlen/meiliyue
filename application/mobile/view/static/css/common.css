@@ -29,11 +29,6 @@ header>a {
   line-height: 1rem;
 }
 
-header>a.fr {
-  /*background: url(../images/icon/left.png) no-repeat center;*/
-  /*background-size: .7rem;*/
-}
-
 header>a.sure {
   background-image: none;
 }
@@ -133,7 +128,6 @@ footer li a {
   right: 0;
   bottom: 0;
   overflow-y: auto;
-  transition:
 }
 
 .invitation .view {
@@ -149,11 +143,6 @@ footer li a {
   border-radius: 1rem;
   overflow: hidden;
   height: 100%;
-}
-
-.invitation .view a>img {
-  /* width: 100%;
-  height: 100%; */
 }
 
 .invitation .optionsWrap {
@@ -589,7 +578,6 @@ footer li a {
   width: 5rem;
   height: 5rem;
   background-color: #f1f1f1;
-  display: inline-block;
   float: left;
   margin-right: 10px;
   text-align: center;
@@ -1174,7 +1162,7 @@ header .search {
   border: none;
   background: url(../images/icon/price.png) no-repeat 35% center;
   background-size: 1.6rem;
-  background-color: orange;
+  background-color: #ffe455;
   height: 3rem;
   line-height: 3rem;
   padding-left: 1.6rem;
@@ -1248,6 +1236,13 @@ body.yaoyueIndex {
 .male .sex {
   background: url(../images/icon/男1.png) center center;
   background-size: 100%;
+}
+
+.dropRefresh {
+  height: 100%;
+  /* max-height: 120vh; */
+  /* weui滑动加载不识别vh单位 */
+  overflow: auto;
 }
 
 .mInviteList-item .ding {
@@ -1339,4 +1334,95 @@ body.yaoyueIndex {
   background: none !important;
   text-align: left !important;
   width: 100%;
+}
+
+/* 我感兴趣 界面 */
+
+.interested header a {
+  height: 100%;
+  margin: 0;
+}
+
+.interested header a.back {
+  background: url(../images/icon/left.png) no-repeat 7px center;
+  background-size: .7rem;
+}
+
+a.operate {
+  width: 2rem;
+  height: 1rem;
+  background: url(../images/icon/三个点.png) center center no-repeat;
+  background-size: 100%;
+}
+
+li.inviteDetail {
+  overflow: hidden;
+}
+
+li.inviteDetail ul.inviteDetail-list {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+li.inviteDetail ul.inviteDetail-list li {
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+li.inviteDetail ul.inviteDetail-list li .bigDot,
+li.inviteDetail ul.inviteDetail-list li .smallDot {
+  vertical-align: top;
+}
+
+li.inviteDetail ul.inviteDetail-list li .title {
+  color: #000;
+}
+
+li.inviteDetail ul.inviteDetail-list li .description {
+  display: inline-block;
+  width: calc(100% - 30px);
+}
+
+li.inviteDetail ul.inviteDetail-list li.detailImages {
+  padding-left: 35px;
+  /* 与dot span相同 */
+}
+
+li.detailImages img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.invitation .items ul.areaTime li {
+  margin: 0;
+}
+
+.avatarOperating {
+  position: fixed;
+  left: 0;
+  right: 0;
+  /* bottom: -2rem; */
+  bottom: 0;
+  z-index: 5;
+}
+
+.avatarOperating li {
+  /* height: 0.48rem; */
+  border-top: 1px solid #f7f7f7;
+  background-color: #fff;
+  font-size: 16px;
+  line-height: 3rem;
+  text-align: center;
+  color: #000;
+}
+
+.avatarOperating li:last-of-type {
+  border-top: 0.05rem solid #eae9ef;
+  color: #7e7e7e;
+}
+
+/* 修改邀约index下拉刷新 */
+
+.dropRefresh.weui-pull-to-refresh {
+  margin-top: -28px;
 }

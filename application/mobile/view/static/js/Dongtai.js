@@ -1,4 +1,5 @@
 $(function () {
+    var GlobalHost = "http://meiliyue.localhost.com/index.php"
     var dongtaiVm = new Vue({
         el: "#dongtaiApp",
         data: {
@@ -28,37 +29,40 @@ $(function () {
                 return this.nowPage + "DataList"
             }
         },
-        beforeMount() {
-
-            // //先查session,把session的值放到data里
-            // if (sessionStorage.getItem("dongtaiPage")) {
-            //     let dongtaiPageData = JSON.parse(sessionStorage.getItem("dongtaiPage"))
-            //     console.log(dongtaiPageData)
-
-            //     this.user_id = dongtaiPageData.user_id
-            //     this.nowPage = dongtaiPageData.nowPage
-            //     this.nowArea = dongtaiPageData.nowArea
-            //     this.areaDataList = dongtaiPageData.areaDataList
-            //     this.attendedDataList = dongtaiPageData.attendedDataList
-            //     this.videoDataList = dongtaiPageData.videoDataList
-
-            //     //滚动位置
-            //     document.getElementsByClassName('pageWrap')[0].scrollTop = dongtaiPageData.pageScrollTop
-
-            //     return
-            // }
-
-
-            // this.user_id = "1"
-
-            // this.getListData("areaDataList", false, {
-            //     user_id: this.user_id,
-            //     range: 1
-            // })
-        },
         mounted: function () {
-
+            let _self = this
+            //监听滚动条
             document.getElementsByClassName('pageWrap')[0].addEventListener('scroll', this.handleScroll)
+            //下拉刷新
+            $(".pageWrap").pullToRefresh(function () {
+                console.log("刷新")
+                let postData = {}
+                switch (_self.nowDataList) {
+                    case "areaDataList":
+                        postData = {
+                            user_id: _self.user_id,
+                            range: _self.nowArea == "同城" ? 1 : 2
+                        }
+                        break;
+                    case "attendedDataList":
+                        postData = {
+                            user_id: _self.user_id,
+                            attention: 1
+                        }
+                        break;
+                    case "videoDataList":
+                        postData = {
+                            user_id: _self.user_id,
+                            jizha: 1
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                _self.getListData(_self.nowDataList, false, postData)
+            })
+
+            //----------------------------------------
 
             //先查session,把session的值放到data里
             if (sessionStorage.getItem("dongtaiPage")) {
@@ -87,8 +91,6 @@ $(function () {
                 user_id: this.user_id,
                 range: 1
             })
-
-
 
         },
         methods: {
@@ -121,16 +123,22 @@ $(function () {
                 }
             },
             //获取数据
-            getListData(dataList, isScroll, postData) { //更新的list str ,是否为滚动 boolean,区域str
+            getListData(dataList, isScroll, {
+                user_id = null,
+                range = "1",
+                attention = null,
+                jizha = null,
+                page = null
+            } = {}) { //更新的list str ,是否为滚动 boolean,区域str
                 // debugger
                 let self = this
                 console.log("ajax")
-                // let postData={
-                //     user_id:"12",
-                //     range:"1",//1同城2全网
-                //     attention:"1",//1关注
-                //     jizha:"1"//1叽喳
-                // }
+                let postData = {
+                    user_id: user_id,
+                    range: range, //1同城2全网
+                    attention: attention, //1关注
+                    jizha: jizha //1叽喳
+                }
                 console.log(postData)
                 $.ajax({
                     type: "POST",
@@ -149,6 +157,8 @@ $(function () {
                         if (isScroll && result.data.length !== 0) {
                             self[dataList].page = self[dataList].page + 1
                         }
+
+                        $(".pageWrap").pullToRefreshDone();
                     }
                 })
             },
@@ -195,12 +205,13 @@ $(function () {
                     this.getListData(this.nowDataList, true, postData)
                 }
             },
-            openEdit() {
+            openEdit(type) { //动态类型
                 //window.location("edit.html?user_id=" + 123)
                 this.savePageToSession()
 
-                window.location.href = "edit.html"
-                //  /mobile/dynamics/add 这里地址怎么写？
+                // window.location.href = "edit.html"
+
+                window.location.href = GlobalHost + "/mobile/invite/add/type/" + type
             },
             //头像加载失败，默认图片
             defaultImg(event) {
@@ -221,6 +232,39 @@ $(function () {
                 console.log(pageData)
 
                 sessionStorage.setItem('dongtaiPage', JSON.stringify(pageData))
+            },
+            //打开全屏小视频
+            videoFullScreen() {
+                var srcTemp = "https://media.w3.org/2010/05/sintel/trailer.mp4"
+                $(".fullScreenWrap video").remove()
+                $(".fullScreenWrap").append($('<video id="video1" width="100%" height="100%" src="' + srcTemp + '" autoplay></video>'))
+
+                $(".fullScreen").show()
+
+                $(".fullScreen video").click(function (event) {
+                    event.stopPropagation()
+                    console.log(this.paused)
+                    if (this.paused) {
+                        this.play()
+                    } else {
+                        this.pause()
+                    }
+                })
+
+                //进度条
+                setInterval(function () {
+                    var vid = document.getElementById("video1")
+                    if (vid.currentTime >= vid.duration) {
+                        //触发
+                        return false
+                    }
+                    console.log(vid.currentTime, vid.duration)
+                    document.getElementsByClassName("progressBar")[0].style.width = (vid.currentTime / vid.duration) * 100 + "%"
+                }, 50);
+            },
+            //关闭全屏小视频
+            closeFullScreen() {
+                $(".fullScreen").hide()
             }
         }
     });
