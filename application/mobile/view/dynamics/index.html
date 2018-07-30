@@ -32,7 +32,7 @@
                     </ul>
                 </div>
                 <div class="tabCut" :class="{actived:nowPage=='attended'}" @click="cutTab('attended')">
-                    关注
+                    关注{$co_name}
                 </div>
                 <div class="tabCut" :class="{actived:nowPage=='video'}" @click="cutTab('video')">
                     叽喳
@@ -62,7 +62,7 @@
                             </div>
                             <div class="item-content">
                                 <a :href="'http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/'+item.dynamic_id+'.html'">
-                                    <p>{{item.content}}{$co_name}</p>
+                                    <p>{{item.content}}</p>
                                 </a>
                                 <!-- <img v-for="img in item.image" src="__STATIC__/images/icon/tx.png"> -->
                             </div>
