@@ -14,7 +14,7 @@ class Dynamics extends Base {
      * @return [type] [description]
      */
     public function index(){
-        $this->assign('co_name', cookie('co_name'));
+        // $this->assign('co_name', cookie('co_name'));
         return $this->fetch();
     }
 
