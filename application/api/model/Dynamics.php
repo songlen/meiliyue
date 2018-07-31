@@ -2,6 +2,8 @@
 namespace app\api\model;
 
 use think\Model;
+use Alchemy\BinaryDriver\ProcessBuilderFactoryAwareInterface;
+
 
 class Dynamics extends Model {
 
