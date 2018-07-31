@@ -2,7 +2,7 @@
 namespace app\api\model;
 
 use think\Model;
-use Alchemy\BinaryDriver;
+use Alchemy\BinaryDriver\ConfigurationAwareInterface;
 
 class Dynamics extends Model {
 
