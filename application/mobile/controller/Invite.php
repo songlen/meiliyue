@@ -65,13 +65,10 @@ class Invite extends Base {
             }
         }
         
-        cookie('co_name', '333');
 
         if($this->request->isAjax()){
         	response_success($list);
         } else {
-echo cookie('co_name');
-            $this->assign('co_name', cookie('co_name'));
 	        $this->assign('lists', $lists);
 	        return $this->fetch();
         }
