@@ -270,8 +270,8 @@ class User extends Base {
     }
 
     public function homePage(){
-        $user_id = I('user_id', 1);
-        $toUserId = I('toUserId', 2);
+        $user_id = I('user_id');
+        $toUserId = I('toUserId');
         /************ 获得自己的信息 **************/
         $user = M('users')->where('user_id', $user_id)->find();
 
@@ -298,23 +298,22 @@ class User extends Base {
         }
         
         /************** 他的邀约 *********/
-        $data['invite'] = M('invite')->where('user_id', $toUserInfo)
+        $data['invite'] = M('invite')->where('user_id', $toUserId)
             ->field('id, title')
             ->order('id desc')
             ->limit(3)
             ->select();
         /************** 他的动态 *********/
-        $data['dynamics'] = M('invite')->where('user_id', $toUserInfo)
+        $data['dynamics'] = M('invite')->where('user_id', $toUserId)
             ->field('id, title')
             ->order('id desc')
             ->find();
 
         /************** 他的照片 *********/
-        $data['photos'] = M('user_photo')->where('user_id', $toUserInfo)
+        $data['photos'] = M('user_photo')->where('user_id', $toUserId)
             ->field('id, thumb, url, type, file_type')
             ->order('id desc')
             ->select();
-
 
 
         response_success($data);
