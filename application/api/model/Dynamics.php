@@ -20,8 +20,8 @@ class Dynamics extends Model {
             // 保存视频路径
             if($data['video']){
                $video = $data['video'];
-               // vendor('Alchemy.BinaryDriver.ProcessRunner');
-               vendor('Alchemy.BinaryDriver.ProcessRunnerInterface');
+               vendor('Alchemy.BinaryDriver.Listeners.ListenerInterface');
+               vendor('Alchemy.BinaryDriver.Listeners.Listeners');
                vendor('Alchemy.BinaryDriver.ProcessRunner');
                vendor('Alchemy.BinaryDriver.ProcessBuilderFactoryInterface');
                vendor('Alchemy.BinaryDriver.ProcessBuilderFactory');
