@@ -19,6 +19,10 @@ class Dynamics extends Model {
             // 保存视频路径
             if($data['video']){
                $video = $data['video'];
+               vendor('Doctrine.Common.Cache.MultiPutCache');
+               vendor('Doctrine.Common.Cache.MultiGetCache');
+               vendor('Doctrine.Common.Cache.ClearableCache');
+               vendor('Doctrine.Common.Cache.FlushableCache');
                vendor('Doctrine.Common.Cache.Cache');
                vendor('Doctrine.Common.Cache.CacheProvider');
                vendor('Doctrine.Common.Cache.ArrayCache');
