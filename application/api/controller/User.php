@@ -155,6 +155,21 @@ class User extends Base {
         response_success($message);
     }
 
+    public function commentList(){
+        $user_id = I('user_id');
+        $page = I('page', 1);
+
+        $start_limit = ($page-1)*20;
+        $lists =  M('dynamics_comment')->alias('dc')
+            ->join('dynamics d', 'd.dynamic_id=d.id', 'left')
+            ->join('users u', 'u.user_id=d.commentator_id', 'left')
+            ->where('cd.replay_user_id', $user_id)
+            ->field('d.type, d.description, d.content, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.age, dc.dynamic_id, dc.content')
+            ->select($start_limit, 20);
+
+
+    }
+
     // 身份认证
     public function identityAuth(){
         $user_id = I('user_id');
@@ -367,7 +382,7 @@ class User extends Base {
         $data['longitude'] = I('longitude');
         $data['latitude'] = I('latitude');
 
-        if(M('users')->where('user_id', $user_id)->update($data)){
+        if(M('users')->where('user_id', $user_id)->update($data) !== false){
             response_success('', '操作成功');
         } else {
             response_error('', '操作失败');
@@ -383,7 +398,7 @@ class User extends Base {
         $field = I('field');
         $fieldValue = I('fieldValue');
 
-        if(M('users')->where('user_id', $user_id)->setField($field, $fieldValue)){
+        if(M('users')->where('user_id', $user_id)->setField($field, $fieldValue) !== false){
             response_success('', '操作成功');
         } else {
             response_error('', '操作失败');
