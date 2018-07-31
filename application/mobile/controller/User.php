@@ -7,33 +7,10 @@ use think\db;
 
 class User extends Base {
 
-    public $user_id = 0;
-    public $user = array();
 
-    /*
-    * 初始化操作
-    */
-    public function _initialize()
-    {
-        /*parent::_initialize();
-        if (session('?user')) {
-            $session_user = session('user');
-            $select_user = M('users')->where("user_id", $session_user['user_id'])->find();
-            $oauth_users = M('OauthUsers')->where(['user_id'=>$session_user['user_id']])->find();
-            empty($oauth_users) && $oauth_users = [];
-            $user =  array_merge($select_user,$oauth_users);
-            session('user', $user);  //覆盖session 中的 user
-            $this->user = $user;
-            $this->user_id = $user['user_id'];
-            $this->assign('user', $user); //存储用户信息
-        }
-        $nologin = array(
-            'login', 'pop_login', 'do_login', 'logout', 'verify', 'set_pwd', 'finished',
-            'verifyHandle', 'reg', 'send_sms_reg_code', 'find_pwd', 'check_validate_code',
-            'forget_pwd', 'check_captcha', 'check_username', 'send_validate_code', 'express' , 'bind_guide', 'bind_account',
-        );*/
+    public function comment(){
+        $this->fetch();
     }
-
    
     /**
      * [visitors 来访者]
@@ -81,7 +58,6 @@ class User extends Base {
      */
     public function friend(){
         $user_id = I('user_id', 1);
-
 
         $lists = M('friend')->alias('f')
             ->join('users u', 'f.friend_id = u.user_id', 'left')
