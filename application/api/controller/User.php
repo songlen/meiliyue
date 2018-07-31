@@ -273,7 +273,7 @@ class User extends Base {
         $user_id = I('user_id', 1);
         $toUserId = I('toUserId', 2);
         /************ 获得自己的信息 **************/
-        $user = cookie('user');
+        $user = M('users')->where('user_id', $user_id)->find();
 
         /*********** 获得对方信息 ************/
         $toUserInfo = M('users')->where('user_id', $toUserId)->find();
@@ -323,7 +323,8 @@ class User extends Base {
     public function myHomePage(){
         $user_id = I('user_id', 1);
         /************ 获得自己的信息 **************/
-        $user = cookie('user');
+        $user = M('users')->where('user_id', $user_id)->find();
+        unset($user['password']);
 
         $data['baseinfo'] = $user;
 
