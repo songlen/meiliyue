@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title>动态</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- jquery-weui-css -->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
+    <link rel="stylesheet" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
+    <!-- 页面-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/dongtai-common.css">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script src="__STATIC__/js/vue.js"></script>
-    <script src="__STATIC__/js/Dongtai.js"></script>
 </head>
 
 <body class="dongtai">
     <div class="vueWrap" id="dongtaiApp">
-
         <div class="allWrap" :class="{blur:isReleasing}">
             <header>
                 <div class="tabCut" v-cloak :class="{actived:nowPage=='area'}" @click="cutTab('area')">
@@ -39,6 +39,15 @@
                 </div>
             </header>
 
+            <!-- 下拉刷新 -->
+            <div class="weui-pull-to-refresh__layer">
+                <div class='weui-pull-to-refresh__arrow'></div>
+                <div class='weui-pull-to-refresh__preloader'></div>
+                <div class="down">下拉刷新</div>
+                <div class="up">释放刷新</div>
+                <div class="refresh">正在刷新</div>
+            </div>
+
             <div class="pageWrap">
 
                 <div class="list-page area-page" v-show="nowPage=='area'">
@@ -47,7 +56,7 @@
                             <div class="item-head">
                                 <div class="item-headWrap">
                                     <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
-                                    <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                                    <!-- <img v-cloak v-else src="__STATIC__   /images/icon/tx.png"> -->
                                 </div>
                                 <div class="item-head-text">
                                     <div>
@@ -68,16 +77,16 @@
                             </div>
                             <div class="item-comment">
                                 <div class="person" v-cloak v-if="item.viewer_count>0">
-                                    <img src="__STATIC__/images/icon/kekan.png">
+                                    <img src="__STATIC__   /images/icon/kekan.png">
                                     <span>{{item.viewer_count}}</span>
                                 </div>
                                 <div>
-                                    <img src="__STATIC__/images/icon/price.png">
+                                    <img src="__STATIC__   /images/icon/price.png">
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
                                     <div class="flowerWrap" @click="sendFlower">
-                                        <img src="__STATIC__/images/icon/花1.png">
+                                        <img src="__STATIC__   /images/icon/花1.png">
                                         <img style="display: none;" src="__STATIC__/images/icon/花2.png">
                                     </div>
                                     <span class="flowerNum" v-cloak v-if="item.flower_num>0">{{item.flower_num}}</span>
@@ -93,7 +102,7 @@
                             <div class="item-head">
                                 <div class="item-headWrap">
                                     <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
-                                    <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                                    <!-- <img v-cloak v-else src="__STATIC__   /images/icon/tx.png"> -->
                                 </div>
                                 <div class="item-head-text">
                                     <div>
@@ -114,16 +123,16 @@
                             </div>
                             <div class="item-comment">
                                 <div class="person" v-cloak v-if="item.viewer_count>0">
-                                    <img src="__STATIC__/images/icon/kekan.png">
+                                    <img src="__STATIC__   /images/icon/kekan.png">
                                     <span>{{item.viewer_count}}</span>
                                 </div>
                                 <div>
-                                    <img src="__STATIC__/images/icon/price.png">
+                                    <img src="__STATIC__   /images/icon/price.png">
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
                                     <div class="flowerWrap" @click="sendFlower">
-                                        <img src="__STATIC__/images/icon/花1.png">
+                                        <img src="__STATIC__   /images/icon/花1.png">
                                         <img style="display: none;" src="__STATIC__/images/icon/花2.png">
                                     </div>
                                     <span class="flowerNum" v-cloak v-if="item.flower_num>0">{{item.flower_num}}</span>
@@ -135,8 +144,12 @@
 
                 <div class="shortVideo-page" v-show="nowPage=='video'">
                     <ul>
-                        <li>
-                            <video class="mVideo" src=""></video>
+                        <li @click="videoFullScreen">
+                            <div class="mVideo">
+                                <video src=""></video>
+                            </div>
+
+
                             <div>
                                 <div>
                                     <span class="name">沫沫</span>
@@ -156,23 +169,6 @@
 
             </div>
 
-            <!-- <footer>
-                        <ul>
-                            <li>
-                                <a href="javascript:;">在线</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;">邀约</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;">动态</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;">我的</a>
-                            </li>
-                        </ul>
-                    </footer> -->
-
             <div class="mask" v-cloak v-if="isReleasing"></div>
 
         </div>
@@ -184,20 +180,20 @@
         <div class="release-start" v-cloak v-show="isReleasing">
             <h5>发布动态</h5>
             <div class="release-group">
-                <div class="release-btn" @click="openEdit">
-                    <img src="__STATIC__/images/icon/文字@2x.png">
+                <div class="release-btn" @click="openEdit(1)">
+                    <img src="__STATIC__   /images/icon/文字@2x.png">
                     <p>文字</p>
                 </div>
-                <div class="release-btn">
-                    <img src="__STATIC__/images/icon/选照片@2x.png">
+                <div class="release-btn" @click="openEdit(2)">
+                    <img src="__STATIC__   /images/icon/选照片@2x.png">
                     <p>选照片</p>
                 </div>
                 <div class="release-btn">
-                    <img src="__STATIC__/images/icon/拍照@2x.png">
+                    <img src="__STATIC__   /images/icon/拍照@2x.png">
                     <p>拍照</p>
                 </div>
-                <div class="release-btn">
-                    <img src="__STATIC__/images/icon/小视频@2x.png">
+                <div class="release-btn" @click="openEdit(3)">
+                    <img src="__STATIC__   /images/icon/小视频@2x.png">
                     <p>小视频</p>
                 </div>
             </div>
@@ -205,7 +201,32 @@
             <span class="triangle"></span>
         </div>
 
+        <!-- 小视频全屏 -->
+        <div class="fullScreen" style="display: none">
+            <span class="progressBar"></span>
+            <div class="fullScreenScroll">
+                <div class="fullScreenWrap">
+                    <video id="video1" width="100%" height="100%" src="" autoplay></video>
+                </div>
+                <!-- 小视频评论 -->
+                <!-- <div class="">
+
+                </div> -->
+            </div>
+
+            <div class="closeFullScreen" @click="closeFullScreen"></div>
+        </div>
     </div>
+
+    <!-- -------------------------------------- -->
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="__STATIC__/js/vue.js"></script>
+    <!-- jquery-weui-js -->
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
+    <!-- 页面-js -->
+    <script src="__STATIC__/js/Dongtai.js"></script>
 </body>
 
 </html>
