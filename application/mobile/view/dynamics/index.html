@@ -56,7 +56,7 @@
                             <div class="item-head">
                                 <div class="item-headWrap">
                                     <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
-                                    <!-- <img v-cloak v-else src="__STATIC__   /images/icon/tx.png"> -->
+                                    <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
                                 </div>
                                 <div class="item-head-text">
                                     <div>
@@ -77,16 +77,16 @@
                             </div>
                             <div class="item-comment">
                                 <div class="person" v-cloak v-if="item.viewer_count>0">
-                                    <img src="__STATIC__   /images/icon/kekan.png">
+                                    <img src="__STATIC__/images/icon/kekan.png">
                                     <span>{{item.viewer_count}}</span>
                                 </div>
                                 <div>
-                                    <img src="__STATIC__   /images/icon/price.png">
+                                    <img src="__STATIC__/images/icon/price.png">
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
                                     <div class="flowerWrap" @click="sendFlower">
-                                        <img src="__STATIC__   /images/icon/花1.png">
+                                        <img src="__STATIC__/images/icon/花1.png">
                                         <img style="display: none;" src="__STATIC__/images/icon/花2.png">
                                     </div>
                                     <span class="flowerNum" v-cloak v-if="item.flower_num>0">{{item.flower_num}}</span>
@@ -102,7 +102,7 @@
                             <div class="item-head">
                                 <div class="item-headWrap">
                                     <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
-                                    <!-- <img v-cloak v-else src="__STATIC__   /images/icon/tx.png"> -->
+                                    <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
                                 </div>
                                 <div class="item-head-text">
                                     <div>
@@ -123,16 +123,16 @@
                             </div>
                             <div class="item-comment">
                                 <div class="person" v-cloak v-if="item.viewer_count>0">
-                                    <img src="__STATIC__   /images/icon/kekan.png">
+                                    <img src="__STATIC__/images/icon/kekan.png">
                                     <span>{{item.viewer_count}}</span>
                                 </div>
                                 <div>
-                                    <img src="__STATIC__   /images/icon/price.png">
+                                    <img src="__STATIC__/images/icon/price.png">
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
                                     <div class="flowerWrap" @click="sendFlower">
-                                        <img src="__STATIC__   /images/icon/花1.png">
+                                        <img src="__STATIC__/images/icon/花1.png">
                                         <img style="display: none;" src="__STATIC__/images/icon/花2.png">
                                     </div>
                                     <span class="flowerNum" v-cloak v-if="item.flower_num>0">{{item.flower_num}}</span>
@@ -181,19 +181,19 @@
             <h5>发布动态</h5>
             <div class="release-group">
                 <div class="release-btn" @click="openEdit(1)">
-                    <img src="__STATIC__   /images/icon/文字@2x.png">
+                    <img src="__STATIC__/images/icon/文字@2x.png">
                     <p>文字</p>
                 </div>
                 <div class="release-btn" @click="openEdit(2)">
-                    <img src="__STATIC__   /images/icon/选照片@2x.png">
+                    <img src="__STATIC__/images/icon/选照片@2x.png">
                     <p>选照片</p>
                 </div>
                 <div class="release-btn">
-                    <img src="__STATIC__   /images/icon/拍照@2x.png">
+                    <img src="__STATIC__/images/icon/拍照@2x.png">
                     <p>拍照</p>
                 </div>
                 <div class="release-btn" @click="openEdit(3)">
-                    <img src="__STATIC__   /images/icon/小视频@2x.png">
+                    <img src="__STATIC__/images/icon/小视频@2x.png">
                     <p>小视频</p>
                 </div>
             </div>
