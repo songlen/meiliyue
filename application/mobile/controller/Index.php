@@ -19,7 +19,7 @@ use app\common\logic\wechat\WechatUtil;
 class Index extends Base {
 
     public function index(){
-        
+        cookie('co_name', '111');
         $this->assign('flash_sale_list',$flash_sale_list);
         $this->assign('start_time',$start_time);
         $this->assign('end_time',$end_time);
