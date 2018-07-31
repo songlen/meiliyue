@@ -8,7 +8,6 @@ use think\Config;
  
 class Invite extends Base {
 	public function index(){
-        cookie('co_name', '11111111');
         $user_longitude = I('longitude');
         $user_latitude = I('latitude');
         $type = I('type');
