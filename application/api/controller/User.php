@@ -210,7 +210,13 @@ class User extends Base {
     }
 
     public function cancelAttention(){
-        
+        $user_id = I('user_id');
+        $friend_id = I('friend_id');
+
+
+        M('friend')->where(array('user_id'=>$user_id, 'friend_id'=>$friend_id))->delete();
+        M('friend')->where(array('user_id'=>$friend_id, 'friend_id'=>$user_id))->setField('twoway', 0);
+        response_success('', '操作成功');
     }
 
     public function homePage(){
