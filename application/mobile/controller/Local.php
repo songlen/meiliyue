@@ -12,13 +12,10 @@ class Invite extends Base {
 		$user_id = I('user_id');
 
 		$userinfo =  M('users')->where('user_id', $user_id)->find();
+		unset($userinfo['password']);
 
 		$this->assign('userinfo', $userinfo);
 		$this->fetch();
-	}
-
-	public function clear(){
-
 	}
 }
 

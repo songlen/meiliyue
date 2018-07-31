@@ -8,7 +8,14 @@
 <body>
     <script>
         var userinfo = "{$userinfo}";
+        
         sessionStorage.setItem('mUserInfo', JSON.stringify(userinfo))
+
+        window.onbeforeunload = function () {
+            if (sessionStorage.getItem('mUserInfo')) {
+                sessionStorage.setItem('mUserInfo', null)
+            }
+        }
     </script>
 </body>
 

@@ -82,37 +82,8 @@ class User extends Base {
      * @return [type] [description]
      */
     public function attentionFans(){
-        $user_id = I('user_id', 1);
-        $type = I('type', 1);
-        $page = I('page', 1);
-
-
-        if($type == '1'){
-            $join_on = 'f.friend_id = u.user_id';
-            $where['f.user_id'] = $user_id;
-            $field = 'friend_id user_id, head_pic, nickname, twoway';
-        } else {
-            $join_on = 'f.friend_id = u.user_id';
-            $where['f.friend_id'] = $user_id;
-            $field = 'user_id, head_pic, nickname, twoway';
-        }
-
-        $limit_start = ($page-1)*20;
-        $lists = M('friend')->alias('f')
-            ->join('users u', $join_on, 'left')
-            ->where($where)
-            ->order('f.id desc')
-            ->field($field)
-            ->limit($limit_start, 20)
-            ->select();
-
-        if($this->request->isAjax()){
-            response_success($lists);
-        } else {
-
-            $this->assign('lists', $lists);
-            return $this->fetch();
-        }
+        
+        return $this->fetch();
     }
 
     /**
