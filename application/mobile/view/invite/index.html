@@ -251,6 +251,8 @@
     <!-- my-js -->
     <script>
         $(function () {
+            var GlobalHost = "http://meiliyue.localhost.com/index.php"
+
             //页面宽高
             $(".options li").width($(".optionsWrap").width() / 6)
 
@@ -267,6 +269,7 @@
                     addressFixed: false,
                     showSelect: false,
                     inviteList: [],
+                    nowPageIndex: 1, //当前页码
                     isPlusing: false,
 
                     selectedText: "辽宁", //目前 默认值 辽宁
@@ -275,8 +278,12 @@
                     sortList: ["最近发布", "近期约会", "离我最近"],
                     nowSortIndex: 0,
                     nowSex: "全部", //当前性别： 全部 男 女
+                    nowProvince: null, //代码
+                    nowCity: null, //代码
                     onlyGift: false,
                     onlyVideo: false,
+
+                    isLoading: false
                 },
                 computed: {
                     type() {
@@ -284,12 +291,64 @@
                             .indexOf(this.nowOptionBtn)
                     }
                 },
-                beforeMount() {
-                    // this.getInviteList()
-                },
                 mounted() {
+                    let _self = this
                     //监听scrollTop，改变筛选条样式
                     document.getElementsByClassName('indexPage')[0].addEventListener('scroll', this.handleAddress)
+                    //下拉刷新
+                    $(".dropRefresh").pullToRefresh(function () {
+                        console.log("刷新")
+                        let sex
+                        switch (_self.nowSex) {
+                            case "全部":
+                                sex = null
+                                break;
+                            case "男":
+                                sex = "1"
+                                break;
+                            case "女":
+                                sex = "2"
+                                break;
+                            default:
+                                break;
+                        }
+                        _self.getInviteList({
+                            type: _self.type,
+                            sex: sex,
+                            province: _self.nowProvince,
+                            city: _self.nowCity,
+                            auth_video: _self.onlyVideo ? "1" : "0"
+                        })
+                    })
+                    // 滑动加载
+                    $(".dropRefresh").infinite(0)
+                    $(".dropRefresh").on("infinite", function () {
+                        if (_self.isLoading) return;
+                        _self.isLoading = true;
+                        console.log("滑动加载")
+                        let sex
+                        switch (_self.nowSex) {
+                            case "全部":
+                                sex = null
+                                break;
+                            case "男":
+                                sex = "1"
+                                break;
+                            case "女":
+                                sex = "2"
+                                break;
+                            default:
+                                break;
+                        }
+                        _self.getInviteList({
+                            type: _self.type,
+                            sex: sex,
+                            province: _self.nowProvince,
+                            city: _self.nowCity,
+                            auth_video: _self.onlyVideo ? "1" : "0",
+                            page: _self.nowPageIndex + 1
+                        }, true)
+                    });
 
                     //city picker
                     $("#city-picker").cityPicker({
@@ -304,14 +363,16 @@
 
                         this.nowOptionBtn = inviIndexPageData.nowOptionBtn
                         this.inviteList = inviIndexPageData.inviteList
-
+                        this.nowPageIndex = inviIndexPageData.nowPageIndex
                         this.selectedText = inviIndexPageData.selectedText
+                        this.nowProvince = inviIndexPageData.nowProvince
+                        this.nowCity = inviIndexPageData.nowCity
 
                         //滚动位置
                         setTimeout(function () {
                             document.getElementsByClassName('indexPage')[0].scrollTop =
                                 inviIndexPageData.pageScrollTop
-                        }, 1)
+                        }, 0)
 
                         return
                     }
@@ -327,8 +388,9 @@
                         sex = null,
                         province = null,
                         city = null,
-                        auth_video = null
-                    } = {}) {
+                        auth_video = null,
+                        page = 1,
+                    } = {}, isScroll) {
                         //
                         let _self = this
                         let postDataTemp = {
@@ -338,7 +400,8 @@
                             sex: sex,
                             province: province,
                             city: city,
-                            auth_video: auth_video
+                            auth_video: auth_video,
+                            page: page
                         }
                         console.log(postDataTemp)
                         $.ajax({
@@ -348,9 +411,18 @@
                             dataType: "json",
                             success: function (result) {
                                 console.log(result.data)
-                                _self.inviteList = result.data
-                                //测试用
-                                _self.inviteList = _self.inviteList.concat(_self.inviteList)
+                                if (isScroll) { //是滚动
+                                    _self.inviteList = _self.inviteList.concat(result.data)
+                                } else {
+                                    _self.inviteList = result.data
+                                }
+                                if (isScroll && result.data.length !== 0) {
+                                    _self.nowPageIndex = _self.nowPageIndex + 1
+                                }
+
+
+                                $(".dropRefresh").pullToRefreshDone();
+                                _self.isLoading = false;
                             }
                         })
                     },
@@ -364,19 +436,25 @@
                     },
                     //默认img
                     defaultImg(event) {
-                        event.target.src = "__STATIC__/images/icon/tx.png"
+                        event.target.src = "../images/icon/tx.png"
                     },
                     //获取地理位置
                     getLocalAddress() {
 
                     },
                     //打开邀约详情页面
-                    openInviteDetail() {
+                    openInviteDetail(item) {
+                        console.log(item)
+                        //return
+                        this.savePageToSession()
 
+                        let inviteItem = JSON.stringify(item)
+
+                        window.location.href = "travel.html?inviteItem=" + inviteItem
                     },
                     //控制筛选栏的位置
                     handleAddress() {
-                        console.log(document.getElementsByClassName('indexPage')[0].scrollTop)
+                        // console.log(document.getElementsByClassName('indexPage')[0].scrollTop)
                         let indexPageScroll = document.getElementsByClassName('indexPage')[0].scrollTop
                         if (indexPageScroll >= 204) {
                             this.addressFixed = true
@@ -412,13 +490,17 @@
                             }, 300)
 
                             this.selectedText = "辽宁"
+                            this.nowProvince = null
+                            this.nowCity = null
                         }
                     },
                     //跳到邀约发布页面
                     openReleaseInvite(type) { //type number 邀约类型
                         this.savePageToSession()
 
-                        window.location.href = "http://meiliyue.localhost.com/index.php/mobile/invite/add/type/" + type //传邀约类型
+                        //window.location.href = "invi-detail.html?type=" + type //传邀约类型
+                        console.log(GlobalHost + "/mobile/invite/add/type/" + type)
+                        window.location.href = GlobalHost + "/mobile/invite/add/type/" + type + ".html"
                     },
                     //跳转页面之前，保存页面信息
                     savePageToSession() {
@@ -427,7 +509,10 @@
                             nowOptionBtn: this.nowOptionBtn,
                             // addressFixed: this.addressFixed,
                             inviteList: this.inviteList,
+                            nowPageIndex: this.nowPageIndex,
                             selectedText: this.selectedText,
+                            nowProvince: this.nowProvince,
+                            nowCity: this.nowCity,
 
                             pageScrollTop: document.getElementsByClassName('indexPage')[0].scrollTop
                         }
@@ -477,6 +562,8 @@
                         if (cityCodes) {
                             provinceCode = cityCodes.split(",")[0]
                             cityCode = cityCodes.split(",")[1]
+                            this.nowProvince = provinceCode
+                            this.nowCity = cityCode
                         }
                         let onlyGift = this.onlyGift
                         let onlyVideo = this.onlyVideo
@@ -504,6 +591,7 @@
                             city: cityCode,
                             auth_video: onlyVideo ? "1" : "0"
                         })
+
                     }
                 }
             })
