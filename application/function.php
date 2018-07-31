@@ -1013,3 +1013,29 @@ function getRegionNameByCode($code){
     $region = M('region')->where('code', $code)->field('name')->find();
     return $region['name'];
 }
+
+
+function timeFormat($time)
+{
+    // 当天最大时间
+    $todayLast = strtotime(date('Y-m-d 23:59:59'));
+    $agoTimeTrue = time() - $time;
+    $agoTime = $todayLast - $time;
+    $agoDay = floor($agoTime / 86400);
+
+    if ($agoTimeTrue < 60) {
+        $result = '刚刚';
+    } elseif ($agoTimeTrue < 3600) {
+        $result = (ceil($agoTimeTrue / 60)) . '分钟前';
+    } elseif ($agoTimeTrue < 3600 * 12) {
+        $result = (ceil($agoTimeTrue / 3600)) . '小时前';
+    } elseif ($agoDay == 1) {
+        $result = '昨天 ';
+    } elseif ($agoDay == 2) {
+        $result = '前天 ';
+    } else {
+        $format = date('Y') != date('Y', $time) ? "Y-m-d" : "m-d";
+        $result = date($format, $time);
+    }
+    return $result;
+}

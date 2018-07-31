@@ -12,11 +12,10 @@ class Article extends Base {
 		parent::__construct();
 	}
     
-    // 夺宝详情
+    // 
     public function detail(){
         $article_id = I('article_id');
 
-        // 活动详情
         $info = M('Article')
             ->where('is_open', 1)
             ->where('article_id', $article_id)
