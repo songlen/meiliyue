@@ -21,8 +21,10 @@ class Dynamics extends Model {
                $video = $data['video'];
                 // 创建视频缩略图
                 $ffmpeg = \FFMpeg\FFMpeg::create(array(
-                    'ffmpeg.binaries'  => VENDOR_PATH.'php-ffmpeg/bin/ffmpeg.exe',
-                    'ffprobe.binaries' => VENDOR_PATH.'php-ffmpeg/bin/ffprobe.exe',
+                    // 'ffmpeg.binaries'  => VENDOR_PATH.'php-ffmpeg/bin/ffmpeg.exe',
+                    // 'ffprobe.binaries' => VENDOR_PATH.'php-ffmpeg/bin/ffprobe.exe',
+                    'ffmpeg.binaries'  => '/usr/bin/ffmpeg',
+                    'ffprobe.binaries' => '/usr/bin/ffprobe',
                 ));
 
                 $videoObj = $ffmpeg->open(ROOT_PATH.$video);

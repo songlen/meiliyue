@@ -15,62 +15,6 @@ class User extends Base {
 		parent::__construct();
 	}
 
-    public function wx_login(){
-        $openid = I('openid');
-        $nickname = I('nickname');
-        $headimgurl = I('headimgurl');
-        $sex = I('sex/d');
-
-        // 检测用户是否已注册
-        $user = Db::name('users')->where("openid=$openid")->find();
-        if($user){
-            $user_id = $user['user_id'];
-        } else {
-            $data = array(
-                'openid' => $openid,
-                'nickname' => $nickname,
-                'head_pic' => $headimgurl,
-                'sex' => $sex,
-                'token' => md5(time().mt_rand(1,999999999)),
-            );
-
-            $user_id = Db::name('users')->insertGetId($data);
-        }
-
-        $userInfo = $this->getUserInfo($user_id);
-
-        response_success($userInfo);
-    }
-
-    // 忘记密码
-    public function resetPwd(){
-        $mobile = I('mobile');
-        $code = I('code');
-        $password = I('password');
-        $password_confirm = I('password_confirm');
-
-        if(check_mobile($mobile) == false){
-            response_error('', '手机号码有误');
-        }
-        // 检测验证码
-        $SmsLogic = new SmsLogic();
-        if($SmsLogic->checkCode($mobile, $code, '1', $error) == false) response_error('', $error);
-
-        if($password != $password_confirm){
-            response_error('', '两次密码输入不一致');
-        }
-
-        $user = Db::name('users')->where("mobile = $mobile")->find();
-        if(empty($user)){
-            response_error('', '手机号不存在');
-        }
-
-        $password = encrypt($password);
-        Db::name('users')->where("mobile=$mobile")->update(array('password'=>$password));
-
-        response_success('', '操作成功');
-    }
-
     /**
      * [uploadFile 上传头像/认证视频]
      * @param [type] $[type] [文件类型 head_pic 头像 auth_video 视频认证]
