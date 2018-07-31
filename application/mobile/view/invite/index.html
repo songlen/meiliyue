@@ -20,11 +20,11 @@
 
     <div class="main-content invitation indexPage" id="indexPageApp">
 
-        <div :class="{blur:isPlusing}">
+        <div style="height: 100%;" :class="{blur:isPlusing}">
 
             <div class="view">
                 <a href="javascript:void(0)">
-                    <img src="__STATIC__/images/pic/pic2.png">
+                    <img src="__STATIC__   /images/pic/pic2.png">
                 </a>
             </div>
             <div class="classify">
@@ -79,7 +79,8 @@
                     </div>
                 </div>
             </div>
-             <!-- 下拉刷新 -->
+
+            <!-- 下拉刷新 -->
             <div class="weui-pull-to-refresh__layer">
                 <div class='weui-pull-to-refresh__preloader'></div>
                 <div class="down"></div>
@@ -108,7 +109,7 @@
                                             <span class="age">23</span>
                                         </span>
                                         <span class="img">
-                                            <img v-cloak v-if="item.auth_video_status==1" src="__STATIC__/images/icon/camera.png">
+                                            <img v-cloak v-if="item.auth_video_status==1" src="__STATIC__  /images/icon/camera.png">
                                         </span>
                                         <span class="job" style="display: none;">职业经理人</span>
                                     </div>
@@ -118,7 +119,7 @@
                             <div class="bottom clearfix">
                                 <p class="title">
                                     <span class="bigDot"></span>{{item.title}}</p>
-                                <div class="more" @click="openInviteDetail">
+                                <div class="more" @click="openInviteDetail(item)">
                                     <ul>
                                         <li v-cloak v-if="item.description&&item.description!==''">
                                             <span class="smallDot"></span>{{item.description}}</li>
@@ -135,7 +136,8 @@
                         </li>
                     </ul>
                 </div>
-                 <!-- 滑动加载 -->
+
+                <!-- 滑动加载 -->
                 <div class="weui-loadmore">
                     <i class="weui-loading"></i>
                     <span class="weui-loadmore__tips">正在加载</span>
@@ -187,7 +189,7 @@
             <span class="maskTrgle"></span>
         </div>
 
-        <!-- 筛选弹窗 -->
+        <!-- 筛选弹窗 页面 -->
         <div class="select-page" :class="{actived:showSelect}">
             <header>
                 <a href="javascript:void(0)" class="back fl closeSelect" @click="closeSelect"></a>
@@ -448,7 +450,7 @@
                     },
                     //默认img
                     defaultImg(event) {
-                        event.target.src = "../images/icon/tx.png"
+                        event.target.src = "__STATIC__ /images/icon/tx.png"
                     },
                     //获取地理位置
                     getLocalAddress() {
