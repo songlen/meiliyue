@@ -20,7 +20,7 @@ class Index extends Base {
      * @return [type] [description]
      */
     public function index(){
-        echo cookie('co_name');
+        p(cookie('co_name'));
         $page = I('page', 1);
         $order_type = I('order_type', '1');
         $sex = I('sex');
