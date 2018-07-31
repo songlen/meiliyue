@@ -2,7 +2,6 @@
 namespace app\api\model;
 
 use think\Model;
-use Alchemy\BinaryDriver\ConfigurationAwareInterface;
 
 class Dynamics extends Model {
 
@@ -20,6 +19,7 @@ class Dynamics extends Model {
             // 保存视频路径
             if($data['video']){
                $video = $data['video'];
+               vendor('Alchemy.BinaryDriver.ConfigurationAwareInterface');
                vendor('Alchemy.BinaryDriver.BinaryInterface');
                vendor('Alchemy.BinaryDriver.AbstractBinary');
                vendor('Doctrine.Common.Cache.MultiPutCache');
