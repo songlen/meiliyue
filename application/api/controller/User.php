@@ -163,7 +163,7 @@ class User extends Base {
         $lists =  M('dynamics_comment')->alias('dc')
             ->join('dynamics d', 'd.dynamic_id=d.id', 'left')
             ->join('users u', 'u.user_id=d.commentator_id', 'left')
-            ->where('cd.reply_user_id', $user_id)
+            ->where('dc.reply_user_id', $user_id)
             ->field('d.type, d.description, d.content, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.age, dc.dynamic_id, dc.content')
             ->select($start_limit, 20);
 
