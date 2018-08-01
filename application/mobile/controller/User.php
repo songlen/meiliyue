@@ -141,4 +141,8 @@ class User extends Base {
 
         return $this->fetch();
     }
+
+    public function editHomePage(){
+        return $this->fetch();
+    }
 }
