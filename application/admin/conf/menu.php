@@ -6,15 +6,6 @@ return	array(
 						// array('name'=>'友情链接','act'=>'linkList','op'=>'Article'),
 						array('name'=>'清除缓存','act'=>'cleanCache','op'=>'System'),
 				)),
-				array('name' => '会员','child'=>array(
-						array('name'=>'会员列表','act'=>'index','op'=>'User'),
-						array('name'=>'会员等级','act'=>'levelList','op'=>'User'),
-						array('name'=>'充值记录','act'=>'recharge','op'=>'User'),
-						array('name'=>'提现申请','act'=>'withdrawals','op'=>'User'),
-						array('name'=>'汇款记录','act'=>'remittance','op'=>'User'),
-						//array('name'=>'会员整合','act'=>'integrate','op'=>'User'),
-						array('name'=>'会员签到','act'=>'signList','op'=>'User'),
-				)),
 				array('name' => '广告','child' => array(
 						array('name'=>'广告列表','act'=>'adList','op'=>'Ad'),
 						array('name'=>'广告位置','act'=>'positionList','op'=>'Ad'),
@@ -24,18 +15,18 @@ return	array(
 						array('name' => '文章分类', 'act'=>'categoryList', 'op'=>'Article'),
 				)),
 				array('name' => '权限','child'=>array(
-						array('name' => '管理员列表', 'act'=>'index', 'op'=>'Admin'),
-						array('name' => '角色管理', 'act'=>'role', 'op'=>'Admin'),
-						array('name'=>'权限资源列表','act'=>'right_list','op'=>'System'),
-						array('name' => '管理员日志', 'act'=>'log', 'op'=>'Admin'),
-						array('name' => '供应商列表', 'act'=>'supplier', 'op'=>'Admin'),
+					array('name' => '管理员列表', 'act'=>'index', 'op'=>'Admin'),
+					array('name' => '角色管理', 'act'=>'role', 'op'=>'Admin'),
+					array('name'=>'权限资源列表','act'=>'right_list','op'=>'System'),
+					array('name' => '管理员日志', 'act'=>'log', 'op'=>'Admin'),
+					array('name' => '供应商列表', 'act'=>'supplier', 'op'=>'Admin'),
 				)),
 			
-				array('name' => '模板','child'=>array(
+				/*array('name' => '模板','child'=>array(
 						array('name' => '模板设置', 'act'=>'templateList', 'op'=>'Template'),
 						//array('name' => '自定义手机模板', 'act'=>'index', 'op'=>'Block'),
 						array('name' => '自定义页面', 'act'=>'pageList', 'op'=>'Block'),
-//						array('name' => '手机首页', 'act'=>'mobile_index', 'op'=>'Template'),
+						//array('name' => '手机首页', 'act'=>'mobile_index', 'op'=>'Template'),
 				)),
 				array('name' => '数据','child'=>array(
 						array('name' => '数据备份', 'act'=>'index', 'op'=>'Tools'),
@@ -43,10 +34,10 @@ return	array(
 						//array('name' => 'ecshop数据导入', 'act'=>'ecshop', 'op'=>'Tools'),
 						//array('name' => '淘宝csv导入', 'act'=>'taobao', 'op'=>'Tools'),
 						//array('name' => 'SQL查询', 'act'=>'log', 'op'=>'Admin'),
-				))
+				))*/
 	)),
 		
-	'shop'=>array('name'=>'商城','child'=>array(
+	/*'shop'=>array('name'=>'商城','child'=>array(
 				array('name' => '商品','child' => array(
 				    array('name' => '商品列表', 'act'=>'goodsList', 'op'=>'Goods'),
 				    array('name' => '淘宝导入', 'act'=>'index', 'op'=>'Import'),
@@ -79,5 +70,24 @@ return	array(
 					array('name' => '运营概览', 'act'=>'finance', 'op'=>'Report'),
 					array('name' => '平台支出记录','act'=>'expense_log','op'=>'Report'),
 			)),
+	)),*/
+	'module' => array('name'=>'模块', 'child'=>array(
+		array('name' => '会员','child'=>array(
+			array('name'=>'会员列表','act'=>'index','op'=>'User'),
+			array('name'=>'会员等级','act'=>'levelList','op'=>'User'),
+			array('name'=>'充值记录','act'=>'recharge','op'=>'User'),
+			array('name'=>'提现申请','act'=>'withdrawals','op'=>'User'),
+			array('name'=>'汇款记录','act'=>'remittance','op'=>'User'),
+			//array('name'=>'会员整合','act'=>'integrate','op'=>'User'),
+			array('name'=>'会员签到','act'=>'signList','op'=>'User'),
+		)),
+		array('name'=>'邀约', 'child'=>array(
+
+			
+		)),
+		array('name'=>'动态', 'child'=>array(
+
+			
+		)),
 	)),
 );

@@ -54,27 +54,7 @@
 				  <span class="err" id="err_ad_link" style="color:#F00; display:none;"></span>
 		          <p class="notic"></p>
         	</div>
-        	<div id="link_category"> <!-- 分类链接 -->
-        		  <select name="cat_id1" id="cat_id1" onblur="get_category(this.value,'cat_id2','0');"  class="class-select valid">
-	                <option value="0">请选择商品分类</option>                                      
-	                     <foreach name="cat_list" item="v" key="k" >                                                                           
-	                       <option value="{$v['id']}" <if condition="$v['id'] eq $info[cat_id1]">selected="selected"</if> >
-	                            {$v['name']}
-	                       </option>
-	                     </foreach>
-	              </select>
-	              <select name="cat_id2" id="cat_id2" onblur="get_category(this.value,'cat_id3','0');" class="class-select valid">
-	                <option value="0">请选择商品分类</option>
-	              </select>    
-	              <select name="cat_id3" id="cat_id3" class="class-select valid">
-	                <option value="0">请选择商品分类</option>
-	              </select> 
-        	</div>
-        	<div id="link_goods"> <!-- 商品链接 -->
-        		  <a id="add_type" class="ncap-btn" onclick="select_goods_dialog()">选择商品</a> 
-        		  <span id="goods_name">{$info.goods_name}</span>
-        		  <input name="goods_id" id="goods_id" type="hidden" value="{$info.ad_link}">
-        	</div> 
+
         </dd>
       </dl>
  	
@@ -96,24 +76,24 @@
         </dd>
       </dl>    
        </if>       
-	  <dl class="row">
-        <dt class="tit">
-          <label>开始日期：</label>
-        </dt>
-        <dd class="opt">
-            <input type="text" class="input-txt" id="start_time" name="begin"  value="{$info.start_time|default='2016-01-01'}"/>
-          <span class="err"></span>
-        </dd>
-      </dl>    
-	  <dl class="row">
-        <dt class="tit">
-          <label>结束时间：</label>
-        </dt>
-        <dd class="opt">
-            <input type="text" class="input-txt" id="end_time" name="end"  value="{$info.end_time|default='2019-01-01'}"/>
-          <span class="err"></span>
-        </dd>
-      </dl>        
+	<!--   <dl class="row">
+               <dt class="tit">
+                 <label>开始日期：</label>
+               </dt>
+               <dd class="opt">
+                   <input type="text" class="input-txt" id="start_time" name="begin"  value="{$info.start_time|default='2016-01-01'}"/>
+                 <span class="err"></span>
+               </dd>
+             </dl>    
+       <dl class="row">
+               <dt class="tit">
+                 <label>结束时间：</label>
+               </dt>
+               <dd class="opt">
+                   <input type="text" class="input-txt" id="end_time" name="end"  value="{$info.end_time|default='2019-01-01'}"/>
+                 <span class="err"></span>
+               </dd>
+             </dl>    -->     
       
       <dl class="row">
         <dt class="tit">
@@ -136,18 +116,18 @@
           <p class="notic">请上传图片格式文件,建议图片尺寸{$Request.param.suggestion}(宽*高, 如果不按要求上传图片将会导致前端广告显示不友好)</p>
         </dd>
       </dl>
-      <if condition='$Request.param.is_app_ad eq 0'>
+      <!-- <if condition='$Request.param.is_app_ad eq 0'>
       <dl class="row">
         <dt class="tit">
           <label><em>*</em>背景颜色：</label>
         </dt>
         <dd class="opt">
           <input type="color" placeholder="背景颜色：" class="input-txt" name="bgcolor" value="{$info.bgcolor}"  />
-		  <span class="err" id="err_bgcolor" style="color:#F00; display:none;"></span>
+            <span class="err" id="err_bgcolor" style="color:#F00; display:none;"></span>
           <p class="notic"></p>
         </dd>
       </dl>   
-      </if>           
+      </if>            -->
       <if condition='$Request.param.is_app_ad eq 0'>   		 		       
       <dl class="row">
         <dt class="tit">
