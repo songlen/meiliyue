@@ -161,11 +161,22 @@ class User extends Base {
 
         $start_limit = ($page-1)*20;
         $lists =  M('dynamics_comment')->alias('dc')
-            ->join('dynamics d', 'dc.dynamic_id=d.id', 'left')
+            ->join('dynamics d', 'd.id=dc.dynamic_id', 'left')
             ->join('users u', 'u.user_id=dc.commentator_id', 'left')
             ->where('dc.reply_user_id', $user_id)
             ->field('d.type, d.description, d.content, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.age, dc.dynamic_id, dc.content')
-            ->select($start_limit, 20);
+            ->limit($start_limit, 20)
+            ->select();
+
+        if(is_array($lists) && !empty($lists)){
+            foreach ($lists as &$item) {
+                if(in_array($item['type'], array('2', '3'))){
+                    $image = M('dynamics_image')->where('dynamic_id', $item['dynamic_id'])->find();
+                    $item['image'] = $image['image'] ?  $image['image'] : '';
+                    $item['video'] = $image['video'] ?  $image['video'] : '';
+                }
+            }
+        }
 
         response_success($lists);
     }
