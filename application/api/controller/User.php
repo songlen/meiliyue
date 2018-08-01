@@ -167,7 +167,7 @@ class User extends Base {
             ->field('d.type, d.description, d.content, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.age, dc.dynamic_id, dc.content')
             ->select($start_limit, 20);
 
-
+        response_success($lists);
     }
 
     // 身份认证
