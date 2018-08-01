@@ -1,5 +1,5 @@
 $(function () {
-    var GlobalHost = "http://meiliyue.localhost.com/index.php"
+    var GlobalHost = "http://meiliyue.caapa.org/index.php"
     var dongtaiVm = new Vue({
         el: "#dongtaiApp",
         data: {
@@ -211,7 +211,7 @@ $(function () {
 
                 // window.location.href = "edit.html"
 
-                window.location.href = GlobalHost + "/mobile/invite/add/type/" + type
+                window.location.href = GlobalHost + "/mobile/dynamics/add/type/" + type+".html"
             },
             //头像加载失败，默认图片
             defaultImg(event) {

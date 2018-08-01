@@ -155,7 +155,7 @@ a.close {
 
 .edit-personal-avatar .avatar-pic img {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
 }
 
 .edit-personal-avatar .avatar-content {
@@ -219,6 +219,7 @@ a.close {
     display: flex;
     background-color: #fff;
     margin-top: 0.12rem;
+    margin-bottom: 0.12rem;
 }
 
 .publicPic {
@@ -241,7 +242,7 @@ a.close {
 
 .edit-pic-item img {
     width: 0.66rem;
-    height: 0.66rem;
+    /* height: 0.66rem; */
 }
 
 .edit-pic-item {
@@ -260,14 +261,14 @@ a.close {
     margin-left: -0.16rem;
 }
 
-.publicPic>a {
+.publicPic ul>a {
     display: inline-block;
     width: 0.66rem;
     height: 0.66rem;
     margin: 0.05rem;
 }
 
-.publicPic>a>img {
+.publicPic ul>a>img {
     width: 0.66rem;
     height: 0.66rem;
 }
@@ -281,10 +282,14 @@ a.close {
 }
 
 .myInvite-content .myInvite-tip {
-    height: 0.42rem;
-    border-bottom: 1px solid #f7f7f8;
     line-height: 0.42rem;
     margin-bottom: 0.12rem;
+}
+
+.myInvite-content .myInvite-tip p {
+    border-bottom: 1px solid #f7f7f8;
+    background: url(../images/icon/back.png) right center no-repeat;
+    border-right: 0.12rem solid transparent;
 }
 
 .myInvite-content .myInvite-tip img {
@@ -295,6 +300,10 @@ a.close {
     margin-right: 0.14rem;
 }
 
+.myInvite-content .inviteToMine {
+    height: 0.3rem;
+}
+
 .myInvite-content .releaseInvite {
     height: 0.38rem;
     width: 2.68rem;
@@ -303,6 +312,7 @@ a.close {
     line-height: 0.38rem;
     text-align: center;
     color: #000;
+    margin: 0.05rem 0;
 }
 
 .myTalk {
@@ -365,7 +375,8 @@ a.close {
 }
 
 .aboutMe .aboutMe-contentWrap {
-    flex: 1 0 0;
+    /* flex: 1 0 0; */
+    width: calc(100% - 1.05rem);
 }
 
 .aboutMe .aboutMe-item {
@@ -374,15 +385,29 @@ a.close {
     align-items: center;
 }
 
+.aboutMe .aboutMe-item.satis_parts_item {
+    height: auto;
+    align-content: flex-start;
+    align-items: flex-start;
+}
+
 .aboutMe .aboutMe-item label {
     width: 1.17rem;
 }
 
 .aboutMe .aboutMe-item .aboutMe-item-content {
     flex: 1 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #000;
 }
 
 .aboutMe .aboutMe-item .aboutMe-item-content>a {
+    color: #6a95ff;
+}
+
+.canChoose {
     color: #6a95ff;
 }
 
@@ -409,6 +434,7 @@ a.close {
     color: #cacacd;
 }
 
+.gotoEditHome,
 .avatarOperating {
     position: fixed;
     left: 0;
@@ -418,6 +444,7 @@ a.close {
     z-index: 3;
 }
 
+.gotoEditHome li,
 .avatarOperating li {
     height: 0.48rem;
     border-top: 1px solid #f7f7f7;
@@ -428,6 +455,7 @@ a.close {
     color: #000;
 }
 
+.gotoEditHome li:last-of-type,
 .avatarOperating li:last-of-type {
     border-top: 0.05rem solid #eae9ef;
     color: #7e7e7e;
@@ -452,6 +480,7 @@ a.close {
     background-color: #f2f4fc;
 }
 
+.editHome-page header,
 .report-page header,
 .addfriends-page header,
 .friends-page header,
@@ -858,10 +887,12 @@ a.close {
 .homepage .all-content {
     position: absolute;
     top: 0;
-    bottom: 50px;
+    /* bottom: 50px; */
+    bottom: 0;
     left: 0;
     right: 0;
     overflow-y: auto;
+    padding-bottom: 50px;
 }
 
 a.operate {
@@ -882,8 +913,9 @@ a.operate {
     float: right;
     margin-right: 0.12rem;
     box-sizing: border-box;
-    width: 0.75rem;
-    height: 0.29rem;
+    /* width: 0.75rem; */
+    /* height: 0.29rem; */
+    padding-right: 0.05rem;
     border-radius: 0.15rem;
     overflow: hidden;
     line-height: 0.29rem;
@@ -901,8 +933,15 @@ a.operate {
     border: 1px solid #ceced1;
 }
 
+.attendAll {
+    background: #fff url(../images/icon/添加好友@2x.png) 0.1rem center no-repeat;
+    background-size: auto 60%;
+    border: 1px solid #ceced1;
+}
+
 .homepage .myInvite {
-    height: 0.93rem;
+    /* height: 0.93rem; */
+    height: auto;
 }
 
 .homepage .inviteToMine {
@@ -1193,4 +1232,421 @@ a.operate {
     margin: 0.3rem auto 0;
     line-height: 0.28rem;
     font-size: 18px;
+}
+
+/* 个人主页2018.7.31 */
+
+.m_shade {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, .3);
+    display: none;
+}
+
+.maskm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 6;
+    /* width: 22rem; */
+    width: 90%;
+    background-color: #fff;
+    border-radius: 10px;
+    display: none;
+}
+
+.maskm .title {
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    border-bottom: 1px solid #f1f1f1;
+    color: #000;
+}
+
+.maskm ul {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    margin: 12px 10px;
+    justify-content: flex-start;
+}
+
+.maskm ul li {
+    /* width: 4.5rem; */
+    flex: 0 0 33.3333%;
+    height: 0.88rem;
+    margin: 0 auto;
+}
+
+.maskm ul li a {
+    display: inline-block;
+    width: 100%;
+}
+
+.maskm ul li a span {
+    display: block;
+    width: 0;
+    /* height: 4.5rem; */
+    padding: 33%;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ccc;
+}
+
+.maskm ul li a span.travel {
+    background: url(../images/icon/旅行1@3x.png) center center no-repeat;
+    background-size: 100%;
+}
+
+.maskm ul li a span.food {
+    background: url(../images/icon/吃饭1@3x.png) center center no-repeat;
+    background-size: 100%;
+}
+
+.maskm ul li a span.movie {
+    background: url(../images/icon/电影1@3x.png) center center no-repeat;
+    background-size: 100%;
+}
+
+.maskm ul li a span.sing {
+    background: url(../images/icon/唱歌1@3x.png) center center no-repeat;
+    background-size: 100%;
+}
+
+.maskm ul li a span.sport {
+    background: url(../images/icon/运动1@3x.png) center center no-repeat;
+    background-size: 100%;
+}
+
+.maskm ul li a span.other {
+    background: url(../images/icon/m其他.png) center center no-repeat;
+    background-size: 100%;
+}
+
+.maskm .box-btm ul {
+    margin-left: 3.5rem;
+}
+
+.maskm .box-btm ul li {
+    margin: 0 10px;
+}
+
+/* 修改个人资料div */
+
+.modifyDataWrap {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #efefef;
+    z-index: 7;
+}
+
+.modifyDataWrap header {
+    opacity: 1;
+}
+
+.modifyDataWrap header .mSave {
+    color: #fff;
+}
+
+.mEditContent,
+.modifyDataWrap .parts-content,
+.modifyDataWrap .signature-content,
+.modifyDataWrap .weight-content,
+.modifyDataWrap .height-content,
+.modifyDataWrap .income-content,
+.modifyDataWrap .profession-content,
+.modifyDataWrap .emotion-content {
+    position: absolute;
+    top: 0.5rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #efefef;
+    overflow-y: auto;
+}
+
+.mEditContent ul,
+.modifyDataWrap .parts-content ul,
+.modifyDataWrap .weight-content ul,
+.modifyDataWrap .height-content ul,
+.modifyDataWrap .income-content ul,
+.modifyDataWrap .emotion-content ul {
+    background-color: #fff;
+    margin-top: 0.1rem;
+}
+
+.mEditContent ul li,
+.modifyDataWrap .weight-content ul li,
+.modifyDataWrap .height-content ul li,
+.modifyDataWrap .income-content ul li,
+.modifyDataWrap .emotion-content ul li {
+    margin: 0 0.1rem;
+    line-height: 0.35rem;
+    text-indent: 0.2rem;
+    border-bottom: 1px solid #efefef;
+    color: #ababab;
+}
+
+.mEditContent ul li.actived,
+.modifyDataWrap .weight-content ul li.actived,
+.modifyDataWrap .height-content ul li.actived,
+.modifyDataWrap .income-content ul li.actived,
+.modifyDataWrap .emotion-content ul li.actived {
+    color: #000;
+}
+
+.profInputWrap {
+    height: 0.4rem;
+    line-height: 0.4rem;
+    background-color: #fff;
+    margin-top: 0.1rem;
+}
+
+.profInputWrap>input {
+    width: calc(100% - 0.3rem);
+    height: 90%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.profInputWrap .clearInput {
+    float: right;
+    width: 0.16rem;
+    height: 0.16rem;
+    margin-top: 0.12rem;
+    margin-right: 0.1rem;
+    border-radius: 50%;
+    background: url(../images/icon/cha.png) center center no-repeat;
+    background-size: 100%;
+}
+
+.profession-content .professionList {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.profession-content .professionList li {
+    background-color: #fff;
+    color: #ababab;
+    width: 30%;
+    height: 0.26rem;
+    line-height: 0.26rem;
+    text-align: center;
+    border-radius: 0.13rem;
+    border: 1px solid #efefef;
+    margin-top: 0.05rem;
+}
+
+.parts-content .partsList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.parts-content .partsList li {
+    min-width: calc(33.3333% - 0.1rem);
+    margin: 0.05rem;
+    margin-right: auto;
+    height: 0.26rem;
+    line-height: 0.26rem;
+    text-align: center;
+    border-radius: 0.13rem;
+    border: 1px solid #efefef;
+}
+
+.parts-content .partsList li.actived,
+.profession-content .professionList li.actived {
+    border-color: #ffe455;
+    background-color: #ffe455;
+    color: #000;
+}
+
+.signatureInputWrap {
+    height: 1.4rem;
+    margin-top: 0.1rem;
+    background-color: #fff;
+    position: relative;
+}
+
+.signatureInputWrap>textarea {
+    border: none;
+    outline: none;
+    resize: none;
+    width: 100%;
+    height: calc(100% - 0.2rem);
+    padding: 0.05rem;
+}
+
+.signatureInputWrap>.signatureCount {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-right: 0.1rem;
+}
+
+p.partsTitle,
+p.signatureTitle {
+    font-size: 12px;
+    text-align: center;
+    line-height: 0.3rem;
+}
+
+ul.signatureList li {
+    border: 1px solid #b3b3b3;
+    margin: 0.1rem auto;
+    width: calc(100% - 0.2rem);
+    border-radius: 0.06rem;
+    padding: 0.05rem;
+}
+
+ul.signatureList li>p {
+    display: inline-block;
+}
+
+ul.signatureList li.actived {
+    color: #000;
+    background-color: #ffe455;
+}
+
+.satisfactory_parts ul li {
+    float: left;
+    border: 1px solid #b3b3b3;
+    padding: 0.01rem 0.02rem;
+    margin: 0.03rem;
+}
+
+/* 编辑个人资料 */
+
+.homepage .editHomePage {
+    display: inline-block;
+    width: 0.3rem;
+    height: 0.35rem;
+    border: 0.05rem solid transparent;
+    background: url(../images/icon/评论.png) center center no-repeat;
+    background-size: 100%;
+}
+
+/* 编辑个人资料 page */
+
+.editHome-page .modifyDataWrap header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.15rem;
+}
+
+.editHome-page>header .back {
+    height: 100%;
+    margin-left: 0.1rem;
+}
+
+.editHome-page header .title {
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+}
+
+.editHome-content {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    background-color: #fff;
+}
+
+.contentTitle {
+    line-height: 0.3rem;
+    background-color: #f0f3f8;
+    padding-left: 0.1rem;
+}
+
+.editItem {
+    border-bottom: 1px solid #efefef;
+    margin-left: 0.1rem;
+    padding: 0.1rem 0;
+    min-height: 0.4rem;
+}
+
+.editItemTitle {
+    float: left;
+    width: 1.14rem;
+}
+
+.editItemContent {
+    margin-left: 1.14rem;
+    padding-right: 0.1rem;
+    text-align: right;
+    color: #000;
+}
+
+.editItemContent.signatureWrap {
+    text-align: left;
+}
+
+.nickname-content>p {
+    line-height: 0.35rem;
+    text-indent: 1em;
+}
+
+.age-content ul li {
+    display: flex;
+    justify-content: space-between;
+}
+
+.age-content ul li>label {
+    color: #000;
+}
+
+.permanent_area input {
+    text-align: right;
+}
+
+/* 个人资料进度条 */
+
+.editHomeLevel {
+    padding: 0.15rem 0.1rem;
+}
+
+.bloodGroove {
+    height: 0.1rem;
+    border-radius: 0.05rem;
+    margin: 0 auto;
+    background-color: #f2f2f2;
+}
+
+.bloodGroove .blood {
+    width: 50%;
+    height: 0.1rem;
+    border-radius: 0.05rem;
+    background-color: #fee555;
+    position: relative;
+}
+
+.bloodGroove .blood::after {
+    content: "";
+    display: block;
+    box-sizing: content-box;
+    border: 2px solid #fff;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.1rem;
+    height: 0.1rem;
+    border-radius: 50%;
+    box-shadow: 0 0 2px 2px #aeaeae;
 }
