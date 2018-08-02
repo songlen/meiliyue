@@ -433,7 +433,7 @@ class User extends Base {
         if($type == '1'){
             $join_on = 'uv.user_id = u.user_id';
             $where['uv.to_user_id'] = $user_id;
-            $field = 'user_id, head_pic, nickname, age, sex, uv.add_time, signature';
+            $field = 'uv.user_id, head_pic, nickname, age, sex, uv.add_time, signature';
         } else {
             $join_on = 'uv.to_user_id = u.user_id';
             $where['uv.user_id'] = $user_id;
