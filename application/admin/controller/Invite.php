@@ -22,4 +22,17 @@ class Invite extends Base{
         $this->assign('Page', $Page);
 		return $this->fetch();
 	}
+
+	public function detail(){
+		$id = I('id');
+
+		$info = M('invite')->alias('i')
+			->join('users u', 'i.user_id=u.user_id', 'left')
+			->where('id', $id)
+			->field('u.uuid, i.*')
+			->find();
+
+		$this->assign('info', $info);
+		return $this->fetch();
+	}
 }

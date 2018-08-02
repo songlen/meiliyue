@@ -106,13 +106,12 @@
                   </div>
                 </td>
                 <td align="center" class="">
-                  <div style="text-align: center; width: 160px;">{$vo.add_time|date='Y-m-d', ###}</div>
+                  <div style="text-align: center; width: 160px;">{$vo.add_time|date='Y-m-d H:i', ###}</div>
                 </td>
                 <td align="center" class="handle">
-                  <div style="text-align: center; width: 170px; max-width:170px;"> <a class="btn blue" target="_blank" href="{:U('Home/Article/detail',array('article_id'=>$vo['article_id']))}"><i class="fa fa-search"></i>查看</a>
-                    <notin name="vo.article_id" value="$article_able_id"> <a class="btn red"  href="javascript:void(0)" data-url="{:U('Article/aticleHandle')}" data-id="{$vo.article_id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a> </notin>
-                    <in name="vo.article_id" value="$article_able_id"> <a class="btn red"  href="javascript:;" onclick="layer.alert('系统文章不得删除!',{icon:2});"><i class="fa fa-trash-o"></i>删除</a> </in>
-                    <a href="{:U('Article/article',array('act'=>'edit','article_id'=>$vo['article_id']))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a> 
+                  <div style="text-align: center; width: 170px; max-width:170px;">
+                    <a class="btn blue" href="{:U('admin/invite/detail',array('id'=>$vo['id']))}"><i class="fa fa-search"></i>查看</a>
+                    <!-- <a class="btn red"  href="javascript:void(0)" data-url="{:U('invite/del')}" data-id="{$vo.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a> -->
                   </div>
                 </td>
                 <td align="" class="" style="width: 100%;">

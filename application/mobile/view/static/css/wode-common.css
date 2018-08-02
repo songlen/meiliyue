@@ -461,6 +461,7 @@ a.close {
     color: #7e7e7e;
 }
 
+.mLoadingMask,
 .mask {
     position: fixed;
     top: 0;
@@ -472,6 +473,26 @@ a.close {
     z-index: 2;
 }
 
+.mLoading {
+    width: 1rem;
+    height: 0.5rem;
+    line-height: 0.5rem;
+    background-color: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.mLoading::after {
+    content: "处理中...";
+    display: inline;
+    color: #000;
+}
+
 /* 评论 */
 
 .visitors-page,
@@ -480,12 +501,26 @@ a.close {
     background-color: #f2f4fc;
 }
 
+.commentsReply-page,
+.comments-page,
+.visitors-page {
+    height: 100vh;
+}
+
+.commentsReply-page {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 100%;
+    transition: top 0.2s;
+    z-index: 1;
+}
+
 .editHome-page header,
 .report-page header,
 .addfriends-page header,
 .friends-page header,
 .visitors-page header,
-.commentsReply-page header,
 .comments-page header {
     position: fixed;
     top: 0;
@@ -494,6 +529,22 @@ a.close {
     background-color: #000;
     height: 50px;
     line-height: 50px;
+    z-index: 6;
+}
+
+.comments-page header {
+    z-index: 1;
+}
+
+.commentsReply-page header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #000;
+    height: 50px;
+    line-height: 50px;
+    z-index: 7;
 }
 
 .report-page header .back,
@@ -519,18 +570,39 @@ a.close {
 }
 
 .addfriends-content,
-.friends-content,
-.commentsReply-content,
-.comments-content {
+.commentsReply-content {
     margin-top: 50px;
 }
 
-.comments-content .noComments {
+.friends-content,
+.comments-content {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+}
+
+.friends-content {
+    background-color: #f2f4fc;
+}
+
+/* 修改下拉刷新 */
+
+.friends-page .weui-pull-to-refresh__layer,
+.visitors-page .weui-pull-to-refresh__layer,
+.comments-page .weui-pull-to-refresh__layer {
+    height: 50px;
+    line-height: 50px;
+}
+
+.noComments {
     padding-top: 1.45rem;
     text-align: center;
 }
 
-.comments-content .noComments img {
+.noComments img {
     width: 0.9rem;
     height: 0.8rem;
 }
@@ -569,6 +641,8 @@ a.close {
     margin-left: -0.2rem;
 }
 
+.fans-tab .comments-text,
+.attention-tab .comments-text,
 .comments-item .comments-text {
     flex: 1 0 0;
 }
@@ -587,7 +661,7 @@ a.close {
 
 .comments-item .comments-pic>img {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
 }
 
 /* 回复评论 */
@@ -654,7 +728,7 @@ a.close {
 /* 来访者 */
 
 .visitors-page header .title>a {
-    font-size: 17px;
+    font-size: 16px;
     color: #fff;
     display: inline-block;
 }
@@ -664,7 +738,7 @@ a.close {
     display: block;
     width: 100%;
     height: 2px;
-    background-color: red;
+    background-color: #ffe456;
     margin-top: -5px;
 }
 
@@ -678,6 +752,7 @@ a.close {
 
 .friends-page {
     background-color: #fff;
+    height: 100vh;
 }
 
 .friends-page header .title {
@@ -703,6 +778,10 @@ a.close {
     border-top: 1px solid #f0f0f1;
     border-bottom: 1px solid #f0f0f1;
     background-color: #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
 }
 
 .friends-tabcut>li {
@@ -718,19 +797,75 @@ a.close {
     background-color: #ffe456;
 }
 
+.friends-content .tabs {
+    position: absolute;
+    top: 0.34rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    background-color: #f2f4fc;
+}
+
 .friends-list {
     min-height: 2.38rem;
     background-color: #f2f4fc;
 }
 
-.noFriends {
+li.newFriendItem,
+li.friendItem {
+    /* box-sizing: content-box; */
+    height: 0.65rem;
+    border-bottom: 1px solid #f0f0f1;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.friendHeadWrap {
+    display: inline-block;
+    width: 0.46rem;
+    height: 0.46rem;
+    border-radius: 0.23rem;
+    overflow: hidden;
+    margin: 0 0.1rem;
+}
+
+.friendHeadWrap>img {
+    width: 100%;
+}
+
+.friendItem-avatar {
+    font-size: 0;
+    margin: 0 0.1rem;
+}
+
+.fans-tab .friendHeadWrap,
+.attention-tab .friendHeadWrap {
+    margin: 0;
+}
+
+.friendItem-avatar>span {
+    display: inline-block;
+    width: 0.2rem;
+    height: 0.2rem;
+    background: url(../images/icon/播放.png) center center no-repeat;
+    background-size: 100%;
+    margin-left: -0.2rem;
+}
+
+.no-fans,
+.no-attention,
+.no-friends {
     width: 100%;
     height: 100%;
     text-align: center;
     padding-top: 0.58rem;
 }
 
-.noFriends>img {
+.no-fans>img,
+.no-attention>img,
+.no-friends>img {
     width: 0.9rem;
     height: 0.8rem;
 }
@@ -754,35 +889,28 @@ a.close {
 }
 
 .addFriend {
-    /* display: inline-block; */
     background: url(../images/icon/添加好友@2x.png) center center no-repeat;
     background-size: 100%;
     width: 0.2rem;
     height: 0.22rem;
     float: right;
     margin-right: 0.14rem;
-    margin-top: -0.05rem;
+    margin-top: -0.12rem;
 }
 
 .attentionOperate {
-    background: url(../images/icon/我的@2x.png) center center no-repeat;
+    background: url(../images/icon/通过好友@2x.png) center center no-repeat;
     background-size: 100% 100%;
     width: 0.2rem;
-    height: 0.25rem;
+    height: 0.2rem;
     float: right;
     margin-right: 0.14rem;
-    margin-top: -0.05rem;
+    /* margin-top: -0.05rem; */
+    margin-top: -0.12rem;
 }
 
 .fans-tab .comments-item {
     border: none;
-}
-
-.fans-tab .comments-text {
-    box-sizing: border-box;
-    padding-top: 0.15rem;
-    height: 100%;
-    border-bottom: 1px solid #f8f9fd;
 }
 
 /* 添加好友 */
@@ -1649,4 +1777,34 @@ ul.signatureList li.actived {
     height: 0.1rem;
     border-radius: 50%;
     box-shadow: 0 0 2px 2px #aeaeae;
+}
+
+.signatureDialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    border-radius: 0.06rem;
+    background-color: #fff;
+    z-index: 6;
+}
+
+.signatureDialog>p {
+    padding: 0.1rem;
+}
+
+.signatureDialogTitle,
+.signatureDialogBtn {
+    text-align: center;
+    font-size: 16px;
+}
+
+.signatureDialogTitle {
+    color: #000;
+}
+
+.signatureDialogBtn {
+    color: red;
+    border-top: 1px solid #e5e5e5;
 }

@@ -4,9 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>来访者</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- jquery-weui-css -->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
+    <!-- 页面-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
@@ -16,49 +20,222 @@
     <header>
         <a href="javascript:void(0)" class="back"></a>
         <div class="title">
-            <a href="{:U('mobile/users/visitor')}" <if condition="$type eq 1">class="actived"</if>>来访者</a>
-            <a href="{:U('mobile/users/visitor', array('type'=>'2'))}" <if condition="$type eq 2">class="actived"</if>>我看过的人</a>
+            <a href="javascript:void(0)" data-list="visiList" class="actived">来访者</a>
+            <a href="javascript:void(0)" data-list="seenList">我看过的人</a>
         </div>
     </header>
 
     <div class="comments-content">
+        <div class="weui-pull-to-refresh__layer">
+            <div class='weui-pull-to-refresh__arrow'></div>
+            <div class='weui-pull-to-refresh__preloader'></div>
+            <div class="down">下拉刷新</div>
+            <div class="up">释放刷新</div>
+            <div class="refresh">正在刷新</div>
+        </div>
 
-        <div class="comments-content">
 
-            <ul>
-                <foreach name="lists" item="item">
-                <li class="comments-item">
-                    <div class="comments-avatar">
-                        <div class="comments-avatar-wrap">
-                            <img src="{$item.head_pic}" alt="">
-                        </div>
-                        <span></span>
-                    </div>
+        <ul class="visiList">
+        </ul>
 
-                    <div class="comments-text">
-                        <div>
-                            <span class="listName">{$item.nickname}</span>
-                            <span class='sexAge <if condition="$item.sex eq 1">male<else/>female</if>'>
-                                <i class="sex"></i>
-                                <span class="age">{$item.age}</span>
-                            </span>
-                        </div>
-                        <span class="">{$item.add_time}</span>
-                        <p class="signature">{$item.signature}</p>
-                    </div>
+        <ul class="seenList" style="display: none;">
+        </ul>
 
-                    <img class="visitors-isnew" src="__STATIC__/images/icon/火.png" alt="">
-                </li>
-                </foreach>
-            </ul>
-            
+        <div class="noComments" style="display: none;">
+            <img src="__STATIC__/images/icon/暂无要找内容.png">
+            <p>暂无任何内容</p>
+        </div>
+
+
+        <div class="weui-loadmore" style="display: none;">
+            <i class="weui-loading"></i>
+            <span class="weui-loadmore__tips">正在加载</span>
         </div>
     </div>
 
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- jquery-weui-js -->
+    <script type="text/javascript" src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
+    <script>
+        var GlobalHost = "http://meiliyue.caapa.org";
+        var Visitors={
+            user_id:"",
+
+            curList:"visiList",
+            isScroll:false,
+            loading:false,
+
+            visiList:{
+                haveLoad:false,
+                page:1,
+            },
+            seenList:{
+                haveLoad:false,
+                page:1,
+            },
+            
+
+            updateDom:function(data){
+                let $curUl=$("."+Visitors.curList);
+                if(data&&data.length!==0){
+                    if(!Visitors.isScroll){
+                        $curUl.html("");
+                    }
+                    data.forEach(function(item,index){
+                        let $li=$(`
+                            <li class="comments-item" data-toUserId=${item.user_id}>
+                                <div class="comments-avatar">
+                                    <div class="comments-avatar-wrap">
+                                        <img src="${GlobalHost+item.head_pic}">
+                                    </div>
+                                    <span class="videoStatus"></span>
+                                </div>
+
+                                <div class="comments-text">
+                                    <div>
+                                        <span class="listName">${item.nickname}</span>
+                                        <span class="sexAge">
+                                            <i class="sex"></i>
+                                            <span class="age">${item.age}</span>
+                                        </span>
+                                    </div>
+                                    <span class="">${item.add_time}</span>
+                                    <p class="signature">${item.signature}</p>
+                                </div>
+
+                                <img class="visitors-isnew" style="display:none;" src="__STATIC__/images/icon/火.png">
+                            </li>
+                        `);
+                        //视频认证
+                        if(item.auth_video_status!==1){
+                            $li.find(".videoStatus").hide();
+                        }
+                        //sex
+                        if(item.sex==1){
+                            $li.find(".sexAge").addClass("male");
+                        }else{
+                            $li.find(".sexAge").addClass("female");
+                        }
+
+                        $curUl.append($li);
+
+                    });
+                }else{
+                    if(Visitors[Visitors.curList].page!==1){
+                        //无内容
+                        $(".noComments").show();
+                    }
+                }
+                
+                //updateDom后
+                //滚动加载的"正在加载"是否显示
+                if($curUl[0].scrollHeight>($(".visitors-page").height()-50)){
+                    $(".weui-loadmore").show();
+                }
+
+                //绑定dom update后才能绑定的事件？
+                // Visitors.eventsBindAfter();
+
+            },
+            getListData:function(){
+                let getPage;
+                if(Visitors.isScroll){
+                    getPage=Visitors[Visitors.curList].page+1;
+                }else{
+                    getPage=1;
+                }
+                let postData={
+                    user_id:Visitors.user_id,
+                    type:Visitors.curList=="visiList"?1:2,
+                    page:getPage,
+                };
+                console.log(postData)
+                $.ajax({
+                    type: "POST",
+                    url: GlobalHost+"/index.php/api/user/visitor",
+                    data: postData,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result.data)
+                        // result.data=result.data.concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data);//测试用
+                        // result.data=[];//测试用
+
+                        if(Visitors.isScroll){
+                            if(result.data.length!==0){
+                                Visitors[Visitors.curList].page++;
+                            }
+                            Visitors.isScroll=false;
+                        }
+
+                        Visitors.updateDom(result.data)
+                        
+                        Visitors[Visitors.curList].haveLoad=true;
+
+                        //下拉刷新done 滚动加载done
+                        $(".comments-content").pullToRefreshDone();
+                        Visitors.loading=false;
+                    }
+                });
+            },
+            initPullToRefresh:function(){
+                //下拉刷新
+                $(".comments-content").pullToRefresh(function () {
+                    Visitors.getListData();
+                });
+                //滚动加载
+                $(".comments-content").infinite().on("infinite", function() {
+                    Visitors.isScroll=true;
+                    //原
+                    if(Visitors.loading) return;
+                    Visitors.loading = true;
+                    Visitors.getListData();
+                });
+                //点击li去他人的主页
+                $(".visitors-page .comments-content>ul").delegate("li","click",function(){
+                    //save?
+
+                    let user_id=Visitors.user_id;
+                    let toUserId=$(this).attr("data-toUserId");
+                    window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/"+user_id+"/toUserId/"+toUserId+".html";
+                });
+            },
+            eventsBind:function(){
+                //back
+                $(".back").click(function(){
+                    window.history.back(-1);
+                });
+                //切换tab
+                $(".visitors-page>header .title a").click(function(){
+                    $(this).addClass("actived").siblings().removeClass("actived");
+
+                    let className=$(this).attr("data-list");
+                    console.log(className)
+                    $("."+className).show().siblings("ul").hide();
+
+                    Visitors.curList=className;
+
+                    //切换时，如果没加载就加载
+                    if(!Visitors[Visitors.curList].haveLoad){
+                        Visitors.getListData();
+                    }
+                });
+            },
+            init:function(){
+                //我的user_id
+                Visitors.user_id=1;
+
+                Visitors.initPullToRefresh();
+
+                Visitors.getListData();
+
+                Visitors.eventsBind();
+            }
+        };
+        $(function () {
+            Visitors.init();
+        });
+    </script>
 </body>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    $(function() {})
-</script>
 
 </html>

@@ -4,9 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>评论</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- jquery-weui-css -->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
+    <!-- 页面-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
@@ -19,70 +23,289 @@
     </header>
 
     <div class="comments-content">
+        <div class="weui-pull-to-refresh__layer">
+            <div class='weui-pull-to-refresh__arrow'></div>
+            <div class='weui-pull-to-refresh__preloader'></div>
+            <div class="down">下拉刷新</div>
+            <div class="up">释放刷新</div>
+            <div class="refresh">正在刷新</div>
+        </div>
 
-        <ul>
-            <li class="comments-item">
-                <div class="comments-avatar">
-                    <div class="comments-avatar-wrap">
-                        <img src="__STATIC__/images/icon/tx.png" alt="">
-                    </div>
-                    <span></span>
-                </div>
-
-                <div class="comments-text">
-                    <div>
-                        <span class="listName">浪漫王子</span>
-                        <span class="sexAge male">
-                            <i class="sex"></i>
-                            <span class="age">23</span>
-                        </span>
-                    </div>
-                    <span class="">刚刚</span>
-                    <p class="">关注</p>
-                </div>
-
-                <div class="comments-pic">
-                    <img src="__STATIC__/images/pic/pic2.png" alt="">
-                </div>
-            </li>
-            <li class="comments-item">
-                <div class="comments-avatar">
-                    <div class="comments-avatar-wrap">
-                        <img src="__STATIC__/images/icon/tx.png" alt="">
-                    </div>
-                    <span></span>
-                </div>
-
-                <div class="comments-text">
-                    <div>
-                        <span class="listName">浪漫王子</span>
-                        <span class="sexAge male">
-                            <i class="sex"></i>
-                            <span class="age">23</span>
-                        </span>
-                    </div>
-                    <span class="">刚刚</span>
-                    <p class="">关注</p>
-                </div>
-
-                <div class="comments-pic">
-                    <img src="__STATIC__/images/pic/pic2.png" alt="">
-                </div>
-            </li>
+        <ul class="commentsList">
         </ul>
 
-        
+
         <div class="noComments" style="display: none;">
-            <img src="__STATIC__/images/icon/暂无要找内容.png" alt="">
+            <img src="__STATIC__/images/icon/暂无要找内容.png">
             <p>尚未收到任何评论</p>
+        </div>
+
+        <div class="weui-loadmore" style="display: none;">
+            <i class="weui-loading"></i>
+            <span class="weui-loadmore__tips">正在加载</span>
         </div>
     </div>
 
+    <!-- 回复评论page -->
+    <div class="commentsReply-page">
+        <header>
+            <a href="javascript:void(0)" class="back replyBack"></a>
+            <div class="title">回复评论</div>
+        </header>
+    
+        <div class="commentsReply-content"
+             data-dynamicId=""
+             data-type=""
+             data-userId=""
+             data-parentId=""
+             >
+            <p class="commentsReply-head"><span class="nickname">nickname</span>&nbsp;回复&nbsp;我:</p>
+            <p class="commentsReply-rep">content</p>
+            <div class="commentsReply-text">
+                <textarea name="" id="replyText" placeholder="placeholder"></textarea>
+            </div>
+            <div class="commentsReply-ope">
+                <div>
+                    <input type="checkbox" id="isWhisper">
+                    <label for="isWhisper">悄悄话</label>
+                </div>
+                <a href="javascript:void(0)" class="replyBtn">回复</a>
+            </div>
+    
+            <p class="dongtai-detail">动态详情</p>
+        </div>
+    </div>
+    <!-- 回复评论page end -->
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- jquery-weui-js -->
+    <script type="text/javascript" src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
+    <script>
+        var GlobalHost = "http://meiliyue.caapa.org";
+        var Comments={
+            user_id:"",
+
+            isScroll:false,
+            loading:false,
+            page:1,
+            
+            updateDom:function(data){
+                if(data&&data.length!==0){
+                    if(!Comments.isScroll){
+                        $(".commentsList").html("");
+                    }
+                    data.forEach(function(item,index){
+                        let $li=$(`
+                            <li class="comments-item" 
+                                data-dynamicId=${item.dynamic_id} 
+                                data-type=${item.type}
+                                data-userId=${item.user_id}
+                                data-parentId=${item.parent_id}
+                                >
+                                <div class="comments-avatar">
+                                    <div class="comments-avatar-wrap">
+                                        <img src="${GlobalHost+item.head_pic}">
+                                    </div>
+                                    <span class="videoStatus"></span>
+                                </div>
+
+                                <div class="comments-text">
+                                    <div>
+                                        <span class="listName">${item.nickname}</span>
+                                        <span class="sexAge">
+                                            <i class="sex"></i>
+                                            <span class="age">${item.age}</span>
+                                        </span>
+                                    </div>
+                                    <span class="">${item.add_time}</span>
+                                    <p class="comment-content">${item.content}</p>
+                                </div>
+
+                                <div class="comments-pic" style="display:none;">
+                                    <img src="__STATIC__/images/pic/pic2.png">
+                                </div>
+                            </li>
+                        `);
+                        //视频认证
+                        if(item.auth_video_status!==1){
+                            $li.find(".videoStatus").hide();
+                        }
+                        //sex
+                        if(item.sex==1){
+                            $li.find(".sexAge").addClass("male");
+                        }else{
+                            $li.find(".sexAge").addClass("female");
+                        }
+                        //图片?
+
+
+                        $(".commentsList").append($li);
+
+                        //是否显示 无评论图片
+                        if($(".commentsList li").length==0){
+                            $(".noComments").show();
+                        }
+                    });
+                }
+
+                //滚动加载的"正在加载"是否显示
+                if(document.getElementsByClassName("commentsList")[0].scrollHeight>($(".comments-page").height()-50)){
+                    $(".weui-loadmore").show();
+                }
+                
+                //eventsBind
+                Comments.eventsBind();
+
+            },
+            //获取list data
+            getListUpdateDom:function(){
+                let getPage;
+                if(Comments.isScroll){
+                    getPage=Comments.page+1;
+                }else{
+                    getPage=1;
+                }
+                var postData={
+                    user_id:Comments.user_id,
+                    page:getPage,
+                };
+
+                console.log("isScroll:"+Comments.isScroll)
+                console.log(postData)
+
+                $.ajax({
+                    type: "POST",
+                    url: GlobalHost+"/index.php/Api/user/commentList",
+                    data: postData,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result.data)
+
+                        //result.data=result.data.concat(result.data).concat(result.data)
+
+                        if(Comments.isScroll){
+                            if(result.data.length!==0){
+                                Comments.page++;
+                            }
+                            Comments.isScroll=false;
+                        }
+                        
+                        Comments.updateDom(result.data);
+
+                        //下拉刷新done 滚动加载done
+                        $(".comments-content").pullToRefreshDone();
+                        Comments.loading = false;
+                    }
+                })
+            },
+            initPullToRefresh:function(){
+                //下拉刷新
+                $(".comments-content").pullToRefresh(function () {
+                    Comments.getListUpdateDom()
+                });
+                //滚动加载
+                $(".comments-content").infinite().on("infinite", function() {
+                    Comments.isScroll=true;
+                    //原
+                    if(Comments.loading) return;
+                    Comments.loading = true;
+                    Comments.getListUpdateDom()
+                });
+            },
+            openCommentsReply:function(el){//点击的li里的.comments-text
+                //reset Dom
+                $("#replyText").val("");
+                $("#isWhisper").prop("checked",false);
+                let $li=$(el).closest(".comments-item");
+                console.log($li)
+                //updateDom
+                let nickname=$li.find(".listName").html();
+                $(".nickname").html(nickname);
+                $(".commentsReply-rep").html($li.find(".comment-content").html());
+                $("#replyText").attr("placeholder","回复 "+nickname);
+                $(".commentsReply-content").attr("data-dynamicId",$li.attr("data-dynamicId"));
+                $(".commentsReply-content").attr("data-userId",$li.attr("data-userId"));
+                $(".commentsReply-content").attr("data-parentId",$li.attr("data-parentId"));
+
+                $(".commentsReply-page").css("top","0");
+            },
+            replyComment:function(){
+                let content=$("#replyText").val();
+                if(content.trim()==""){
+                    return;
+                }
+                
+                let postData={
+                    reply_user_id:Number($(".commentsReply-content").attr("data-userId")),
+                    dynamic_id:Number($(".commentsReply-content").attr("data-dynamicId")),
+                    commentator_id:Number(Comments.user_id),
+                    parent_id:Number($(".commentsReply-content").attr("data-parentId")),
+                    content:content,
+                    private:$("#isWhisper").is(":checked")?1:null,
+                };
+                console.log(postData)
+                
+                Comments.openLoading();
+
+                $.ajax({
+                    type: "POST",
+                    url: GlobalHost+"/index.php/Api/user/commentList",
+                    data: postData,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+                        
+                        Comments.closeLoading();
+                        $(".replyBack")[0].click();
+                    }
+                });
+            },
+            openLoading:function(){
+                if($(".mask").length==0){
+                    $("body").append($('<div class="mLoadingMask"></div>'));
+                }
+                if($(".mLoading").length==0){
+                    $("body").append($('<div class="mLoading"></div>'));
+                }
+            },
+            closeLoading:function(){
+                $(".mLoadingMask")
+                    .add($(".mLoading"))
+                    .remove();
+            },
+            eventsBind:function(){
+                //点击li
+                $(".commentsList").delegate(".comments-text","click",function(){
+                    Comments.openCommentsReply(this)
+                });
+                //点击回复评论的 返回
+                $(".replyBack").click(function(){
+                    $(".commentsReply-page").css("top","100%");
+                });
+                //点击reply 回复
+                $(".replyBtn").click(function(){
+                    Comments.replyComment();
+                });
+                //去 动态详情
+                $(".dongtai-detail").click(function(){
+                    //save?
+                    
+                    let dynamicId=$(".commentsReply-content").attr("data-dynamicId");
+                    window.location.href = GlobalHost + "/index.php/mobile/dynamics/detail/id/"+dynamicId+".html";
+                });
+            },
+            init:function(){
+                Comments.user_id=1;
+
+                Comments.initPullToRefresh();
+
+                Comments.getListUpdateDom();
+            }
+        };
+        $(function () {
+            Comments.init();
+        });
+    </script>
 </body>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    $(function() {
-    })
-</script>
 
 </html>
