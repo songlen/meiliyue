@@ -489,7 +489,7 @@ class User extends Base {
         } else {
             $join_on = 'f.friend_id = u.user_id';
             $where['f.friend_id'] = $user_id;
-            $field = 'user_id, head_pic, nickname, auth_video_status, twoway';
+            $field = 'u.user_id, head_pic, nickname, auth_video_status, twoway';
         }
 
         $limit_start = ($page-1)*20;

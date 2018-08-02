@@ -19,7 +19,6 @@ return	array(
 					array('name' => '角色管理', 'act'=>'role', 'op'=>'Admin'),
 					array('name'=>'权限资源列表','act'=>'right_list','op'=>'System'),
 					array('name' => '管理员日志', 'act'=>'log', 'op'=>'Admin'),
-					array('name' => '供应商列表', 'act'=>'supplier', 'op'=>'Admin'),
 				)),
 			
 				/*array('name' => '模板','child'=>array(
@@ -74,19 +73,19 @@ return	array(
 	'module' => array('name'=>'模块', 'child'=>array(
 		array('name' => '会员','child'=>array(
 			array('name'=>'会员列表','act'=>'index','op'=>'User'),
-			array('name'=>'会员等级','act'=>'levelList','op'=>'User'),
-			array('name'=>'充值记录','act'=>'recharge','op'=>'User'),
-			array('name'=>'提现申请','act'=>'withdrawals','op'=>'User'),
-			array('name'=>'汇款记录','act'=>'remittance','op'=>'User'),
+			// array('name'=>'会员等级','act'=>'levelList','op'=>'User'),
+			// array('name'=>'充值记录','act'=>'recharge','op'=>'User'),
+			// array('name'=>'提现申请','act'=>'withdrawals','op'=>'User'),
+			// array('name'=>'汇款记录','act'=>'remittance','op'=>'User'),
 			//array('name'=>'会员整合','act'=>'integrate','op'=>'User'),
-			array('name'=>'会员签到','act'=>'signList','op'=>'User'),
+			// array('name'=>'会员签到','act'=>'signList','op'=>'User'),
 		)),
 		array('name'=>'邀约', 'child'=>array(
-
+			array('name'=>'邀约列表','act'=>'index','op'=>'Invite'),
 			
 		)),
 		array('name'=>'动态', 'child'=>array(
-
+			array('name'=>'动态列表','act'=>'index','op'=>'Dynamics'),
 			
 		)),
 	)),
