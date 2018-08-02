@@ -248,6 +248,10 @@ class User extends Base {
     public function homePage(){
         $user_id = I('user_id');
         $toUserId = I('toUserId');
+
+        if($user_id == $toUserId){
+            $this->redirect('user/myHomePage', array('user_id' => $user_id));
+        }
         /************ 获得自己的信息 **************/
         $user = M('users')->where('user_id', $user_id)->find();
 
