@@ -101,9 +101,6 @@ class User extends Base {
             exit($this->error('未作内容修改或修改失败'));
         }
         
-        $user['first_lower'] = M('users')->where("first_leader = {$user['user_id']}")->count();
-        $user['second_lower'] = M('users')->where("second_leader = {$user['user_id']}")->count();
-        $user['third_lower'] = M('users')->where("third_leader = {$user['user_id']}")->count();
  
         $this->assign('user',$user);
         return $this->fetch();

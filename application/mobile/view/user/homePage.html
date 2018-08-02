@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>个人主页</title>
+    <title>别人的个人主页</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
@@ -17,8 +17,7 @@
         <header>
             <a class="back homepageBack" href="javascript:void(0)"></a>
             <div class="title">nickname</div>
-            <a class="operate" href="javascript:void(0)" style="display: none;"></a>
-            <a class="editHomePage" href="javascript:void(0)" style="display: none;"></a>
+            <a class="operate" href="javascript:void(0)"></a>
         </header>
 
         <div class="all-content">
@@ -37,7 +36,7 @@
                         <span class="age">age</span>
                     </span>
                     <span class="edit-personal-constellation">摩羯座</span>
-                    <span class="haveAttend" style="display: none;">
+                    <span class="haveAttend">
                         <span class="attend" style="display:none;">加关注</span>
                         <span class="attended" style="display:none;">已关注</span>
                         <span class="attendAll" style="display: none;">相互关注</span>
@@ -45,7 +44,7 @@
                     <p>
                         <img class="areaPic" src="__STATIC__/images/icon/定位-2.png">
                         <span class="edit-personal-area">北京</span>&nbsp;
-                        <span class="distance" style="display: none;">2km</span>
+                        <span class="distance">2km</span>
                     </p>
                 </div>
             </div>
@@ -59,9 +58,6 @@
                     <!-- <li class="edit-pic-item">
                         <img src="__STATIC__/images/icon/tx.png">
                     </li> -->
-                    <a href="javascript:void(0)" class="addMyPhotos">
-                        <img src="__STATIC__/images/icon/拍照.png">
-                    </a>
                 </ul>
 
             </div>
@@ -190,18 +186,18 @@
                                 <span class="modifyData weight">weight</span>
                             </div>
                         </li>
-                        <li class="aboutMe-item">
+                        <li class="aboutMe-item signatureItem">
                             <label>个性签名</label>
                             <div class="aboutMe-item-content">
                                 <span class="modifyData signature">0</span>
                             </div>
                         </li>
-                        <li class="aboutMe-item">
+                        <!-- <li class="aboutMe-item">
                             <label>对另一半的要求</label>
                             <div class="aboutMe-item-content">
-                                <span class="modifyData canChoose">填写</span>
+                                <span class="modifyData"></span>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="aboutMe-item">
                             <label>最近活跃时间</label>
                             <div class="aboutMe-item-content">
@@ -229,15 +225,7 @@
                 <ul>
                     <li class="">举报</li>
                     <li class="">拉黑</li>
-                    <li class="">移除粉丝</li>
-                    <li class="home-cancel">取消</li>
-                </ul>
-            </div>
-
-            <div class="gotoEditHome" style="display: none;">
-                <ul>
-                    <li class="gotoEditHomePage">编辑资料</li>
-                    <li class="">认证形象视频</li>
+                    <!-- <li class="">移除粉丝</li> -->
                     <li class="home-cancel">取消</li>
                 </ul>
             </div>
@@ -268,44 +256,14 @@
                 </p>
             </div>
 
-            <!-- 发布邀约 -->
+            <!-- 个性签名 -->
 
             <div class="m_shade"></div>
-
-            <div class="maskm">
-                <div class="title">发起邀约</div>
-                <div class="box-top">
-                    <ul>
-                        <li>
-                            <a class="openReleaseInvite" href="javascript:void(0)" data-type=1>
-                                <span class="travel"></span>旅行</a>
-                        </li>
-                        <li>
-                            <a class="openReleaseInvite" href="javascript:void(0)" data-type=2>
-                                <span class="food"></span>吃饭</a>
-                        </li>
-                        <li>
-                            <a class="openReleaseInvite" href="javascript:void(0)" data-type=3>
-                                <span class="movie"></span>电影</a>
-                        </li>
-                        <li>
-                            <a class="openReleaseInvite" href="javascript:void(0)" data-type=4>
-                                <span class="sing"></span>唱歌</a>
-                        </li>
-                        <li>
-                            <a class="openReleaseInvite" href="javascript:void(0)" data-type=5>
-                                <span class="sport"></span>运动</a>
-                        </li>
-                        <li>
-                            <a class="openReleaseInvite" href="javascript:void(0)" data-type=6>
-                                <span class="other"></span>其他</a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="signatureDialog" style="display: none;">
+                <p class="signatureDialogTitle">个性签名</p>
+                <p class="signatureDialogContent"></p>
+                <p class="signatureDialogBtn">确定</p>
             </div>
-
-            <!-- 修改个人资料div wrap -->
-            <div class="modifyDataWrap" style="display: none;"></div>
 
         </div>
 
@@ -314,7 +272,7 @@
             <span class="letsChat">打开聊天</span>
         </div>
 
-        <footer style="display: none;">
+        <footer>
             <img src="__STATIC__/images/icon/消息.png" alt="">
             <span class="sayHi">打个招呼</span>
         </footer>
@@ -340,7 +298,6 @@
         _mTimer: null,
         user_id: "",
         toUserId: "",
-        isSelf: false,
         attentionStatus: 0, //userid对touserid的关注状态
 
         updateDom: function (data) {
@@ -358,56 +315,28 @@
             $(".avatar-content .sexAge").addClass(sexClass)
             $(".avatar-content .sexAge .age").html(data.baseinfo.age)
             // $(".edit-personal-constellation").html()//星座
-            if (Homepage.isSelf) { //我的主页
-                $(".editHomePage").show()
-                $("footer").hide()
-                $(".haveAttend").hide()
-                $(".addMyPhotos").show()
-                $(".myInviteText").html("我的邀约")
-                $(".releaseInvite").show()
-                $(".myTalkText").html("我的动态")
-                $(".myApproveText").html("我的认证")
-                approveBtnText = "认证"
-                $(".aboutText").html("关于我")
-                if (data.baseinfo.emotion_status && data.baseinfo.emotion_status !== "") {
-                    $(".emotion_status").html(data.baseinfo.emotion_status)
-                } else {
-                    $(".emotion_status").html("请选择").addClass("canChoose")
-                }
-                $(".distance").hide()
+            switch (data.baseinfo.attention) {
+                case 0: //未关注
+                    $(".haveAttend").find(".attend").show()
+                    break;
+                case 1: //已关注
+                    $(".haveAttend").find(".attended").show()
+                    break;
+                case 2: //已被关注
+                    $(".haveAttend").find(".attend").show()
+                    break;
+                case 3: //相互关注
+                    $(".haveAttend").find(".attendAll").show()
+                    break;
+                default:
+                    break;
+            }
+            // $(".inviteToMine").show()
+            approveBtnText = "邀请认证"
+            if (data.baseinfo.emotion_status && data.baseinfo.emotion_status !== "") {
+                $(".emotion_status").html(data.baseinfo.emotion_status)
             } else {
-                $(".operate").show()
-                $("footer").show()
-                $(".haveAttend").show()
-                switch (data.baseinfo.attention) {
-                    case 0: //未关注
-                        $(".haveAttend").find(".attend").show()
-                        break;
-                    case 1: //已关注
-                        $(".haveAttend").find(".attended").show()
-                        break;
-                    case 2: //已被关注
-                        $(".haveAttend").find(".attend").show()
-                        break;
-                    case 3: //相互关注
-                        $(".haveAttend").find(".attendAll").show()
-                        break;
-                    default:
-                        break;
-                }
-                $(".addMyPhotos").hide()
-                $(".myInviteText").html("TA的邀约")
-                // $(".inviteToMine").show()
-                $(".myTalkText").html("TA的动态")
-                $(".myApproveText").html("TA的认证")
-                approveBtnText = "邀请认证"
-                $(".aboutText").html("关于TA")
-                if (data.baseinfo.emotion_status && data.baseinfo.emotion_status !== "") {
-                    $(".emotion_status").html(data.baseinfo.emotion_status)
-                } else {
-                    $(".emotion_status").html("填写")
-                }
-                $(".distance").show()
+                $(".emotion_status").html("填写")
             }
             $(".edit-personal-area").html(data.baseinfo.city)
             if (data.photos) {
@@ -452,7 +381,7 @@
             if (data.baseinfo.mobile_validated == 0) {
                 $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src", "__STATIC__/images/icon/微信@2x.png")
                 $(".myApprove-phone").html("手机号未认证")
-                // $(".myApprove-phone+.approveBtn").show()
+                $(".myApprove-phone+.approveBtn").show()
             } else {
                 $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src", "__STATIC__/images/icon/微信@2x.png")
                 $(".myApprove-phone").html("手机号已认证")
@@ -463,7 +392,7 @@
                 $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
                     "__STATIC__/images/icon/视频未认证@2x.png")
                 $(".myApprove-video").html("形象视频未认证")
-                // $(".myApprove-video+.approveBtn").show()
+                $(".myApprove-video+.approveBtn").show()
             } else {
                 $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
                     "__STATIC__/images/icon/小视频@2x.png")
@@ -475,7 +404,7 @@
                 $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
                     "__STATIC__/images/icon/身份未认真@2x.png")
                 $(".myApprove-identity").html("身份未认证")
-                // $(".myApprove-identity+.approveBtn").show()
+                $(".myApprove-identity+.approveBtn").show()
             } else {
                 $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
                     "__STATIC__/images/icon/身份未认真@2x.png")
@@ -491,21 +420,13 @@
             if (data.baseinfo.emotion_status && data.baseinfo.emotion_status !== "") {
                 $(".emotion_status").html(data.baseinfo.emotion_status)
             } else {
-                if (Homepage.isSelf) {
-                    $(".emotion_status").html("请选择").addClass("canChoose")
-                } else {
-                    $(".emotion_status").html("填写")
-                }
+                $(".emotion_status").html("未填")
             }
             //职业
             if (data.baseinfo.profession && data.baseinfo.profession !== "") {
                 $(".profession").html(data.baseinfo.profession)
             } else {
-                if (Homepage.isSelf) {
-                    $(".profession").html("请选择").addClass("canChoose")
-                } else {
-                    $(".profession").html("填写")
-                }
+                $(".profession").html("未填")
             }
             //收入
             if (data.baseinfo.income && data.baseinfo.income !== "") {
@@ -535,41 +456,25 @@
                         break;
                 }
             } else {
-                if (Homepage.isSelf) {
-                    $(".income").html("请选择").addClass("canChoose")
-                } else {
-                    $(".income").html("填写")
-                }
+                $(".income").html("未填")
             }
             //身高
             if (data.baseinfo.height && data.baseinfo.height !== "") {
                 $(".height").html(data.baseinfo.height + "cm")
             } else {
-                if (Homepage.isSelf) {
-                    $(".height").html("请选择").addClass("canChoose")
-                } else {
-                    $(".height").html("填写")
-                }
+                $(".height").html("未填")
             }
             //体重
             if (data.baseinfo.weight && data.baseinfo.weight !== "") {
                 $(".weight").html(data.baseinfo.weight + "kg")
             } else {
-                if (Homepage.isSelf) {
-                    $(".weight").html("请选择").addClass("canChoose")
-                } else {
-                    $(".weight").html("填写")
-                }
+                $(".weight").html("未填")
             }
             //对爱情的看法
             if (data.baseinfo.signature && data.baseinfo.signature !== "") {
                 $(".signature").html(data.baseinfo.signature)
             } else {
-                if (Homepage.isSelf) {
-                    $(".signature").html("请选择").addClass("canChoose")
-                } else {
-                    $(".signature").html("填写")
-                }
+                $(".signature").html("未填")
             }
 
             //对另一半的要求？
@@ -579,11 +484,7 @@
             if (data.baseinfo.active_time && data.baseinfo.active_time !== "") {
                 $(".active_time").html(data.baseinfo.active_time)
             } else {
-                if (Homepage.isSelf) {
-                    $(".active_time").html("请选择").addClass("canChoose")
-                } else {
-                    $(".active_time").html("填写")
-                }
+                // $(".active_time").html("填写")
             }
             //最满意部位
             if (data.baseinfo.satisfactory_parts && data.baseinfo.satisfactory_parts !== "") {
@@ -593,11 +494,7 @@
                     $(".satisfactory_parts ul").append($('<li>' + value + '</li>'))
                 })
             } else {
-                if (Homepage.isSelf) {
-                    $(".active_time").html("请选择").addClass("canChoose")
-                } else {
-                    $(".active_time").html("填写")
-                }
+                $(".active_time").html("未填")
             }
 
             //
@@ -608,14 +505,7 @@
                 user_id: Homepage.user_id,
                 toUserId: Homepage.toUserId
             }
-            var url = ""
-            if (Homepage.user_id == Homepage.toUserId) {
-                //我的主页
-                url = GlobalHost + "/index.php/Api/User/myHomePage"
-            } else {
-                //访问他人主页
-                url = GlobalHost + "/index.php/Api/User/homePage"
-            }
+            var url = GlobalHost + "/index.php/Api/User/homePage"
             console.log(postData)
 
             $.ajax({
@@ -630,48 +520,12 @@
                 }
             })
         },
-        addMyPhotos: function () {
-            // if ($(".edit-pic-item").length >= 9) {
-            //     alert("最多上传9张图片")
-            //     return
-            // }
-            var $liTemp = $(
-                `
-                        <li class="edit-pic-item">
-                            <input class="albumInput" type="file" accept="image/*" capture="camera" style="display: none">
-                            <img class="showPic" src="__STATIC__/images/icon/tx.png">
-                        </li>
-                    `
-            )
-
-            $liTemp.find(".albumInput").change(function () {
-                readURL(this);
-            })
-            //触发点击input file
-            $liTemp.find(".albumInput")[0].click()
-
-            function readURL(input) {
-                console.log(input)
-                console.log(input.files)
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        console.log(e)
-                        $liTemp.find('.showPic').attr('src', e.target.result);
-
-                        //添加图片成功 后
-                        $(".myPhotos").prepend($liTemp)
-                        // console.log(input.value)
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-        },
         addAttention: function (callback) {
             var postData = {
                 user_id: Homepage.user_id,
                 friend_id: Homepage.toUserId
             }
+            console.log(postData)
             $.ajax({
                 type: "POST",
                 url: GlobalHost + "/index.php/Api/User/attention",
@@ -688,6 +542,7 @@
                 user_id: Homepage.user_id,
                 friend_id: Homepage.toUserId
             }
+            console.log(postData)
             $.ajax({
                 type: "POST",
                 url: GlobalHost + "/index.php/Api/User/cancelAttention",
@@ -699,466 +554,20 @@
                 }
             })
         },
-        modifyDataBind: function () {
-            //感情状况
-            $(".emotion_status").closest(".aboutMe-item").click(function () {
-                let mHtml =
-                    `
-                        <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
-                            <span class="title">感情状况</span>
-                            <a href="javascript:void(0)" class="fr mSave saveEmotion">确定</a>
-                        </header>
-                        <div class="emotion-content">
-                            <ul>
-                                <li>单身</li>
-                                <li>恋爱</li>
-                                <li>貌似恋爱</li>
-                                <li>已婚</li>
-                                <li>分居</li>
-                                <li>离异</li>
-                            </ul>
-                        </div>
-                    `
-                $(".modifyDataWrap")[0].innerHTML = mHtml
-                //js
-                $(".modifyDataWrap>header .back").click(function () {
-                    $(".modifyDataWrap").hide()
-                    $(".modifyDataWrap").html("")
-                })
-                $(".emotion-content ul li").click(function () {
-                    $(this).addClass("actived").siblings().removeClass("actived")
-                })
-                $(".saveEmotion").click(function () {
-                    if ($(".emotion-content ul li.actived").length > 0) {
-                        var valueStr = $(".emotion-content ul li.actived").html()
-                        Homepage.modifyData("emotion_status", valueStr, function () {
-                            $(".modifyDataWrap").hide()
-                            $(".modifyDataWrap").html("")
-
-                            //更新原网页
-                            $(".emotion_status").html(valueStr).removeClass("canChoose")
-                        })
-                    }
-                })
-                //js end
-
-                $(".modifyDataWrap").show()
-            })
-
-            //职业
-            $(".profession").closest(".aboutMe-item").click(function () {
-                let mHtml =
-                    `
-                        <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
-                            <span class="title">职业</span>
-                            <a href="javascript:void(0)" class="fr mSave saveProfess">确定</a>
-                        </header>
-                        <div class="profession-content">
-                            <div class="profInputWrap">
-                                <span class="clearInput" style="display: none;"></span>
-                                <input id="profInput" type="text" placeholder="选择下面或自填">
-                            </div>
-
-                            <ul class="professionList">
-                                <li>私营企业主</li>
-                                <li>中层管理者</li>
-                                <li>高校学生</li>
-                                <li>公司职员</li>
-                                <li>工程师</li>
-                                <li>军人</li>
-                                <li>警察</li>
-                                <li>医生</li>
-                                <li>护士</li>
-                                <li>空乘</li>
-                                <li>航空公司</li>
-                                <li>模特</li>
-                                <li>教师</li>
-                                <li>国企工作者</li>
-                                <li>机关工作者</li>
-                                <li>媒体工作者</li>
-                                <li>互联网从业者</li>
-                                <li>风险投资人</li>
-                            </ul>
-                        </div>
-                        `
-                $(".modifyDataWrap")[0].innerHTML = mHtml
-                //js
-                $(".modifyDataWrap>header .back").click(function () {
-                    $(".modifyDataWrap").hide()
-                    $(".modifyDataWrap").html("")
-                })
-                document.getElementById("profInput").oninput = function () {
-                    if (this.value == "") {
-                        $(".clearInput").hide()
-                    } else {
-                        $(".clearInput").show()
-                    }
-                }
-                $(".clearInput").click(function () {
-                    document.getElementById("profInput").value = ""
-                    $(this).hide()
-                })
-                $(".professionList li").click(function () {
-                    $(this).addClass("actived").siblings().removeClass("actived")
-                    document.getElementById("profInput").value = $(this).text()
-                    $(".clearInput").show()
-                })
-                $(".saveProfess").click(function () {
-                    var valueStr = document.getElementById("profInput").value
-                    if (valueStr !== "") {
-                        Homepage.modifyData("profession", valueStr, function () {
-                            console.log(555)
-                            $(".modifyDataWrap").hide()
-                            $(".modifyDataWrap").html("")
-
-                            //更新原网页
-                            $(".profession").html(valueStr).removeClass("canChoose")
-                        })
-                    }
-                })
-                //js end
-
-                $(".modifyDataWrap").show()
-            })
-
-            //收入
-            $(".income").closest(".aboutMe-item").click(function () {
-                let mHtml =
-                    `
-                        <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
-                            <span class="title">收入</span>
-                            <a href="javascript:void(0)" class="fr mSave saveIncome">确定</a>
-                        </header>
-                        <div class="income-content">
-                            <ul>
-                                <li data-income="1">3000元以上/月</li>
-                                <li data-income="2">5000元以上/月</li>
-                                <li data-income="3">10000元以上/月</li>
-                                <li data-income="4">20000元以上/月</li>
-                                <li data-income="5">50万元以上/年</li>
-                                <li data-income="6">100万元以上/年</li>
-                                <li data-income="7">保密</li>
-                            </ul>
-                        </div>
-                    `
-                $(".modifyDataWrap")[0].innerHTML = mHtml
-                //js
-                $(".modifyDataWrap>header .back").click(function () {
-                    $(".modifyDataWrap").hide()
-                    $(".modifyDataWrap").html("")
-                })
-                $(".income-content ul li").click(function () {
-                    $(this).addClass("actived").siblings().removeClass("actived")
-                })
-                $(".saveIncome").click(function () {
-                    if ($(".income-content ul li.actived").length > 0) {
-                        var valueStr = Number($(".income-content ul li.actived").attr(
-                            "data-income"))
-                        Homepage.modifyData("income", valueStr, function () {
-                            $(".modifyDataWrap").hide()
-                            $(".modifyDataWrap").html("")
-
-                            //更新原网页
-                            let realStr
-                            switch (valueStr) {
-                                case 1:
-                                    realStr = "3000元以上/月"
-                                    break;
-                                case 2:
-                                    realStr = "5000元以上/月"
-                                    break;
-                                case 3:
-                                    realStr = "10000元以上/月"
-                                    break;
-                                case 4:
-                                    realStr = "20000元以上/月"
-                                    break;
-                                case 5:
-                                    realStr = "50万元以上/年"
-                                    break;
-                                case 6:
-                                    realStr = "100万元以上/年"
-                                    break;
-                                case 7:
-                                    realStr = "保密"
-                                    break;
-                                default:
-                                    break;
-                            }
-                            $(".income").html(realStr).removeClass("canChoose")
-                        })
-                    }
-                })
-                //js end
-
-                $(".modifyDataWrap").show()
-            })
-
-            //身高
-            $(".height").closest(".aboutMe-item").click(function () {
-                let mHtml =
-                    `
-                        <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
-                            <span class="title">身高</span>
-                            <a href="javascript:void(0)" class="fr mSave saveHeight">确定</a>
-                        </header>
-                        <div class="height-content">
-                            <ul>
-                            </ul>
-                        </div>
-                    `
-                $(".modifyDataWrap")[0].innerHTML = mHtml
-                for (let index = 0; index <= 80; index++) {
-                    $(".modifyDataWrap .height-content ul").append($('<li>' + (140 + index) + 'cm</li>'))
-                }
-                //js
-                $(".modifyDataWrap>header .back").click(function () {
-                    $(".modifyDataWrap").hide()
-                    $(".modifyDataWrap").html("")
-                })
-                $(".height-content ul li").click(function () {
-                    $(this).addClass("actived").siblings().removeClass("actived")
-                })
-                $(".saveHeight").click(function () {
-                    if ($(".height-content ul li.actived").length > 0) {
-                        var valueStr = $(".height-content ul li.actived").html()
-                        var valueStrNum = valueStr.substr(0, valueStr.length - 2)
-                        console.log(valueStrNum)
-                        Homepage.modifyData("height", valueStrNum, function () {
-                            $(".modifyDataWrap").hide()
-                            $(".modifyDataWrap").html("")
-
-                            //更新原网页
-                            $(".height").html(valueStr).removeClass("canChoose")
-                        })
-                    }
-                })
-
-                //js end
-
-                $(".modifyDataWrap").show()
-            })
-
-            //体重
-            $(".weight").closest(".aboutMe-item").click(function () {
-                let mHtml =
-                    `
-                        <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
-                            <span class="title">体重</span>
-                            <a href="javascript:void(0)" class="fr mSave saveWeight">确定</a>
-                        </header>
-                        <div class="weight-content">
-                            <ul>
-                            </ul>
-                        </div>
-                    `
-                $(".modifyDataWrap")[0].innerHTML = mHtml
-                for (let index = 0; index <= 65; index++) {
-                    $(".modifyDataWrap .weight-content ul").append($('<li>' + (35 + index) + 'kg</li>'))
-                }
-                //js
-                $(".modifyDataWrap>header .back").click(function () {
-                    $(".modifyDataWrap").hide()
-                    $(".modifyDataWrap").html("")
-                })
-                $(".weight-content ul li").click(function () {
-                    $(this).addClass("actived").siblings().removeClass("actived")
-                })
-                $(".saveWeight").click(function () {
-                    if ($(".weight-content ul li.actived").length > 0) {
-                        var valueStr = $(".weight-content ul li.actived").html()
-                        var valueStrNum = valueStr.substr(0, valueStr.length - 2)
-                        console.log(valueStrNum)
-                        Homepage.modifyData("weight", valueStrNum, function () {
-                            $(".modifyDataWrap").hide()
-                            $(".modifyDataWrap").html("")
-
-                            //更新原网页
-                            $(".weight").html(valueStr).removeClass("canChoose")
-                        })
-                    }
-                })
-
-                //js end
-
-                $(".modifyDataWrap").show()
-            })
-
-            //个性签名
-            $(".signature").closest(".aboutMe-item").click(function () {
-                let mHtml =
-                    `
-                        <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
-                            <span class="title">个性签名</span>
-                            <a href="javascript:void(0)" class="fr mSave saveSignature">确定</a>
-                        </header>
-                        <div class="signature-content">
-                            <div class="signatureInputWrap">
-                                <textarea id="signatureInput" placeholder="选择下面或自填"></textarea>
-                                <span class="signatureCount">50</span>
-                            </div>
-
-                            <p class="signatureTitle">请勿填写任何与索要礼物有关的内容，被发现将直接封号</p>
-                            <p class="signatureTitle">可以简单说自己，也可以说说你喜欢怎样的男生/女生</p>
-
-                        </div>
-                        `
-                // <ul class="signatureList">
-                //     <li><p>经历许多，现在只想简简单单，相爱到老</p></li>
-                //     <li><p>向往忠贞不渝的爱情，但现实太残酷</p></li>
-                //     <li><p>哪怕王菲和李亚鹏都分手了，我仍相信爱情</p></li>
-                //     <li><p>有时麻木得已经对感情不抱期望了，但还是期待那可能出现的美好未来</p></li>
-                // </ul>
-
-                $(".modifyDataWrap")[0].innerHTML = mHtml
-                //js
-                var textarea = document.getElementById('signatureInput')
-                if ($(".signature").html() !== "请选择" && $(".signature").html() !== "填写") {
-                    textarea.value = $(".signature").html()
-                }
-                $(".modifyDataWrap>header .back").click(function () {
-                    $(".modifyDataWrap").hide()
-                    $(".modifyDataWrap").html("")
-                })
-                textarea.onchange = function () {
-                    limitCount(this)
-                }
-                textarea.onkeydown = function () {
-                    limitCount(this)
-                }
-                textarea.onkeyup = function () {
-                    limitCount(this)
-                }
-
-                function limitCount(el) {
-                    let valueStr = el.value
-                    let count = 50 - valueStr.length
-                    if (count <= 0) {
-                        el.value = el.value.substring(0, 50)
-                        count = 0
-                    }
-                    $(".signatureCount").html(count)
-                }
-                // $(".signatureList li").click(function () {
-                //     $(this).addClass("actived").siblings().removeClass("actived")
-                //     textarea.value = $(this).find("p").text()
-                // })
-                $(".saveSignature").click(function () {
-                    var valueStr = textarea.value
-                    if (valueStr !== "") {
-                        Homepage.modifyData("signature", valueStr, function () {
-                            $(".modifyDataWrap").hide()
-                            $(".modifyDataWrap").html("")
-
-                            //更新原网页
-                            $(".signature").html(valueStr).removeClass("canChoose")
-                        })
-                    }
-                })
-                //js end
-
-                $(".modifyDataWrap").show()
-            })
-
-            //最满意部位
-            $(".satisfactory_parts").closest(".aboutMe-item").click(function () {
-                let mHtml =
-                    `
-                    <header>
-                        <a href="javascript:void(0)" class="back fl"></a>
-                        <span class="title">最满意部位</span>
-                        <a href="javascript:void(0)" class="fr mSave saveParts">确定</a>
-                    </header>
-                    <div class="parts-content">
-                        <p class="partsTitle">从以下便签中选择(最多选择6个)</p>
-
-                        <ul class="partsList">
-                            <li>笑容</li>
-                            <li>鼻梁</li>
-                            <li>眼睛</li>
-                            <li>酒窝</li>
-                            <li>腹肌</li>
-                            <li>络腮胡</li>
-                            <li>腰肌</li>
-                            <li>胸肌</li>
-                            <li>傻笑</li>
-                            <li>磁性声音</li>
-                            <li>只懂赚钱男</li>
-                            <li>黝黑的皮肤</li>
-                            <li>大鼻子</li>
-                        </ul>
-                    </div>
-                    `
-                $(".modifyDataWrap")[0].innerHTML = mHtml
-                //js
-                $(".modifyDataWrap>header .back").click(function () {
-                    $(".modifyDataWrap").hide()
-                    $(".modifyDataWrap").html("")
-                })
-                $(".partsList li").click(function () {
-                    if ($(this).hasClass("actived")) {
-                        $(this).removeClass("actived")
-                    } else {
-                        $(this).addClass("actived")
-                        if ($(".partsList li.actived").length >= 7) {
-                            $(this).removeClass("actived")
-                        }
-                    }
-                })
-                $(".saveParts").click(function () {
-                    var valueArr = []
-                    $(".partsList li.actived").each(function () {
-                        valueArr.push($(this).html())
-                    })
-                    var valueStr = valueArr.join(",")
-                    console.log(valueStr)
-
-                    if (valueStr !== "") {
-                        Homepage.modifyData("satisfactory_parts", valueStr, function () {
-                            $(".modifyDataWrap").hide()
-                            $(".modifyDataWrap").html("")
-
-                            //更新原网页
-                            var $ul = $('<ul class="clearfix"></ul>')
-                            valueArr.forEach(function (item) {
-                                $ul.append($('<li>' + item + '</li>'))
-                            })
-                            $(".satisfactory_parts").html($ul).removeClass("canChoose")
-                        })
-                    }
-                })
-                //js end
-
-                $(".modifyDataWrap").show()
-            })
-
-        },
-        modifyData: function (key, value, callback) {
-            var postData = {
-                user_id: Homepage.user_id,
-                field: key,
-                fieldValue: value,
-            }
-            console.log(postData)
-            $.ajax({
-                type: "POST",
-                url: GlobalHost + "/index.php/Api/User/changeInfo",
-                data: postData,
-                dataType: "json",
-                success: function (result) {
-                    console.log(result)
-                    callback()
-                }
-            })
-        },
         savePageSession: function () {
             //
+        },
+        showSignature:function(){
+            console.log($(".signature").html())
+            $(".signatureDialogContent").html($(".signature").html())
+
+            $(".m_shade").show()
+            $(".signatureDialog").show()
+
+            $(".signatureDialogBtn").click(function(){
+                $(".m_shade").hide()
+                $(".signatureDialog").hide()
+            })
         },
         eventsBind: function () {
             $('.operate').click(function () {
@@ -1206,30 +615,6 @@
             $(".homepageBack").click(function () {
                 window.history.back(-1)
             })
-            //添加图片
-            $(".addMyPhotos").click(function () {
-                Homepage.addMyPhotos()
-            })
-            //发布邀约
-            $(".releaseInvite").click(function (event) {
-                event.stopPropagation()
-                $(".m_shade").add($(".maskm")).show()
-            })
-            //关闭发布邀约
-            $("body").click(function () {
-                $(".m_shade").add($(".maskm")).hide()
-            })
-            //跳添加邀约页面
-            $(".openReleaseInvite").click(function () {
-                //保存页面数据
-
-                var type = $(this).attr("data-type")
-                window.location.href = GlobalHost + "/index.php/mobile/invite/add/type/" + type + ".html"
-            })
-            //修改个人主页里的资料
-            if (Homepage.isSelf) {
-                Homepage.modifyDataBind()
-            }
             //点击 “关注” 系列
             //点击 加关注
             $(".attend").click(function () {
@@ -1272,28 +657,15 @@
             })
             //点击 “关注” 系列 end
 
-            //点击编辑图标
-            $(".editHomePage").click(function () {
-                if ($(".mask").length == 0) {
-                    $('body').append($('<div class="mask"></div>'))
-                }
-                $('.gotoEditHome').show()
-                // $('.avatarOperating').show().animate({'bottom':'0'},300)
-                // $('body').css('overflow', 'hidden')
-            })
-            //点击编辑资料
-            $(".gotoEditHomePage").click(function () {
-                // Homepage.savePageSession()
-                window.location.href = "editHomePage.html"
+            //查看个性签名
+            $(".signatureItem").click(function(){
+                Homepage.showSignature();
             })
         },
         init: function () {
             //得到user_id
-            Homepage.user_id = 1
+            Homepage.user_id = 2
             Homepage.toUserId = 1
-            if (Homepage.user_id == Homepage.toUserId) {
-                Homepage.isSelf = true
-            }
             //获取用户信息
             Homepage.getDataUpdateDom()
         }
