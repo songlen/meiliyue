@@ -164,7 +164,7 @@ class User extends Base {
             ->join('dynamics d', 'd.id=dc.dynamic_id', 'left')
             ->join('users u', 'u.user_id=dc.commentator_id', 'left')
             ->where('dc.reply_user_id', $user_id)
-            ->field('d.type, d.description, d.content, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.age, dc.dynamic_id, dc.content')
+            ->field('d.type, d.description, d.content,u.user_id, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.age, dc.dynamic_id, dc.content, dc.parent_id, dc.add_time')
             ->limit($start_limit, 20)
             ->select();
 
@@ -250,7 +250,7 @@ class User extends Base {
         $toUserId = I('toUserId');
 
         if($user_id == $toUserId){
-            $this->redirect('user/myHomePage', array('user_id' => $user_id));
+            $this->redirect('mobile/user/myHomePage', array('user_id' => $user_id));
         }
         /************ 获得自己的信息 **************/
         $user = M('users')->where('user_id', $user_id)->find();
