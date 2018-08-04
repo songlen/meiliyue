@@ -121,13 +121,12 @@ footer li a {
 }
 
 .indexPage {
-  /* margin-bottom: 4.5rem */
   position: absolute;
   top: 50px;
   left: 0;
   right: 0;
   bottom: 0;
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 
 .invitation .view {
@@ -137,7 +136,19 @@ footer li a {
   /* height: 6.7rem; */
   height: 108px;
 }
-
+.invitation .blurDiv{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.invitation .inviteTopWrap{
+  height: 246px;
+  margin-top: 0;
+  transition: margin 0.3s;
+  /* 覆盖下拉刷新 */
+  position: relative;
+  z-index: 3;
+}
 .invitation .view a {
   display: inline-block;
   border-radius: 1rem;
@@ -155,15 +166,15 @@ footer li a {
 .invitation .options {
   display: flex;
   flex-wrap: wrap;
-  padding: 1rem 0;
+  padding: 14px 0;
   border-bottom: 1px solid #f1f1f1;
+  overflow-y: hidden;
   overflow-x: auto;
   height: calc(100% + 20px);
 }
 
 .invitation .classify {
   background-color: #fff;
-  margin-bottom: 10px;
 }
 
 .invitation .classify .all {
@@ -189,8 +200,8 @@ footer li a {
 .invitation .classify ul {
   display: flex;
   flex-wrap: nowrap;
-  /* height: 45px; */
-  height: 3.2rem;
+  height: 45px;
+  /* height: 3.2rem; */
   line-height: 40px;
 }
 
@@ -255,7 +266,9 @@ footer li a {
 }
 
 .invitation .address {
-  padding: 10px;
+  height: 100%;
+  line-height: 40px;
+  padding: 0 10px;
 }
 
 .invitation .address .select {
@@ -983,11 +996,15 @@ footer li a {
 .select-page.actived {
   top: 0;
 }
-
+.yaoyueIndex .select-page header {
+  position: absolute;
+}
 header .search {
   background: none;
 }
-
+.selectPage{
+  margin-top: 50px;
+}
 .selectPage .tabs>.title {
   height: 2.5rem;
   line-height: 2.5rem;
@@ -1080,6 +1097,7 @@ header .search {
 
 .invitation .addressWrap {
   height: 40px;
+  overflow: hidden;
 }
 
 .invitation .address {
@@ -1199,6 +1217,17 @@ header .search {
 body.yaoyueIndex {
   height: 100vh;
 }
+.yaoyueIndex header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 10px;
+  z-index: 5;
+}
 
 .sexAge {
   display: inline-flex;
@@ -1239,10 +1268,9 @@ body.yaoyueIndex {
 }
 
 .dropRefresh {
-  height: 100%;
-  /* max-height: 120vh; */
-  /* weui滑动加载不识别vh单位 */
-  overflow: auto;
+  flex: 1 0 0;
+  overflow-y: auto;
+  /* margin-top: 10px; */
 }
 
 .mInviteList-item .ding {
@@ -1308,7 +1336,7 @@ body.yaoyueIndex {
 .descriptionWrap .textCountWrap {
   display: block;
   position: absolute;
-  right: 25px;
+  right: 0;
   bottom: -15px;
 }
 
@@ -1422,7 +1450,18 @@ li.detailImages img {
 }
 
 /* 修改邀约index下拉刷新 */
+.dropRefresh .weui-pull-to-refresh__layer{
+  height: 50px;
+  line-height: 50px;
+}
 
-.dropRefresh.weui-pull-to-refresh {
-  margin-top: -28px;
+/* 无任何内容 */
+.noComments {
+  padding-top: 50px;
+  text-align: center;
+}
+
+.noComments img {
+  width: 60px;
+  height: 50px;
 }

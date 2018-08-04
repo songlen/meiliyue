@@ -152,11 +152,13 @@ footer li a {
 
 .list-item {
     padding-top: 0.14rem;
+    padding-left: 0.1rem;
 }
 
 .list-item .item-head {
     display: flex;
     padding-left: 0.04rem;
+    align-items: center;
 }
 
 .list-item .item-head .item-headWrap {
@@ -178,6 +180,10 @@ footer li a {
 
 .list-item .item-head .item-head-text .listName {
     font-size: 15px;
+}
+.list-item .addTime {
+    margin-right: auto;
+    font-size: 13px;
 }
 
 .sexAge {
@@ -224,13 +230,14 @@ footer li a {
 }
 
 .list-item .item-content {
-    margin-left: 0.49rem;
+    /* margin-left: 0.49rem; */
     font-size: 14px;
     color: #000;
+    min-height: 0.05rem;
 }
 
-.list-item .item-content p {
-    margin-bottom: 0.14rem;
+.list-item .item-content {
+    margin-top: 0.05rem;
 }
 
 .list-item .item-content img {
@@ -240,8 +247,8 @@ footer li a {
 .list-item .item-comment {
     display: flex;
     justify-content: flex-end;
-    margin-left: 0.49rem;
-    padding-bottom: 0.26rem;
+    /* margin-left: 0.49rem; */
+    padding-bottom: 0.15rem;
     border-bottom: 1px solid #f7f7f7;
 }
 
@@ -250,8 +257,8 @@ footer li a {
 }
 
 .list-item .item-comment>div img {
-    width: 0.22rem;
-    height: 0.22rem;
+    width: 0.2rem;
+    height: 0.2rem;
     vertical-align: middle;
 }
 
@@ -842,7 +849,7 @@ a.operate {
     background-size: 100%;
 }
 
-.details-input .sendComment {
+.sendComment {
     display: inline-block;
     width: 56px;
     height: 30px;
@@ -966,6 +973,43 @@ a.operate {
     z-index: 6;
     background-color: #000;
 }
+.fullScreen .videoHeader{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    line-height: 50px;
+    /* background-color: #fff; */
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.fullScreen .videoHeader>.img-box{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 15px;
+    margin-left: 10px;
+}
+.fullScreen .videoHeader>.img-box>img{
+    width: 100%;
+}
+.fullScreen .closeFullScreen {
+    width: 30px;
+    height: 30px;
+    transform: translateX(-50%) rotate(45deg);
+    margin-right: auto;
+    margin-left: 25px;
+}
+.fullScreen .videoOperate{
+    width: 30px;
+    height: 30px;
+    background: url(../images/icon/三个点.png) center center no-repeat;
+    background-size: 100%;
+}
+
 
 .dongtai .fullScreen .progressBar {
     display: block;
@@ -989,16 +1033,49 @@ a.operate {
 .dongtai .fullScreen .fullScreenScroll .fullScreenWrap {
     width: 100vw;
     height: 100vh;
+    position: relative;
+    z-index: 1;
 }
-
-.fullScreen .closeFullScreen {
-    display: block;
-    width: 34px;
-    height: 34px;
+.fullScreen .fullScreenScroll .videoInput{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background-color: green;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+.dongtai .fullScreen .fullScreenScroll .fullScreenWrap>video {
+    background-color: #000;
+}
+.fullScreen .fullScreenScroll .fullScreenWrap .videoFooter {
     position: absolute;
-    left: 40px;
-    top: 25px;
-    transform: translateX(-50%) rotate(45deg);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.videoCommentBtn{
+    width: 30px;
+    height: 30px;
+    background: url(../images/icon/评论-4.png) center center no-repeat;
+    background-size: 100%;
+}
+.videoFooter .littleTri{
+    width: 9px;
+    height: 9px;
+    border: 1px solid;
+    border-color: transparent transparent #fff #fff;
+    transform-origin: center center;
+    transform: rotate(-45deg) translate(-50%);
+    position: absolute;
+    left: 50%;
+    bottom: 7px;
 }
 
 .fullScreen .closeFullScreen::before {
@@ -1025,6 +1102,19 @@ a.operate {
 
 /* 修改dongtai下拉刷新 */
 
-.pageWrap.weui-pull-to-refresh {
-    margin-top: 0;
+.dongtai .weui-pull-to-refresh__layer {
+    height: 50px;
+    line-height: 50px;
+}
+
+/* 无任何内容 */
+
+.noComments {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.noComments img {
+    width: 60px;
+    height: 50px;
 }

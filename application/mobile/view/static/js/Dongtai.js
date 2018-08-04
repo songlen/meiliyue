@@ -1,8 +1,10 @@
 $(function () {
-    var GlobalHost = "http://meiliyue.caapa.org/index.php"
+    var GlobalHost = "http://meiliyue.caapa.org";
     var dongtaiVm = new Vue({
         el: "#dongtaiApp",
         data: {
+            GlobalHost:GlobalHost,
+
             user_id: "",
             isShowArea: false,
             nowPage: "area", //area attended video
@@ -34,33 +36,7 @@ $(function () {
             //监听滚动条
             document.getElementsByClassName('pageWrap')[0].addEventListener('scroll', this.handleScroll)
             //下拉刷新
-            $(".pageWrap").pullToRefresh(function () {
-                console.log("刷新")
-                let postData = {}
-                switch (_self.nowDataList) {
-                    case "areaDataList":
-                        postData = {
-                            user_id: _self.user_id,
-                            range: _self.nowArea == "同城" ? 1 : 2
-                        }
-                        break;
-                    case "attendedDataList":
-                        postData = {
-                            user_id: _self.user_id,
-                            attention: 1
-                        }
-                        break;
-                    case "videoDataList":
-                        postData = {
-                            user_id: _self.user_id,
-                            jizha: 1
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                _self.getListData(_self.nowDataList, false, postData)
-            })
+            this.initPullToRefresh();
 
             //----------------------------------------
 
@@ -81,11 +57,10 @@ $(function () {
                     document.getElementsByClassName('pageWrap')[0].scrollTop = dongtaiPageData.pageScrollTop
                 }, 1)
 
-                return
+                return;
             }
 
-
-            this.user_id = "1"
+            this.user_id = 1;
 
             this.getListData("areaDataList", false, {
                 user_id: this.user_id,
@@ -93,10 +68,39 @@ $(function () {
             })
 
         },
+        filters: {
+            //时间戳 转 文字
+            stampToStr: function (stamp) {//传来的stamp十位数
+                if (!stamp) return '';
+
+                let nowStamp=Math.round((new Date().getTime())/1000);
+                let howLong=nowStamp-stamp;
+
+                if(howLong<60){//1分钟内
+                    return "1分钟内";
+                }else if(howLong<3600){//1小时内，显示分钟数
+                    let minutes=Math.floor(howLong/60);
+                    return minutes+"分钟前";
+                }else if(howLong<43200){//12小时内，显示小时数
+                    let hours=Math.floor(howLong/3600);
+                    return hours+"小时前";
+                }else if(howLong>=43200&&howLong<86400){//大于12小时，小于24小时
+                    let dateStr=stampToDate(stamp);
+                    console.log(dateStr)
+                    let minStr=dateStr.substr(dateStr.length-5);
+                    return "昨天 "+minStr;
+                }else if(howLong>86400){//大于24小时，直接显示时间
+                    return stampToDate(stamp);
+                }
+            }
+        },
         methods: {
             cutTab(pageStr) {
                 if (pageStr == "area" && this.nowPage == "area") {
-                    this.isShowArea = true
+                    // this.isShowArea = true
+                    this.isShowArea = !this.isShowArea;
+                }else{
+                    this.isShowArea = false;
                 }
                 this.nowPage = pageStr
                 //查数据
@@ -104,8 +108,8 @@ $(function () {
                     if (!this[this.nowDataList].isLoad) { //还没加载过数据
                         this.getListData(this.nowDataList, false, {
                             user_id: this.user_id,
-                            attention: this.nowPage == "attended" ? 1 : "",
-                            jizha: this.nowPage == "video" ? 1 : ""
+                            attention: this.nowPage == "attended" ? 1 : null,
+                            jizha: this.nowPage == "video" ? 1 : null
                         })
                     }
                 }
@@ -125,7 +129,7 @@ $(function () {
             //获取数据
             getListData(dataList, isScroll, {
                 user_id = null,
-                range = "1",
+                range = null,
                 attention = null,
                 jizha = null,
                 page = null
@@ -142,22 +146,29 @@ $(function () {
                 console.log(postData)
                 $.ajax({
                     type: "POST",
-                    url: "http://meiliyue.caapa.org/index.php/Api/dynamics/index",
+                    url: GlobalHost+"/index.php/Api/dynamics/index",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
                         console.log(result.data)
                         if (isScroll) { //是滚动
                             self[dataList].list = self[dataList].list.concat(result.data)
+
+                            if(result.data.length !== 0){
+                                self[dataList].page = self[dataList].page + 1;
+                            }
                         } else {
                             self[dataList].list = result.data
+
+                            //显示 "无任何内容"
+                            if(self.nowPage=="attended"&&result.data.length==0){
+                                $(".noComments").show();
+                            }
                         }
 
                         self[dataList].isLoad = true
-                        if (isScroll && result.data.length !== 0) {
-                            self[dataList].page = self[dataList].page + 1
-                        }
 
+                        //下拉刷新done
                         $(".pageWrap").pullToRefreshDone();
                     }
                 })
@@ -207,11 +218,11 @@ $(function () {
             },
             openEdit(type) { //动态类型
                 //window.location("edit.html?user_id=" + 123)
-                this.savePageToSession()
+                this.savePageToSession();
 
                 // window.location.href = "edit.html"
 
-                window.location.href = GlobalHost + "/mobile/dynamics/add/type/" + type+".html"
+                window.location.href = GlobalHost + "/index.php/mobile/dynamics/add/type/" + type+".html";
             },
             //头像加载失败，默认图片
             defaultImg(event) {
@@ -235,12 +246,16 @@ $(function () {
             },
             //打开全屏小视频
             videoFullScreen() {
-                var srcTemp = "https://media.w3.org/2010/05/sintel/trailer.mp4"
-                $(".fullScreenWrap video").remove()
-                $(".fullScreenWrap").append($('<video id="video1" width="100%" height="100%" src="' + srcTemp + '" autoplay></video>'))
+                var srcTemp = "https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用,传来的src
+                var video=document.getElementById("video1");
+                if(!srcTemp==$(video).attr("src")){
+                    $(video).attr("src",srcTemp);
+                }
 
                 $(".fullScreen").show()
-
+                video.currentTime = 0;//总是从头开始播放
+                
+                //点击 控制video
                 $(".fullScreen video").click(function (event) {
                     event.stopPropagation()
                     console.log(this.paused)
@@ -249,7 +264,7 @@ $(function () {
                     } else {
                         this.pause()
                     }
-                })
+                });
 
                 //进度条
                 setInterval(function () {
@@ -261,13 +276,67 @@ $(function () {
                     console.log(vid.currentTime, vid.duration)
                     document.getElementsByClassName("progressBar")[0].style.width = (vid.currentTime / vid.duration) * 100 + "%"
                 }, 50);
+
             },
             //关闭全屏小视频
             closeFullScreen() {
                 $(".fullScreen").hide()
+            },
+            gotoDongtaiDetail(item){
+                this.savePageToSession();
+
+                window.location.href=GlobalHost+'/index.php/mobile/dynamics/detail/id/'+item.dynamic_id+'.html'
+            },
+            gotoHomePage(item){
+                this.savePageToSession();
+
+                let user_id=this.user_id;
+                let toUserId=item.user_id;
+                window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/"+user_id+"/toUserId/"+toUserId+".html";
+            },
+            //初始化下拉刷新
+            initPullToRefresh(){
+                let _self=this;
+                //下拉刷新
+                $(".pageWrap").pullToRefresh(function () {
+                    console.log("刷新")
+                    let postData = {}
+                    switch (_self.nowDataList) {
+                        case "areaDataList":
+                            postData = {
+                                user_id: _self.user_id,
+                                range: _self.nowArea == "同城" ? 1 : 2
+                            }
+                            break;
+                        case "attendedDataList":
+                            postData = {
+                                user_id: _self.user_id,
+                                attention: 1
+                            }
+                            break;
+                        case "videoDataList":
+                            postData = {
+                                user_id: _self.user_id,
+                                jizha: 1
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    _self.getListData(_self.nowDataList, false, postData)
+                });
             }
         }
     });
-
-
 });
+//时间戳转日期时间
+function stampToDate(timestamp) {
+    var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    Y = date.getFullYear() + '-';
+    M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+    D = (date.getDate()<10?"0"+date.getDate():date.getDate()) + ' ';
+    h = (date.getHours()<10?"0"+date.getHours():date.getHours()) + ':';
+    m = (date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes());
+    // s = date.getSeconds();
+    return Y+M+D+h+m;
+}
