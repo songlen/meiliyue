@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>邀约详情</title>
+    <title>发布邀约</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <!-- jquery-weui-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
@@ -111,6 +111,7 @@
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
     <!-- my-js -->
     <script type="text/javascript">
+        var GlobalHost = "http://meiliyue.caapa.org";
         var ReleInvite = {
             inviteList: [{
                 title: "旅行",
@@ -133,53 +134,40 @@
             }],
 
             _type: "",
-            _theme: "",
-
             _user_id: "",
             _user_sex: "",
 
-            //处理ulr参数func,返回obj
-            getUrlOptions: function (urlOptionStr) { //urlOptionStr = window.location.search
-                var requestObj = {}
-                var str = urlOptionStr.substr(1);
-                var strs = str.split("&");
-                for (var i = 0; i < strs.length; i++) {
-                    requestObj[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1])
-                }
-                return requestObj
-            },
-            //获取一些页面参数 ??? 进行一些操作
+            _theme: "",
+
+
+            //获取页面基本参数
             getPageData: function () {
-                //处理url参数
-                var urlOptionStr = window.location.search
-                urlOptionStr = "?type=2" //测试用
+                //user_id
+                ReleInvite._user_id = 1;
+                //sex
+                ReleInvite._user_sex = 2;
+                //type
+                var ulrStr = window.location.href;
+                ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html" //测试用
+                var strTemp = ulrStr.split("/add/type/")[1];
+                ReleInvite._type = Number(strTemp.substr(0, strTemp.length - 5));
 
-                if (urlOptionStr.indexOf("?") != -1) {
-                    var urlOptionObj = ReleInvite.getUrlOptions(urlOptionStr)
-
-                    console.log(urlOptionObj)
-                    //得到type theme
-                    ReleInvite._type = urlOptionObj.type
-                    ReleInvite.inviteList.forEach(function (obj) {
-                        if (obj.type == ReleInvite._type) {
-                            ReleInvite._theme = obj.title
-                        }
-                    })
-
-                    console.log(ReleInvite._theme, ReleInvite._type)
-                }
-
-                $(".inviteTheme").html(ReleInvite._theme)
-
-                //用户信息 id 性别
-                ReleInvite._user_id = "1" //测试用
-                ReleInvite._user_sex = "2" //测试用
-                //知道性别后，改变页面的“我买单”“当然你买单”“需要接送” ???
-
+                //更新dom
+                ReleInvite.updateDom();
+            },
+            updateDom:function(){
+                //主题
+                ReleInvite.inviteList.forEach(function (obj) {
+                    if (obj.type == ReleInvite._type) {
+                        ReleInvite._theme = obj.title
+                    }
+                });
+                $(".inviteTheme").html(ReleInvite._theme);
+                //根据sex 修改"当然你买"
 
                 //
             },
-            //用传过来的地址，改变 地址 选择器默认值
+            //改变 地址 选择器默认值
             setAreaDefault: function () {
 
             },
@@ -216,31 +204,40 @@
                     cityCode = cityCodes.split(",")[1]
                 }
 
-                var propsData = {
+                if (!cityCodes || $("#datetime-picker").val() == "") {
+                    // alter("地点和时间请填写完整")
+                    return
+                }
+
+                let posiArr=ReleInvite.getLocalPosition();
+
+                var postData = {
                     user_id: ReleInvite._user_id,
                     user_sex: ReleInvite._user_sex,
                     type: ReleInvite._type,
                     title: ReleInvite._theme,
-                    description: $("#descripTextarea").val(),
+
+                    description: $("#descripTextarea").val().trim(),
                     time: $("#datetime-picker").val(),
                     province: provinceCode,
                     city: cityCode,
-                    place: $(".detailPlace-inputWrap>input").val(),
-                    longitude: "", ///////////
-                    latitudu: "", ////////////
+                    place: $(".detailPlace-inputWrap>input").val().trim(),
                     object: $(".otherSide .choose .active").text(),
                     pay: $(".payMoney .choose .active").text(),
                     is_jiesong: $("#myCheck").is(':checked') ? "1" : "0",
-                    width_confidante: $("#myCheck1").is(':checked') ? "1" : "0"
+                    width_confidante: $("#myCheck1").is(':checked') ? "1" : "0",
+
+                    longitude: posiArr[0], 
+                    latitude: posiArr[1], 
                 }
 
-                console.log(propsData)
+                console.log(postData)
 
-                return //测试用
+                // return //测试用
 
                 $.ajax({
                     type: "POST",
-                    url: "http://meiliyue.caapa.org/index.php/Api/Dynamics/add",
+                    url: GlobalHost+"/index.php/Api/Dynamics/add",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -253,6 +250,35 @@
 
                     }
                 })
+            },
+            //获取当前地理位置
+            getLocalPosition:function(){//返回一个数组， 经 纬度
+                let position=[null,null];
+                if(navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition( // 该函数有如下三个参数
+                        function(pos){ // 如果成果则执行该回调函数
+                            console.log(
+                                '  经度：' + pos.coords.latitude +
+                                '  纬度：' + pos.coords.longitude +
+                                '  高度：' + pos.coords.altitude +
+                                '  精确度(经纬)：' + pos.coords.accuracy +
+                                '  精确度(高度)：' + pos.coords.altitudeAccuracy +
+                                '  速度：' + pos.coords.speed
+                            );
+
+                            position[0]=pos.coords.latitude;
+                            position[1]=pos.coords.longitude;
+                        }, function(err){ // 如果失败则执行该回调函数
+                            console.log(err.message);
+                        }, { // 附带参数
+                            // enableHighAccuracy: false, // 提高精度(耗费资源)
+                            // timeout: 3000, // 超过timeout则调用失败的回调函数
+                            // maximumAge: 1000 // 获取到的地理信息的有效期，超过有效期则重新获取一次位置信息
+                        }
+                    );
+                }
+
+                return position;
             },
             eventsBind: function () {
                 //取消发布
@@ -283,11 +309,11 @@
                 //
                 ReleInvite.eventsBind()
             }
-        }
+        };
 
         $(function () {
-            ReleInvite.init()
-        })
+            ReleInvite.init();
+        });
     </script>
 </body>
 
