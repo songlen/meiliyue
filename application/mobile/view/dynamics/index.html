@@ -20,13 +20,13 @@
     <div class="vueWrap" id="dongtaiApp">
         <div class="allWrap" :class="{blur:isReleasing}">
             <header>
-                <div class="tabCut" v-cloak :class="{actived:nowPage=='area'}" @click="cutTab('area')">
-                    {{nowArea}}
+                <div class="tabCut" :class="{actived:nowPage=='area'}" @click="cutTab('area')">
+                    <span v-cloak v-text="nowArea"></span>
                     <ul class="mSelect" v-show="isShowArea">
-                        <li @click.stop="cutArea('同城')">
+                        <li v-cloak @click.stop="cutArea('同城')">
                             同城
                         </li>
-                        <li @click.stop="cutArea('全网')">
+                        <li v-cloak @click.stop="cutArea('全网')">
                             全网
                         </li>
                     </ul>
@@ -39,23 +39,24 @@
                 </div>
             </header>
 
-            <!-- 下拉刷新 -->
-            <div class="weui-pull-to-refresh__layer">
-                <div class='weui-pull-to-refresh__arrow'></div>
-                <div class='weui-pull-to-refresh__preloader'></div>
-                <div class="down">下拉刷新</div>
-                <div class="up">释放刷新</div>
-                <div class="refresh">正在刷新</div>
-            </div>
 
             <div class="pageWrap">
+                <div class="weui-pull-to-refresh__layer" v-cloak>
+                    <div class='weui-pull-to-refresh__arrow'></div>
+                    <div class='weui-pull-to-refresh__preloader'></div>
+                    <div class="down">下拉刷新</div>
+                    <div class="up">释放刷新</div>
+                    <div class="refresh">正在刷新</div>
+                </div>
 
-                <div class="list-page area-page" v-show="nowPage=='area'">
+
+                <!-- 同城，全网 -->
+                <div class="list-page area-page" v-cloak v-show="nowPage=='area'">
                     <ul>
-                        <li class="list-item" v-cloak v-for="(item,index) in areaDataList.list" :key="index">
+                        <li class="list-item" v-cloak v-for="(item,index) in areaDataList.list" :key="index" @click="gotoDongtaiDetail(item)">
                             <div class="item-head">
-                                <div class="item-headWrap">
-                                    <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
+                                <div class="item-headWrap" @click.stop="gotoHomePage(item)">
+                                    <img :src="GlobalHost+item.head_pic" @error="defaultImg">
                                     <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
                                 </div>
                                 <div class="item-head-text">
@@ -66,16 +67,14 @@
                                             <span class="age">{{item.age}}</span>
                                         </span>
                                     </div>
-                                    <span>{{item.add_time}}</span>
                                 </div>
                             </div>
                             <div class="item-content">
-                                <a :href="'http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/'+item.dynamic_id+'.html'">
-                                    <p>{{item.content}}</p>
-                                </a>
+                                <p>{{item.content}}</p>
                                 <!-- <img v-for="img in item.image" src="__STATIC__/images/icon/tx.png"> -->
                             </div>
                             <div class="item-comment">
+                                <span class="addTime">{{item.add_time | stampToStr}}</span>
                                 <div class="person" v-cloak v-if="item.viewer_count>0">
                                     <img src="__STATIC__/images/icon/kekan.png">
                                     <span>{{item.viewer_count}}</span>
@@ -95,13 +94,13 @@
                         </li>
                     </ul>
                 </div>
-
-                <div class="list-page attended-page" v-show="nowPage=='attended'">
+                <!-- 关注 -->
+                <div class="list-page attended-page" v-cloak v-show="nowPage=='attended'">
                     <ul>
-                        <li class="list-item" v-cloak v-for="(item,index) in attendedDataList.list" :key="index">
+                        <li class="list-item" v-cloak v-for="(item,index) in attendedDataList.list" :key="index" @click="gotoDongtaiDetail(item)">
                             <div class="item-head">
-                                <div class="item-headWrap">
-                                    <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
+                                <div class="item-headWrap" @click.stop="gotoHomePage(item)">
+                                    <img :src="GlobalHost+item.head_pic" @error="defaultImg">
                                     <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
                                 </div>
                                 <div class="item-head-text">
@@ -112,16 +111,14 @@
                                             <span class="age">{{item.age}}</span>
                                         </span>
                                     </div>
-                                    <span>{{item.add_time}}</span>
                                 </div>
                             </div>
                             <div class="item-content">
-                                <a :href="'http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/'+item.dynamic_id+'.html'">
-                                    <p>{{item.content}}</p>
-                                </a>
+                                <p>{{item.content}}</p>
                                 <!-- <img v-for="img in item.image" src="__STATIC__/images/icon/tx.png"> -->
                             </div>
                             <div class="item-comment">
+                                <span class="addTime">{{item.add_time | stampToStr}}</span>
                                 <div class="person" v-cloak v-if="item.viewer_count>0">
                                     <img src="__STATIC__/images/icon/kekan.png">
                                     <span>{{item.viewer_count}}</span>
@@ -140,9 +137,14 @@
                             </div>
                         </li>
                     </ul>
-                </div>
 
-                <div class="shortVideo-page" v-show="nowPage=='video'">
+                    <div class="noComments" style="display: none;">
+                        <img src="__STATIC__/images/icon/暂无要找内容.png">
+                        <p>暂无任何内容</p>
+                    </div>
+                </div>
+                <!-- 叽喳 -->
+                <div class="shortVideo-page" v-cloak v-show="nowPage=='video'">
                     <ul>
                         <li @click="videoFullScreen">
                             <div class="mVideo">
@@ -188,7 +190,7 @@
                     <img src="__STATIC__/images/icon/选照片@2x.png">
                     <p>选照片</p>
                 </div>
-                <div class="release-btn">
+                <div class="release-btn" @click="openEdit(2)">
                     <img src="__STATIC__/images/icon/拍照@2x.png">
                     <p>拍照</p>
                 </div>
@@ -203,18 +205,37 @@
 
         <!-- 小视频全屏 -->
         <div class="fullScreen" style="display: none">
-            <span class="progressBar"></span>
-            <div class="fullScreenScroll">
-                <div class="fullScreenWrap">
-                    <video id="video1" width="100%" height="100%" src="" autoplay></video>
+            <div class="videoHeader">
+                <div class="closeFullScreen" @click="closeFullScreen"></div>
+                <div class="videoOperate"></div>
+                <div class="img-box">
+                    <img src="__STATIC__/images/icon/tx.png">
                 </div>
-                <!-- 小视频评论 -->
-                <!-- <div class="">
-
-                </div> -->
             </div>
 
-            <div class="closeFullScreen" @click="closeFullScreen"></div>
+            <div class="fullScreenScroll">
+                <div class="fullScreenWrap">
+                    <span class="progressBar"></span>
+                    <video id="video1" width="100%" height="100%" src="" autoplay loop></video>
+                    <div class="videoFooter">
+                        <div class="videoCommentBtn"></div>
+                        <span class="littleTri"></span>
+                    </div>
+                </div>
+                <!-- 小视频评论 -->
+                <div class="" style="height: 300px;background-color: red;;">
+
+                </div>
+                
+                <!-- 小视频评论input -->
+                <div class="videoInput">
+                    <input type="text">
+                    <span class="sendComment">发送</span>
+                </div>
+            </div>
+
+            
+
         </div>
     </div>
 
