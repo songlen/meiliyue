@@ -20,86 +20,89 @@
 
     <div class="main-content invitation indexPage" id="indexPageApp">
 
-        <div style="height: 100%;" :class="{blur:isPlusing}">
+        <div class="blurDiv" :class="{blur:isPlusing}">
 
-            <div class="view">
-                <a href="javascript:void(0)">
-                    <img src="__STATIC__/images/pic/pic2.png">
-                </a>
-            </div>
-            <div class="classify">
-                <div class="optionsWrap">
-                    <div class="options clearfix">
-                        <ul class="fl">
-                            <li>
-                                <a href="javascript:void(0)" class="optionsBtn allBtn" @click="handleOption('allBtn')">
-                                    <span :class="{actived:nowOptionBtn=='allBtn'}">全部</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" class="optionsBtn travelBtn" @click="handleOption('travelBtn')">
-                                    <span :class="{actived:nowOptionBtn=='travelBtn'}">旅行</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" class="optionsBtn foodBtn" @click="handleOption('foodBtn')">
-                                    <span :class="{actived:nowOptionBtn=='foodBtn'}">吃饭</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" class="optionsBtn movieBtn" @click="handleOption('movieBtn')">
-                                    <span :class="{actived:nowOptionBtn=='movieBtn'}">电影</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" class="optionsBtn singBtn" @click="handleOption('singBtn')">
-                                    <span :class="{actived:nowOptionBtn=='singBtn'}">唱歌</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" class="optionsBtn sportBtn" @click="handleOption('sportBtn')">
-                                    <span :class="{actived:nowOptionBtn=='sportBtn'}">运动</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" class="optionsBtn otherBtn" @click="handleOption('otherBtn')">
-                                    <span :class="{actived:nowOptionBtn=='otherBtn'}">其他</span>
-                                </a>
-                            </li>
-                        </ul>
+            <div class="inviteTopWrap">
+                <div class="view">
+                    <a href="javascript:void(0)">
+                        <img src="__STATIC__/images/pic/pic2.png">
+                    </a>
+                </div>
+                <div class="classify">
+                    <div class="optionsWrap">
+                        <div class="options clearfix">
+                            <ul class="fl">
+                                <li>
+                                    <a href="javascript:void(0)" class="optionsBtn allBtn" @click="handleOption('allBtn')">
+                                        <span :class="{actived:nowOptionBtn=='allBtn'}">全部</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="optionsBtn travelBtn" @click="handleOption('travelBtn')">
+                                        <span :class="{actived:nowOptionBtn=='travelBtn'}">旅行</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="optionsBtn foodBtn" @click="handleOption('foodBtn')">
+                                        <span :class="{actived:nowOptionBtn=='foodBtn'}">吃饭</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="optionsBtn movieBtn" @click="handleOption('movieBtn')">
+                                        <span :class="{actived:nowOptionBtn=='movieBtn'}">电影</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="optionsBtn singBtn" @click="handleOption('singBtn')">
+                                        <span :class="{actived:nowOptionBtn=='singBtn'}">唱歌</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="optionsBtn sportBtn" @click="handleOption('sportBtn')">
+                                        <span :class="{actived:nowOptionBtn=='sportBtn'}">运动</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="optionsBtn otherBtn" @click="handleOption('otherBtn')">
+                                        <span :class="{actived:nowOptionBtn=='otherBtn'}">其他</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="addressWrap">
+                        <div class="address clearfix" @click="opentSelect">
+                            <span class="fl" @click.stop="cancelSelectList">{{selectedText}}
+                                <span class="cancelSelected" v-cloak v-if="selectedText!=='辽宁'"></span>
+                            </span>
+                            <span class="select fr">筛选</span>
+                        </div>
                     </div>
                 </div>
-
-                <div class="addressWrap">
-                    <div class="address clearfix" :class={addressFixed:addressFixed} @click="opentSelect">
-                        <span class="fl" @click.stop="cancelSelectList">{{selectedText}}
-                            <span class="cancelSelected" v-cloak v-if="selectedText!=='辽宁'"></span>
-                        </span>
-                        <span class="select fr">筛选</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 下拉刷新 -->
-            <div class="weui-pull-to-refresh__layer">
-                <div class='weui-pull-to-refresh__preloader'></div>
-                <div class="down"></div>
-                <div class="up"></div>
-                <div class="refresh"></div>
             </div>
 
             <!-- 列表--------------------- -->
 
-            <div class="dropRefresh">
+            <div class="dropRefresh"><!-- 滚动容器 -->
+                <div class="weui-pull-to-refresh__layer">
+                    <div class='weui-pull-to-refresh__arrow'></div>
+                    <div class='weui-pull-to-refresh__preloader'></div>
+                    <div class="down">下拉刷新</div>
+                    <div class="up">释放刷新</div>
+                    <div class="refresh">正在刷新</div>
+                </div>
+
+
                 <div class="items mInviteList">
                     <ul>
                         <li class="mInviteList-item" v-cloak v-for="(item,index) in inviteList" :key="index">
-                            <span class="active ding">
+                            <span class="active ding" style="display: none;">
                                 <span class="dingText">顶</span>
                             </span>
                             <div class="top">
-                                <div class="img-box">
-                                    <img :src="'http://meiliyue.caapa.org'+item.head_pic" @error="defaultImg">
+                                <div class="img-box" @click="gotoInviteDetail(item)">
+                                    <img :src="GlobalHost+item.head_pic" @error="defaultImg">
                                 </div>
                                 <div class="details">
                                     <div class="person">
@@ -129,15 +132,21 @@
                                             <span class="smallDot"></span>{{item.place}}</li>
                                     </ul>
                                     <div v-cloak v-if="item.image&&item.image!==''">
-                                        <img :src="'http://meiliyue.caapa.org'+item.image">
+                                        <img :src="GlobalHost+item.image">
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
+
+
+                    <div class="noComments" style="display: none;">
+                        <img src="__STATIC__/images/icon/暂无要找内容.png">
+                        <p>暂时没有你要找的内容</p>
+                    </div>
                 </div>
 
-                <!-- 滑动加载 -->
+
                 <div class="weui-loadmore">
                     <i class="weui-loading"></i>
                     <span class="weui-loadmore__tips">正在加载</span>
@@ -265,7 +274,7 @@
     <!-- my-js -->
     <script>
         $(function () {
-            var GlobalHost = "http://meiliyue.caapa.org/index.php"
+            var GlobalHost = "http://meiliyue.caapa.org";
 
             //页面宽高
             $(".options li").width($(".optionsWrap").width() / 6)
@@ -274,13 +283,17 @@
             let yaoyueIndexVm = new Vue({
                 el: "#indexPageApp",
                 data: {
+                    GlobalHost:GlobalHost,
+
+                    user_id:"",
+
                     //条件
                     nowOptionBtn: "allBtn",
                     optionsList: ["allBtn", "travelBtn", "foodBtn", "movieBtn", "singBtn", "sportBtn",
                         "otherBtn"
                     ],
 
-                    addressFixed: false,
+                    // addressFixed: false,
                     showSelect: false,
                     inviteList: [],
                     nowPageIndex: 1, //当前页码
@@ -307,62 +320,14 @@
                 },
                 mounted() {
                     let _self = this
+
+                    this.user_id=1;
+
                     //监听scrollTop，改变筛选条样式
-                    document.getElementsByClassName('indexPage')[0].addEventListener('scroll', this.handleAddress)
-                    //下拉刷新
-                    $(".dropRefresh").pullToRefresh(function () {
-                        console.log("刷新")
-                        let sex
-                        switch (_self.nowSex) {
-                            case "全部":
-                                sex = null
-                                break;
-                            case "男":
-                                sex = "1"
-                                break;
-                            case "女":
-                                sex = "2"
-                                break;
-                            default:
-                                break;
-                        }
-                        _self.getInviteList({
-                            type: _self.type,
-                            sex: sex,
-                            province: _self.nowProvince,
-                            city: _self.nowCity,
-                            auth_video: _self.onlyVideo ? "1" : "0"
-                        })
-                    })
-                    // 滑动加载
-                    $(".dropRefresh").infinite(0)
-                    $(".dropRefresh").on("infinite", function () {
-                        if (_self.isLoading) return;
-                        _self.isLoading = true;
-                        console.log("滑动加载")
-                        let sex
-                        switch (_self.nowSex) {
-                            case "全部":
-                                sex = null
-                                break;
-                            case "男":
-                                sex = "1"
-                                break;
-                            case "女":
-                                sex = "2"
-                                break;
-                            default:
-                                break;
-                        }
-                        _self.getInviteList({
-                            type: _self.type,
-                            sex: sex,
-                            province: _self.nowProvince,
-                            city: _self.nowCity,
-                            auth_video: _self.onlyVideo ? "1" : "0",
-                            page: _self.nowPageIndex + 1
-                        }, true)
-                    });
+                    document.getElementsByClassName('dropRefresh')[0].addEventListener('scroll', this.handleAddress);
+                    
+                    //下拉刷新 滚动加载
+                    this.initPullToRefresh();
 
                     //city picker
                     $("#city-picker").cityPicker({
@@ -384,11 +349,10 @@
 
                         //滚动位置
                         setTimeout(function () {
-                            document.getElementsByClassName('indexPage')[0].scrollTop =
-                                inviIndexPageData.pageScrollTop
-                        }, 0)
+                            document.getElementsByClassName('dropRefresh')[0].scrollTop =inviIndexPageData.pageScrollTop
+                        }, 0);
 
-                        return
+                        return;
                     }
 
                     this.getInviteList()
@@ -420,23 +384,35 @@
                         console.log(postDataTemp)
                         $.ajax({
                             type: "POST",
-                            url: "http://meiliyue.caapa.org/index.php/Api/Invite/index",
+                            url: GlobalHost+"/index.php/Api/Invite/index",
                             data: postDataTemp,
                             dataType: "json",
                             success: function (result) {
                                 console.log(result.data)
                                 if (isScroll) { //是滚动
                                     _self.inviteList = _self.inviteList.concat(result.data)
+                                    
+                                    if(result.data.length !== 0){
+                                        _self.nowPageIndex = _self.nowPageIndex + 1;
+                                    }
                                 } else {
                                     _self.inviteList = result.data
-                                }
-                                if (isScroll && result.data.length !== 0) {
-                                    _self.nowPageIndex = _self.nowPageIndex + 1
+
+                                    if(result.data.length == 0){
+                                        $(".noComments").show();
+                                    }else{
+                                        $(".noComments").hide();
+                                    }
                                 }
 
 
+                                //下拉刷新done  滚动加载done
                                 $(".dropRefresh").pullToRefreshDone();
                                 _self.isLoading = false;
+
+                                if(result.data.length==0){
+                                    $(".weui-loadmore").hide();
+                                }
                             }
                         })
                     },
@@ -450,7 +426,7 @@
                     },
                     //默认img
                     defaultImg(event) {
-                        event.target.src = "__STATIC__ /images/icon/tx.png"
+                        event.target.src = "__STATIC__/images/icon/tx.png"
                     },
                     //获取地理位置
                     getLocalAddress() {
@@ -462,23 +438,24 @@
                         //return
                         this.savePageToSession()
 
-                        let inviteItem = JSON.stringify(item)
+                        let inviteItemStr = JSON.stringify(item)
+                        let inviteItem=JSON.parse(inviteItemStr);
+                        inviteItem.originUserId=this.user_id;
 
-                        window.location.href = "travel.html?inviteItem=" + inviteItem
+                        window.location.href = "travel.html?inviteItem=" + JSON.stringify(inviteItem);
                     },
                     //控制筛选栏的位置
                     handleAddress() {
-                        // console.log(document.getElementsByClassName('indexPage')[0].scrollTop)
-                        let indexPageScroll = document.getElementsByClassName('indexPage')[0].scrollTop
-                        if (indexPageScroll >= 204) {
-                            this.addressFixed = true
+                        let scrollTemp = document.getElementsByClassName('dropRefresh')[0].scrollTop;
+                        if (scrollTemp >= 100) {
+                            $(".inviteTopWrap").css("margin-top","-206px");
                         } else {
-                            this.addressFixed = false
+                            $(".inviteTopWrap").css("margin-top","0");
                         }
                     },
                     //弹出筛选页面
                     opentSelect() {
-                        this.resetSelectPage()
+                        //this.resetSelectPage()
 
                         this.showSelect = true
                     },
@@ -506,14 +483,14 @@
                             this.selectedText = "辽宁"
                             this.nowProvince = null
                             this.nowCity = null
+
+                            this.resetSelectPage()
                         }
                     },
                     //跳到邀约发布页面
                     openReleaseInvite(type) { //type number 邀约类型
                         this.savePageToSession()
 
-                        //window.location.href = "invi-detail.html?type=" + type //传邀约类型
-                        console.log(GlobalHost + "/mobile/invite/add/type/" + type)
                         window.location.href = GlobalHost + "/mobile/invite/add/type/" + type + ".html"
                     },
                     //跳转页面之前，保存页面信息
@@ -521,18 +498,79 @@
                         //key : inviIndexPage
                         let pageData = {
                             nowOptionBtn: this.nowOptionBtn,
-                            // addressFixed: this.addressFixed,
                             inviteList: this.inviteList,
                             nowPageIndex: this.nowPageIndex,
                             selectedText: this.selectedText,
                             nowProvince: this.nowProvince,
                             nowCity: this.nowCity,
 
-                            pageScrollTop: document.getElementsByClassName('indexPage')[0].scrollTop
+                            pageScrollTop: document.getElementsByClassName('dropRefresh')[0].scrollTop
                         }
-                        console.log(pageData)
+                        // console.log(pageData)
 
                         sessionStorage.setItem('inviIndexPage', JSON.stringify(pageData))
+                    },
+                    //下拉刷新 滚动加载
+                    initPullToRefresh(){
+                        let _self = this;
+                        //下拉刷新
+                        $(".dropRefresh").pullToRefresh(function () {
+                            console.log("刷新")
+                            let sex
+                            switch (_self.nowSex) {
+                                case "全部":
+                                    sex = null
+                                    break;
+                                case "男":
+                                    sex = "1"
+                                    break;
+                                case "女":
+                                    sex = "2"
+                                    break;
+                                default:
+                                    break;
+                            }
+                            _self.getInviteList({
+                                type: _self.type,
+                                sex: sex,
+                                province: _self.nowProvince,
+                                city: _self.nowCity,
+                                auth_video: _self.onlyVideo ? "1" : "0"
+                            })
+                        })
+                        // 滑动加载
+                        $(".dropRefresh").infinite().on("infinite", function () {
+                            if (_self.isLoading) return;
+                            _self.isLoading = true;
+                            console.log("滑动加载")
+                            let sex
+                            switch (_self.nowSex) {
+                                case "全部":
+                                    sex = null
+                                    break;
+                                case "男":
+                                    sex = "1"
+                                    break;
+                                case "女":
+                                    sex = "2"
+                                    break;
+                                default:
+                                    break;
+                            }
+                            _self.getInviteList({
+                                type: _self.type,
+                                sex: sex,
+                                province: _self.nowProvince,
+                                city: _self.nowCity,
+                                auth_video: _self.onlyVideo ? "1" : "0",
+                                page: _self.nowPageIndex + 1
+                            }, true)
+                        });
+                    },
+                    gotoInviteDetail(item){
+                        this.savePageToSession();
+
+                        window.location.href = GlobalHost+"/index.php/mobile/user/homePage/user_id/"+this.user_id+"/toUserId/"+item.user_id+".html";
                     },
 
                     //筛选页面-----------------------------------------------
