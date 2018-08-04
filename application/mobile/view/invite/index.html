@@ -442,7 +442,7 @@
                         let inviteItem=JSON.parse(inviteItemStr);
                         inviteItem.originUserId=this.user_id;
 
-                        window.location.href = "travel.html?inviteItem=" + JSON.stringify(inviteItem);
+                        window.location.href = "detail.html?inviteItem=" + JSON.stringify(inviteItem);
                     },
                     //控制筛选栏的位置
                     handleAddress() {
@@ -491,7 +491,7 @@
                     openReleaseInvite(type) { //type number 邀约类型
                         this.savePageToSession()
 
-                        window.location.href = GlobalHost + "/mobile/invite/add/type/" + type + ".html"
+                        window.location.href = GlobalHost + "/index.php/mobile/invite/add/type/" + type + ".html"
                     },
                     //跳转页面之前，保存页面信息
                     savePageToSession() {
