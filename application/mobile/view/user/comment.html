@@ -95,6 +95,7 @@
                         $(".commentsList").html("");
                     }
                     data.forEach(function(item,index){
+                        let timeStr=stampToStr(item.add_time);
                         let $li=$(`
                             <li class="comments-item" 
                                 data-dynamicId=${item.dynamic_id} 
@@ -117,7 +118,7 @@
                                             <span class="age">${item.age}</span>
                                         </span>
                                     </div>
-                                    <span class="">${item.add_time}</span>
+                                    <span class="">${timeStr}</span>
                                     <p class="comment-content">${item.content}</p>
                                 </div>
 
@@ -305,6 +306,41 @@
         $(function () {
             Comments.init();
         });
+        //时间戳转日期时间
+        function stampToDate(timestamp) {
+            var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            Y = date.getFullYear() + '-';
+            M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+            D = (date.getDate()<10?"0"+date.getDate():date.getDate()) + ' ';
+            h = (date.getHours()<10?"0"+date.getHours():date.getHours()) + ':';
+            m = (date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes());
+            // s = date.getSeconds();
+            return Y+M+D+h+m;
+        }
+        //时间戳转文字
+        function stampToStr (stamp) {//传来的stamp十位数
+            if (!stamp) return '';
+
+            let nowStamp=Math.round((new Date().getTime())/1000);
+            let howLong=nowStamp-stamp;
+
+            if(howLong<60){//1分钟内
+                return "1分钟内";
+            }else if(howLong<3600){//1小时内，显示分钟数
+                let minutes=Math.floor(howLong/60);
+                return minutes+"分钟前";
+            }else if(howLong<43200){//12小时内，显示小时数
+                let hours=Math.floor(howLong/3600);
+                return hours+"小时前";
+            }else if(howLong>=43200&&howLong<86400){//大于12小时，小于24小时
+                let dateStr=stampToDate(stamp);
+                console.log(dateStr)
+                let minStr=dateStr.substr(dateStr.length-5);
+                return "昨天 "+minStr;
+            }else if(howLong>86400){//大于24小时，直接显示时间
+                return stampToDate(stamp);
+            }
+        }
     </script>
 </body>
 

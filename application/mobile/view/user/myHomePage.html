@@ -460,25 +460,21 @@
             }
 
             if (data.baseinfo.auth_video_status == 0) {
-                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/视频未认证@2x.png")
+                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/视频未认证@2x.png")
                 $(".myApprove-video").html("形象视频未认证")
                 // $(".myApprove-video+.approveBtn").show()
             } else {
-                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/小视频@2x.png")
+                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/小视频@2x.png")
                 $(".myApprove-video").html("形象视频已认证")
                 $(".myApprove-video+.approveBtn").hide()
             }
 
             if (data.baseinfo.auth_identity_status == 0) {
-                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/身份未认真@2x.png")
+                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/身份未认真@2x.png")
                 $(".myApprove-identity").html("身份未认证")
                 // $(".myApprove-identity+.approveBtn").show()
             } else {
-                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/身份未认真@2x.png")
+                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/身份未认真@2x.png")
                 $(".myApprove-identity").html("身份已认证")
                 $(".myApprove-identity+.approveBtn").hide()
             }
@@ -577,7 +573,8 @@
 
             //最近活跃时间
             if (data.baseinfo.active_time && data.baseinfo.active_time !== "") {
-                $(".active_time").html(data.baseinfo.active_time)
+                let timeStr=stampToStr(data.baseinfo.active_time);
+                $(".active_time").html(timeStr);
             } else {
                 if (Homepage.isSelf) {
                     $(".active_time").html("请选择").addClass("canChoose")
@@ -598,6 +595,19 @@
                 } else {
                     $(".active_time").html("填写")
                 }
+            }
+            
+            //updateDom之后
+
+            //根据sesstion 返回页面滚动位置
+            if (sessionStorage.getItem("homePage")) {
+                let pageData = JSON.parse(sessionStorage.getItem("homePage"))
+                console.log(pageData)
+
+                //滚动位置
+                setTimeout(function () {
+                    $(".homepage .all-content")[0].scrollTop =pageData.pageScrollTop
+                }, 0);
             }
 
             //
@@ -637,11 +647,11 @@
             // }
             var $liTemp = $(
                 `
-                        <li class="edit-pic-item">
-                            <input class="albumInput" type="file" accept="image/*" capture="camera" style="display: none">
-                            <img class="showPic" src="__STATIC__/images/icon/tx.png">
-                        </li>
-                    `
+                    <li class="edit-pic-item">
+                        <input class="albumInput" type="file" accept="image/*" capture="camera" style="display: none">
+                        <img class="showPic" src="__STATIC__/images/icon/tx.png">
+                    </li>
+                `
             )
 
             $liTemp.find(".albumInput").change(function () {
@@ -1158,7 +1168,14 @@
             })
         },
         savePageSession: function () {
-            //
+            //key : homePage
+            let scroll=$(".homepage .all-content")[0].scrollTop;
+            let pageData = {
+                pageScrollTop: scroll
+            }
+            console.log(pageData)
+            
+            sessionStorage.setItem('homePage', JSON.stringify(pageData))
         },
         eventsBind: function () {
             $('.operate').click(function () {
@@ -1283,7 +1300,7 @@
             })
             //点击编辑资料
             $(".gotoEditHomePage").click(function () {
-                // Homepage.savePageSession()
+                Homepage.savePageSession()
                 window.location.href = "editHomePage.html"
             })
         },
@@ -1294,13 +1311,49 @@
             if (Homepage.user_id == Homepage.toUserId) {
                 Homepage.isSelf = true
             }
+            
             //获取用户信息
             Homepage.getDataUpdateDom()
         }
     }
     $(function () {
         Homepage.init()
-    })
+    });
+    //时间戳转日期时间
+    function stampToDate(timestamp) {
+        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        D = (date.getDate()<10?"0"+date.getDate():date.getDate()) + ' ';
+        h = (date.getHours()<10?"0"+date.getHours():date.getHours()) + ':';
+        m = (date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes());
+        // s = date.getSeconds();
+        return Y+M+D+h+m;
+    }
+    //时间戳转文字
+    function stampToStr (stamp) {//传来的stamp十位数
+        if (!stamp) return '';
+
+        let nowStamp=Math.round((new Date().getTime())/1000);
+        let howLong=nowStamp-stamp;
+
+        if(howLong<60){//1分钟内
+            return "1分钟内";
+        }else if(howLong<3600){//1小时内，显示分钟数
+            let minutes=Math.floor(howLong/60);
+            return minutes+"分钟前";
+        }else if(howLong<43200){//12小时内，显示小时数
+            let hours=Math.floor(howLong/3600);
+            return hours+"小时前";
+        }else if(howLong>=43200&&howLong<86400){//大于12小时，小于24小时
+            let dateStr=stampToDate(stamp);
+            console.log(dateStr)
+            let minStr=dateStr.substr(dateStr.length-5);
+            return "昨天 "+minStr;
+        }else if(howLong>86400){//大于24小时，直接显示时间
+            return stampToDate(stamp);
+        }
+    }
 </script>
 
 </html>
