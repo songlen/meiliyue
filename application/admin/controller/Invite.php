@@ -35,4 +35,13 @@ class Invite extends Base{
 		$this->assign('info', $info);
 		return $this->fetch();
 	}
+
+	public function changeStatus(){
+		$id = I('id');
+		$status = I('status');
+
+		M('invite')->where('id', $id)->setField('status', $status);
+
+		response_success();
+	}
 }
