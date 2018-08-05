@@ -24,7 +24,7 @@
   <div class="flexigrid">
     <div class="mDiv">
       <div class="ftitle">
-        <h3>邀约列表</h3>
+        <h3>动态列表</h3>
         <h5>(共{$Page->totalRows}条记录)</h5>
       </div>
       <div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>
@@ -52,10 +52,7 @@
                 <div style="width: 24px;"><i class="ico-check"></i></div>
               </th>
               <th align="left" abbr="article_title" axis="col3" class="">
-                <div style="text-align: left; width: 240px;" class="">标题</div>
-              </th>
-              <th align="left" abbr="ac_id" axis="col4" class="">
-                <div style="text-align: left; width: 150px;" class="">约会时间</div>
+                <div style="text-align: left; width: 240px;" class="">内容</div>
               </th>
               <th align="center" abbr="article_show" axis="col5" class="">
                 <div style="text-align: center; width: 80px;" class="">状态</div>
@@ -94,10 +91,10 @@
                   <input type="hidden" name="id" value="{$vo.id}">
                 </td>
                 <td align="left" class="">
-                  <div style="text-align: left; width: 240px;">{$vo.title|getSubstr=0,33}</div>
-                </td>
-                <td align="left" class="">
-                  <div style="text-align: left; width: 150px;">{$vo.time}</div>
+                  <div style="text-align: left; width: 240px;">
+                      <if condition="$vo.description neq ''">{$vo.description}</if>
+                      <if condition="$vo.content neq ''">{$vo.content|getSubstr=0,33}</if>
+                  </div>
                 </td>
                 <td align="center" class="">
                   <div style="text-align: center; width: 80px;">
@@ -113,8 +110,8 @@
                 </td>
                 <td align="center" class="handle">
                   <div style="text-align: center; width: 170px; max-width:170px;">
-                    <a class="btn blue" href="{:U('admin/invite/detail',array('id'=>$vo['id']))}"><i class="fa fa-search"></i>查看</a>
-                    <!-- <a class="btn red"  href="javascript:void(0)" data-url="{:U('invite/del')}" data-id="{$vo.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a> -->
+                    <a class="btn blue" href="{:U('admin/dynamics/detail',array('id'=>$vo['id']))}"><i class="fa fa-search"></i>查看</a>
+                    <!-- <a class="btn red"  href="javascript:void(0)" data-url="{:U('dynamics/del')}" data-id="{$vo.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a> -->
                   </div>
                 </td>
                 <td align="" class="" style="width: 100%;">
@@ -148,7 +145,7 @@
           var id = $(this).parents('tr').find('.sign').find('input[name=id]').val();
 
           $.ajax({
-              url: "{:U('admin/invite/changeStatus')}/id/"+id+"/status/"+thisStatus,
+              url: "{:U('admin/dynamics/changeStatus')}/id/"+id+"/status/"+thisStatus,
               type:'post',
               dataType:'json',
               success:function(data){

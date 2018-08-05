@@ -503,4 +503,27 @@ class User extends Base {
 
         response_success($lists);
     }
+
+    // 意见反馈
+    public function feedback(){
+        $data['user_id'] = I('user_id');
+        $data['content'] = I('content');
+
+        if($_FILES['image']){
+            $FileLogic = new FileLogic();
+            $uploadPath = UPLOAD_PATH.'feedback';
+            $result = $FileLogic->uploadSingleFile('image', $uploadPath);
+            if($result['status'] == '1'){
+                $data['image'] = $result['fullPath'];
+            } else {
+                response_error('', '文件上传失败');
+            }
+        }
+
+        if(M('feedback')->insert($data)){
+            response_success('', '操作成功');
+        } else {
+            response_error('', '操作失败');
+        }
+    }
 }

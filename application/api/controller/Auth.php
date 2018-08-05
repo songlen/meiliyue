@@ -117,7 +117,9 @@ class Auth extends Base {
 			'country' => $country,
 			'province' => $province,
 			'city' => $city,
-			'qq' => $qq,
+            'qq' => $qq,
+            'longitude' => $longitude,
+            'latitude' => $latitude,
             'active_time' => time(),
             'is_line' => '1',
     	);
