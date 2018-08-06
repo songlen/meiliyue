@@ -29,15 +29,10 @@ class Article extends MobileBase
         return $this->fetch();
     }
 
-    public function news()
-    {
-        $id = input('id');
-        if (!$news = WxNews::get($id)) {
-            $this->error('文章不存在了~', null, '', 100);
-        }
-
-        $news->content = htmlspecialchars_decode($news->content);
-        $this->assign('news', $news);
+    public function questionDetail(){
+        $article_id = input('article_id/d', 1);
+        $article = Db::name('article')->where("article_id", $article_id)->find();
+        $this->assign('article', $article);
         return $this->fetch();
     }
 }

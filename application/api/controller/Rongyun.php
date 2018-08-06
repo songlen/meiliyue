@@ -30,7 +30,10 @@ class Rongyun extends Base {
 
 	public function getToken(){
 		$user_id = I('user_id');
-		M('users')->where('user_id', $user_id)->field()->find();
+		$user = M('users')->where('user_id', $user_id)->field('nickname, head_pic, rongyun_token')->find();
+		if(empty($user)) response_error('', '该用户不存在');
+
+		
 		// 获取 Token 方法
 		$result = $this->RongCloud->user()->getToken('userId1', 'username', 'http://www.rongcloud.cn/images/logo.png');
 	}

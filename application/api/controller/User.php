@@ -105,7 +105,7 @@ class User extends Base {
         if(!empty($questions)){
             foreach ($questions as &$item) {
                 $item['content'] = html_entity_decode($item['content']);
-                $item['link'] = '/mobile/Article/detail?article_id='.$item['article_id'];
+                $item['link'] = '/mobile/Article/questionDetail?article_id='.$item['article_id'];
             }
         }
         response_success($questions);
