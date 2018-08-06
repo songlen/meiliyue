@@ -119,21 +119,7 @@ class Invite extends Base {
     }
 
     public function detail(){
-    	$id = I('id');
 
-    	$where = array(
-    		'id' => $id,
-    		'status' => '2',
-    	);
-    	$info = M('invite')->alias('i')
-    		->join('users u', 'i.user_id=u.user_id', 'left')
-    		->where($where)
-    		->field('u.user_id, head_pic, auth_video_status, nickname, u.sex, u.age, i.id invite_id, i.title, i.description, i.time, i.place, image, i.object, i.pay')
-    		->find();
-
-    	if($info['image']) $info['image'] = unserialize($info['image']);
-
-    	$this->assign('info', $info);
     	return $this->fetch();
     }
 }
