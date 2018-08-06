@@ -32,6 +32,7 @@ class Article extends Base
     public function questionDetail(){
         $article_id = input('article_id/d', 1);
         $article = Db::name('article')->where("article_id", $article_id)->find();
+        $article['content'] = htmlspecialchars_decode($article['content']);
         $this->assign('article', $article);
         return $this->fetch();
     }
