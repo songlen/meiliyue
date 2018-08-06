@@ -21,12 +21,12 @@ header>span {
 header>a {
   display: inline-block;
   color: #fff;
-  width: 2rem;
-  height: 1rem;
+  width: 0.28rem;
+  height: 0.14rem;
   background: url(../images/icon/left.png) no-repeat left center;
-  background-size: .7rem;
-  margin-top: 1rem;
-  line-height: 1rem;
+  background-size: 0.1rem;
+  margin-top: 0.14rem;
+  line-height: 0.14rem;
 }
 
 header>a.sure {
@@ -36,7 +36,7 @@ header>a.sure {
 .view-detail .horizontal {
   display: flex;
   flex-wrap: wrap;
-  width: 12rem;
+  width: 1.7rem;
   margin: 0 auto;
   position: fixed;
   top: 10px;
@@ -52,7 +52,7 @@ header>a.sure {
 .view-detail .horizontal li a {
   color: #bbb6b6;
   display: inline-block;
-  height: 1.8rem;
+  height: 0.26rem;
 }
 
 .view-detail .horizontal li.active a {
@@ -89,7 +89,7 @@ footer li a {
   width: 100%;
   height: 100%;
   background: url(../images/icon/xiaolian.png) no-repeat center 8px;
-  background-size: 1.8rem;
+  background-size: 0.26rem;
   padding-top: 18px;
 }
 
@@ -109,8 +109,8 @@ footer li a {
   background-color: red;
   border-radius: 50%;
   position: fixed;
-  bottom: 5rem;
-  right: 2rem;
+  bottom: 0.7rem;
+  right: 0.28rem;
   z-index: 6;
   transition: all 0.2s;
   box-shadow: 0 0 5px #000;
@@ -131,7 +131,7 @@ footer li a {
 
 .invitation .view {
   background-color: #fff;
-  padding: 1rem;
+  padding: 0.14rem;
   margin-bottom: 10px;
   /* height: 6.7rem; */
   height: 108px;
@@ -151,7 +151,7 @@ footer li a {
 }
 .invitation .view a {
   display: inline-block;
-  border-radius: 1rem;
+  border-radius: 0.14rem;
   overflow: hidden;
   height: 100%;
 }
@@ -185,7 +185,7 @@ footer li a {
   padding-top: 15px;
   display: inline-block;
   background: url(../images/icon/xiaolian.png) no-repeat center 0;
-  background-size: 1.5rem;
+  background-size: 0.2rem;
 }
 
 .invitation .classify .all span {
@@ -206,7 +206,7 @@ footer li a {
 }
 
 .invitation .classify ul li {
-  width: 4.2rem;
+  width: 0.6rem;
   text-align: center;
 }
 
@@ -300,8 +300,8 @@ footer li a {
 }
 
 .invitation .items li .top .img-box {
-  width: 4rem;
-  height: 4rem;
+  width: 0.57rem;
+  height: 0.57rem;
   margin-right: 10px;
   overflow: hidden;
   border-radius: 50%;
@@ -324,8 +324,8 @@ footer li a {
 }
 .yaoyueIndex .videoStatus{
   position: absolute;
-  top: 2.8rem;
-  left:2.8rem;
+  top: 0.17rem;
+  left:0.17rem;
 }
 
 .invitation .items li .top .details {
@@ -355,7 +355,7 @@ footer li a {
 }
 
 .invitation .items li .person .img {
-  width: 1rem;
+  width: 0.14rem;
   display: inline-block;
   margin: 0 10px;
 }
@@ -383,15 +383,15 @@ footer li a {
 }
 
 .invitation .items li .bottom {
-  line-height: 1rem;
+  line-height: 0.14rem;
 }
 
 .invitation .items li .bottom .title {
-  margin-top: .5rem;
+  margin-top: 0.07rem;
   /* padding-left: 1.5rem; */
   font-size: 16px;
-  height: 2rem;
-  line-height: 2rem;
+  height: 0.28rem;
+  line-height: 0.28rem;
   /* background: url(../images/icon/checkbox.png) no-repeat 10px center;
   background-size: 10px; */
   color: #000;
@@ -409,7 +409,7 @@ footer li a {
 .invitation .items .bottom .more ul li {
   margin: 0;
   padding: 0;
-  max-width: 19rem;
+  max-width: 2.71rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -439,8 +439,8 @@ footer li a {
 }
 
 .invitation .items li .bottom .more>div {
-  width: 3rem;
-  height: 3rem;
+  width: 0.43rem;
+  height: 0.43rem;
   overflow: hidden;
   border: 1px solid #f1f1f1;
 }
@@ -478,7 +478,7 @@ footer li a {
 .mask ul li {
   /* width: 4.5rem; */
   flex: 0 0 33.3333%;
-  height: 5.5rem;
+  height: 0.78rem;
   margin: 0 auto;
 }
 
@@ -529,7 +529,7 @@ footer li a {
 }
 
 .mask .box-btm ul {
-  margin-left: 3.5rem;
+  margin-left: 0.5rem;
 }
 
 .mask .box-btm ul li {
@@ -595,13 +595,13 @@ footer li a {
 
 .invitation .theme textarea {
   width: 100%;
-  height: 6rem;
+  height: 0.86rem;
   /*border: none;*/
 }
 
 .invitation .theme div a {
-  width: 5rem;
-  height: 5rem;
+  width: 0.71rem;
+  height: 0.71rem;
   background-color: #f1f1f1;
   float: left;
   margin-right: 10px;
@@ -610,13 +610,13 @@ footer li a {
 
 .invitation .theme div input[type="file"] {
   width: 100%;
-  height: 3.5rem;
+  height: 0.5rem;
 }
 
 .invitation .theme div.speak a {
-  padding-top: 3.6rem;
+  padding-top: 0.51rem;
   background: url(../images/icon/add.png) no-repeat center 10px;
-  background-size: 3rem;
+  background-size: 0.43rem;
   background-color: #f1f1f1;
 }
 
@@ -636,9 +636,9 @@ footer li a {
   text-align: center;
   z-index: 1;
   background-color: yellow;
-  width: 11rem;
+  width: 0.14rem;
   padding: 10px 0;
-  border-radius: 3rem;
+  border-radius: 0.43rem;
 }
 
 .invitation .view-list li {
@@ -686,7 +686,7 @@ footer li a {
 .view-detail .cash .top .money a {
   display: inline-block;
   background-color: yellow;
-  padding: 0 1rem;
+  padding: 0 0.14rem;
   border-radius: 20px;
 }
 
@@ -697,8 +697,8 @@ footer li a {
 }
 
 .view-detail .none img {
-  width: 8rem;
-  margin: 7rem auto 0;
+  width: 1.14rem;
+  margin: 1rem auto 0;
 }
 
 .view-detail .none {
@@ -707,7 +707,7 @@ footer li a {
 
 .view-detail .none p {
   font-size: 16px;
-  margin-top: 2rem;
+  margin-top: 0.28rem;
 }
 
 /*开通视频*/
@@ -715,21 +715,21 @@ footer li a {
 .invitation .input-box {
   margin: 10px 0;
   background-color: #fff;
-  height: 2.8rem;
-  line-height: 2.8rem;
+  height: 0.4rem;
+  line-height: 0.4rem;
   padding: 0 10px;
 }
 
 .invitation .input-box input {
-  height: 2rem;
-  line-height: 2rem;
+  height: 0.28rem;
+  line-height: 0.28rem;
   margin-top: 8px;
 }
 
 .invitation .input-box .close {
   display: inline-block;
-  width: 1rem;
-  height: 1rem;
+  width: 0.14rem;
+  height: 0.14rem;
   background: url(../images/icon/close.png) no-repeat center;
   margin-top: 14px;
 }
@@ -739,18 +739,18 @@ footer li a {
   flex-wrap: wrap;
   margin-left: 50%;
   transform: translateX(-50%);
-  width: 22rem;
-  margin-top: 1.5rem;
+  width: 3.14rem;
+  margin-top: 0.2rem;
 }
 
 .invitation .labels li {
-  width: 6.6rem;
-  height: 2rem;
-  line-height: 2rem;
+  width: 0.94rem;
+  height: 0.28rem;
+  line-height: 0.28rem;
   text-align: center;
   background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 3rem;
+  border-radius: 0.43rem;
   margin: 0 10px 10px 0;
 }
 
@@ -768,20 +768,20 @@ footer li a {
 }
 
 .invitation .open-now {
-  width: 20rem;
+  width: 2.86rem;
   background-color: yellow;
   display: inline-block;
   margin-left: 50%;
   transform: translateX(-50%);
   text-align: center;
-  margin-top: 1rem;
-  line-height: 2.5rem;
-  border-radius: 3rem;
+  margin-top: 0.14rem;
+  line-height: 0.36rem;
+  border-radius: 0.43rem;
   font-weight: 600;
 }
 
 .open-mask {
-  width: 18rem;
+  width: 2.57rem;
 }
 
 .open-mask .top {
@@ -796,24 +796,24 @@ footer li a {
 }
 
 .invitation>.price {
-  padding: 1rem 10px;
+  padding: 0.14rem 10px;
 }
 
 .invitation>.price .cost {
-  padding-left: 1.5rem;
+  padding-left: 0.21rem;
   background: url(../images/icon/price.png) no-repeat left center;
-  background-size: 1rem;
+  background-size: 0.14rem;
 }
 
 .invitation>.price .rates {
   background: url(../images/icon/back.png) no-repeat right center;
-  background-size: .5rem;
+  background-size: 0.07rem;
   padding-right: 15px;
 }
 
 .invitation>.state .title {
-  height: 2rem;
-  line-height: 2rem;
+  height: 0.28rem;
+  line-height: 0.28rem;
   padding-left: 10px;
 }
 
@@ -823,9 +823,9 @@ footer li a {
 }
 
 .state .weui-cell__bd {
-  padding-left: 1.2rem;
+  padding-left: 0.17rem;
   background: url(../images/icon/cha.png) no-repeat left center;
-  background-size: 1rem;
+  background-size: 0.14rem;
 }
 
 .view-list .opened .details {
@@ -834,28 +834,28 @@ footer li a {
 }
 
 .viewOpen .mask .top {
-  padding: 1rem;
+  padding: 0.14rem;
   text-align: center;
   border-bottom: 1px solid #f1f1f1;
 }
 
 .viewOpen .mask .top .notice {
-  line-height: 2rem;
+  line-height: 0.28rem;
   display: inline-block;
-  margin-top: 1rem;
+  margin-top: 0.14rem;
 }
 
 .viewOpen .mask .top .detail {
   text-align: left;
-  line-height: 3rem;
+  line-height: 0.43rem;
 }
 
 .viewOpen .mask button {
   border: none;
   background-color: #fff;
   width: 50%;
-  height: 3rem;
-  line-height: 3rem;
+  height: 0.43rem;
+  line-height: 0.43rem;
   float: left;
   border-radius: 10px;
   font-size: 16px;
@@ -873,7 +873,7 @@ footer li a {
 }
 
 .feedback {
-  padding: 10px 10px 10px 1.5rem;
+  padding: 10px 10px 10px 0.21rem;
   background: url(../images/icon/checkbox.png) no-repeat 10px 16px;
   background-size: 6px;
 }
@@ -886,10 +886,10 @@ footer li a {
 
 .view.all-time {
   background: url(../images/icon/checkbox.png) no-repeat 10px center;
-  background-size: .5rem;
+  background-size: 0.07rem;
   background-color: #e2ebf1;
   color: #a9a5a5;
-  padding-left: 1.6rem;
+  padding-left: 0.23rem;
 }
 
 .view.all-time .time {
@@ -899,20 +899,20 @@ footer li a {
 .cost-list li {
   background-color: #fff;
   border-bottom: 1px solid #f1f1f1;
-  height: 3rem;
-  line-height: 3rem;
+  height: 0.43rem;
+  line-height: 0.43rem;
   padding: 0 10px;
 }
 
 .cost-list li.active {
   background: url(../images/icon/checkbox1.png) no-repeat 96% center;
-  background-size: 1rem;
+  background-size: 0.14rem;
   background-color: #fff;
 }
 
 .cost-list li>span {
   display: inline-block;
-  margin-left: 1rem;
+  margin-left: 0.14rem;
   color: #ccc;
 }
 
@@ -931,7 +931,7 @@ footer li a {
   top: -35px;
   right: 10px;
   z-index: 2;
-  width: 5rem;
+  width: 0.71rem;
   margin: 0;
   left: auto;
   transform: translateX(0);
@@ -944,8 +944,8 @@ footer li a {
 
 .viewOpen .tabs .horizontal li a {
   color: #000;
-  height: 1.1rem;
-  line-height: 1.1rem;
+  height: 0.16rem;
+  line-height: 0.16rem;
 }
 
 .viewOpen .tabs .horizontal li:nth-child(1) {
@@ -957,8 +957,8 @@ footer li a {
 .chart-list {
   background-color: #fff;
   padding: 0 10px;
-  height: 2.6rem;
-  line-height: 2.6rem;
+  height: 0.37rem;
+  line-height: 0.37rem;
   border-bottom: 1px solid #f1f1f1;
 }
 
@@ -968,8 +968,8 @@ footer li a {
 }
 
 .invitation .view-list li .label .close {
-  width: 1rem;
-  height: 1rem;
+  width: 0.14rem;
+  height: 0.14rem;
   border-radius: 4px;
   background: url(../images/icon/close.png) no-repeat center;
   margin-top: 5px;
@@ -979,14 +979,14 @@ footer li a {
   position: absolute;
   right: 10px;
   top: 0;
-  width: 5.5rem;
-  height: 2rem;
+  width: 0.79rem;
+  height: 0.28rem;
   background-color: green;
-  border-radius: 2rem;
+  border-radius: 0.28rem;
   color: #fff;
   text-align: center;
-  line-height: 2rem;
-  padding-left: 1.2rem;
+  line-height: 0.28rem;
+  padding-left: 0.17rem;
 }
 
 .viewOpen .mask button.buy {
@@ -1018,8 +1018,8 @@ header .search {
   margin-top: 50px;
 }
 .selectPage .tabs>.title {
-  height: 2.5rem;
-  line-height: 2.5rem;
+  height: 0.36rem;
+  line-height: 0.36rem;
   padding: 0 10px;
 }
 
@@ -1053,7 +1053,7 @@ header .search {
 }
 
 .selectPage .tab-content {
-  margin-top: 2.5rem;
+  margin-top: 0.36rem;
 }
 
 .selectPage .opened {
@@ -1082,7 +1082,7 @@ header .search {
 
 .selectPage .opened .gender .fr span {
   display: inline-block;
-  width: 4rem;
+  width: 0.57rem;
   border-right: 1px solid #f1f1f1;
   text-align: center;
   color: #b7b7b7;
@@ -1131,15 +1131,15 @@ header .search {
 
 .invitation .address .fl .close {
   display: inline-block;
-  width: 1rem;
-  height: 1rem;
+  width: 0.14rem;
+  height: 0.14rem;
   overflow: hidden;
   border-radius: 50%;
   background: url(../images/icon/close.png) no-repeat center;
   background-size: 100%;
   position: absolute;
   top: 2px;
-  right: -1.5rem;
+  right: -0.21rem;
 }
 
 .selectpage .classify ul li {
@@ -1158,16 +1158,16 @@ header .search {
 }
 
 .invitation .invite-detail li .bottom .title {
-  padding-left: 4.6rem;
-  background-position: 1rem center;
-  background-size: 2rem;
+  padding-left: 0.66rem;
+  background-position: 0.14rem center;
+  background-size: 0.28rem;
 }
 
 .invite-detail .detail p {
-  height: 2.5rem;
-  line-height: 2.5rem;
-  padding-left: 4.6rem;
-  background: url(../images/icon/checkbox.png) no-repeat 1.8rem center;
+  height: 0.36rem;
+  line-height: 0.36rem;
+  padding-left: 0.66rem;
+  background: url(../images/icon/checkbox.png) no-repeat 0.26rem center;
   background-size: 6px;
 }
 
@@ -1191,11 +1191,11 @@ header .search {
   width: 100%;
   border: none;
   background: url(../images/icon/price.png) no-repeat 35% center;
-  background-size: 1.6rem;
+  background-size: 0.23rem;
   background-color: #ffe455;
-  height: 3rem;
-  line-height: 3rem;
-  padding-left: 1.6rem;
+  height: 0.43rem;
+  line-height: 0.43rem;
+  padding-left: 0.23rem;
 }
 
 ._share {
@@ -1211,8 +1211,8 @@ header .search {
 }
 
 ._share p {
-  height: 3rem;
-  line-height: 3rem;
+  height: 0.43rem;
+  line-height: 0.43rem;
   border-bottom: 1px solid #f1f1f1;
 }
 
@@ -1385,12 +1385,12 @@ body.yaoyueIndex {
 
 .interested header a.back {
   background: url(../images/icon/left.png) no-repeat 7px center;
-  background-size: .7rem;
+  background-size: 0.1rem;
 }
 
 a.operate {
-  width: 2rem;
-  height: 1rem;
+  width: 0.28rem;
+  height: 0.14rem;
   background: url(../images/icon/三个点.png) center center no-repeat;
   background-size: 100%;
 }
@@ -1451,13 +1451,13 @@ li.detailImages img {
   border-top: 1px solid #f7f7f7;
   background-color: #fff;
   font-size: 16px;
-  line-height: 3rem;
+  line-height: 0.43rem;
   text-align: center;
   color: #000;
 }
 
 .avatarOperating li:last-of-type {
-  border-top: 0.05rem solid #eae9ef;
+  border-top: 5px solid #eae9ef;
   color: #7e7e7e;
 }
 

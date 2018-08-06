@@ -11,6 +11,9 @@
     <!-- my-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css">
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
+    </script>
 </head>
 
 <body class="yaoyueIndex">
@@ -456,10 +459,45 @@
                     //控制筛选栏的位置
                     handleAddress() {
                         let scrollTemp = document.getElementsByClassName('dropRefresh')[0].scrollTop;
+                        let wrapHeight=document.getElementsByClassName('dropRefresh')[0].clientHeight;
+                        let ulHeight=document.getElementsByClassName('mInviteList')[0].clientHeight;
+                        // console.log(scrollTemp)
+                        //控制top的位置
                         if (scrollTemp >= 100) {
                             $(".inviteTopWrap").css("margin-top","-206px");
                         } else {
                             $(".inviteTopWrap").css("margin-top","0");
+                        }
+                        //滚动加载
+                        console.log(scrollTemp + wrapHeight - ulHeight)
+                        if (scrollTemp > 0 && scrollTemp + wrapHeight - ulHeight>=85) {
+                            if(!this.isLoading){
+                                this.isLoading = true;
+                                console.log("滑动加载")
+                                let sex
+                                switch (this.nowSex) {
+                                    case "全部":
+                                        sex = null
+                                        break;
+                                    case "男":
+                                        sex = "1"
+                                        break;
+                                    case "女":
+                                        sex = "2"
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                this.isLoading = true;
+                                this.getInviteList({
+                                    type: this.type,
+                                    sex: sex,
+                                    province: this.nowProvince,
+                                    city: this.nowCity,
+                                    auth_video: this.onlyVideo ? "1" : "0",
+                                    page: this.nowPageIndex + 1
+                                }, true)
+                            }
                         }
                     },
                     //弹出筛选页面
@@ -550,33 +588,33 @@
                             })
                         })
                         // 滑动加载
-                        $(".dropRefresh").infinite().on("infinite", function () {
-                            if (_self.isLoading) return;
-                            _self.isLoading = true;
-                            console.log("滑动加载")
-                            let sex
-                            switch (_self.nowSex) {
-                                case "全部":
-                                    sex = null
-                                    break;
-                                case "男":
-                                    sex = "1"
-                                    break;
-                                case "女":
-                                    sex = "2"
-                                    break;
-                                default:
-                                    break;
-                            }
-                            _self.getInviteList({
-                                type: _self.type,
-                                sex: sex,
-                                province: _self.nowProvince,
-                                city: _self.nowCity,
-                                auth_video: _self.onlyVideo ? "1" : "0",
-                                page: _self.nowPageIndex + 1
-                            }, true)
-                        });
+                        // $(".dropRefresh").infinite().on("infinite", function () {
+                        //     if (_self.isLoading) return;
+                        //     _self.isLoading = true;
+                        //     console.log("滑动加载")
+                        //     let sex
+                        //     switch (_self.nowSex) {
+                        //         case "全部":
+                        //             sex = null
+                        //             break;
+                        //         case "男":
+                        //             sex = "1"
+                        //             break;
+                        //         case "女":
+                        //             sex = "2"
+                        //             break;
+                        //         default:
+                        //             break;
+                        //     }
+                        //     _self.getInviteList({
+                        //         type: _self.type,
+                        //         sex: sex,
+                        //         province: _self.nowProvince,
+                        //         city: _self.nowCity,
+                        //         auth_video: _self.onlyVideo ? "1" : "0",
+                        //         page: _self.nowPageIndex + 1
+                        //     }, true)
+                        // });
                     },
                     gotoInviteDetail(item){
                         this.savePageToSession();
