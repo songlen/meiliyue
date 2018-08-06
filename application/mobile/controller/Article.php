@@ -16,7 +16,7 @@ namespace app\mobile\controller;
 use think\Db;
 use app\common\model\WxNews;
  
-class Article extends MobileBase
+class Article extends Base
 {
     /**
      * 文章内容页
