@@ -526,4 +526,16 @@ class User extends Base {
             response_error('', '操作失败');
         }
     }
+
+    // 获取用户认证视频连接
+    public function getAuthVideoUrl(){
+        $user_id = I('user_id');
+
+        $video = M('users_auth_video')->where('user_id', $user_id)->field('auth_video_url')->find();
+        if($video){
+            response_success(array('video_url'=>$video['auth_video_url']));
+        } else {
+            response_error('', '该用户视频未认证');
+        }
+    }
 }

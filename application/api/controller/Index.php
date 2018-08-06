@@ -20,8 +20,11 @@ class Index extends Base {
      * @return [type] [description]
      */
     public function index(){
+
         $page = I('page', 1);
         $order_type = I('order_type', '1');
+        $user_longitude = I('longitude'); // 排序为离我最近时传入
+        $user_latitude = I('latitude'); // 排序为离我最近时传入
         $sex = I('sex');
         $province = I('province');
         $city = I('city');
