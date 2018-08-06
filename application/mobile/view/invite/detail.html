@@ -26,9 +26,13 @@
                         <div class="details">
                             <div class="person">
                                 <span class="name">寻你！</span>
-                                <span class="age woman">44</span>
-                                <span class="distance fr">
-                                    <span class="distanceText">100</span>km</span>
+                                <span class="sexAge">
+                                    <i class="sex"></i>
+                                    <span class="age">23</span>
+                                </span>
+                                <!-- <span class="distance fr">
+                                    <span class="distanceText">100</span>km
+                                </span> -->
                             </div>
                             <div class="" style="margin-top: 10px;">发布邀约</div>
                         </div>
@@ -87,7 +91,10 @@
     <script>
         var GlobalHost = "http://meiliyue.caapa.org";
         var Interested = {
-            inviteItem: {},
+            originUserId:"",
+            toUserId:"",
+            detailId:"",
+
 
             //处理ulr参数func,返回obj
             getUrlOptions: function (urlOptionStr) { //urlOptionStr = window.location.search
@@ -104,26 +111,53 @@
                 //处理url参数
                 var urlOptionStr = window.location.search
                 console.log(urlOptionStr)
-                //urlOptionStr ="?inviteItem={%22user_id%22:%221%22,%22head_pic%22:%22/public/upload/head_pic/20180728/938806dc024e113e09aa3b0321e2b91e.jpg%22,%22auth_video_status%22:%220%22,%22nickname%22:%2215201110059%22,%22sex%22:%221%22,%22age%22:%2212%22,%22title%22:%22%E6%B2%A1%E4%BA%8B%E7%8E%A9%E7%8E%A9%22,%22description%22:%22%E4%BD%A0%E9%82%A3%E9%87%8C%E5%A5%BD%E7%8E%A9%E5%90%97%22,%22time%22:%222018-07-29%22,%22place%22:%22%E5%94%90%E5%9F%8E%E5%B0%8F%E5%8C%BA%22,%22image%22:false,%22distince%22:0}"; //测试用
 
                 if (urlOptionStr.indexOf("?") != -1) {
                     var urlOptionObj = Interested.getUrlOptions(urlOptionStr)
 
-                    var inviteItem = JSON.parse(urlOptionObj.inviteItem)
-                    console.log(inviteItem)
-                    Interested.inviteItem = inviteItem
-                    Interested.updateDom()
+                    var options = JSON.parse(urlOptionObj.options)
+                    console.log(options)
+
+                    //
+                    Interested.originUserId=options.originUserId;
+                    Interested.toUserId=options.toUserId;
+                    Interested.detailId=options.detailId;
+
+                    //ajax邀约详情信息
+                    Interested.getInviteData();
                 }
             },
+            getInviteData:function(){
+                $.ajax({
+                    type: "POST",
+                    url: GlobalHost+"/index.php/Api/invite/detail",
+                    data: {
+                        id:Interested.detailId
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+                        
+                        //更新dom
+                        if(result.data&&result.data!==""){
+                            Interested.updateDom(result.data);
+                        }
+                    }
+                });
+            },
             //根据inviteItem更新Dom
-            updateDom: function () {
-                var item = Interested.inviteItem
-                $(".img-box img").attr("src", GlobalHost + item.head_pic)
-                $(".person .name").html(item.nickname)
-                //sex age
-                $(".person .distance .distanceText").html(item.distince)
-                $(".inviteDetail .inviteDetail-list li .title").html(item.title)
-                $(".inviteDetail .inviteDetail-list li .description").html(item.description)
+            updateDom: function (data) {
+                $(".img-box img").attr("src", GlobalHost + data.head_pic)
+                $(".person .name").html(data.nickname)
+                if(data.sex==1){
+                    $(".sexAge").addClass("male");
+                }else{
+                    $(".sexAge").addClass("female");
+                }
+                $(".sexAge .age").html(data.age);
+                // $(".person .distance .distanceText").html(data.distince)
+                $(".inviteDetail .inviteDetail-list li .title").html(data.title)
+                $(".inviteDetail .inviteDetail-list li .description").html(data.description)
                 //图片
                 // if (item.image && item.image !== "") {
                 //     //还要改 item.image格式？
@@ -138,10 +172,10 @@
                 //         console.log(2)
                 //     })
                 // }
-                $(".inviteDetail .inviteDetail-list li .payType").html("AA") //没有？
-                $(".inviteDetail .inviteDetail-list li .otherSideSex").html("不限男女") //没有？
-                $(".areaTime .detailTime").html(item.time)
-                $(".areaTime .areaPlace").html(item.place)
+                $(".inviteDetail .inviteDetail-list li .payType").html(data.pay);
+                $(".inviteDetail .inviteDetail-list li .otherSideSex").html(data.object);
+                $(".areaTime .detailTime").html(data.time)
+                $(".areaTime .areaPlace").html(data.place)
             },
             eventsBind: function () {
                 //返回
@@ -160,18 +194,17 @@
                 //我感兴趣
                 $(".interest").click(function () {
                     //感兴趣
+
                 })
                 //点击头像看他人的个人主页
                 $(".interested .img-box").click(function(){
-                    let user_id=Interested.inviteItem.originUserId;
-                    let toUserId=Interested.inviteItem.user_id;
-
-                    window.location.href = GlobalHost+"/index.php/mobile/user/homePage/user_id/"+user_id+"/toUserId/"+toUserId+".html";
+                    window.location.href = GlobalHost+"/index.php/mobile/user/homePage/user_id/"+Interested.originUserId+"/toUserId/"+Interested.toUserId+".html";
                 });
             },
             init: function () {
                 //获取传来的邀约item信息
                 Interested.getPageData()
+
                 Interested.eventsBind()
             }
         }

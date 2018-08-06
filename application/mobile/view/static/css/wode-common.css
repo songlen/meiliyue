@@ -641,6 +641,17 @@ a.close {
     margin-left: -0.2rem;
 }
 
+.videoStatus{
+    display: inline-block;
+    width: 0.2rem;
+    height: 0.2rem;
+    background: url(../images/icon/播放.png) center center no-repeat;
+    background-size: 100%;
+    position: absolute;
+    left: 0.65rem;
+    bottom: 0.14rem;
+}
+
 .fans-tab .comments-text,
 .attention-tab .comments-text,
 .comments-item .comments-text {
@@ -1807,4 +1818,143 @@ ul.signatureList li.actived {
 .signatureDialogBtn {
     color: red;
     border-top: 1px solid #e5e5e5;
+}
+
+/* 小视频全屏 */
+
+.fullScreen {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 6;
+    background-color: #000;
+}
+.fullScreen .videoHeader{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    line-height: 50px;
+    /* background-color: #fff; */
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.fullScreen .videoHeader>.img-box{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px;
+    margin-left: 10px;
+}
+.fullScreen .videoHeader>.img-box>img{
+    width: 100%;
+}
+.fullScreen .closeFullScreen {
+    width: 30px;
+    height: 30px;
+    transform: translateX(-50%) rotate(45deg);
+    margin-right: auto;
+    margin-left: 25px;
+}
+.fullScreen .videoOperate{
+    width: 30px;
+    height: 30px;
+    background: url(../images/icon/三个点.png) center center no-repeat;
+    background-size: 100%;
+}
+
+
+.fullScreen .progressBar {
+    display: block;
+    position: absolute;
+    top: 0;
+    height: 5px;
+    width: 0%;
+    background-color: #fff;
+}
+
+.fullScreen .fullScreenScroll {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+    font-size: 0;
+}
+
+.fullScreen .fullScreenScroll .fullScreenWrap {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+.fullScreen .fullScreenScroll .videoInput{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background-color: green;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+.fullScreen .fullScreenScroll .fullScreenWrap>video {
+    background-color: #000;
+}
+.fullScreen .fullScreenScroll .fullScreenWrap .videoFooter {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.videoCommentBtn{
+    width: 30px;
+    height: 30px;
+    background: url(../images/icon/评论-4.png) center center no-repeat;
+    background-size: 100%;
+}
+.videoFooter .littleTri{
+    width: 9px;
+    height: 9px;
+    border: 1px solid;
+    border-color: transparent transparent #fff #fff;
+    transform-origin: center center;
+    transform: rotate(-45deg) translate(-50%);
+    position: absolute;
+    left: 50%;
+    bottom: 7px;
+}
+
+.fullScreen .closeFullScreen::before {
+    content: '';
+    display: block;
+    border-top: 1px solid #e8e7e9;
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fullScreen .closeFullScreen::after {
+    content: '';
+    display: block;
+    border-left: 1px solid #e8e7e9;
+    position: absolute;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
