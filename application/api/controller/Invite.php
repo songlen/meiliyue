@@ -28,7 +28,7 @@ class Invite extends Base {
         $city = I('city');
         $auth_video = I('auth_video');
         /************************ 要查询的字段 ***************************/
-        $field = 'u.user_id, head_pic, auth_video_status, nickname, u.sex, u.age, i.title, i.description, i.time, i.place, image';
+        $field = 'u.user_id, head_pic, auth_video_status, nickname, u.sex, u.age, i.id, i.title, i.description, i.time, i.place, image';
         /************************ 排序 ***************************/
         $order_type = I('order_type', 1);
         if($order_type == 1) $order = 'add_time desc';
