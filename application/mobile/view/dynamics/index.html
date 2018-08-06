@@ -55,10 +55,14 @@
                     <ul>
                         <li class="list-item" v-cloak v-for="(item,index) in areaDataList.list" :key="index" @click="gotoDongtaiDetail(item)">
                             <div class="item-head">
-                                <div class="item-headWrap" @click.stop="gotoHomePage(item)">
-                                    <img :src="GlobalHost+item.head_pic" @error="defaultImg">
-                                    <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                                <div style="position: relative;">
+                                    <div class="item-headWrap" @click.stop="gotoHomePage(item)">
+                                        <img :src="GlobalHost+item.head_pic" @error="defaultImg">
+                                        <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                                    </div>
+                                    <!-- <span v-show="item." class="videoStatus"></span> -->
                                 </div>
+                                
                                 <div class="item-head-text">
                                     <div>
                                         <span class="listName">{{item.nickname}}</span>
@@ -99,10 +103,14 @@
                     <ul>
                         <li class="list-item" v-cloak v-for="(item,index) in attendedDataList.list" :key="index" @click="gotoDongtaiDetail(item)">
                             <div class="item-head">
-                                <div class="item-headWrap" @click.stop="gotoHomePage(item)">
-                                    <img :src="GlobalHost+item.head_pic" @error="defaultImg">
-                                    <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                                <div style="position: relative;">
+                                    <div class="item-headWrap" @click.stop="gotoHomePage(item)">
+                                        <img :src="GlobalHost+item.head_pic" @error="defaultImg">
+                                        <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                                    </div>
+                                    <!-- <span v-show="item." class="videoStatus"></span> -->
                                 </div>
+                                
                                 <div class="item-head-text">
                                     <div>
                                         <span class="listName">{{item.nickname}}</span>
@@ -148,7 +156,8 @@
                     <ul>
                         <li @click="videoFullScreen">
                             <div class="mVideo">
-                                <video src=""></video>
+                                <!-- <img src=""> -->
+                                <video style="width: 100%;height: 100%;" src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4" preload="auto"></video>
                             </div>
 
 
@@ -233,10 +242,8 @@
                     <span class="sendComment">发送</span>
                 </div>
             </div>
-
-            
-
         </div>
+        
     </div>
 
     <!-- -------------------------------------- -->

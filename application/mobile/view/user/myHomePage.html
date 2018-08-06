@@ -28,9 +28,13 @@
             </div>
 
             <div class="edit-personal-avatar">
-                <div class="avatar-pic">
-                    <img src="__STATIC__/images/icon/tx.png">
+                <div style="position: relative;">
+                    <div class="avatar-pic">
+                        <img src="__STATIC__/images/icon/tx.png">
+                    </div>
+                    <span class="videoStatus" style="display: none;"></span>
                 </div>
+                
                 <div class="avatar-content">
                     <span class="sexAge">
                         <i class="sex"></i>
@@ -369,6 +373,9 @@
             if (data.baseinfo.head_pic && data.baseinfo.head_pic !== "") {
                 $(".avatar-pic img").attr("src", GlobalHost + data.baseinfo.head_pic)
             }
+            if(data.baseinfo.auth_video_status===1){
+                $(".edit-personal-avatar .videoStatus").show();
+            }
             $(".avatar-content .sexAge").addClass(sexClass)
             $(".avatar-content .sexAge .age").html(data.baseinfo.age)
             // $(".edit-personal-constellation").html()//星座
@@ -698,7 +705,7 @@
             var $liTemp = $(
                 `
                     <li class="edit-pic-item">
-                        <input class="albumInput" type="file" accept="image/*" capture="camera" style="display: none">
+                        <input class="albumInput" type="file" accept="image/*" style="display: none">
                         <img class="showPic" src="__STATIC__/images/icon/tx.png">
                     </li>
                 `
@@ -1233,6 +1240,49 @@
             
             sessionStorage.setItem('homePage', JSON.stringify(pageData))
         },
+        showVideo:function({user_id,head_pic,src}){
+            console.log(user_id,head_pic,src)
+            let $fullScreen=$(`
+                <div class="fullScreen">
+                    <div class="videoHeader">
+                        <div class="closeFullScreen"></div>
+                        <div class="videoOperate"></div>
+                        <div class="img-box">
+                            <img src=${GlobalHost+head_pic}>
+                        </div>
+                    </div>
+
+                    <div class="fullScreenScroll">
+                        <div class="fullScreenWrap">
+                            <span class="progressBar"></span>
+                            <video id="video1" width="100%" height="100%" src=${src} autoplay loop></video>
+                            <div class="videoFooter">
+                                <div class="videoCommentBtn"></div>
+                                <span class="littleTri"></span>
+                            </div>
+                        </div>
+                        <!-- 小视频评论 -->
+                        <div class="" style="height: 300px;background-color: red;;">
+
+                        </div>
+                        
+                        <!-- 小视频评论input -->
+                        <div class="videoInput">
+                            <input type="text">
+                            <span class="sendComment">发送</span>
+                        </div>
+                    </div>
+                </div>
+            `);
+
+            //点击关闭事件
+            $fullScreen.find(".closeFullScreen").click(function(){
+                $fullScreen.remove();
+            });
+            
+            $("body").append($fullScreen);
+
+        },
         eventsBind: function () {
             $('.operate').click(function () {
                 if ($(".mask").length == 0) {
@@ -1359,6 +1409,15 @@
                 Homepage.savePageSession()
                 window.location.href = "editHomePage.html"
             })
+            //点击视频认证
+            $(".edit-personal-avatar").delegate(".videoStatus","click",function(){
+                let option={
+                    user_id:1,
+                    head_pic:"/public/upload/head_pic/20180728/938806dc024e113e09aa3b0321e2b91e.jpg",
+                    src:"https://media.w3.org/2010/05/sintel/trailer.mp4",
+                };
+                Homepage.showVideo(option);
+            });
         },
         init: function () {
             //得到user_id

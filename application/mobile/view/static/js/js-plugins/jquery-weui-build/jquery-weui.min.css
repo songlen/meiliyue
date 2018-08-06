@@ -43,7 +43,7 @@ body {
     font-size: 16px
 }
 
-@media only screen and (min-width:400px) {
+/* @media only screen and (min-width:400px) {
     html {
         font-size: 21.33px !important
     }
@@ -59,7 +59,7 @@ body {
     html {
         font-size: 25.6px !important
     }
-}
+} */
 
 .weui_navbar {
     z-index: 10
@@ -859,13 +859,15 @@ body {
 .pull-up .weui-pull-to-refresh__layer .weui-pull-to-refresh__arrow {
     display: inline-block;
     -webkit-transform: rotate(180deg) translate3d(0, 0, 0);
-    transform: rotate(180deg) translate3d(0, 0, 0)
+    transform: rotate(180deg) translate3d(0, 0, 0);
 }
 
 .pull-down .weui-pull-to-refresh__layer .down,
 .pull-down .weui-pull-to-refresh__layer .weui-pull-to-refresh__arrow,
 .pull-up .weui-pull-to-refresh__layer .up {
-    display: inline-block
+    display: inline-block;
+    -webkit-transform: rotate(0deg) translate3d(0, 0, 0);
+    transform: rotate(0deg) translate3d(0, 0, 0);
 }
 
 .refreshing .weui-pull-to-refresh__layer .weui-pull-to-refresh__arrow {

@@ -101,9 +101,13 @@
                                 <span class="dingText">顶</span>
                             </span>
                             <div class="top">
-                                <div class="img-box" @click="gotoInviteDetail(item)">
-                                    <img :src="GlobalHost+item.head_pic" @error="defaultImg">
+                                <div style="position: relative;">
+                                    <div class="img-box" @click="gotoInviteDetail(item)">
+                                        <img :src="GlobalHost+item.head_pic" @error="defaultImg">
+                                    </div>
+                                    <span class="videoStatus" v-cloak v-show="item.auth_video_status==1" @click="showVideo(item)"></span>
                                 </div>
+                                
                                 <div class="details">
                                     <div class="person">
                                         <span class="name">{{item.nickname}}</span>
@@ -164,7 +168,7 @@
 
         <div class="m_shade" v-cloak v-if="isPlusing"></div>
 
-        <div class="mask" v-show="isPlusing">
+        <div class="mask" v-cloak v-show="isPlusing">
             <div class="title">发起邀约</div>
             <div class="box-top">
                 <ul>
@@ -435,14 +439,19 @@
                     //打开邀约详情页面
                     openInviteDetail(item) {
                         console.log(item)
-                        //return
                         this.savePageToSession()
 
-                        let inviteItemStr = JSON.stringify(item)
-                        let inviteItem=JSON.parse(inviteItemStr);
-                        inviteItem.originUserId=this.user_id;
+                        let options={
+                            originUserId:this.user_id,//从谁那 去的邀约详情
+                            toUserId:item.user_id,//去 谁的 邀约详情
+                            detailId:item.id,
+                        };
 
-                        window.location.href = "detail.html?inviteItem=" + JSON.stringify(inviteItem);
+                        let toUrl=GlobalHost + "/index.php/mobile/invite/detail.html?options="+JSON.stringify(options);
+                        // let toUrl="detail.html?options="+JSON.stringify(options);//测试用
+                        console.log(toUrl)
+
+                        window.location.href = toUrl;
                     },
                     //控制筛选栏的位置
                     handleAddress() {
@@ -490,6 +499,8 @@
                     //跳到邀约发布页面
                     openReleaseInvite(type) { //type number 邀约类型
                         this.savePageToSession()
+
+                        $(".plus")[0].click();
 
                         window.location.href = GlobalHost + "/index.php/mobile/invite/add/type/" + type + ".html"
                     },
@@ -571,6 +582,51 @@
                         this.savePageToSession();
 
                         window.location.href = GlobalHost+"/index.php/mobile/user/homePage/user_id/"+this.user_id+"/toUserId/"+item.user_id+".html";
+                    },
+                    showVideo(item){
+                        let user_id=item.user_id;
+                        let head_pic=item.head_pic;
+                        let src="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
+
+                        let $fullScreen=$(`
+                            <div class="fullScreen">
+                                <div class="videoHeader">
+                                    <div class="closeFullScreen"></div>
+                                    <div class="videoOperate"></div>
+                                    <div class="img-box">
+                                        <img src=${GlobalHost+head_pic}>
+                                    </div>
+                                </div>
+
+                                <div class="fullScreenScroll">
+                                    <div class="fullScreenWrap">
+                                        <span class="progressBar"></span>
+                                        <video id="video1" width="100%" height="100%" src=${src} autoplay loop></video>
+                                        <div class="videoFooter">
+                                            <div class="videoCommentBtn"></div>
+                                            <span class="littleTri"></span>
+                                        </div>
+                                    </div>
+                                    <!-- 小视频评论 -->
+                                    <div class="" style="height: 300px;background-color: red;;">
+
+                                    </div>
+                                    
+                                    <!-- 小视频评论input -->
+                                    <div class="videoInput">
+                                        <input type="text">
+                                        <span class="sendComment">发送</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+
+                        //点击关闭事件
+                        $fullScreen.find(".closeFullScreen").click(function(){
+                            $fullScreen.remove();
+                        });
+                        
+                        $("body").append($fullScreen);
                     },
 
                     //筛选页面-----------------------------------------------

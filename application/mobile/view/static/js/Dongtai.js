@@ -246,7 +246,7 @@ $(function () {
             },
             //打开全屏小视频
             videoFullScreen() {
-                var srcTemp = "https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用,传来的src
+                var srcTemp = "http://www.w3school.com.cn/example/html5/mov_bbb.mp4";//测试用,传来的src
                 var video=document.getElementById("video1");
                 if(!srcTemp==$(video).attr("src")){
                     $(video).attr("src",srcTemp);

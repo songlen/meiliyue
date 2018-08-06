@@ -85,7 +85,7 @@
                 </ul>
             </div>
 
-            <!-- 评论列表 -->
+            <!-- 评论列表---------------------------------- -->
 
             <div class="details-comments">
                 <div class="details-comments-head" style="display: none;">
@@ -93,10 +93,15 @@
                 </div>
                 <ul>
                     <li class="details-comments-item" v-cloak v-for="(item,index) in commentsList" :key="index">
-                        <div class="comment-headWrap" @click="applyHomepage">
-                            <img :src="GlobalHost+item.head_pic" @error="defaultImg">
-                            <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                        <div style="position: relative;">
+                            <div class="comment-headWrap" @click="applyHomepage">
+                                <img :src="GlobalHost+item.head_pic" @error="defaultImg">
+                                <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                            </div>
+                            <!-- <span class="videoStatus"></span> -->
                         </div>
+                        
+
                         <div class="details-comments-content">
                             <div class="details-item-head">
                                 <span class="nickname">{{item.nickname}}</span>

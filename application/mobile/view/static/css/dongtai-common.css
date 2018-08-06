@@ -177,6 +177,20 @@ footer li a {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+.videoStatus{
+    display: inline-block;
+    width: 0.18rem;
+    height: 0.18rem;
+    background: url(../images/icon/播放.png) center center no-repeat;
+    background-size: 100%;
+    position: absolute;
+    right: 0.07rem;
+    bottom: 0;
+}
+.details-page .videoStatus{
+    top: 0.32rem;
+    left: 0.44rem;
+}
 
 .list-item .item-head .item-head-text .listName {
     font-size: 15px;
@@ -396,6 +410,7 @@ footer li a {
     height: 2.37rem;
     border-radius: 5px;
     border: 1px solid red;
+    background-color: #000;
 }
 
 /* 发动态 */
@@ -493,7 +508,7 @@ footer li a {
     display: inline-flex;
     flex-wrap: wrap;
 }
-
+.edit-pic .edit-pic-item video,
 .edit-pic .edit-pic-item img {
     width: 0.81rem;
     height: 0.81rem;
@@ -964,7 +979,7 @@ a.operate {
 
 /* 小视频全屏 */
 
-.dongtai .fullScreen {
+.fullScreen {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -1011,7 +1026,7 @@ a.operate {
 }
 
 
-.dongtai .fullScreen .progressBar {
+.fullScreen .progressBar {
     display: block;
     position: absolute;
     top: 0;
@@ -1020,7 +1035,7 @@ a.operate {
     background-color: #fff;
 }
 
-.dongtai .fullScreen .fullScreenScroll {
+.fullScreen .fullScreenScroll {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -1030,7 +1045,7 @@ a.operate {
     font-size: 0;
 }
 
-.dongtai .fullScreen .fullScreenScroll .fullScreenWrap {
+.fullScreen .fullScreenScroll .fullScreenWrap {
     width: 100vw;
     height: 100vh;
     position: relative;
@@ -1047,7 +1062,7 @@ a.operate {
     align-items: center;
     font-size: 14px;
 }
-.dongtai .fullScreen .fullScreenScroll .fullScreenWrap>video {
+.fullScreen .fullScreenScroll .fullScreenWrap>video {
     background-color: #000;
 }
 .fullScreen .fullScreenScroll .fullScreenWrap .videoFooter {
