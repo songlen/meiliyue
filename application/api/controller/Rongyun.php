@@ -4,7 +4,7 @@ namespace app\api\controller;
 
 use think\Db;
 
-include PLUGINS_PATH.'rongyun/rongcloud.php';
+include PLUGIN_PATH.'rongyun/rongcloud.php';
 
 class Rongyun extends Base {
 
@@ -23,9 +23,7 @@ class Rongyun extends Base {
 		$this->appKey = 'tdrvipkstxgq5';
 		$this->appSecret = 'F1QPkVpi57B08';
 		$this->jsonPath = "jsonsource/";
-		$this->RongCloud = new RongCloud($appKey,$appSecret);
-
-
+		$this->RongCloud = new \RongCloud($this->appKey,$this->appSecret);
 	}
 
 	public function getToken(){
@@ -33,8 +31,19 @@ class Rongyun extends Base {
 		$user = M('users')->where('user_id', $user_id)->field('nickname, head_pic, rongyun_token')->find();
 		if(empty($user)) response_error('', '该用户不存在');
 
-		
+		if($user['rongyun_token']) response_success(array('token'=>$user['rongyun_token']));
+
+
+		ini_set('safe_mode','Off');
 		// 获取 Token 方法
 		$result = $this->RongCloud->user()->getToken('userId1', 'username', 'http://www.rongcloud.cn/images/logo.png');
+		$result = json_decode($result, true);
+		if($result['code'] == 200){
+			$rongyun_token = $result['token'];
+			M('users')->where('user_id', $user_id)->setField('rongyun_token', $rongyun_token);
+			response_success(array('token'=>$rongyun_token));
+		} else {
+			response_error('', $result['msg']);
+		}
 	}
 }
