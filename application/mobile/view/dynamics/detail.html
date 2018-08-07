@@ -4,21 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <title>详情</title>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/dongtai-common.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="__STATIC__/js/vue.js"></script>
 </head>
 
 <body class="details">
+
     <div class="vueWrap" id="vueApp">
         <header>
             <a href="javascript:window.history.back(-1)" class="back"></a>
             <div class="title">动态详情</div>
             <a href="javascript:void(0)" class="operate"></a>
         </header>
+
         <div class="details-page">
             <div class="details-content">
                 <div class="details-content-head">
@@ -80,6 +84,9 @@
                     </if>
                 </ul>
             </div>
+
+            <!-- 评论列表---------------------------------- -->
+
             <div class="details-comments">
                 <div class="details-comments-head" style="display: none;">
                     <img src="__STATIC__/images/icon/消息.png">评论&nbsp;（为保护隐私，评论头像和昵称都是随机生成）
@@ -89,9 +96,12 @@
                         <div style="position: relative;">
                             <div class="comment-headWrap" @click="applyHomepage">
                                 <img :src="GlobalHost+item.head_pic" @error="defaultImg">
+                                <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
                             </div>
+                            <!-- <span class="videoStatus"></span> -->
                         </div>
                         
+
                         <div class="details-comments-content">
                             <div class="details-item-head">
                                 <span class="nickname">{{item.nickname}}</span>
@@ -99,6 +109,7 @@
                             </div>
                             <div class="details-comments-text" @click="startComment(1,item)">{{item.content}}</div>
 
+                            <!-- 二级评论 -->
                             <div class="details-comments-content-second" v-cloak v-if="item.sub&&item.sub.length!==0">
                                 <ul class="comments-second-ul">
                                     <li v-cloak v-for="(subItem,subIndex) in item.sub" :key="subIndex">
@@ -114,10 +125,13 @@
                                     </li>
                                 </ul>
                             </div>
+
                         </div>
                     </li>
                 </ul>
             </div>
+
+            <!-- 评论列表 end -->
 
             <div class="details-tip">
                 <img src="__STATIC__/images/icon/tx.png">评论所有人可见，悄悄话仅对方和你可见
@@ -131,6 +145,10 @@
             <span class="sendComment" @click="sendComment">发送</span>
         </div>
 
+
+        <!-- 模态框 -->
+
+        <!-- 送小花提示窗 -->
         <div class="flowerDialog" style="display: none;">
             <p>
                 您已成功送给对方
@@ -139,18 +157,21 @@
             </p>
             <span class="littleFlower"></span>
         </div>
+        <!-- 申请查看主页提示窗 -->
         <div class="avatarOperating" style="display: none;">
             <ul>
                 <li class="">申请查看TA的主页</li>
                 <li class="home-cancel">取消</li>
             </ul>
         </div>
+        <!-- 更多操作提示窗 -->
         <div class="avatarOperating-jubao" style="display: none;">
             <ul>
                 <li class="">举报</li>
                 <li class="jubao-cancel">取消</li>
             </ul>
         </div>
+        <!-- 确认删除评论？ -->
         <div class="confirmDelete" style="display: none;">
             <p>
                 确认删除评论？
@@ -162,9 +183,8 @@
         </div>
 
     </div>
+</body>
 
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="__STATIC__/js/vue.js"></script>
 <script>
     var GlobalHost = "http://meiliyue.caapa.org";
     var Details = {
@@ -174,13 +194,17 @@
 
         _flowerTimer: null,
         replyDiv: null,
-        commentType: 1, 
+        commentType: 1, //1给动态评论  2二级评论
 
+        //送花
         giveFlower: function () {
+            //用户id  动态id
             var postData = {
                 user_id: "123",
                 dynamics_id: "12"
             }
+
+            return
 
             $.ajax({
                 type: "POST",
@@ -188,9 +212,11 @@
                 data: postData,
                 dataType: "json",
                 success: function (result) {
-                    let sendedFlowersCount = 2 
-                    let leftFlowersCount = 99 
+                    //这里需要更多信息？？
+                    let sendedFlowersCount = 2 //已送2朵小花
+                    let leftFlowersCount = 99 //自己剩余99朵小花
                     if (result.msg == "操作成功") {
+                        //显示提示弹窗
                         $(".flowerDialog .sendSuccessCount").text(sendedFlowersCount)
                         $(".flowerDialog .dialogLeftFlowers").text(leftFlowersCount)
                         $(".flowerDialog").show().addClass('mfadeout')
@@ -198,25 +224,33 @@
                         Details._flowerTimer = setTimeout(function () {
                             $('.flowerDialog').hide().removeClass('mfadeout')
                         }, 1300)
+                        //显示提示弹窗 end
+                        //小花池里增加一朵小花
                         $(".flowerPool").prepend($(
                             '<div class="flowerItem"><img src="__STATIC__/images/icon/花3.png"></div>'
                         ))
+                        //小花池数量加一
                         $(".flowerPool-count").html(Number($(".flowerPool-count").html()) + 1)
+                        //小花样式
                         if ($(".haveFlower").css("display") == "none") {
                             $(".haveFlower").show()
                             $(".noFlower").hide()
                         }
+                        //已有小花数量加一
                         $(".flowerCount").html(Number($(".flowerCount").html()) + 1)
                     }
                 }
             })
         },
 
+        //申请查看主页
         applyHomepage: function () {
+            console.log(3)
             if($(".mask").length==0){
                 $('body').append($('<div class="mask"></div>'))
             }
             $('.avatarOperating').show()
+            // $('.avatarOperating').show().animate({'bottom':'0'},300)
             $('body').css('overflow', 'hidden')
         },
         initVue: function () {
@@ -224,41 +258,44 @@
                 el: "#vueApp",
                 data: {
                     GlobalHost:GlobalHost,
+
                     commentsList: [],
                     isWhisper: false,
                     placeHolder: "输入评论",
                     inputComment: "",
-                    replyItem: null,
+                    replyItem: null,//replyItem存在的话，说明是给下面的评论评论，而不是给这个动态评论
                 },
                 mounted: function () {
                     this.getCommentsList()
                 },
                 filters: {
-                    stampToStr: function (stamp) {
+                    //时间戳 转 文字
+                    stampToStr: function (stamp) {//传来的stamp十位数
                         if (!stamp) return '';
 
                         let nowStamp=Math.round((new Date().getTime())/1000);
                         let howLong=nowStamp-stamp;
 
-                        if(howLong<60){
+                        if(howLong<60){//1分钟内
                             return "1分钟内";
-                        }else if(howLong<3600){
+                        }else if(howLong<3600){//1小时内，显示分钟数
                             let minutes=Math.floor(howLong/60);
                             return minutes+"分钟前";
-                        }else if(howLong<43200){
+                        }else if(howLong<43200){//12小时内，显示小时数
                             let hours=Math.floor(howLong/3600);
                             return hours+"小时前";
-                        }else if(howLong>=43200&&howLong<86400){
+                        }else if(howLong>=43200&&howLong<86400){//大于12小时，小于24小时
                             let dateStr=stampToDate(stamp);
                             console.log(dateStr)
                             let minStr=dateStr.substr(dateStr.length-5);
                             return "昨天 "+minStr;
-                        }else if(howLong>86400){
+                        }else if(howLong>86400){//大于24小时，直接显示时间
                             return stampToDate(stamp);
                         }
                     }
                 },
                 methods: {
+                    //获取评论列表数据
                     getCommentsList: function () {
                         var self = this
                         var postData = {
@@ -275,9 +312,12 @@
                             }
                         })
                     },
-                    startComment: function (type, item) {
-                        var el = event.target;
-                        if (item&&item.commentator_id&&Number(item.commentator_id)==Number(Details.user_id)) {
+                    //触发评论 让input focus
+                    startComment: function (type, item) { //0点击动态 1点击评论/回复谁
+                        // console.log(event)
+                        console.log(item)
+                        var el = event.target;//点击那条评论dom
+                        if (item&&item.commentator_id&&Number(item.commentator_id)==Number(Details.user_id)) { //点击的是自己评论的，提问是否删除 //需要和自己的nickname对比？
                             this.toggleDelete(el);
                         }else{
                             if(type==0){
@@ -286,6 +326,7 @@
                                 console.log(1)
                                 $(".details-realInput").focus()
 
+                                //记录点击的评论
                                 Details.commentType = 1
                             }else if(type==1){
                                 this.placeHolder = "回复" + item.nickname
@@ -293,6 +334,7 @@
                                 console.log(2)
                                 $(".details-realInput").focus()
 
+                                //记录点击的评论
                                 Details.commentType = 2
                             }
 
@@ -300,29 +342,32 @@
                         }
                         console.log(this.replyItem)
                     },
+                    //发送评论
                     sendComment: function () {
                         console.log(this.replyItem)
 
                         var self = this;
-                        var itemIndex;
+                        var itemIndex //父评论的index
 
                         if (this.inputComment.trim() == "") {
                             return;
                         }
 
                         var postData = {
-                            dynamic_id: Details.dynamic_id,
-                            commentator_id: Details.user_id,
-                            content: this.inputComment.trim(),
-                            private: this.isWhisper?1:null, 
+                            dynamic_id: Details.dynamic_id,//动态id
+                            commentator_id: Details.user_id, //评论者id，我的id
+                            content: this.inputComment.trim(),//内容
+                            private: this.isWhisper?1:null, //悄悄话
 
+                            //reply_user_id: "", //回复谁, 顶级评论填写这条动态的发布者id
                         };
 
-                        if (this.replyItem) {
+                        if (this.replyItem) {//评论的是评论
                             
+                            //获取父评论的index
                             if (self.replyItem.parent_id == 0) {
                                 itemIndex = self.commentsList.indexOf(self.replyItem)
-                            } else {
+                            } else { //点的是二级评论
                                 self.commentsList.forEach(function (item, index) {
                                     if (item.sub) {
                                         if (item.sub.indexOf(self.replyItem) > -1) {
@@ -335,7 +380,7 @@
                             
                             postData.parent_id=this.commentsList[itemIndex].comment_id;
                             postData.reply_user_id=this.replyItem.commentator_id;
-                        } else {
+                        } else {//给这条动态评论
                             postData.parent_id="0";
                             postData.reply_user_id=Details.dynamic_origin_id;
                         }
@@ -349,10 +394,50 @@
                             dataType: "json",
                             success: function (result) {
                                 console.log(result)
-                             
+                                //放数据
                                 if (result.msg == "操作成功") {
+
+                                    // if (self.replyItem) {
+
+                                    //     if (!self.commentsList[itemIndex].sub) {
+                                    //         self.commentsList[itemIndex].sub = []
+                                    //     }
+
+                                    //     var addItem = {
+                                    //         add_time: "122222222",
+                                    //         comment_id: "23232",
+                                    //         commentator_id: "99",
+                                    //         head_pic: "sdfsfsdf",
+
+                                    //         content: self.inputComment,
+                                    //         parent_id: self.commentsList[itemIndex].comment_id,
+
+                                    //         nickname: "我自己",
+                                    //         reply_nickname: "我自己？"
+                                    //     }
+
+                                    //     self.commentsList[itemIndex].sub.push(addItem)
+                                    // } else {
+                                    //     var addItem = {
+                                    //         add_time: "122222222",
+                                    //         comment_id: "23232",
+                                    //         commentator_id: "99",
+                                    //         head_pic: "sdfsfsdf",
+
+                                    //         content: self.inputComment,
+                                    //         parent_id: "0",
+
+                                    //         nickname: "我自己",
+                                    //         reply_nickname: "我自己？"
+                                    //     }
+
+                                    //     self.commentsList.push(addItem)
+                                    // }
+
+
                                     self.getCommentsList();
 
+                                    //send完评论，重置data
                                     self.inputComment = "";
                                     self.placeHolder = "输入评论";
                                     self.replyItem = null;
@@ -361,6 +446,7 @@
                             }
                         })
                     },
+                    //头像加载失败，默认图片
                     defaultImg: function (event) {
                         event.target.src = "__STATIC__/images/icon/tx.png"
                     },
@@ -369,17 +455,23 @@
                             $('body').append($('<div class="mask"></div>'))
                         }
                         $('.avatarOperating').show()
+                        // $('.avatarOperating').show().animate({'bottom':'0'},300)
                         $('body').css('overflow', 'hidden')
                     },
+                    //点自己的评论了，提问是否删除
                     toggleDelete:function(el){
                         if($(".mask").length==0){
                             $('body').append($('<div class="mask"></div>'))
                         }
                         $('.confirmDelete').show();
+
+                        //删除评论事件
+                        //关闭
                         $(".cancelDelete").click(function(){
                             $(".mask").remove();
                             $('.confirmDelete').hide();
                         });
+                        //删除
                         $(".delete").click(function(){
                             console.log("删除自己的评论")
                         });
@@ -388,35 +480,49 @@
             })
         },
         eventsBind: function () {
+            //点击送花
             $(".giveFlower").click(function () {
                 console.log("送花")
                 Details.giveFlower()
             })
+            //点击头像打开个人主页
             $(".details-headImgWrap").click(function () {
+                //save
+
+                //打开他人的个人主页
 
             })
+            //申请查看主页-取消
             $(".home-cancel").click(function () {
                 $('.mask').remove()
+                // $('.avatarOperating').animate({'bottom':'-2rem'},300,function(){
                 $('.avatarOperating').hide()
+                // })
                 $('body').css('overflow', 'auto')
             })
+            //更多操作 举报
             $(".operate").click(function () {
                 if($(".mask").length==0){
                     $('body').append($('<div class="mask"></div>'))
                 }
                 $('.avatarOperating-jubao').show()
+                // $('.avatarOperating').show().animate({'bottom':'0'},300)
                 $('body').css('overflow', 'hidden')
             })
+            //更多操作 举报-取消
             $(".jubao-cancel").click(function () {
                 $('.mask').remove()
+                // $('.avatarOperating').animate({'bottom':'-2rem'},300,function(){
                 $('.avatarOperating-jubao').hide()
+                // })
                 $('body').css('overflow', 'auto')
             });
         },
         init: function () {
-            Details.user_id=1;
+            Details.user_id=1;//测试用
             Details.dynamic_id=1;
-            Details.dynamic_origin_id=1;
+            Details.dynamic_origin_id=1;//这条动态的发布者的id
+            // Details.dynamic_origin_id={$info['user_id']};
 
             Details.initVue()
 
@@ -426,16 +532,17 @@
     $(function () {
         Details.init()
     });
+    //时间戳转日期时间
     function stampToDate(timestamp) {
-        var date = new Date(timestamp * 1000);
+        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
         Y = date.getFullYear() + '-';
         M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
         D = (date.getDate()<10?"0"+date.getDate():date.getDate()) + ' ';
         h = (date.getHours()<10?"0"+date.getHours():date.getHours()) + ':';
         m = (date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes());
+        // s = date.getSeconds();
         return Y+M+D+h+m;
     }
 </script>
-</body>
 
 </html>
