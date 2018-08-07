@@ -226,7 +226,7 @@ $(function () {
             },
             //头像加载失败，默认图片
             defaultImg(event) {
-                event.target.src = "../images/icon/tx.png"
+                event.target.src = "__STATIC__/images/icon/tx.png"
             },
             //跳转之前存数据到session
             savePageToSession() {
@@ -325,6 +325,79 @@ $(function () {
                     }
                     _self.getListData(_self.nowDataList, false, postData)
                 });
+            },
+            openVideoScreen(item){
+                let self=this;
+                let toUserId=item.user_id;
+                let head_pic=GlobalHost+item.head_pic;
+                console.log(head_pic)
+                this.getVideoUrl(toUserId,function(url){
+                    // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
+                    self.showVideo({
+                        user_id:toUserId,
+                        head_pic:head_pic,
+                        src:url
+                    });
+                });
+            },
+            getVideoUrl(user_id,callback){//user_id
+                $.ajax({
+                    type: "POST",
+                    url: GlobalHost+"/index.php/Api/user/getAuthVideoUrl",
+                    data: {
+                        user_id:user_id
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+                        if(result.code==200){//测试用
+                            let url=GlobalHost+result.data.video_url;
+                            callback(url);
+                        }
+                    }
+                });
+            },
+            showVideo:function({user_id,head_pic,src}){
+                console.log(user_id,head_pic,src)
+                let $fullScreen=$(`
+                    <div class="fullScreen">
+                        <div class="videoHeader">
+                            <div class="closeFullScreen"></div>
+                            <div class="videoOperate"></div>
+                            <div class="img-box">
+                                <img src=${head_pic}>
+                            </div>
+                        </div>
+
+                        <div class="fullScreenScroll">
+                            <div class="fullScreenWrap">
+                                <span class="progressBar"></span>
+                                <video id="video1" width="100%" height="100%" src=${src} autoplay loop></video>
+                                <div class="videoFooter">
+                                    <div class="videoCommentBtn"></div>
+                                    <span class="littleTri"></span>
+                                </div>
+                            </div>
+                            <!-- 小视频评论 -->
+                            <div class="" style="height: 300px;background-color: red;;">
+
+                            </div>
+                            
+                            <!-- 小视频评论input -->
+                            <div class="videoInput">
+                                <input type="text">
+                                <span class="sendComment">发送</span>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                //点击关闭事件
+                $fullScreen.find(".closeFullScreen").click(function(){
+                    $fullScreen.remove();
+                });
+                
+                $("body").append($fullScreen);
             }
         }
     });

@@ -109,6 +109,8 @@
                                         <img :src="GlobalHost+item.head_pic" @error="defaultImg">
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="item.auth_video_status==1" @click="showVideo(item)"></span>
+                                    <!-- 测试用 -->
+                                    <!-- <span class="videoStatus" @click.stop="openVideoScreen(item)"></span> -->
                                 </div>
                                 
                                 <div class="details">
@@ -451,7 +453,7 @@
                         };
 
                         let toUrl=GlobalHost + "/index.php/mobile/invite/detail.html?options="+JSON.stringify(options);
-                        // let toUrl="detail.html?options="+JSON.stringify(options);//测试用
+                        // toUrl="detail.html?options="+JSON.stringify(options);//测试用
                         console.log(toUrl)
 
                         window.location.href = toUrl;
@@ -621,18 +623,46 @@
 
                         window.location.href = GlobalHost+"/index.php/mobile/user/homePage/user_id/"+this.user_id+"/toUserId/"+item.user_id+".html";
                     },
-                    showVideo(item){
-                        let user_id=item.user_id;
-                        let head_pic=item.head_pic;
-                        let src="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
-
+                    openVideoScreen(item){
+                        let self=this;
+                        let toUserId=item.user_id;
+                        let head_pic=GlobalHost+item.head_pic;
+                        console.log(head_pic)
+                        this.getVideoUrl(toUserId,function(url){
+                            // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
+                            self.showVideo({
+                                user_id:toUserId,
+                                head_pic:head_pic,
+                                src:url
+                            });
+                        });
+                    },
+                    getVideoUrl(user_id,callback){//user_id
+                        $.ajax({
+                            type: "POST",
+                            url: GlobalHost+"/index.php/Api/user/getAuthVideoUrl",
+                            data: {
+                                user_id:user_id
+                            },
+                            dataType: "json",
+                            success: function (result) {
+                                console.log(result)
+                                if(result.code==200){//测试用
+                                    let url=GlobalHost+result.data.video_url;
+                                    callback(url);
+                                }
+                            }
+                        });
+                    },
+                    showVideo:function({user_id,head_pic,src}){
+                        console.log(user_id,head_pic,src)
                         let $fullScreen=$(`
                             <div class="fullScreen">
                                 <div class="videoHeader">
                                     <div class="closeFullScreen"></div>
                                     <div class="videoOperate"></div>
                                     <div class="img-box">
-                                        <img src=${GlobalHost+head_pic}>
+                                        <img src=${head_pic}>
                                     </div>
                                 </div>
 

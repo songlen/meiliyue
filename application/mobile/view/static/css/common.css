@@ -309,23 +309,27 @@ footer li a {
 }
 
 .invitation .items li .top .img-box>img {
-  width: 120%;
+  /* width: 120%;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  tonghzou,下拉变方bug */
+  width: 100%;
 }
 .videoStatus{
   display: inline-block;
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 0.2rem;
+  height: 0.2rem;
   background: url(../images/icon/播放.png) center center no-repeat;
   background-size: 100%;
+  position: absolute;
+  right: 0.13rem;
+  bottom: 0;
 }
 .yaoyueIndex .videoStatus{
-  position: absolute;
-  top: 0.17rem;
-  left:0.17rem;
+  bottom: 0.04rem;
+  right: 0.07rem;
 }
 
 .invitation .items li .top .details {
@@ -1615,4 +1619,131 @@ li.detailImages img {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* m弹出框 */
+/* 也是遮罩 */
+.msgWrap{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, .3);
+  z-index: 2;
+}
+.msgWrap .msg{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 2rem;
+  height: 1.2rem;
+  border-radius: 5px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.msgWrap .msgText{
+  flex: 1 0 0;
+  padding: 0.05rem 0.1rem;
+  line-height: 0.3rem;
+  border-bottom: 1px solid #e2e2e2;
+}
+.msgWrap .msgCtrl{
+  height: 0.35rem;
+  line-height: 0.35rem;
+  text-align: center;
+  color: #6692fe;
+}
+
+/* 添加邀约，上传图片 */
+ul.showPicUl {
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+ul.showPicUl>a {
+  margin: 0.05rem;
+}
+li.edit-pic-item {
+  font-size: 0;
+  width: 0.71rem;
+  height: 0.71rem;
+  margin: 0.05rem;
+  padding: 0 !important;
+  border: none;
+  overflow: hidden;
+}
+.edit-pic-item video,
+.edit-pic-item img {
+    width: 100%;
+    height: 100%;
+}
+
+.invitation .edit-pic-item .edit-closePic {
+  display: inline-block;
+  width: 0.16rem;
+  height: 0.16rem;
+  background: url(../images/icon/close.png) center center no-repeat;
+  background-size: 100%;
+  position: absolute;
+  margin-left: -0.16rem;
+}
+
+.confirmDelete {
+  width: 2.79rem;
+  height: 1.03rem;
+  border: 1px solid #acacac;
+  border-radius: 6px;
+  background-color: #fff;
+  /* position: absolute; */
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+}
+
+.confirmDelete>p {
+  flex: 1 0 0;
+  padding: 0.2rem;
+  line-height: 0.2rem;
+  text-align: center;
+  color: #000;
+}
+
+.confirmDelete .confirmDelete-btngroup {
+  height: 0.48rem;
+  border-top: 1px solid #eeeeef;
+  display: flex;
+}
+
+.confirmDelete .confirmDelete-btngroup>a {
+  flex: 1 0 0;
+  text-align: center;
+  height: 100%;
+  padding-top: 0.12rem;
+  color: #46a3ff;
+}
+
+.confirmDelete .confirmDelete-btngroup>a:last-of-type {
+  border-left: 1px solid #e9e9e9;
+}
+
+.mLoading {
+  width: 1rem;
+  height: 0.5rem;
+  line-height: 0.5rem;
+  background-color: #fff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  border-radius: 5px;
+  text-align: center;
+  color: #000;
 }

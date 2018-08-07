@@ -276,7 +276,7 @@
             <span class="letsChat">打开聊天</span>
         </div>
 
-        <footer>
+        <footer style="display: none;">
             <img src="__STATIC__/images/icon/消息.png" alt="">
             <span class="sayHi">打个招呼</span>
         </footer>
@@ -302,6 +302,7 @@
         _mTimer: null,
         user_id: "",
         toUserId: "",
+        head_pic:"",
         attentionStatus: 0, //userid对touserid的关注状态
 
         updateDom: function (data) {
@@ -314,11 +315,13 @@
 
             $(".homepage>.allWrap>header .title").html(data.baseinfo.nickname)
             if (data.baseinfo.head_pic && data.baseinfo.head_pic !== "") {
-                $(".avatar-pic img").attr("src", GlobalHost + data.baseinfo.head_pic)
+                $(".avatar-pic img").attr("src", GlobalHost + data.baseinfo.head_pic);
+                Homepage.head_pic=data.baseinfo.head_pic;
             }
             if(data.baseinfo.auth_video_status===1){
                 $(".edit-personal-avatar .videoStatus").show();
             }
+            // $(".edit-personal-avatar .videoStatus").show();//测试用
             $(".avatar-content .sexAge").addClass(sexClass)
             $(".avatar-content .sexAge .age").html(data.baseinfo.age)
             // $(".edit-personal-constellation").html()//星座
@@ -581,7 +584,7 @@
                         <div class="closeFullScreen"></div>
                         <div class="videoOperate"></div>
                         <div class="img-box">
-                            <img src=${GlobalHost+head_pic}>
+                            <img src=${head_pic}>
                         </div>
                     </div>
 
@@ -614,6 +617,23 @@
             });
             
             $("body").append($fullScreen);
+        },
+        getVideoUrl:function(user_id,callback){//user_id
+            $.ajax({
+                type: "POST",
+                url: GlobalHost+"/index.php/Api/user/getAuthVideoUrl",
+                data: {
+                    user_id:user_id
+                },
+                dataType: "json",
+                success: function (result) {
+                    console.log(result)
+                    if(result.code==200){
+                        let url=GlobalHost+result.data.video_url;
+                        callback(url);
+                    }
+                }
+            });
         },
         eventsBind: function () {
             $('.operate').click(function () {
@@ -709,12 +729,14 @@
             });
             //点击视频认证
             $(".edit-personal-avatar").delegate(".videoStatus","click",function(){
-                let option={
-                    user_id:1,
-                    head_pic:"/public/upload/head_pic/20180728/938806dc024e113e09aa3b0321e2b91e.jpg",
-                    src:"https://media.w3.org/2010/05/sintel/trailer.mp4",
-                };
-                Homepage.showVideo(option);
+                Homepage.getVideoUrl(Homepage.toUserId,function(url){
+                    // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
+                    Homepage.showVideo({
+                        user_id:Homepage.toUserId,
+                        head_pic:GlobalHost+Homepage.head_pic,
+                        src:url
+                    });
+                });
             });
         },
         init: function () {

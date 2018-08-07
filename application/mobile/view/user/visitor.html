@@ -90,7 +90,7 @@
                                     <div class="comments-avatar-wrap">
                                         <img src="${GlobalHost+item.head_pic}">
                                     </div>
-                                    <span class="videoStatus"></span>
+                                    <span class="videoStatus" style="display:none;"></span>
                                 </div>
 
                                 <div class="comments-text">
@@ -109,9 +109,10 @@
                             </li>
                         `);
                         //视频认证
-                        if(item.auth_video_status!==1){
-                            $li.find(".videoStatus").hide();
+                        if(item.auth_video_status==1){
+                            $li.find(".videoStatus").show();
                         }
+                        // $li.find(".videoStatus").show();//测试用
                         //sex
                         if(item.sex==1){
                             $li.find(".sexAge").addClass("male");
@@ -138,6 +139,65 @@
                 //绑定dom update后才能绑定的事件？
                 // Visitors.eventsBindAfter();
 
+            },
+            getVideoUrl:function(user_id,callback){//user_id
+                $.ajax({
+                    type: "POST",
+                    url: GlobalHost+"/index.php/Api/user/getAuthVideoUrl",
+                    data: {
+                        user_id:user_id
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+                        if(result.code==200){//测试用
+                            let url=GlobalHost+result.data.video_url;
+                            callback(url);
+                        }
+                    }
+                });
+            },
+            showVideo:function({user_id,head_pic,src}){
+                console.log(user_id,head_pic,src)
+                let $fullScreen=$(`
+                    <div class="fullScreen">
+                        <div class="videoHeader">
+                            <div class="closeFullScreen"></div>
+                            <div class="videoOperate"></div>
+                            <div class="img-box">
+                                <img src=${head_pic}>
+                            </div>
+                        </div>
+
+                        <div class="fullScreenScroll">
+                            <div class="fullScreenWrap">
+                                <span class="progressBar"></span>
+                                <video id="video1" width="100%" height="100%" src=${src} autoplay loop></video>
+                                <div class="videoFooter">
+                                    <div class="videoCommentBtn"></div>
+                                    <span class="littleTri"></span>
+                                </div>
+                            </div>
+                            <!-- 小视频评论 -->
+                            <div class="" style="height: 300px;background-color: red;;">
+
+                            </div>
+                            
+                            <!-- 小视频评论input -->
+                            <div class="videoInput">
+                                <input type="text">
+                                <span class="sendComment">发送</span>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                //点击关闭事件
+                $fullScreen.find(".closeFullScreen").click(function(){
+                    $fullScreen.remove();
+                });
+                
+                $("body").append($fullScreen);
             },
             getListData:function(){
                 let getPage;
@@ -220,6 +280,22 @@
                     if(!Visitors[Visitors.curList].haveLoad){
                         Visitors.getListData();
                     }
+                });
+                //点击视频认证
+                $(".visiList")
+                .add($(".seenList")).delegate(".videoStatus","click",function(event){
+                    event.stopPropagation();
+                    let toUserId=Number($(this).closest(".comments-item").attr("data-toUserId"));
+                    let head_pic=$(this).closest(".comments-avatar").find("img").attr("src");
+                    console.log(head_pic)
+                    Visitors.getVideoUrl(toUserId,function(url){
+                        // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
+                        Visitors.showVideo({
+                            user_id:toUserId,
+                            head_pic:head_pic,
+                            src:url
+                        });
+                    });
                 });
             },
             init:function(){

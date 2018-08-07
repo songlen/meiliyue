@@ -171,11 +171,13 @@ footer li a {
 }
 
 .list-item .item-head .item-headWrap img {
-    position: absolute;
+    /* position: absolute;
     width: 100%;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
+    /* tongzhou,下拉变方bug */
+    width: 100%;
 }
 .videoStatus{
     display: inline-block;
@@ -1005,6 +1007,7 @@ a.operate {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    overflow: hidden;
     margin-right: 15px;
     margin-left: 10px;
 }

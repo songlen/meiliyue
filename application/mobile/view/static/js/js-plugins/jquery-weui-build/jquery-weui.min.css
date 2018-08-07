@@ -1315,7 +1315,8 @@ body {
 }
 
 .picker-calendar-week-days {
-    height: .9em;
+    /* height: .9em;tongzhou */
+    height: 1.5em;
     background: #f7f7f8;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1363,7 +1364,8 @@ body {
 }
 
 .picker-calendar-week-days+.picker-calendar-months {
-    height: 11.9em
+    /* height: 11.9em;tongzhou */
+    height: 11.3em;
 }
 
 .picker-calendar-months {
