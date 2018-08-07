@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <title>邀约</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- jquery-weui-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
     <link rel="stylesheet" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
+    <!-- my-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css">
     <script>
@@ -83,7 +85,9 @@
                 </div>
             </div>
 
-            <div class="dropRefresh">
+            <!-- 列表--------------------- -->
+
+            <div class="dropRefresh"><!-- 滚动容器 -->
                 <div class="weui-pull-to-refresh__layer">
                     <div class='weui-pull-to-refresh__arrow'></div>
                     <div class='weui-pull-to-refresh__preloader'></div>
@@ -105,6 +109,8 @@
                                         <img :src="GlobalHost+item.head_pic" @error="defaultImg">
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="item.auth_video_status==1" @click="showVideo(item)"></span>
+                                    <!-- 测试用 -->
+                                    <!-- <span class="videoStatus" @click.stop="openVideoScreen(item)"></span> -->
                                 </div>
                                 
                                 <div class="details">
@@ -157,6 +163,11 @@
             </div>
 
         </div>
+        <!-- 模糊end-->
+
+        <!-- 模糊之外 -->
+
+        <!-- 模态框及其他 -->
 
         <div class="plus" :class="{actived:isPlusing}" @click="isPlusing=!isPlusing"></div>
 
@@ -196,6 +207,7 @@
             <span class="maskTrgle"></span>
         </div>
 
+        <!-- 筛选弹窗 页面 -->
         <div class="select-page" :class="{actived:showSelect}">
             <header>
                 <a href="javascript:void(0)" class="back fl closeSelect" @click="closeSelect"></a>
@@ -213,6 +225,7 @@
 
                     <p class="title">约会</p>
 
+                    <!-- 筛选列表 -->
                     <div class="tab-content items view-list" id="tab-detail1">
                         <ul class="opened">
                             <li class="gender clearfix">
@@ -223,9 +236,16 @@
                                     <span :class="{active:nowSex=='女'}" @click="cutSex('女')">女</span>
                                 </span>
                             </li>
+                            <!-- <li class="guojia clearfix">
+                                <span class="fl">国家</span>
+                                <a href="javascript:void(0)" class="fr">
+                                    <input type="text" readonly="readonly" value="中国">
+                                </a>
+                            </li> -->
                             <li class="diqu clearfix" v-cloak v-show="nowSortIndex!==2">
                                 <span class="fl">地区</span>
                                 <a href="javascript:void(0)" class="fr">
+                                    <!-- <input type="text" readonly="readonly" value="北京"> -->
                                     <input type="text" id='city-picker' />
                                 </a>
                             </li>
@@ -253,16 +273,22 @@
 
     </div>
 
+    <!-- -------------------------------------------------------------- -->
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- vue-js -->
     <script src="__STATIC__/js/vue.js"></script>
+    <!-- jquery-weui-js -->
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
+    <!-- my-js -->
     <script>
         $(function () {
             var GlobalHost = "http://meiliyue.caapa.org";
 
+            //页面宽高
             $(".options li").width($(".optionsWrap").width() / 6)
 
+            //vm
             let yaoyueIndexVm = new Vue({
                 el: "#indexPageApp",
                 data: {
@@ -270,23 +296,26 @@
 
                     user_id:"",
 
+                    //条件
                     nowOptionBtn: "allBtn",
                     optionsList: ["allBtn", "travelBtn", "foodBtn", "movieBtn", "singBtn", "sportBtn",
                         "otherBtn"
                     ],
 
+                    // addressFixed: false,
                     showSelect: false,
                     inviteList: [],
-                    nowPageIndex: 1,
+                    nowPageIndex: 1, //当前页码
                     isPlusing: false,
 
-                    selectedText: "辽宁", 
+                    selectedText: "辽宁", //目前 默认值 辽宁
 
+                    //筛选页面
                     sortList: ["最近发布", "近期约会", "离我最近"],
                     nowSortIndex: 0,
-                    nowSex: "全部", 
-                    nowProvince: null, 
-                    nowCity: null,
+                    nowSex: "全部", //当前性别： 全部 男 女
+                    nowProvince: null, //代码
+                    nowCity: null, //代码
                     onlyGift: false,
                     onlyVideo: false,
 
@@ -303,15 +332,19 @@
 
                     this.user_id=1;
 
+                    //监听scrollTop，改变筛选条样式
                     document.getElementsByClassName('dropRefresh')[0].addEventListener('scroll', this.handleAddress);
                     
+                    //下拉刷新 滚动加载
                     this.initPullToRefresh();
 
+                    //city picker
                     $("#city-picker").cityPicker({
                         title: "请选择地区",
                         showDistrict: false
                     });
 
+                    //先查session,把session的值放到data里
                     if (sessionStorage.getItem("inviIndexPage")) {
                         let inviIndexPageData = JSON.parse(sessionStorage.getItem("inviIndexPage"))
                         console.log(inviIndexPageData)
@@ -323,6 +356,7 @@
                         this.nowProvince = inviIndexPageData.nowProvince
                         this.nowCity = inviIndexPageData.nowCity
 
+                        //滚动位置
                         setTimeout(function () {
                             document.getElementsByClassName('dropRefresh')[0].scrollTop =inviIndexPageData.pageScrollTop
                         }, 0);
@@ -333,6 +367,7 @@
                     this.getInviteList()
                 },
                 methods: {
+                    //获取邀约列表
                     getInviteList({
                         longitude = "41",
                         latitude = "123",
@@ -343,6 +378,7 @@
                         auth_video = null,
                         page = 1,
                     } = {}, isScroll) {
+                        //
                         let _self = this
                         let postDataTemp = {
                             longitude: longitude,
@@ -362,7 +398,7 @@
                             dataType: "json",
                             success: function (result) {
                                 console.log(result.data)
-                                if (isScroll) {
+                                if (isScroll) { //是滚动
                                     _self.inviteList = _self.inviteList.concat(result.data)
                                     
                                     if(result.data.length !== 0){
@@ -379,6 +415,7 @@
                                 }
 
 
+                                //下拉刷新done  滚动加载done
                                 $(".dropRefresh").pullToRefreshDone();
                                 _self.isLoading = false;
 
@@ -388,6 +425,7 @@
                             }
                         })
                     },
+                    //点击option
                     handleOption(btnStr) {
                         this.nowOptionBtn = btnStr
                         let type = this.optionsList.indexOf(btnStr)
@@ -395,33 +433,44 @@
                             type: type !== 0 ? type : null
                         })
                     },
+                    //默认img
                     defaultImg(event) {
                         event.target.src = "__STATIC__/images/icon/tx.png"
                     },
+                    //获取地理位置
+                    getLocalAddress() {
+
+                    },
+                    //打开邀约详情页面
                     openInviteDetail(item) {
                         console.log(item)
                         this.savePageToSession()
 
                         let options={
-                            originUserId:this.user_id,
-                            toUserId:item.user_id,
+                            originUserId:this.user_id,//从谁那 去的邀约详情
+                            toUserId:item.user_id,//去 谁的 邀约详情
                             detailId:item.id,
                         };
 
                         let toUrl=GlobalHost + "/index.php/mobile/invite/detail.html?options="+JSON.stringify(options);
+                        // toUrl="detail.html?options="+JSON.stringify(options);//测试用
                         console.log(toUrl)
 
                         window.location.href = toUrl;
                     },
+                    //控制筛选栏的位置
                     handleAddress() {
                         let scrollTemp = document.getElementsByClassName('dropRefresh')[0].scrollTop;
                         let wrapHeight=document.getElementsByClassName('dropRefresh')[0].clientHeight;
                         let ulHeight=document.getElementsByClassName('mInviteList')[0].clientHeight;
+                        // console.log(scrollTemp)
+                        //控制top的位置
                         if (scrollTemp >= 100) {
                             $(".inviteTopWrap").css("margin-top","-206px");
                         } else {
                             $(".inviteTopWrap").css("margin-top","0");
                         }
+                        //滚动加载
                         console.log(scrollTemp + wrapHeight - ulHeight)
                         if (scrollTemp > 0 && scrollTemp + wrapHeight - ulHeight>=85) {
                             if(!this.isLoading){
@@ -453,9 +502,13 @@
                             }
                         }
                     },
+                    //弹出筛选页面
                     opentSelect() {
+                        //this.resetSelectPage()
+
                         this.showSelect = true
                     },
+                    //初始化筛选页面
                     resetSelectPage() {
                         this.nowSortIndex = 0
                         this.nowSex = "全部"
@@ -463,6 +516,7 @@
                         this.onlyVideo = false
                         $("#city-picker").val("")
                     },
+                    //取消筛选条件，加载所有数据
                     cancelSelectList() {
                         if (this.selectedText !== "辽宁") {
                             let type = this.type
@@ -470,6 +524,7 @@
                                 type: type
                             })
 
+                            // document.getElementsByClassName('indexPage')[0].scrollTop = 0
                             $(".indexPage").animate({
                                 scrollTop: 0
                             }, 300)
@@ -481,14 +536,17 @@
                             this.resetSelectPage()
                         }
                     },
-                    openReleaseInvite(type) { 
+                    //跳到邀约发布页面
+                    openReleaseInvite(type) { //type number 邀约类型
                         this.savePageToSession()
 
                         $(".plus")[0].click();
 
                         window.location.href = GlobalHost + "/index.php/mobile/invite/add/type/" + type + ".html"
                     },
+                    //跳转页面之前，保存页面信息
                     savePageToSession() {
+                        //key : inviIndexPage
                         let pageData = {
                             nowOptionBtn: this.nowOptionBtn,
                             inviteList: this.inviteList,
@@ -499,10 +557,14 @@
 
                             pageScrollTop: document.getElementsByClassName('dropRefresh')[0].scrollTop
                         }
+                        // console.log(pageData)
+
                         sessionStorage.setItem('inviIndexPage', JSON.stringify(pageData))
                     },
+                    //下拉刷新 滚动加载
                     initPullToRefresh(){
                         let _self = this;
+                        //下拉刷新
                         $(".dropRefresh").pullToRefresh(function () {
                             console.log("刷新")
                             let sex
@@ -527,6 +589,34 @@
                                 auth_video: _self.onlyVideo ? "1" : "0"
                             })
                         })
+                        // 滑动加载
+                        // $(".dropRefresh").infinite().on("infinite", function () {
+                        //     if (_self.isLoading) return;
+                        //     _self.isLoading = true;
+                        //     console.log("滑动加载")
+                        //     let sex
+                        //     switch (_self.nowSex) {
+                        //         case "全部":
+                        //             sex = null
+                        //             break;
+                        //         case "男":
+                        //             sex = "1"
+                        //             break;
+                        //         case "女":
+                        //             sex = "2"
+                        //             break;
+                        //         default:
+                        //             break;
+                        //     }
+                        //     _self.getInviteList({
+                        //         type: _self.type,
+                        //         sex: sex,
+                        //         province: _self.nowProvince,
+                        //         city: _self.nowCity,
+                        //         auth_video: _self.onlyVideo ? "1" : "0",
+                        //         page: _self.nowPageIndex + 1
+                        //     }, true)
+                        // });
                     },
                     gotoInviteDetail(item){
                         this.savePageToSession();
@@ -539,6 +629,7 @@
                         let head_pic=GlobalHost+item.head_pic;
                         console.log(head_pic)
                         this.getVideoUrl(toUserId,function(url){
+                            // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
                             self.showVideo({
                                 user_id:toUserId,
                                 head_pic:head_pic,
@@ -546,7 +637,7 @@
                             });
                         });
                     },
-                    getVideoUrl(user_id,callback){
+                    getVideoUrl(user_id,callback){//user_id
                         $.ajax({
                             type: "POST",
                             url: GlobalHost+"/index.php/Api/user/getAuthVideoUrl",
@@ -556,7 +647,7 @@
                             dataType: "json",
                             success: function (result) {
                                 console.log(result)
-                                if(result.code==200){
+                                if(result.code==200){//测试用
                                     let url=GlobalHost+result.data.video_url;
                                     callback(url);
                                 }
@@ -598,6 +689,7 @@
                             </div>
                         `);
 
+                        //点击关闭事件
                         $fullScreen.find(".closeFullScreen").click(function(){
                             $fullScreen.remove();
                         });
@@ -605,17 +697,27 @@
                         $("body").append($fullScreen);
                     },
 
+                    //筛选页面-----------------------------------------------
+
+                    //切换排序
                     cutSort(index) {
                         this.nowSortIndex = index
                     },
+                    //切换性别
                     cutSex(sexStr) {
                         this.nowSex = sexStr
                     },
+                    //关闭筛选页面
                     closeSelect() {
                         this.showSelect = false
                     },
+                    //点击筛选页面的 搜索
                     searchBySelect() {
+
+                        //关闭筛选页面
                         this.closeSelect()
+
+                        //更新list
                         let type = this.type
                         let sex
                         switch (this.nowSex) {
@@ -642,10 +744,12 @@
                         let onlyGift = this.onlyGift
                         let onlyVideo = this.onlyVideo
 
+                        //回到顶部
                         $(".indexPage").animate({
                             scrollTop: 0
                         }, 300)
 
+                        //更新筛选条件text
                         let cityTemp = $("#city-picker").val()
                         console.log(cityTemp)
                         let textTemp = cityTemp + (this.nowSex == "全部" ? "" : " " + this.nowSex) + (
@@ -654,6 +758,7 @@
                         console.log(textTemp)
 
                         this.selectedText = textTemp.trim() == "" ? "辽宁" : textTemp
+                        //更新筛选条件text end
 
                         this.getInviteList({
                             type: type,
