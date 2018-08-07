@@ -48,6 +48,7 @@
                         <span class="fl">时间</span>
                         <span class="fr">
                             <input type="text" id='datetime-picker' />
+                            <!-- <input id='datetime-picker' type="text" data-toggle='date' /> -->
                         </span>
                     </li>
                 </ul>
@@ -89,23 +90,38 @@
                                 <span class="textCount">0</span>/200</span>
                         </div>
 
-                        <!-- <div>
+                        <div>
+                            <!-- 添加图片 -->
                             <div class="add">
-                                <a href="javascript:;">
-                                    <input type="file" readonly="readonly"> 添加
-                                </a>
+                                <ul class="showPicUl">
+                                    <a href="javascript:void(0)" class="addPic">
+                                        <img src="__STATIC__/images/icon/add.png">
+                                    </a>
+                                </ul>
                             </div>
-                            <div class="speak">
+                            <!-- 添加录音 -->
+                            <div class="speak" style="display: none;">
                                 <a href="javascript:;">
                                     按住说话
                                 </a>
                             </div>
-                        </div> -->
+                        </div>
 
                     </li>
                 </ul>
             </div>
         </form>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="confirmDelete" style="display: none;">
+        <p>
+            你尚未发布，确认删除？
+        </p>
+        <div class="confirmDelete-btngroup">
+            <a href="javascript:void(0)" class="cancelDelete">取消</a>
+            <a href="javascript:void(0)" class="delete">确定</a>
+        </div>
     </div>
 
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
@@ -151,7 +167,7 @@
                 ReleInvite._user_sex = 2;
                 //type
                 var ulrStr = window.location.href;
-                ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html" //测试用
+                // ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html" //测试用
                 var strTemp = ulrStr.split("/add/type/")[1];
                 ReleInvite._type = Number(strTemp.substr(0, strTemp.length - 5));
 
@@ -165,7 +181,14 @@
                         ReleInvite._theme = obj.title
                     }
                 });
-                $(".inviteTheme").html(ReleInvite._theme);
+                if(ReleInvite._theme=="其他"){
+                    $(".inviteTheme").html(`
+                        <input id="mTitle" type="text" placeholder="输入主题"/>
+                    `);
+                }else{
+                    $(".inviteTheme").html(ReleInvite._theme);
+                }
+                
                 //根据sex 修改"当然你买"
 
                 //
@@ -193,12 +216,82 @@
                     let count = vInnerHtml.length
                     document.getElementsByClassName('textCount')[0].innerHTML = count
                     if (count >= 200) {
-                        alert("最多输入200个字")
+                        ReleInvite.messageWin("最多输入200个字");
+                    }
+                }
+            },
+            messageWin:function(msg){
+                if($(".msgWrap").length==0){
+                    let $msgDiv=$(`
+                        <div class="msgWrap">
+                            <div class="msg">
+                                <p class="msgText">${msg}</p>
+                                <p class="msgCtrl">
+                                    <span class="closeMsg">确定</span>
+                                </p>
+                            </div>
+                        </div>
+                    `);
+                    //msg点击事件
+                    $msgDiv.find(".msgCtrl").click(function(){
+                        $msgDiv.remove();
+                    });
+                    $("body").append($msgDiv);
+                }
+            },
+            addPic:function(){
+                if ($(".edit-pic-item").length >= 9) {
+                    // alert("最多上传9张图片")
+                    ReleInvite.messageWin(最多上传9张图片);
+                    return;
+                }
+                var $liTemp = $(
+                    `
+                    <li class="edit-pic-item">
+                        <input class="albumInput" type="file" accept="image/*" style="display: none">
+                        <img class="showPic" src="__STATIC__/images/icon/tx.png">
+                        <a href="javascript:void(0)" class="edit-closePic"></a>
+                    </li>
+                    `
+                );
+
+                //取消图片
+                $liTemp.find("a.edit-closePic").click(function () {
+                    ReleInvite.cancelPic(this)
+                })
+
+                $liTemp.find(".albumInput").change(function () {
+                    readURL(this);
+                })
+                //触发点击input file
+                $liTemp.find(".albumInput")[0].click()
+
+                function readURL(input) {
+                    console.log(input)
+                    console.log(input.files)
+                    if (input.files && input.files[0]) {
+                        console.log(input.files[0])
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            console.log(e)
+                            $liTemp.find('.showPic').attr('src', e.target.result);
+
+                            //添加图片成功 后
+                            $(".showPicUl").prepend($liTemp)
+                        }
+                        reader.readAsDataURL(input.files[0]);
                     }
                 }
             },
             //发布邀约
             publishInvit: function () {
+                console.log(4)
+                //主题
+                let title=$("#mTitle").length!==0?$("#mTitle").val().trim():$(".inviteTheme").text();
+                if(title===""){
+                    ReleInvite.messageWin("请填写主题");
+                    return;
+                }
                 //省市code
                 let cityCodes = $("#city-picker").attr("data-codes")
                 let provinceCode, cityCode
@@ -208,8 +301,17 @@
                 }
 
                 if (!cityCodes || $("#datetime-picker").val() == "") {
-                    // alter("地点和时间请填写完整")
-                    return
+                    // alter("地点和时间请填写完整");
+                    ReleInvite.messageWin("地点和时间请填写完整");
+                    return;
+                }
+
+                //file
+                let fileArr=[];
+                if($(".albumInput").length!==0){
+                    $(".albumInput").each(function(){
+                        fileArr.push(this.files[0]);
+                    });
                 }
 
                 // let posiArr=ReleInvite.getLocalPosition();
@@ -230,6 +332,8 @@
                     is_jiesong: $("#myCheck").is(':checked') ? "1" : "0",
                     width_confidante: $("#myCheck1").is(':checked') ? "1" : "0",
 
+                    file:fileArr,//支持多张图片
+
                     // longitude: posiArr[0], 
                     // latitude: posiArr[1], 
                     longitude: "", 
@@ -237,24 +341,47 @@
                 }
 
                 console.log(postData)
+                ReleInvite.openLoading();
 
+                // setTimeout(function(){
+                //     ReleInvite.closeLoading("发布成功");
+                // },500)
                 // return //测试用
-
+                
                 $.ajax({
                     type: "POST",
                     url: GlobalHost+"/index.php/Api/Dynamics/add",
                     data: postData,
                     dataType: "json",
+                    processData : false,
+					contentType : false,
                     success: function (result) {
                         console.log(result)
-
                         if (result.msg == "操作成功") {
-                            //关闭 返回
-                            window.history.back(-1)
+                            
+                            ReleInvite.closeLoading("发布成功",function(){
+                                //关闭 返回
+                                window.history.back(-1)
+                            });
                         }
-
                     }
                 })
+            },
+            openLoading:function(){
+                if($(".msgWrap").length==0){
+                    $("body").append($('<div class="msgWrap"></div>'));
+                }
+                if($(".mLoading").length==0){
+                    $("body").append($('<div class="mLoading">处理中...</div>'));
+                }
+            },
+            closeLoading:function(resultMsg,callback){
+                $(".mLoading").html(resultMsg);
+                setTimeout(function(){
+                    $(".mLoadingMask")
+                    .add($(".mLoading")).remove();
+                    callback();
+                },500);
             },
             //获取当前地理位置
             // getLocalPosition:function(){//返回一个数组， 经 纬度
@@ -285,6 +412,25 @@
 
             //     return position;
             // },
+            cancelPic: function (el) { //pic的a标签
+                if($(".msgWrap").length==0){
+                    $('body').append($('<div class="msgWrap"></div>'));
+                }
+                $('.confirmDelete').show()
+
+                //取消删除
+                $(".cancelDelete").click(function () {
+                    $('.msgWrap').remove()
+                    $('.confirmDelete').hide()
+                })
+                //确认删除
+                $(".delete").click(function () {
+                    $('.msgWrap').remove()
+                    $('.confirmDelete').hide()
+
+                    $(el).closest('.edit-pic-item').remove()
+                })
+            },
             eventsBind: function () {
                 //取消发布
                 $(".cancle").click(function () {
@@ -299,7 +445,11 @@
                 //发布邀约
                 $(".publish").click(function () {
                     ReleInvite.publishInvit()
-                })
+                });
+                //添加图片
+                $(".addPic").click(function(){
+                    ReleInvite.addPic();
+                });
             },
             init: function () {
                 ReleInvite.getPageData()
@@ -309,7 +459,7 @@
                     title: "请选择地区",
                     showDistrict: false
                 });
-                $("#datetime-picker").datetimePicker();
+                $("#datetime-picker").calendar();
 
                 //
                 ReleInvite.eventsBind()
