@@ -131,4 +131,44 @@ class Invite extends Base {
 
         response_success($info);
     }
+
+    // 感兴趣、报名
+    public function enroll(){
+        $user_id = I('user_id');
+        $invite_id = I('invite_id');
+
+        $invite = M('invite')->where('id', $invite_id)->find();
+        if(empty($invite) || $invite['status'] != 2){
+            response_error('', '邀约不存在或已被删除');
+        }
+
+        if($user_id == $invite['user_id']){
+            response_error('', '自己不能报名');
+        }
+
+
+        $data = array(
+            'invite_id' => $invite_id,
+            'user_id' => $user_id,
+            'add_time' => time(),
+        );
+        if(M('invite_enroll')->insert($data)){
+            response_success('', '操作成功');
+        } else {
+            response_error('', '操作失败');
+        }
+    }
+
+    // 获取邀约报名的人
+    public function getEnroll(){
+        $invite_id = I('invite_id');
+
+        $lists = M('invite_enroll')->alias('ie')
+            ->join('users u', 'u.user_id=ie.user_id', 'left')
+            ->where('invite_id', $invite_id)
+            ->field('u.user_id, nickname, head_pic, sex, age')
+            ->select();
+
+        response_success($lists);
+    }
 }
