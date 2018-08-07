@@ -359,7 +359,7 @@
         user_id: "",
         toUserId: "",
         isSelf: false,
-        attentionStatus: 0, //userid对touserid的关注状态
+        attentionStatus: 0,  //userid对touserid的关注状态
 
         updateDom: function (data) {
 
@@ -378,8 +378,8 @@
             }
             $(".avatar-content .sexAge").addClass(sexClass)
             $(".avatar-content .sexAge .age").html(data.baseinfo.age)
-            // $(".edit-personal-constellation").html()//星座
-            if (Homepage.isSelf) { //我的主页
+            // $(".edit-personal-constellation").html() //星座
+            if (Homepage.isSelf) {  //我的主页
                 $(".editHomePage").show()
                 $("footer").hide()
                 $(".haveAttend").hide()
@@ -401,16 +401,16 @@
                 $("footer").show()
                 $(".haveAttend").show()
                 switch (data.baseinfo.attention) {
-                    case 0: //未关注
+                    case 0:   //未关注
                         $(".haveAttend").find(".attend").show()
                         break;
-                    case 1: //已关注
+                    case 1:   //已关注
                         $(".haveAttend").find(".attended").show()
                         break;
-                    case 2: //已被关注
+                    case 2:  //已被关注
                         $(".haveAttend").find(".attend").show()
                         break;
-                    case 3: //相互关注
+                    case 3:   //相互关注
                         $(".haveAttend").find(".attendAll").show()
                         break;
                     default:
@@ -674,7 +674,7 @@
             .add($(".mLoading")).remove();
         },
         //上传普通/精华图片
-        uploadPic:function({type,file},callback){//type类型：1普通，2精华/file文件
+        uploadPic:function({type,file},callback){ //type类型：1普通，2精华/file文件
             var postData={
                 user_id:Homepage.user_id,
                 type:type,
@@ -701,7 +701,7 @@
             //     alert("最多上传9张图片")
             //     return
             // }
-            var type=Number($(el).attr("data-type"));//1普通图片，2精华图片
+            var type=Number($(el).attr("data-type")); //1普通图片，2精华图片
             var $liTemp = $(
                 `
                     <li class="edit-pic-item">
@@ -882,7 +882,6 @@
                     var valueStr = document.getElementById("profInput").value
                     if (valueStr !== "") {
                         Homepage.modifyData("profession", valueStr, function () {
-                            console.log(555)
                             $(".modifyDataWrap").hide()
                             $(".modifyDataWrap").html("")
 
@@ -1364,7 +1363,7 @@
                     }, 3000)
 
                     $(".attend").hide()
-                    if (Homepage.attentionStatus == 2) { //本来就是已被关注了
+                    if (Homepage.attentionStatus == 2) {  //本来就是已被关注了
                         $(".attendAll").show()
 
                         Homepage.attentionStatus = 3
@@ -1436,7 +1435,7 @@
     });
     //时间戳转日期时间
     function stampToDate(timestamp) {
-        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
         Y = date.getFullYear() + '-';
         M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
         D = (date.getDate()<10?"0"+date.getDate():date.getDate()) + ' ';
@@ -1446,26 +1445,26 @@
         return Y+M+D+h+m;
     }
     //时间戳转文字
-    function stampToStr (stamp) {//传来的stamp十位数
+    function stampToStr (stamp) {   //传来的stamp十位数
         if (!stamp) return '';
 
         let nowStamp=Math.round((new Date().getTime())/1000);
         let howLong=nowStamp-stamp;
 
-        if(howLong<60){//1分钟内
+        if(howLong<60){  //1分钟内
             return "1分钟内";
-        }else if(howLong<3600){//1小时内，显示分钟数
+        }else if(howLong<3600){  //1小时内，显示分钟数
             let minutes=Math.floor(howLong/60);
             return minutes+"分钟前";
-        }else if(howLong<43200){//12小时内，显示小时数
+        }else if(howLong<43200){  //12小时内，显示小时数
             let hours=Math.floor(howLong/3600);
             return hours+"小时前";
-        }else if(howLong>=43200&&howLong<86400){//大于12小时，小于24小时
+        }else if(howLong>=43200&&howLong<86400){  //大于12小时，小于24小时
             let dateStr=stampToDate(stamp);
             console.log(dateStr)
             let minStr=dateStr.substr(dateStr.length-5);
             return "昨天 "+minStr;
-        }else if(howLong>86400){//大于24小时，直接显示时间
+        }else if(howLong>86400){  //大于24小时，直接显示时间
             return stampToDate(stamp);
         }
     }

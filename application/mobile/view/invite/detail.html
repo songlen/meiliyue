@@ -100,12 +100,12 @@
 
 
             //处理ulr参数func,返回obj
-            getUrlOptions: function (urlOptionStr) { //urlOptionStr = window.location.search
+            getUrlOptions: function (urlOptionStr) {  //urlOptionStr = window.location.search
                 var requestObj = {}
                 var str = urlOptionStr.substr(1);
                 var strs = str.split("&");
                 for (var i = 0; i < strs.length; i++) {
-                    requestObj[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]) //unescape?
+                    requestObj[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1])  //unescape?
                 }
                 return requestObj
             },

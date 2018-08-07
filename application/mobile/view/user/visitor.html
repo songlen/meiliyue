@@ -112,7 +112,7 @@
                         if(item.auth_video_status==1){
                             $li.find(".videoStatus").show();
                         }
-                        // $li.find(".videoStatus").show();//测试用
+                        // $li.find(".videoStatus").show(); //测试用
                         //sex
                         if(item.sex==1){
                             $li.find(".sexAge").addClass("male");
@@ -140,7 +140,7 @@
                 // Visitors.eventsBindAfter();
 
             },
-            getVideoUrl:function(user_id,callback){//user_id
+            getVideoUrl:function(user_id,callback){ //user_id
                 $.ajax({
                     type: "POST",
                     url: GlobalHost+"/index.php/Api/user/getAuthVideoUrl",
@@ -150,7 +150,7 @@
                     dataType: "json",
                     success: function (result) {
                         console.log(result)
-                        if(result.code==200){//测试用
+                        if(result.code==200){ //测试用
                             let url=GlobalHost+result.data.video_url;
                             callback(url);
                         }
@@ -314,7 +314,7 @@
         });
         //时间戳转日期时间
         function stampToDate(timestamp) {
-            var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
             Y = date.getFullYear() + '-';
             M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
             D = (date.getDate()<10?"0"+date.getDate():date.getDate()) + ' ';
@@ -324,26 +324,26 @@
             return Y+M+D+h+m;
         }
         //时间戳转文字
-        function stampToStr (stamp) {//传来的stamp十位数
+        function stampToStr (stamp) { //传来的stamp十位数
             if (!stamp) return '';
 
             let nowStamp=Math.round((new Date().getTime())/1000);
             let howLong=nowStamp-stamp;
 
-            if(howLong<60){//1分钟内
+            if(howLong<60){  //1分钟内
                 return "1分钟内";
-            }else if(howLong<3600){//1小时内，显示分钟数
+            }else if(howLong<3600){  //1小时内，显示分钟数
                 let minutes=Math.floor(howLong/60);
                 return minutes+"分钟前";
-            }else if(howLong<43200){//12小时内，显示小时数
+            }else if(howLong<43200){  //12小时内，显示小时数
                 let hours=Math.floor(howLong/3600);
                 return hours+"小时前";
-            }else if(howLong>=43200&&howLong<86400){//大于12小时，小于24小时
+            }else if(howLong>=43200&&howLong<86400){  //大于12小时，小于24小时
                 let dateStr=stampToDate(stamp);
                 console.log(dateStr)
                 let minStr=dateStr.substr(dateStr.length-5);
                 return "昨天 "+minStr;
-            }else if(howLong>86400){//大于24小时，直接显示时间
+            }else if(howLong>86400){  //大于24小时，直接显示时间
                 return stampToDate(stamp);
             }
         }

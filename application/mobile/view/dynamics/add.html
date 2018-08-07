@@ -67,7 +67,7 @@
             _type:"",
 
             //取消照片
-            cancelPic: function (el) { //pic的a标签
+            cancelPic: function (el) {  //pic的a标签
                 if($(".mask").length==0){
                     $('body').append($('<div class="mask"></div>'));
                 }
@@ -211,8 +211,8 @@
                         var lat = position.coords.latitude;
                         var lon = position.coords.longitude;
                         // alert(lat, lon)
-                        // //var map = new BMap.Map("container");   // 创建Map实例
-                        // var point = new BMap.Point(lon, lat); // 创建点坐标
+                        // //var map = new BMap.Map("container");    // 创建Map实例
+                        // var point = new BMap.Point(lon, lat);   // 创建点坐标
                         // var gc = new BMap.Geocoder();
                         // gc.getLocation(point, function (rs) {
                         //     var addComp = rs.addressComponents;
@@ -244,7 +244,7 @@
 
                 var postData = {
                     user_id: Edit._user_id,
-                    type: Edit._type, //1文字2图片3视频
+                    type: Edit._type,  //1文字2图片3视频
                     content: contentStr,
                     image:null,
                     video:null,
@@ -259,10 +259,10 @@
                     switch (Edit._type) {
                         case 1:
                             break;
-                        case 2://图片
+                        case 2:  //图片
                             postData.image=filesArr;
                             break;
-                        case 3://视频
+                        case 3:  //视频
                             postData.video=filesArr;
                             break;
                         default:
@@ -425,11 +425,11 @@
             getPageInfo:function(){
                 //_user_id
                 // Edit._user_id={$info['user_id']};
-                Edit._user_id=1;//测试用
+                Edit._user_id=1;  //测试用
 
                 //_type
                 let url=window.location.href;
-                // url="http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html";//测试用
+                // url="http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html";  //测试用
                 let strTemp=url.split("/add/type/")[1];
                 let type=strTemp.substr(0,strTemp.length-5);
                 Edit._type=Number(type);
@@ -447,7 +447,7 @@
                 })
                 //添加图片
                 $(".addPic").click(function () {
-                    if(Edit._type==3){//添加视频
+                    if(Edit._type==3){  //添加视频
                         Edit.addVideo();
                     }else{
                         Edit.addPic();
