@@ -33,7 +33,7 @@ class Index extends Base {
         $age_r = I('age_r');
         $height_l = I('height_l');
         $height_r = I('height_r');
-        $income = I('income');
+        // $income = I('income');
         $satisfactory_parts = I('satisfactory_parts');
 
         $field = 'user_id, head_pic, nickname, active_time, longitude, latitude';
@@ -49,22 +49,22 @@ class Index extends Base {
             $where['longitude'] = array('BETWEEN', array($around['minLongitude'], $around['maxLongitude']));
             $where['latitude'] = array('BETWEEN', array($around['minLatitude'], $around['maxLatitude']));
             // sql 计算距离 并按距离排序
-            $field .= ", ROUND(6378.138*2*ASIN(SQRT(POW(SIN(($user_latitude*PI()/180-latitude*PI()/180)/2),2)+COS($user_latitude*PI()/180)*COS(latitude*PI()/180)*POW(SIN(($user_longitude*PI()/180-longitude*PI()/180)/2),2))), 2) AS distince";
-            $order = 'distince asc';
+            $field .= ", ROUND(6378.138*2*ASIN(SQRT(POW(SIN(($user_latitude*PI()/180-latitude*PI()/180)/2),2)+COS($user_latitude*PI()/180)*COS(latitude*PI()/180)*POW(SIN(($user_longitude*PI()/180-longitude*PI()/180)/2),2))), 2) AS distance";
+            $order = 'distance asc';
         }
         // 条件
         $where = array(
         	'is_lock' => '0',
             'is_line' => '1',
         );
+        if($sex) $where['sex'] = $sex;
         if($province && $city){
             $where['province'] = $province;
             $where['city'] = $city;
         }
         if($auth_video_status) $where['auth_video_status'] = $auth_video_status;
-        if($auth_video_status) $where['auth_video_status'] = $auth_video_status;
-        if($age_l && $age_r) $where['age'] = array(array('age', '>=', $age_l), array('age', '<', $age_r));
-        if($height_l && $height_r) $where['height'] = array(array('height', '>=', $height_l), array('height', '<', $age_r));
+        if($age_l && $age_r) $where['age'] = array(array('>=', $age_l), array('<', $age_r));
+        if($height_l && $height_r) $where['height'] = array(array('>=', $height_l), array('<', $height_r));
         
         // 满意部位
         if($satisfactory_parts) $where['satisfactory_parts'] = $satisfactory_parts;
@@ -75,7 +75,6 @@ class Index extends Base {
             ->limit($limit_start, 18)
             ->order($order)
             ->select();
-
 
         response_success($users);
     }

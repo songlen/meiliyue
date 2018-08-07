@@ -35,8 +35,12 @@ class User extends Base {
      * @param type 1 关注 2 粉丝
      * @return [type] [description]
      */
-    public function attentionFans(){
+    public function attention(){
        
+        return $this->fetch();
+    }
+
+    public function fans(){
         return $this->fetch();
     }
 
