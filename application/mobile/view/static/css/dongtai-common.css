@@ -519,6 +519,7 @@ footer li a {
 .edit-pic .edit-pic-item {
     font-size: 0;
     margin: 0.05rem;
+    overflow: hidden;
 }
 
 .edit-pic .edit-pic-item .edit-closePic {

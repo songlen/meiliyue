@@ -128,6 +128,7 @@
     <!-- jquery-weui-js -->
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/swiper.min.js"></script>
     <!-- my-js -->
     <script type="text/javascript">
         var GlobalHost = "http://meiliyue.caapa.org";
@@ -159,6 +160,7 @@
             _theme: "",
 
 
+
             //获取页面基本参数
             getPageData: function () {
                 //user_id sex
@@ -174,7 +176,7 @@
 
                 //type
                 var ulrStr = window.location.href;
-                // ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html"   //测试用
+                // ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html" //测试用
                 var strTemp = ulrStr.split("/add/type/")[1];
                 ReleInvite._type = Number(strTemp.substr(0, strTemp.length - 5));
 
@@ -260,7 +262,7 @@
                     `
                     <li class="edit-pic-item">
                         <input class="albumInput" type="file" accept="image/*" style="display: none">
-                        <img class="showPic" src="__STATIC__/images/icon/tx.png">
+                        <img class="showPic" data-index=${$(".edit-pic-item").length} src="__STATIC__/images/icon/tx.png">
                         <a href="javascript:void(0)" class="edit-closePic"></a>
                     </li>
                     `
@@ -443,6 +445,19 @@
                     $(el).closest('.edit-pic-item').remove()
                 })
             },
+            showFullPic: function (el) {
+                let index = $(el).attr("data-index");
+                let srcArr = [];
+                $(".showPicUl .showPic").each(function () {
+                    srcArr.unshift($(this).attr("src"));
+                });
+                console.log(srcArr)
+                let swiper = $.photoBrowser({
+                    items: srcArr
+                });
+                // swiper.open(index);
+                swiper.open();
+            },
             eventsBind: function () {
                 //取消发布
                 $(".cancle").click(function () {
@@ -461,6 +476,11 @@
                 //添加图片
                 $(".addPic").click(function () {
                     ReleInvite.addPic();
+                });
+                //点击图片显示大图
+                $(".showPicUl").delegate(".showPic", "click", function () {
+                    console.log($(this).attr("src"))
+                    ReleInvite.showFullPic(this);
                 });
             },
             init: function () {

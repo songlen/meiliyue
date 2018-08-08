@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>发动态</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- jquery-weui-css -->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
+    <link rel="stylesheet" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
     <!-- 表情插件-css -->
     <link rel="stylesheet" href="__STATIC__/js/js-plugins/jQuery-emoji-master20160321/lib/css/jquery.mCustomScrollbar.min.css">
     <link rel="stylesheet" href="__STATIC__/js/js-plugins/jQuery-emoji-master20160321/dist/css/jquery.emoji.css">
@@ -57,6 +60,9 @@
 
     <!-- ------------------------------------ -->
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- jquery-weui-js -->
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/swiper.min.js"></script>
     <!-- 表情插件-js -->
     <script src="__STATIC__/js/js-plugins/jQuery-emoji-master20160321/lib/script/jquery.mCustomScrollbar.min.js"></script>
     <script src="__STATIC__/js/js-plugins/jQuery-emoji-master20160321/dist/js/jquery.emoji.min.js"></script>
@@ -293,7 +299,7 @@
                     `
                         <li class="edit-pic-item">
                             <input class="albumInput" type="file" accept="image/*" style="display: none">
-                            <img class="showPic" src="__STATIC__/images/icon/tx.png">
+                            <img class="showPic" data-index=${$(".edit-pic-item").length} src="__STATIC__/images/icon/tx.png">
                             <a href="javascript:void(0)" class="edit-closePic"></a>
                         </li>
                     `
@@ -326,6 +332,19 @@
                         reader.readAsDataURL(input.files[0]);
                     }
                 }
+            },
+            showFullPic: function (el) {
+                let index = $(el).attr("data-index");
+                let srcArr = [];
+                $(".showPicUl .showPic").each(function () {
+                    srcArr.unshift($(this).attr("src"));
+                });
+                console.log(srcArr)
+                let swiper = $.photoBrowser({
+                    items: srcArr
+                });
+                // swiper.open(index);
+                swiper.open();
             },
             //添加视频
             addVideo: function () {
@@ -437,7 +456,7 @@
 
                 //_type
                 let url = window.location.href;
-                //url="http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html";  //测试用
+                // url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html"; //测试用
                 let strTemp = url.split("/add/type/")[1];
                 let type = strTemp.substr(0, strTemp.length - 5);
                 Edit._type = Number(type);
@@ -461,6 +480,11 @@
                         Edit.addPic();
                     }
                 })
+                //点击图片显示大图
+                $(".showPicUl").delegate("img.showPic", "click", function () {
+                    console.log($(this).attr("src"))
+                    Edit.showFullPic(this);
+                });
             },
             init: function () {
                 //得到userid 和 type
