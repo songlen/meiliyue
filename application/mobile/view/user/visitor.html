@@ -247,6 +247,25 @@
                     }
                 });
             },
+            savePageData: function () {
+                //key : visitorPage
+                let pageData = {
+                    nowList: Visitors.curList,
+                    visiList: {
+                        haveLoad: Visitors.visiList.haveLoad,
+                        page: Visitors.visiList.page
+                    },
+                    seenList: {
+                        haveLoad: Visitors.seenList.haveLoad,
+                        page: Visitors.seenList.page
+                    },
+
+                    scrollTop: document.getElementsByClassName('comments-content')[0].scrollTop
+                }
+                console.log(pageData)
+
+                sessionStorage.setItem('visitorPage', JSON.stringify(pageData));
+            },
             initPullToRefresh: function () {
                 //下拉刷新
                 $(".comments-content").pullToRefresh(function () {
@@ -262,7 +281,8 @@
                 });
                 //点击li去他人的主页
                 $(".visitors-page .comments-content>ul").delegate("li", "click", function () {
-                    //save?
+                    //savePageData()
+                    Visitors.savePageData();
 
                     let user_id = Visitors.user_id;
                     let toUserId = $(this).attr("data-toUserId");
@@ -318,6 +338,38 @@
                 }
 
                 Visitors.initPullToRefresh();
+
+                //从session拿到之前页面数据
+                if (sessionStorage.getItem("visitorPage")) {
+                    let pageData = JSON.parse(sessionStorage.getItem("visitorPage"))
+                    console.log(pageData)
+
+                    Visitors.curList = pageData.curList;
+                    Visitors.visiList = {
+                        // haveLoad: pageData.visiList.haveLoad,
+                        // page: pageData.visiList.page
+                        haveLoad: false,
+                        page: 1
+                    };
+                    Visitors.seenList = {
+                        // haveLoad: pageData.seenList.haveLoad,
+                        // page: pageData.seenList.page
+                        haveLoad: false,
+                        page: 1
+                    };
+
+                    //tab页
+                    $("header .title a").removeClass("actived");
+                    $("[data-list='" + Visitors.curList + "']").addClass("actived").
+                    $("." + Visitors.curList).show().siblings("ul").hide();
+
+                    //滚动位置
+                    setTimeout(function () {
+                        document.getElementsByClassName('comments-content')[0].scrollTop = pageData.scrollTop;
+                    }, 0);
+                }
+
+
 
                 Visitors.getListData();
 

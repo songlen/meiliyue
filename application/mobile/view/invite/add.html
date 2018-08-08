@@ -22,7 +22,24 @@
         <span class="fr publish">发布</span>
     </header>
     <div class="main-content invitation">
-        <form action="">
+        <form id="releInviteForm" action="http://meiliyue.caapa.org/index.php/Api/invite/add" method="post" enctype="multipart/form-data">
+            <!-- 隐藏域 -->
+            <input type="text" value="" name="user_id" style="display: none;">
+            <input type="text" value="" name="user_sex" style="display: none;">
+            <input type="text" value="" name="type" style="display: none;">
+            <input type="text" value="" name="title" style="display: none;">
+            <input type="text" value="" name="description" style="display: none;">
+            <input type="text" value="" name="time" style="display: none;">
+            <input type="text" value="" name="province" style="display: none;">
+            <input type="text" value="" name="city" style="display: none;">
+            <input type="text" value="" name="place" style="display: none;">
+            <input type="text" value="" name="object" style="display: none;">
+            <input type="text" value="" name="pay" style="display: none;">
+            <input type="text" value="" name="is_jiesong" style="display: none;">
+            <input type="text" value="" name="with_confidante" style="display: none;">
+            <input type="text" value="" name="longitude" style="display: none;">
+            <input type="text" value="" name="latitude" style="display: none;">
+            <!-- 隐藏域 end -->
             <div class="theme items">
                 <ul>
                     <li class="clearfix title">
@@ -100,11 +117,11 @@
                                 </ul>
                             </div>
                             <!-- 添加录音 -->
-                            <div class="speak" style="display: none;">
+                            <!-- <div class="speak" style="display: none;">
                                 <a href="javascript:;">
                                     按住说话
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
 
                     </li>
@@ -128,6 +145,9 @@
     <!-- jquery-weui-js -->
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/swiper.min.js"></script>
+    <!-- jquery.form-js -->
+    <script src="__STATIC__/js/js-plugins/jquery.form.js"></script>
     <!-- my-js -->
     <script type="text/javascript">
         var GlobalHost = "http://meiliyue.caapa.org";
@@ -159,6 +179,7 @@
             _theme: "",
 
 
+
             //获取页面基本参数
             getPageData: function () {
                 //user_id sex
@@ -168,13 +189,14 @@
                     ReleInvite.user_id = Number(mUserInfo.user_id);
                     ReleInvite._user_sex = Number(mUserInfo.sex);
                 } else {
-                    ReleInvite.user_id = 1; //测试用
+                    ReleInvite._user_id = 1; //测试用
                     ReleInvite._user_sex = 2; //测试用
                 }
+                console.log(ReleInvite._user_id)
 
                 //type
                 var ulrStr = window.location.href;
-                // ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html"   //测试用
+                // ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html" //测试用
                 var strTemp = ulrStr.split("/add/type/")[1];
                 ReleInvite._type = Number(strTemp.substr(0, strTemp.length - 5));
 
@@ -191,8 +213,8 @@
                 if (ReleInvite._theme == "其他") {
                     $(".inviteTheme").html(
                         `
-                        <input id="mTitle" type="text" placeholder="输入主题"/>
-                    `
+                            <input id="mTitle" type="text" placeholder="输入主题"/>
+                        `
                     );
                 } else {
                     $(".inviteTheme").html(ReleInvite._theme);
@@ -253,14 +275,14 @@
             addPic: function () {
                 if ($(".edit-pic-item").length >= 9) {
                     // alert("最多上传9张图片")
-                    ReleInvite.messageWin(最多上传9张图片);
+                    ReleInvite.messageWin("最多上传9张图片");
                     return;
                 }
                 var $liTemp = $(
                     `
                     <li class="edit-pic-item">
-                        <input class="albumInput" type="file" accept="image/*" style="display: none">
-                        <img class="showPic" src="__STATIC__/images/icon/tx.png">
+                        <input class="albumInput" name="file[]" type="file" accept="image/*" style="display: none">
+                        <img class="showPic" data-index=${$(".edit-pic-item").length} src="__STATIC__/images/icon/tx.png">
                         <a href="javascript:void(0)" class="edit-closePic"></a>
                     </li>
                     `
@@ -278,13 +300,13 @@
                 $liTemp.find(".albumInput")[0].click()
 
                 function readURL(input) {
-                    console.log(input)
-                    console.log(input.files)
+                    // console.log(input)
+                    // console.log(input.files)
                     if (input.files && input.files[0]) {
                         console.log(input.files[0])
                         var reader = new FileReader();
                         reader.onload = function (e) {
-                            console.log(e)
+                            // console.log(e)
                             $liTemp.find('.showPic').attr('src', e.target.result);
 
                             //添加图片成功 后
@@ -296,7 +318,6 @@
             },
             //发布邀约
             publishInvit: function () {
-                console.log(4)
                 //主题
                 let title = $("#mTitle").length !== 0 ? $("#mTitle").val().trim() : $(".inviteTheme").text();
                 if (title === "") {
@@ -318,65 +339,94 @@
                 }
 
                 //file
-                let fileArr = [];
-                if ($(".albumInput").length !== 0) {
-                    $(".albumInput").each(function () {
-                        fileArr.push(this.files[0]);
-                    });
-                }
+                // let fileArr = [];
+                // if ($(".albumInput").length !== 0) {
+                //     $(".albumInput").each(function () {
+                //         fileArr.push(this.files[0]);
+                //         // fileArr.push(new FormData(this));
+                //     });
+                // }
 
                 // let posiArr=ReleInvite.getLocalPosition();
+                // console.log(fileArr)
+                // var postData = {
+                //     user_id: ReleInvite._user_id,
+                //     user_sex: ReleInvite._user_sex,
+                //     type: ReleInvite._type,
+                //     title: ReleInvite._theme,
 
-                var postData = {
-                    user_id: ReleInvite._user_id,
-                    user_sex: ReleInvite._user_sex,
-                    type: ReleInvite._type,
-                    title: ReleInvite._theme,
+                //     description: $("#descripTextarea").val().trim(),
+                //     time: $("#datetime-picker").val(),
+                //     province: provinceCode,
+                //     city: cityCode,
+                //     place: $(".detailPlace-inputWrap>input").val().trim(),
+                //     object: $(".otherSide .choose .active").text(),
+                //     pay: $(".payMoney .choose .active").text(),
+                //     is_jiesong: $("#myCheck").is(':checked') ? 1 : 0,
+                //     with_confidante: $("#myCheck1").is(':checked') ? 1 : 0,
 
-                    description: $("#descripTextarea").val().trim(),
-                    time: $("#datetime-picker").val(),
-                    province: provinceCode,
-                    city: cityCode,
-                    place: $(".detailPlace-inputWrap>input").val().trim(),
-                    object: $(".otherSide .choose .active").text(),
-                    pay: $(".payMoney .choose .active").text(),
-                    is_jiesong: $("#myCheck").is(':checked') ? "1" : "0",
-                    width_confidante: $("#myCheck1").is(':checked') ? "1" : "0",
+                //     file: fileArr, //支持多张图片 //测试用
+                //     // file:[],
 
-                    file: fileArr, //支持多张图片
+                //     // longitude: posiArr[0], 
+                //     // latitude: posiArr[1], 
+                //     longitude: "",
+                //     latitude: "",
+                // }
 
-                    // longitude: posiArr[0], 
-                    // latitude: posiArr[1], 
-                    longitude: "",
-                    latitude: "",
-                }
+                // console.log(postData)
 
-                console.log(postData)
+                // $.ajax({
+                //     type: "POST",
+                //     url: GlobalHost + "/index.php/Api/invite/add",
+                //     data: postData,
+                //     dataType: "json",
+                //     cache: false,
+                //     processData: false,
+                //     contentType: false,
+                //     success: function (result) {
+                //         console.log(result)
+                //         if (result.msg == "操作成功") {
+
+                //             ReleInvite.closeLoading("发布成功", function () {
+                //                 //关闭 返回
+                //                 //window.history.back(-1)
+                //             });
+                //         }
+                //     }
+                // });
+
+
+                //jquery.form.js方法
+                $(":input[name='user_id']").val(ReleInvite._user_id);
+                $(":input[name='user_sex']").val(ReleInvite._user_sex);
+                $(":input[name='type']").val(ReleInvite._type);
+                $(":input[name='title']").val(ReleInvite._theme);
+                $(":input[name='description']").val($("#descripTextarea").val().trim());
+                $(":input[name='time']").val($("#datetime-picker").val());
+                $(":input[name='province']").val(provinceCode);
+                $(":input[name='city']").val(cityCode);
+                $(":input[name='place']").val($(".detailPlace-inputWrap>input").val().trim());
+                $(":input[name='object']").val($(".otherSide .choose .active").text());
+                $(":input[name='pay']").val($(".payMoney .choose .active").text());
+                $(":input[name='is_jiesong']").val($("#myCheck").is(':checked') ? 1 : 0);
+                $(":input[name='with_confidante']").val($("#myCheck1").is(':checked') ? 1 : 0);
+                $(":input[name='longitude']").val("");
+                $(":input[name='latitude']").val("");
+
+
                 ReleInvite.openLoading();
 
-                // setTimeout(function(){
-                //     ReleInvite.closeLoading("发布成功");
-                // },500)
-                // return //测试用
+                $("#releInviteForm").ajaxSubmit(function (result) {  
+                    console.log(result)                  
+                    if (result.msg == "操作成功") {
+                        ReleInvite.closeLoading("发布成功", function () {
+                            //关闭 返回
+                            window.history.back(-1);
+                        });
+                    }  
+                });
 
-                $.ajax({
-                    type: "POST",
-                    url: GlobalHost + "/index.php/Api/Dynamics/add",
-                    data: postData,
-                    dataType: "json",
-                    processData: false,
-                    contentType: false,
-                    success: function (result) {
-                        console.log(result)
-                        if (result.msg == "操作成功") {
-
-                            ReleInvite.closeLoading("发布成功", function () {
-                                //关闭 返回
-                                window.history.back(-1)
-                            });
-                        }
-                    }
-                })
             },
             openLoading: function () {
                 if ($(".msgWrap").length == 0) {
@@ -443,6 +493,19 @@
                     $(el).closest('.edit-pic-item').remove()
                 })
             },
+            showFullPic: function (el) {
+                let index = $(el).attr("data-index");
+                let srcArr = [];
+                $(".showPicUl .showPic").each(function () {
+                    srcArr.unshift($(this).attr("src"));
+                });
+                console.log(srcArr)
+                let swiper = $.photoBrowser({
+                    items: srcArr
+                });
+                // swiper.open(index);
+                swiper.open();
+            },
             eventsBind: function () {
                 //取消发布
                 $(".cancle").click(function () {
@@ -462,6 +525,11 @@
                 $(".addPic").click(function () {
                     ReleInvite.addPic();
                 });
+                //点击图片显示大图
+                $(".showPicUl").delegate(".showPic", "click", function () {
+                    console.log($(this).attr("src"))
+                    ReleInvite.showFullPic(this);
+                });
             },
             init: function () {
                 ReleInvite.getPageData()
@@ -471,7 +539,9 @@
                     title: "请选择地区",
                     showDistrict: false
                 });
-                $("#datetime-picker").calendar();
+                $("#datetime-picker").calendar({
+                    dateFormat: "yyyy-mm-dd"
+                });
 
                 //
                 ReleInvite.eventsBind()

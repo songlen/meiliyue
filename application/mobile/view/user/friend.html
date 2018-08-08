@@ -163,6 +163,28 @@
                 page: 1,
             },
 
+
+            savePageData: function () {
+                //key : friendPage
+                let pageData = {
+                    curList: Friends.curList,
+                    attentionList: {
+                        haveLoad: Friends.attentionList.haveLoad,
+                        type: Friends.attentionList.type,
+                        page: Friends.attentionList.page
+                    },
+                    fansList: {
+                        haveLoad: Friends.fansList.haveLoad,
+                        type: Friends.fansList.type,
+                        page: Friends.fansList.page
+                    },
+
+                    //scrollTop: document.getElementsByClassName('pageWrap')[0].scrollTop
+                };
+                console.log(pageData)
+
+                sessionStorage.setItem('friendPage', JSON.stringify(pageData))
+            },
             updateDom: function (data) {
                 if (data && data.length !== 0) {
                     data.forEach(function (item, index) {
@@ -395,7 +417,7 @@
                 //点击 头像 进入他人的个人主页
                 $(".attentionUl")
                     .add($(".fansUl")).delegate(".friendItem-avatar", "click", function () {
-                        //save?
+                        //savePageData()
 
                         let user_id = Friends.user_id;
                         let toUserId = $(this).closest("li").attr("data-toUserId");
@@ -414,6 +436,47 @@
                 }
 
                 Friends.initPullToRefresh();
+
+                //从session获取之前的页面数据
+                if (sessionStorage.getItem("friendPage")) {
+                    let pageData = JSON.parse(sessionStorage.getItem("friendPage"))
+                    console.log(pageData)
+
+                    Friends.curList = pageData.curList;
+                    Friends.attentionList = {
+                        haveLoad: false,
+                        page: 1
+                    };
+                    Friends.fansList = {
+                        haveLoad: false,
+                        page: 1
+                    };
+
+                    //tab页
+                    $(".friends-tabcut li").removeClass("actived");
+                    $(".tabs").hide();
+                    switch (Friends.curList) {
+                        case "":
+                            $(".friends-tabcut .friends").addClass("actived");
+                            $(".friends-tab").show();
+                            break;
+                        case "attentionList":
+                            $(".friends-tabcut .attention").addClass("actived");
+                            $(".attention-tab").show();
+                        case "fansList":
+                            $(".friends-tabcut .fans").addClass("actived");
+                            $(".fans-tab").show();
+                        default:
+                            break;
+                    }
+                    // $("[data-list='" + Visitors.curList + "']").addClass("actived").
+
+                    //滚动位置
+                    // setTimeout(function () {
+                    //     document.getElementsByClassName('comments-content')[0].scrollTop = pageData.scrollTop;
+                    // }, 0);
+                }
+
 
                 Friends.getFriendsList();
 

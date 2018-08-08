@@ -326,6 +326,15 @@
 
                 $("body").append($fullScreen);
             },
+            savePageData: function () {
+                //key : commentPage
+                let pageData = {
+                    scrollTop: document.getElementsByClassName('comments-content')[0].scrollTop
+                }
+                console.log(pageData)
+
+                sessionStorage.setItem('commentPage', JSON.stringify(pageData));
+            },
             openLoading: function () {
                 if ($(".mLoadingMask").length == 0) {
                     $("body").append($('<div class="mLoadingMask"></div>'));
@@ -354,7 +363,8 @@
                 });
                 //去 动态详情
                 $(".dongtai-detail").click(function () {
-                    //save?
+                    //savePageData
+                    Comments.savePageData();
 
                     let dynamicId = $(".commentsReply-content").attr("data-dynamicId");
                     window.location.href = GlobalHost + "/index.php/mobile/dynamics/detail/id/" +
@@ -385,6 +395,12 @@
                 } else {
                     Comments.user_id = 1; //测试用
                 }
+
+                // //
+                // if(){
+
+                // }
+
 
                 Comments.initPullToRefresh();
 
