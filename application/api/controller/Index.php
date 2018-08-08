@@ -58,7 +58,7 @@ class Index extends Base {
             'is_line' => '1',
         );
         if($sex) $where['sex'] = $sex;
-        if($province && $city){
+        if($province && $city && $order_type=='1'){
             $where['province'] = $province;
             $where['city'] = $city;
         }
