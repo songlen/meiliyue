@@ -31,9 +31,12 @@ class Base extends Controller {
     protected function requestToLog(){
         $pathinfo = $this->request->pathinfo();
         $method = $this->request->method();
-        $param = $this->request->param();
+        $param = $this->request->param(true);
 
         $data = "\r\n".date('Y-m-d H:i:s')." ".$pathinfo." method: {$method} \r\n param: ".var_export($param, true);
-        file_put_contents('runtime/log/request.log', $data, FILE_APPEND);
+
+        $logPath = ROOT_PATH.'/runtime/log/'.date('Ymd').'/requestlog.txt';
+
+        file_put_contents($logPath, $data, FILE_APPEND);
     }
 }
