@@ -33,7 +33,10 @@
         </div>
 
         <div class="personalInformation">
-            <p class="contentTitle">个人信息&nbsp;<span class="curCount">0</span>/<span class="sumCount">5</span></p>
+            <p class="contentTitle">个人信息&nbsp;
+                <span class="curCount">0</span>/
+                <span class="sumCount">5</span>
+            </p>
             <ul>
                 <li class="editItem">
                     <div>
@@ -79,7 +82,10 @@
         </div>
 
         <div class="friendsInformation">
-            <p class="contentTitle">交友信息&nbsp;<span class="curCount">0</span>/<span class="sumCount">5</span></p>
+            <p class="contentTitle">交友信息&nbsp;
+                <span class="curCount">0</span>/
+                <span class="sumCount">5</span>
+            </p>
             <ul>
                 <li class="editItem">
                     <div>
@@ -135,7 +141,10 @@
         </div>
 
         <div class="emotionalView">
-            <p class="contentTitle">情感观&nbsp;<span class="curCount">0</span>/<span class="sumCount">5</span></p>
+            <p class="contentTitle">情感观&nbsp;
+                <span class="curCount">0</span>/
+                <span class="sumCount">5</span>
+            </p>
             <ul>
                 <li class="editItem">
                     <div>
@@ -173,7 +182,10 @@
         </div>
 
         <div class="hobbys">
-            <p class="contentTitle">兴趣爱好&nbsp;<span class="curCount">0</span>/<span class="sumCount">5</span></p>
+            <p class="contentTitle">兴趣爱好&nbsp;
+                <span class="curCount">0</span>/
+                <span class="sumCount">5</span>
+            </p>
             <ul>
                 <li class="editItem">
                     <div>
@@ -275,8 +287,8 @@
                     $(".income").html("填写").addClass("canChoose")
                 }
                 //常住地
-                data.baseinfo.permanent_province = "辽宁省";   //测试用
-                data.baseinfo.permanent_city = "沈阳市";  //测试用
+                data.baseinfo.permanent_province = "辽宁省"; //测试用
+                data.baseinfo.permanent_city = "沈阳市"; //测试用
                 if (data.baseinfo.permanent_province && data.baseinfo.permanent_province !== "" && data.baseinfo
                     .permanent_city && data.baseinfo.permanent_city !== "") {
                     EditHome.curPermanent_province = data.baseinfo.permanent_province
@@ -1010,7 +1022,7 @@
                     showDistrict: false,
                     onClose: function (event) {
                         console.log(event)
-                        var newValue = event.displayValue   //是个数组，第一是省，第二是市
+                        var newValue = event.displayValue //是个数组，第一是省，第二是市
                         //修改 常住地
                         var codesArr = $("#city-picker").attr("data-codes").split(",")
                         if (codesArr.length !== 0) {
@@ -1056,8 +1068,9 @@
                 $(".hobbys .contentTitle .sumCount").html(sumCountHobbys)
                 $(".hobbys .contentTitle .curCount").html(curCountHobbys)
                 //最上面的进度条
-                let percent=((curCountPerson+curCountFriends+curCountView+curCountHobbys)/(sumCountPerson+sumCountFriends+sumCountView+sumCountHobbys))*100+"%";
-                $(".bloodGroove .blood").css("width",percent)
+                let percent = ((curCountPerson + curCountFriends + curCountView + curCountHobbys) / (
+                    sumCountPerson + sumCountFriends + sumCountView + sumCountHobbys)) * 100 + "%";
+                $(".bloodGroove .blood").css("width", percent)
             },
             eventsBind: function () {
                 //点击back
@@ -1069,7 +1082,13 @@
             },
             init: function () {
                 //得到user_id
-                EditHome.user_id = 1
+                if (sessionStorage.getItem("mUserInfo")) {
+                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                    console.log(mUserInfo)
+                    EditHome.user_id = Number(mUserInfo.user_id);
+                } else {
+                    EditHome.user_id = 1; //测试用
+                }
 
                 //获取用户信息
                 EditHome.getDataUpdateDom()

@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>别人的个人主页</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/base.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/wode-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
@@ -29,11 +29,11 @@
             <div class="edit-personal-avatar">
                 <div style="position: relative;">
                     <div class="avatar-pic">
-                        <img src="__STATIC__/images/icon/tx.png">
+                        <img src="../static/images/icon/tx.png">
                     </div>
                     <span class="videoStatus" style="display: none;"></span>
                 </div>
-                
+
                 <div class="avatar-content">
                     <span class="sexAge">
                         <i class="sex"></i>
@@ -46,7 +46,7 @@
                         <span class="attendAll" style="display: none;">相互关注</span>
                     </span>
                     <p>
-                        <img class="areaPic" src="__STATIC__/images/icon/定位-2.png">
+                        <img class="areaPic" src="../static/images/icon/定位-2.png">
                         <span class="edit-personal-area">北京</span>&nbsp;
                         <span class="distance">2km</span>
                     </p>
@@ -60,7 +60,7 @@
                 </div>
                 <ul class="myPhotos">
                     <!-- <li class="edit-pic-item">
-                        <img src="__STATIC__/images/icon/tx.png">
+                        <img src="../static/images/icon/tx.png">
                     </li> -->
                 </ul>
 
@@ -94,12 +94,12 @@
 
                 <ul class="myTalkList">
                     <!-- <li class="myTalk-item">
-                        <img src="__STATIC__/images/icon/tx.png">
+                        <img src="../static/images/icon/tx.png">
                     </li> -->
                 </ul>
 
                 <a href="javascript:void(0)" class="more">
-                    <img src="__STATIC__/images/icon/back.png">
+                    <img src="../static/images/icon/back.png">
                 </a>
             </div>
 
@@ -111,28 +111,28 @@
                 <ul>
                     <li class="myApprove-item">
                         <div class="myApprove-pic">
-                            <img src="__STATIC__/images/icon/tx.png">
+                            <img src="../static/images/icon/tx.png">
                         </div>
                         <p class="myApprove-phone">手机号未认证</p>
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
                     </li>
                     <li class="myApprove-item">
                         <div class="myApprove-pic">
-                            <img src="__STATIC__/images/icon/tx.png">
+                            <img src="../static/images/icon/tx.png">
                         </div>
                         <p class="myApprove-video">形象视频未认证</p>
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
                     </li>
                     <li class="myApprove-item">
                         <div class="myApprove-pic">
-                            <img src="__STATIC__/images/icon/tx.png">
+                            <img src="../static/images/icon/tx.png">
                         </div>
                         <p class="myApprove-identity">身份未认证</p>
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
                     </li>
                     <!-- <li class="myApprove-item">
                         <div class="myApprove-pic">
-                            <img src="__STATIC__/images/icon/tx.png">
+                            <img src="../static/images/icon/tx.png">
                         </div>
                         <p class="myApprove-job">职业未认证</p>
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
@@ -277,7 +277,7 @@
         </div>
 
         <footer style="display: none;">
-            <img src="__STATIC__/images/icon/消息.png" alt="">
+            <img src="../static/images/icon/消息.png" alt="">
             <span class="sayHi">打个招呼</span>
         </footer>
     </div>
@@ -302,9 +302,25 @@
         _mTimer: null,
         user_id: "",
         toUserId: "",
-        head_pic:"",
-        attentionStatus: 0,  //userid对touserid的关注状态
+        head_pic: "",
+        attentionStatus: 0, //userid对touserid的关注状态
 
+
+        getUserId: function () {
+            //得到user_id
+            if (sessionStorage.getItem("mUserInfo")) {
+                let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                console.log(mUserInfo)
+                Homepage.user_id = mUserInfo.user_id;
+            } else {
+                Homepage.user_id = 1; //测试用
+            }
+            //获取toUserId
+            var ulrStr = window.location.href;
+            //ulrStr = "http://meiliyue.caapa.org/index.php/mobile/user/homePage/user_id/1/toUserId/2.html" //测试用
+            var strTemp = ulrStr.split("/toUserId/")[1];
+            Homepage.toUserId = Number(strTemp.substr(0, strTemp.length - 5));
+        },
         updateDom: function (data) {
 
             var sexClass = data.baseinfo.sex == "1" ? "male" : "female"
@@ -316,9 +332,9 @@
             $(".homepage>.allWrap>header .title").html(data.baseinfo.nickname)
             if (data.baseinfo.head_pic && data.baseinfo.head_pic !== "") {
                 $(".avatar-pic img").attr("src", GlobalHost + data.baseinfo.head_pic);
-                Homepage.head_pic=data.baseinfo.head_pic;
+                Homepage.head_pic = data.baseinfo.head_pic;
             }
-            if(data.baseinfo.auth_video_status===1){
+            if (data.baseinfo.auth_video_status === 1) {
                 $(".edit-personal-avatar .videoStatus").show();
             }
             // $(".edit-personal-avatar .videoStatus").show();//测试用
@@ -326,16 +342,16 @@
             $(".avatar-content .sexAge .age").html(data.baseinfo.age)
             // $(".edit-personal-constellation").html()//星座
             switch (data.baseinfo.attention) {
-                case 0:  //未关注
+                case 0: //未关注
                     $(".haveAttend").find(".attend").show()
                     break;
-                case 1:  //已关注
+                case 1: //已关注
                     $(".haveAttend").find(".attended").show()
                     break;
-                case 2:  //已被关注
+                case 2: //已被关注
                     $(".haveAttend").find(".attend").show()
                     break;
-                case 3:  //相互关注
+                case 3: //相互关注
                     $(".haveAttend").find(".attendAll").show()
                     break;
                 default:
@@ -389,31 +405,37 @@
             })
 
             if (data.baseinfo.mobile_validated == 0) {
-                $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src", "__STATIC__/images/icon/微信@2x.png")
+                $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
+                    "../static/images/icon/微信@2x.png")
                 $(".myApprove-phone").html("手机号未认证")
                 $(".myApprove-phone+.approveBtn").show()
             } else {
-                $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src", "__STATIC__/images/icon/微信@2x.png")
+                $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
+                    "../static/images/icon/微信@2x.png")
                 $(".myApprove-phone").html("手机号已认证")
                 $(".myApprove-phone+.approveBtn").hide()
             }
 
             if (data.baseinfo.auth_video_status == 0) {
-                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/视频未认证@2x.png")
+                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
+                    "../static/images/icon/视频未认证@2x.png")
                 $(".myApprove-video").html("形象视频未认证")
                 $(".myApprove-video+.approveBtn").show()
             } else {
-                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/小视频@2x.png")
+                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
+                    "../static/images/icon/小视频@2x.png")
                 $(".myApprove-video").html("形象视频已认证")
                 $(".myApprove-video+.approveBtn").hide()
             }
 
             if (data.baseinfo.auth_identity_status == 0) {
-                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/身份未认真@2x.png")
+                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
+                    "../static/images/icon/身份未认真@2x.png")
                 $(".myApprove-identity").html("身份未认证")
                 $(".myApprove-identity+.approveBtn").show()
             } else {
-                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/身份未认真@2x.png")
+                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
+                    "../static/images/icon/身份未认真@2x.png")
                 $(".myApprove-identity").html("身份已认证")
                 $(".myApprove-identity+.approveBtn").hide()
             }
@@ -488,7 +510,7 @@
 
             //最近活跃时间
             if (data.baseinfo.active_time && data.baseinfo.active_time !== "") {
-                let timeStr=stampToStr(data.baseinfo.active_time);
+                let timeStr = stampToStr(data.baseinfo.active_time);
                 $(".active_time").html(timeStr);
             } else {
                 // $(".active_time").html("填写")
@@ -564,21 +586,26 @@
         savePageSession: function () {
             //
         },
-        showSignature:function(){
+        showSignature: function () {
             console.log($(".signature").html())
             $(".signatureDialogContent").html($(".signature").html())
 
             $(".m_shade").show()
             $(".signatureDialog").show()
 
-            $(".signatureDialogBtn").click(function(){
+            $(".signatureDialogBtn").click(function () {
                 $(".m_shade").hide()
                 $(".signatureDialog").hide()
             })
         },
-        showVideo:function({user_id,head_pic,src}){
-            console.log(user_id,head_pic,src)
-            let $fullScreen=$(`
+        showVideo: function ({
+            user_id,
+            head_pic,
+            src
+        }) {
+            console.log(user_id, head_pic, src)
+            let $fullScreen = $(
+                `
                 <div class="fullScreen">
                     <div class="videoHeader">
                         <div class="closeFullScreen"></div>
@@ -609,28 +636,29 @@
                         </div>
                     </div>
                 </div>
-            `);
+            `
+            );
 
             //点击关闭事件
-            $fullScreen.find(".closeFullScreen").click(function(){
+            $fullScreen.find(".closeFullScreen").click(function () {
                 $fullScreen.remove();
             });
-            
+
             $("body").append($fullScreen);
         },
         //user_id
-        getVideoUrl:function(user_id,callback){
+        getVideoUrl: function (user_id, callback) {
             $.ajax({
                 type: "POST",
-                url: GlobalHost+"/index.php/Api/user/getAuthVideoUrl",
+                url: GlobalHost + "/index.php/Api/user/getAuthVideoUrl",
                 data: {
-                    user_id:user_id
+                    user_id: user_id
                 },
                 dataType: "json",
                 success: function (result) {
                     console.log(result)
-                    if(result.code==200){
-                        let url=GlobalHost+result.data.video_url;
+                    if (result.code == 200) {
+                        let url = GlobalHost + result.data.video_url;
                         callback(url);
                     }
                 }
@@ -693,7 +721,7 @@
                     }, 3000)
 
                     $(".attend").hide()
-                    if (Homepage.attentionStatus == 2) {  //本来就是已被关注了
+                    if (Homepage.attentionStatus == 2) { //本来就是已被关注了
                         $(".attendAll").show()
 
                         Homepage.attentionStatus = 3
@@ -725,25 +753,25 @@
             //点击 “关注” 系列 end
 
             //查看个性签名
-            $(".signatureItem").click(function(){
+            $(".signatureItem").click(function () {
                 Homepage.showSignature();
             });
             //点击视频认证
-            $(".edit-personal-avatar").delegate(".videoStatus","click",function(){
-                Homepage.getVideoUrl(Homepage.toUserId,function(url){
+            $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
+                Homepage.getVideoUrl(Homepage.toUserId, function (url) {
                     // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
                     Homepage.showVideo({
-                        user_id:Homepage.toUserId,
-                        head_pic:GlobalHost+Homepage.head_pic,
-                        src:url
+                        user_id: Homepage.toUserId,
+                        head_pic: GlobalHost + Homepage.head_pic,
+                        src: url
                     });
                 });
             });
         },
         init: function () {
-            //得到user_id
-            Homepage.user_id = 2
-            Homepage.toUserId = 1
+            //获取user_id
+            Homepage.getUserId();
+
             //获取用户信息
             Homepage.getDataUpdateDom()
         }
@@ -752,37 +780,37 @@
         Homepage.init()
     });
     //时间戳转日期时间
-    ;function stampToDate(timestamp) {
-        var date = new Date(timestamp * 1000);  //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    function stampToDate(timestamp) {
+        var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
         Y = date.getFullYear() + '-';
-        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-        D = (date.getDate()<10?"0"+date.getDate():date.getDate()) + ' ';
-        h = (date.getHours()<10?"0"+date.getHours():date.getHours()) + ':';
-        m = (date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes());
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+        D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + ' ';
+        h = (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ':';
+        m = (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
         // s = date.getSeconds();
-        return Y+M+D+h+m;
+        return Y + M + D + h + m;
     }
     //时间戳转文字
-    ;function stampToStr (stamp) {  //传来的stamp十位数
+    function stampToStr(stamp) { //传来的stamp十位数
         if (!stamp) return '';
 
-        let nowStamp=Math.round((new Date().getTime())/1000);
-        let howLong=nowStamp-stamp;
+        let nowStamp = Math.round((new Date().getTime()) / 1000);
+        let howLong = nowStamp - stamp;
 
-        if(howLong<60){  //1分钟内
+        if (howLong < 60) { //1分钟内
             return "1分钟内";
-        }else if(howLong<3600){  //1小时内，显示分钟数
-            let minutes=Math.floor(howLong/60);
-            return minutes+"分钟前";
-        }else if(howLong<43200){  //12小时内，显示小时数
-            let hours=Math.floor(howLong/3600);
-            return hours+"小时前";
-        }else if(howLong>=43200&&howLong<86400){  //大于12小时，小于24小时
-            let dateStr=stampToDate(stamp);
+        } else if (howLong < 3600) { //1小时内，显示分钟数
+            let minutes = Math.floor(howLong / 60);
+            return minutes + "分钟前";
+        } else if (howLong < 43200) { //12小时内，显示小时数
+            let hours = Math.floor(howLong / 3600);
+            return hours + "小时前";
+        } else if (howLong >= 43200 && howLong < 86400) { //大于12小时，小于24小时
+            let dateStr = stampToDate(stamp);
             console.log(dateStr)
-            let minStr=dateStr.substr(dateStr.length-5);
-            return "昨天 "+minStr;
-        }else if(howLong>86400){  //大于24小时，直接显示时间
+            let minStr = dateStr.substr(dateStr.length - 5);
+            return "昨天 " + minStr;
+        } else if (howLong > 86400) { //大于24小时，直接显示时间
             return stampToDate(stamp);
         }
     }

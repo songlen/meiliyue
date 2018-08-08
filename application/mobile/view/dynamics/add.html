@@ -427,7 +427,13 @@
             getPageInfo: function () {
                 //_user_id
                 // Edit._user_id={$info['user_id']};
-                Edit._user_id = 1; //测试用
+                if (sessionStorage.getItem("mUserInfo")) {
+                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                    console.log(mUserInfo)
+                    Edit.user_id = Number(mUserInfo.user_id);
+                } else {
+                    Edit.user_id = 1; //测试用
+                }
 
                 //_type
                 let url = window.location.href;

@@ -52,14 +52,10 @@
             <a href="javascript:void(0)" class="back replyBack"></a>
             <div class="title">回复评论</div>
         </header>
-    
-        <div class="commentsReply-content"
-             data-dynamicId=""
-             data-type=""
-             data-userId=""
-             data-parentId=""
-             >
-            <p class="commentsReply-head"><span class="nickname">nickname</span>&nbsp;回复&nbsp;我:</p>
+
+        <div class="commentsReply-content" data-dynamicId="" data-type="" data-userId="" data-parentId="">
+            <p class="commentsReply-head">
+                <span class="nickname">nickname</span>&nbsp;回复&nbsp;我:</p>
             <p class="commentsReply-rep">content</p>
             <div class="commentsReply-text">
                 <textarea name="" id="replyText" placeholder="placeholder"></textarea>
@@ -71,7 +67,7 @@
                 </div>
                 <a href="javascript:void(0)" class="replyBtn">回复</a>
             </div>
-    
+
             <p class="dongtai-detail">动态详情</p>
         </div>
     </div>
@@ -82,21 +78,22 @@
     <script type="text/javascript" src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script>
         var GlobalHost = "http://meiliyue.caapa.org";
-        var Comments={
-            user_id:"",
+        var Comments = {
+            user_id: "",
 
-            isScroll:false,
-            loading:false,
-            page:1,
-            
-            updateDom:function(data){
-                if(data&&data.length!==0){
-                    if(!Comments.isScroll){
+            isScroll: false,
+            loading: false,
+            page: 1,
+
+            updateDom: function (data) {
+                if (data && data.length !== 0) {
+                    if (!Comments.isScroll) {
                         $(".commentsList").html("");
                     }
-                    data.forEach(function(item,index){
-                        let timeStr=stampToStr(item.add_time);
-                        let $li=$(`
+                    data.forEach(function (item, index) {
+                        let timeStr = stampToStr(item.add_time);
+                        let $li = $(
+                            `
                             <li class="comments-item" 
                                 data-dynamicId=${item.dynamic_id} 
                                 data-type=${item.type}
@@ -126,16 +123,17 @@
                                     <img src="__STATIC__/images/pic/pic2.png">
                                 </div>
                             </li>
-                        `);
+                        `
+                        );
                         //视频认证
-                        if(item.auth_video_status==1){
+                        if (item.auth_video_status == 1) {
                             $li.find(".videoStatus").show();
                         }
                         // $li.find(".videoStatus").show();//测试用
                         //sex
-                        if(item.sex==1){
+                        if (item.sex == 1) {
                             $li.find(".sexAge").addClass("male");
-                        }else{
+                        } else {
                             $li.find(".sexAge").addClass("female");
                         }
                         //图片?
@@ -144,40 +142,41 @@
                         $(".commentsList").append($li);
 
                         //是否显示 无评论图片
-                        if($(".commentsList li").length==0){
+                        if ($(".commentsList li").length == 0) {
                             $(".noComments").show();
                         }
                     });
                 }
 
                 //滚动加载的"正在加载"是否显示
-                if(document.getElementsByClassName("commentsList")[0].scrollHeight>($(".comments-page").height()-50)){
+                if (document.getElementsByClassName("commentsList")[0].scrollHeight > ($(".comments-page").height() -
+                        50)) {
                     $(".weui-loadmore").show();
                 }
-                
+
                 //eventsBind
                 Comments.eventsBind();
 
             },
             //获取list data
-            getListUpdateDom:function(){
+            getListUpdateDom: function () {
                 let getPage;
-                if(Comments.isScroll){
-                    getPage=Comments.page+1;
-                }else{
-                    getPage=1;
+                if (Comments.isScroll) {
+                    getPage = Comments.page + 1;
+                } else {
+                    getPage = 1;
                 }
-                var postData={
-                    user_id:Comments.user_id,
-                    page:getPage,
+                var postData = {
+                    user_id: Comments.user_id,
+                    page: getPage,
                 };
 
-                console.log("isScroll:"+Comments.isScroll)
+                console.log("isScroll:" + Comments.isScroll)
                 console.log(postData)
 
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost+"/index.php/Api/user/commentList",
+                    url: GlobalHost + "/index.php/Api/user/commentList",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -185,13 +184,13 @@
 
                         //result.data=result.data.concat(result.data).concat(result.data)
 
-                        if(Comments.isScroll){
-                            if(result.data.length!==0){
+                        if (Comments.isScroll) {
+                            if (result.data.length !== 0) {
                                 Comments.page++;
                             }
-                            Comments.isScroll=false;
+                            Comments.isScroll = false;
                         }
-                        
+
                         Comments.updateDom(result.data);
 
                         //下拉刷新done 滚动加载done
@@ -200,88 +199,93 @@
                     }
                 })
             },
-            initPullToRefresh:function(){
+            initPullToRefresh: function () {
                 //下拉刷新
                 $(".comments-content").pullToRefresh(function () {
                     Comments.getListUpdateDom()
                 });
                 //滚动加载
-                $(".comments-content").infinite().on("infinite", function() {
-                    Comments.isScroll=true;
+                $(".comments-content").infinite().on("infinite", function () {
+                    Comments.isScroll = true;
                     //原
-                    if(Comments.loading) return;
+                    if (Comments.loading) return;
                     Comments.loading = true;
                     Comments.getListUpdateDom()
                 });
             },
-            openCommentsReply:function(el){//点击的li里的.comments-text
+            openCommentsReply: function (el) { //点击的li里的.comments-text
                 //reset Dom
                 $("#replyText").val("");
-                $("#isWhisper").prop("checked",false);
-                let $li=$(el).closest(".comments-item");
+                $("#isWhisper").prop("checked", false);
+                let $li = $(el).closest(".comments-item");
                 console.log($li)
                 //updateDom
-                let nickname=$li.find(".listName").html();
+                let nickname = $li.find(".listName").html();
                 $(".nickname").html(nickname);
                 $(".commentsReply-rep").html($li.find(".comment-content").html());
-                $("#replyText").attr("placeholder","回复 "+nickname);
-                $(".commentsReply-content").attr("data-dynamicId",$li.attr("data-dynamicId"));
-                $(".commentsReply-content").attr("data-userId",$li.attr("data-userId"));
-                $(".commentsReply-content").attr("data-parentId",$li.attr("data-parentId"));
+                $("#replyText").attr("placeholder", "回复 " + nickname);
+                $(".commentsReply-content").attr("data-dynamicId", $li.attr("data-dynamicId"));
+                $(".commentsReply-content").attr("data-userId", $li.attr("data-userId"));
+                $(".commentsReply-content").attr("data-parentId", $li.attr("data-parentId"));
 
-                $(".commentsReply-page").css("top","0");
+                $(".commentsReply-page").css("top", "0");
             },
-            replyComment:function(){
-                let content=$("#replyText").val();
-                if(content.trim()==""){
+            replyComment: function () {
+                let content = $("#replyText").val();
+                if (content.trim() == "") {
                     return;
                 }
-                
-                let postData={
-                    reply_user_id:Number($(".commentsReply-content").attr("data-userId")),
-                    dynamic_id:Number($(".commentsReply-content").attr("data-dynamicId")),
-                    commentator_id:Number(Comments.user_id),
-                    parent_id:Number($(".commentsReply-content").attr("data-parentId")),
-                    content:content,
-                    private:$("#isWhisper").is(":checked")?1:null,
+
+                let postData = {
+                    reply_user_id: Number($(".commentsReply-content").attr("data-userId")),
+                    dynamic_id: Number($(".commentsReply-content").attr("data-dynamicId")),
+                    commentator_id: Number(Comments.user_id),
+                    parent_id: Number($(".commentsReply-content").attr("data-parentId")),
+                    content: content,
+                    private: $("#isWhisper").is(":checked") ? 1 : null,
                 };
                 console.log(postData)
-                
+
                 Comments.openLoading();
 
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost+"/index.php/Api/user/commentList",
+                    url: GlobalHost + "/index.php/Api/user/commentList",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
                         console.log(result)
-                        
+
                         Comments.closeLoading();
                         $(".replyBack")[0].click();
                     }
                 });
             },
-            getVideoUrl:function(user_id,callback){  //user_id
+            getVideoUrl: function (user_id, callback) { //user_id
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost+"/index.php/Api/user/getAuthVideoUrl",
+                    url: GlobalHost + "/index.php/Api/user/getAuthVideoUrl",
                     data: {
-                        user_id:user_id
+                        user_id: user_id
                     },
                     dataType: "json",
                     success: function (result) {
                         console.log(result)
-                        if(result.code==200){  //测试用
-                            let url=GlobalHost+result.data.video_url;
+                        if (result.code == 200) { //测试用
+                            let url = GlobalHost + result.data.video_url;
                             callback(url);
                         }
                     }
                 });
             },
-            showVideo:function({user_id,head_pic,src}){
-                console.log(user_id,head_pic,src)
-                let $fullScreen=$(`
+            showVideo: function ({
+                user_id,
+                head_pic,
+                src
+            }) {
+                console.log(user_id, head_pic, src)
+                let $fullScreen = $(
+                    `
                     <div class="fullScreen">
                         <div class="videoHeader">
                             <div class="closeFullScreen"></div>
@@ -312,66 +316,75 @@
                             </div>
                         </div>
                     </div>
-                `);
+                `
+                );
 
                 //点击关闭事件
-                $fullScreen.find(".closeFullScreen").click(function(){
+                $fullScreen.find(".closeFullScreen").click(function () {
                     $fullScreen.remove();
                 });
-                
+
                 $("body").append($fullScreen);
             },
-            openLoading:function(){
-                if($(".mLoadingMask").length==0){
+            openLoading: function () {
+                if ($(".mLoadingMask").length == 0) {
                     $("body").append($('<div class="mLoadingMask"></div>'));
                 }
-                if($(".mLoading").length==0){
+                if ($(".mLoading").length == 0) {
                     $("body").append($('<div class="mLoading"></div>'));
                 }
             },
-            closeLoading:function(){
+            closeLoading: function () {
                 $(".mLoadingMask")
                     .add($(".mLoading"))
                     .remove();
             },
-            eventsBind:function(){
+            eventsBind: function () {
                 //点击li
-                $(".commentsList").delegate(".comments-text","click",function(){
+                $(".commentsList").delegate(".comments-text", "click", function () {
                     Comments.openCommentsReply(this)
                 });
                 //点击回复评论的 返回
-                $(".replyBack").click(function(){
-                    $(".commentsReply-page").css("top","100%");
+                $(".replyBack").click(function () {
+                    $(".commentsReply-page").css("top", "100%");
                 });
                 //点击reply 回复
-                $(".replyBtn").click(function(){
+                $(".replyBtn").click(function () {
                     Comments.replyComment();
                 });
                 //去 动态详情
-                $(".dongtai-detail").click(function(){
+                $(".dongtai-detail").click(function () {
                     //save?
-                    
-                    let dynamicId=$(".commentsReply-content").attr("data-dynamicId");
-                    window.location.href = GlobalHost + "/index.php/mobile/dynamics/detail/id/"+dynamicId+".html";
+
+                    let dynamicId = $(".commentsReply-content").attr("data-dynamicId");
+                    window.location.href = GlobalHost + "/index.php/mobile/dynamics/detail/id/" +
+                        dynamicId + ".html";
                 });
                 //点击视频认证
-                $(".commentsList").delegate(".videoStatus","click",function(){
+                $(".commentsList").delegate(".videoStatus", "click", function () {
                     event.stopPropagation();
-                    let toUserId=Number($(this).closest(".comments-item").attr("data-userId"));
-                    let head_pic=$(this).closest(".comments-avatar").find("img").attr("src");
+                    let toUserId = Number($(this).closest(".comments-item").attr("data-userId"));
+                    let head_pic = $(this).closest(".comments-avatar").find("img").attr("src");
                     console.log(head_pic)
-                    Comments.getVideoUrl(toUserId,function(url){
+                    Comments.getVideoUrl(toUserId, function (url) {
                         // url="https://media.w3.org/2010/05/sintel/trailer.mp4";  //测试用
                         Comments.showVideo({
-                            user_id:toUserId,
-                            head_pic:head_pic,
-                            src:url
+                            user_id: toUserId,
+                            head_pic: head_pic,
+                            src: url
                         });
                     });
                 });
             },
-            init:function(){
-                Comments.user_id=1;
+            init: function () {
+                //user_id
+                if (sessionStorage.getItem("mUserInfo")) {
+                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                    console.log(mUserInfo)
+                    Comments.user_id = Number(mUserInfo.user_id);
+                } else {
+                    Comments.user_id = 1; //测试用
+                }
 
                 Comments.initPullToRefresh();
 
@@ -383,36 +396,36 @@
         });
         //时间戳转日期时间
         function stampToDate(timestamp) {
-            var date = new Date(timestamp * 1000);  //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
             Y = date.getFullYear() + '-';
-            M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-            D = (date.getDate()<10?"0"+date.getDate():date.getDate()) + ' ';
-            h = (date.getHours()<10?"0"+date.getHours():date.getHours()) + ':';
-            m = (date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes());
+            M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+            D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + ' ';
+            h = (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ':';
+            m = (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
             // s = date.getSeconds();
-            return Y+M+D+h+m;
+            return Y + M + D + h + m;
         }
         //时间戳转文字
-        function stampToStr (stamp) {  //传来的stamp十位数
+        function stampToStr(stamp) { //传来的stamp十位数
             if (!stamp) return '';
 
-            let nowStamp=Math.round((new Date().getTime())/1000);
-            let howLong=nowStamp-stamp;
+            let nowStamp = Math.round((new Date().getTime()) / 1000);
+            let howLong = nowStamp - stamp;
 
-            if(howLong<60){  //1分钟内
+            if (howLong < 60) { //1分钟内
                 return "1分钟内";
-            }else if(howLong<3600){  //1小时内，显示分钟数
-                let minutes=Math.floor(howLong/60);
-                return minutes+"分钟前";
-            }else if(howLong<43200){  //12小时内，显示小时数
-                let hours=Math.floor(howLong/3600);
-                return hours+"小时前";
-            }else if(howLong>=43200&&howLong<86400){  //大于12小时，小于24小时
-                let dateStr=stampToDate(stamp);
+            } else if (howLong < 3600) { //1小时内，显示分钟数
+                let minutes = Math.floor(howLong / 60);
+                return minutes + "分钟前";
+            } else if (howLong < 43200) { //12小时内，显示小时数
+                let hours = Math.floor(howLong / 3600);
+                return hours + "小时前";
+            } else if (howLong >= 43200 && howLong < 86400) { //大于12小时，小于24小时
+                let dateStr = stampToDate(stamp);
                 console.log(dateStr)
-                let minStr=dateStr.substr(dateStr.length-5);
-                return "昨天 "+minStr;
-            }else if(howLong>86400){  //大于24小时，直接显示时间
+                let minStr = dateStr.substr(dateStr.length - 5);
+                return "昨天 " + minStr;
+            } else if (howLong > 86400) { //大于24小时，直接显示时间
                 return stampToDate(stamp);
             }
         }

@@ -161,10 +161,17 @@
 
             //获取页面基本参数
             getPageData: function () {
-                //user_id
-                ReleInvite._user_id = 1;
-                //sex
-                ReleInvite._user_sex = 2;
+                //user_id sex
+                if (sessionStorage.getItem("mUserInfo")) {
+                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                    console.log(mUserInfo)
+                    ReleInvite.user_id = Number(mUserInfo.user_id);
+                    ReleInvite._user_sex = Number(mUserInfo.sex);
+                } else {
+                    ReleInvite.user_id = 1; //测试用
+                    ReleInvite._user_sex = 2; //测试用
+                }
+
                 //type
                 var ulrStr = window.location.href;
                 // ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html"   //测试用
@@ -174,21 +181,23 @@
                 //更新dom
                 ReleInvite.updateDom();
             },
-            updateDom:function(){
+            updateDom: function () {
                 //主题
                 ReleInvite.inviteList.forEach(function (obj) {
                     if (obj.type == ReleInvite._type) {
                         ReleInvite._theme = obj.title
                     }
                 });
-                if(ReleInvite._theme=="其他"){
-                    $(".inviteTheme").html(`
+                if (ReleInvite._theme == "其他") {
+                    $(".inviteTheme").html(
+                        `
                         <input id="mTitle" type="text" placeholder="输入主题"/>
-                    `);
-                }else{
+                    `
+                    );
+                } else {
                     $(".inviteTheme").html(ReleInvite._theme);
                 }
-                
+
                 //根据sex 修改"当然你买"
 
                 //
@@ -212,7 +221,7 @@
 
                 function limitCount(el) {
                     let vInnerHtml = el.value
-                    el.value = el.value.substring(0, 200)   //限制字数
+                    el.value = el.value.substring(0, 200) //限制字数
                     let count = vInnerHtml.length
                     document.getElementsByClassName('textCount')[0].innerHTML = count
                     if (count >= 200) {
@@ -220,9 +229,10 @@
                     }
                 }
             },
-            messageWin:function(msg){
-                if($(".msgWrap").length==0){
-                    let $msgDiv=$(`
+            messageWin: function (msg) {
+                if ($(".msgWrap").length == 0) {
+                    let $msgDiv = $(
+                        `
                         <div class="msgWrap">
                             <div class="msg">
                                 <p class="msgText">${msg}</p>
@@ -231,15 +241,16 @@
                                 </p>
                             </div>
                         </div>
-                    `);
+                    `
+                    );
                     //msg点击事件
-                    $msgDiv.find(".msgCtrl").click(function(){
+                    $msgDiv.find(".msgCtrl").click(function () {
                         $msgDiv.remove();
                     });
                     $("body").append($msgDiv);
                 }
             },
-            addPic:function(){
+            addPic: function () {
                 if ($(".edit-pic-item").length >= 9) {
                     // alert("最多上传9张图片")
                     ReleInvite.messageWin(最多上传9张图片);
@@ -287,8 +298,8 @@
             publishInvit: function () {
                 console.log(4)
                 //主题
-                let title=$("#mTitle").length!==0?$("#mTitle").val().trim():$(".inviteTheme").text();
-                if(title===""){
+                let title = $("#mTitle").length !== 0 ? $("#mTitle").val().trim() : $(".inviteTheme").text();
+                if (title === "") {
                     ReleInvite.messageWin("请填写主题");
                     return;
                 }
@@ -307,9 +318,9 @@
                 }
 
                 //file
-                let fileArr=[];
-                if($(".albumInput").length!==0){
-                    $(".albumInput").each(function(){
+                let fileArr = [];
+                if ($(".albumInput").length !== 0) {
+                    $(".albumInput").each(function () {
                         fileArr.push(this.files[0]);
                     });
                 }
@@ -332,12 +343,12 @@
                     is_jiesong: $("#myCheck").is(':checked') ? "1" : "0",
                     width_confidante: $("#myCheck1").is(':checked') ? "1" : "0",
 
-                    file:fileArr,  //支持多张图片
+                    file: fileArr, //支持多张图片
 
                     // longitude: posiArr[0], 
                     // latitude: posiArr[1], 
-                    longitude: "", 
-                    latitude: "", 
+                    longitude: "",
+                    latitude: "",
                 }
 
                 console.log(postData)
@@ -347,19 +358,19 @@
                 //     ReleInvite.closeLoading("发布成功");
                 // },500)
                 // return //测试用
-                
+
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost+"/index.php/Api/Dynamics/add",
+                    url: GlobalHost + "/index.php/Api/Dynamics/add",
                     data: postData,
                     dataType: "json",
-                    processData : false,
-					contentType : false,
+                    processData: false,
+                    contentType: false,
                     success: function (result) {
                         console.log(result)
                         if (result.msg == "操作成功") {
-                            
-                            ReleInvite.closeLoading("发布成功",function(){
+
+                            ReleInvite.closeLoading("发布成功", function () {
                                 //关闭 返回
                                 window.history.back(-1)
                             });
@@ -367,28 +378,28 @@
                     }
                 })
             },
-            openLoading:function(){
-                if($(".msgWrap").length==0){
+            openLoading: function () {
+                if ($(".msgWrap").length == 0) {
                     $("body").append($('<div class="msgWrap"></div>'));
                 }
-                if($(".mLoading").length==0){
+                if ($(".mLoading").length == 0) {
                     $("body").append($('<div class="mLoading">处理中...</div>'));
                 }
             },
-            closeLoading:function(resultMsg,callback){
+            closeLoading: function (resultMsg, callback) {
                 $(".mLoading").html(resultMsg);
-                setTimeout(function(){
+                setTimeout(function () {
                     $(".mLoadingMask")
-                    .add($(".mLoading")).remove();
+                        .add($(".mLoading")).remove();
                     callback();
-                },500);
+                }, 500);
             },
             //获取当前地理位置
-            getLocalPosition:function(){  //返回一个数组， 经 纬度
-                let position=[null,null];
-                if(navigator.geolocation){
-                    navigator.geolocation.getCurrentPosition(   // 该函数有如下三个参数
-                        function(pos){   // 如果成果则执行该回调函数
+            getLocalPosition: function () { //返回一个数组， 经 纬度
+                let position = [null, null];
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition( // 该函数有如下三个参数
+                        function (pos) { // 如果成果则执行该回调函数
                             console.log(
                                 '  经度：' + pos.coords.latitude +
                                 '  纬度：' + pos.coords.longitude +
@@ -398,22 +409,23 @@
                                 '  速度：' + pos.coords.speed
                             );
 
-                            position[0]=pos.coords.latitude;
-                            position[1]=pos.coords.longitude;
-                        }, function(err){   // 如果失败则执行该回调函数
+                            position[0] = pos.coords.latitude;
+                            position[1] = pos.coords.longitude;
+                        },
+                        function (err) { // 如果失败则执行该回调函数
                             console.log(err.message);
-                        }, {   // 附带参数
-                                // enableHighAccuracy: false, // 提高精度(耗费资源)
-                                // timeout: 3000, // 超过timeout则调用失败的回调函数
-                                // maximumAge: 1000 // 获取到的地理信息的有效期，超过有效期则重新获取一次位置信息
+                        }, { // 附带参数
+                            // enableHighAccuracy: false, // 提高精度(耗费资源)
+                            // timeout: 3000, // 超过timeout则调用失败的回调函数
+                            // maximumAge: 1000 // 获取到的地理信息的有效期，超过有效期则重新获取一次位置信息
                         }
                     );
                 }
 
                 return position;
             },
-            cancelPic: function (el) {  //pic的a标签
-                if($(".msgWrap").length==0){
+            cancelPic: function (el) { //pic的a标签
+                if ($(".msgWrap").length == 0) {
                     $('body').append($('<div class="msgWrap"></div>'));
                 }
                 $('.confirmDelete').show()
@@ -447,7 +459,7 @@
                     ReleInvite.publishInvit()
                 });
                 //添加图片
-                $(".addPic").click(function(){
+                $(".addPic").click(function () {
                     ReleInvite.addPic();
                 });
             },
