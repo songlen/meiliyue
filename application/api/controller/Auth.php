@@ -80,9 +80,7 @@ class Auth extends Base {
     	$country = I('country');
     	$province = I('province');
     	$city = I('city');
-        $qq = I('qq');
-        $longitude = I('longitude');
-        $latitude = I('latitude');
+    	$qq = I('qq');
 
     	if(check_mobile($mobile) == false){
     		response_error('', '手机号格式错误');
