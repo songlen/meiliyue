@@ -15,7 +15,7 @@ class Local extends Base {
 		unset($userinfo['password']);
 
 		$this->assign('userinfo', json_encode($userinfo));
-		$this->fetch();
+		return $this->fetch();
 	}
 }
 
