@@ -8,12 +8,16 @@
 <body>
     <script>
         var userinfo = "{$userinfo}";
-        
-        sessionStorage.setItem('mUserInfo', JSON.stringify(userinfo))
+
+        // sessionStorage.setItem('mUserInfo', JSON.stringify(userinfo))
+        sessionStorage['mUserInfo'] = JSON.stringify(userinfo);
 
         window.onbeforeunload = function () {
-            if (sessionStorage.getItem('mUserInfo')) {
-                sessionStorage.setItem('mUserInfo', null)
+            // if (sessionStorage.getItem('mUserInfo')) {
+            //     sessionStorage.setItem('mUserInfo', null)
+            // }
+            if (sessionStorage['mUserInfo']) {
+                sessionStorage['mUserInfo'] = null;
             }
         }
     </script>
