@@ -34,8 +34,7 @@ class Base extends Controller {
         $param = $this->request->param();
 
         if($_FILES){
-            $file = current($_FILES);
-            $param = array_merge($param, $file['name']);
+            $param = array_merge($param, $_FILES);
         }
 
         $data = "\r\n".date('Y-m-d H:i:s')." ".$pathinfo." method: {$method} \r\n param: ".var_export($param, true);
