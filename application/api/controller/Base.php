@@ -31,7 +31,12 @@ class Base extends Controller {
     protected function requestToLog(){
         $pathinfo = $this->request->pathinfo();
         $method = $this->request->method();
-        $param = $this->request->param(true);
+        $param = $this->request->param();
+
+        if($_FILES){
+            $file = current($_FILES);
+            $param = array_merge($param, $file['name']);
+        }
 
         $data = "\r\n".date('Y-m-d H:i:s')." ".$pathinfo." method: {$method} \r\n param: ".var_export($param, true);
 
