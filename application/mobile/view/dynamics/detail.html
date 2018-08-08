@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>详情</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/css/base.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/dongtai-common.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/dongtai-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
@@ -51,8 +51,8 @@
                 </div>
                 <div class="details-flower">
                     <div class="giveFlower">
-                        <img class="noFlower" src="../static/images/icon/花1.png">
-                        <img class="haveFlower" src="../static/images/icon/花2.png" style="display: none;">
+                        <img class="noFlower" src="__STATIC__/images/icon/花1.png">
+                        <img class="haveFlower" src="__STATIC__/images/icon/花2.png" style="display: none;">
                     </div>
                     <span class="flowerCount">{$info.flower_num}</span>
                 </div>
@@ -62,7 +62,7 @@
                 <if condition="$info.flower_num gt 0">
                     <for start="0" end="$info.flower_num">
                         <div class="flowerItem">
-                            <img src="../static/images/icon/花3.png">
+                            <img src="__STATIC__/images/icon/花3.png">
                         </div>
                     </for>
                 </if>
@@ -87,14 +87,14 @@
 
             <div class="details-comments">
                 <div class="details-comments-head" style="display: none;">
-                    <img src="../static/images/icon/消息.png">评论&nbsp;（为保护隐私，评论头像和昵称都是随机生成）
+                    <img src="__STATIC__/images/icon/消息.png">评论&nbsp;（为保护隐私，评论头像和昵称都是随机生成）
                 </div>
                 <ul>
                     <li class="details-comments-item" v-cloak v-for="(item,index) in commentsList" :key="index">
                         <div style="position: relative;">
                             <div class="comment-headWrap" @click="applyHomepage">
                                 <img :src="GlobalHost+item.head_pic" @error="defaultImg">
-                                <!-- <img v-cloak v-else src="../static/images/icon/tx.png"> -->
+                                <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
                             </div>
                             <!-- <span class="videoStatus"></span> -->
                         </div>
@@ -132,7 +132,7 @@
             <!-- 评论列表 end -->
 
             <div class="details-tip">
-                <img src="../static/images/icon/tx.png">评论所有人可见，悄悄话仅对方和你可见
+                <img src="__STATIC__/images/icon/tx.png">评论所有人可见，悄悄话仅对方和你可见
             </div>
         </div>
 
@@ -184,7 +184,7 @@
 
 
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../static/js/vue.js"></script>
+    <script src="__STATIC__/js/vue.js"></script>
     <script>
         var GlobalHost = "http://meiliyue.caapa.org";
         var Details = {
@@ -246,7 +246,7 @@
                             //显示提示弹窗 end
                             //小花池里增加一朵小花
                             $(".flowerPool").prepend($(
-                                '<div class="flowerItem"><img src="../static/images/icon/花3.png"></div>'
+                                '<div class="flowerItem"><img src="__STATIC__/images/icon/花3.png"></div>'
                             ))
                             //小花池数量加一
                             $(".flowerPool-count").html(Number($(".flowerPool-count").html()) + 1)
@@ -430,7 +430,7 @@
                         },
                         //头像加载失败，默认图片
                         defaultImg: function (event) {
-                            event.target.src = "../static/images/icon/tx.png"
+                            event.target.src = "__STATIC__/images/icon/tx.png"
                         },
                         applyHomepage: function () {
                             if ($(".mask").length == 0) {

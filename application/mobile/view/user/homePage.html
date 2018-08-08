@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>别人的个人主页</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/css/base.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/wode-common.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
@@ -29,7 +29,7 @@
             <div class="edit-personal-avatar">
                 <div style="position: relative;">
                     <div class="avatar-pic">
-                        <img src="../static/images/icon/tx.png">
+                        <img src="__STATIC__/images/icon/tx.png">
                     </div>
                     <span class="videoStatus" style="display: none;"></span>
                 </div>
@@ -46,7 +46,7 @@
                         <span class="attendAll" style="display: none;">相互关注</span>
                     </span>
                     <p>
-                        <img class="areaPic" src="../static/images/icon/定位-2.png">
+                        <img class="areaPic" src="__STATIC__/images/icon/定位-2.png">
                         <span class="edit-personal-area">北京</span>&nbsp;
                         <span class="distance">2km</span>
                     </p>
@@ -60,7 +60,7 @@
                 </div>
                 <ul class="myPhotos">
                     <!-- <li class="edit-pic-item">
-                        <img src="../static/images/icon/tx.png">
+                        <img src="__STATIC__/images/icon/tx.png">
                     </li> -->
                 </ul>
 
@@ -94,12 +94,12 @@
 
                 <ul class="myTalkList">
                     <!-- <li class="myTalk-item">
-                        <img src="../static/images/icon/tx.png">
+                        <img src="__STATIC__/images/icon/tx.png">
                     </li> -->
                 </ul>
 
                 <a href="javascript:void(0)" class="more">
-                    <img src="../static/images/icon/back.png">
+                    <img src="__STATIC__/images/icon/back.png">
                 </a>
             </div>
 
@@ -111,28 +111,28 @@
                 <ul>
                     <li class="myApprove-item">
                         <div class="myApprove-pic">
-                            <img src="../static/images/icon/tx.png">
+                            <img src="__STATIC__/images/icon/tx.png">
                         </div>
                         <p class="myApprove-phone">手机号未认证</p>
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
                     </li>
                     <li class="myApprove-item">
                         <div class="myApprove-pic">
-                            <img src="../static/images/icon/tx.png">
+                            <img src="__STATIC__/images/icon/tx.png">
                         </div>
                         <p class="myApprove-video">形象视频未认证</p>
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
                     </li>
                     <li class="myApprove-item">
                         <div class="myApprove-pic">
-                            <img src="../static/images/icon/tx.png">
+                            <img src="__STATIC__/images/icon/tx.png">
                         </div>
                         <p class="myApprove-identity">身份未认证</p>
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
                     </li>
                     <!-- <li class="myApprove-item">
                         <div class="myApprove-pic">
-                            <img src="../static/images/icon/tx.png">
+                            <img src="__STATIC__/images/icon/tx.png">
                         </div>
                         <p class="myApprove-job">职业未认证</p>
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
@@ -277,7 +277,7 @@
         </div>
 
         <footer style="display: none;">
-            <img src="../static/images/icon/消息.png" alt="">
+            <img src="__STATIC__/images/icon/消息.png" alt="">
             <span class="sayHi">打个招呼</span>
         </footer>
     </div>
@@ -406,36 +406,36 @@
 
             if (data.baseinfo.mobile_validated == 0) {
                 $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                    "../static/images/icon/微信@2x.png")
+                    "__STATIC__/images/icon/微信@2x.png")
                 $(".myApprove-phone").html("手机号未认证")
                 $(".myApprove-phone+.approveBtn").show()
             } else {
                 $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                    "../static/images/icon/微信@2x.png")
+                    "__STATIC__/images/icon/微信@2x.png")
                 $(".myApprove-phone").html("手机号已认证")
                 $(".myApprove-phone+.approveBtn").hide()
             }
 
             if (data.baseinfo.auth_video_status == 0) {
                 $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
-                    "../static/images/icon/视频未认证@2x.png")
+                    "__STATIC__/images/icon/视频未认证@2x.png")
                 $(".myApprove-video").html("形象视频未认证")
                 $(".myApprove-video+.approveBtn").show()
             } else {
                 $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
-                    "../static/images/icon/小视频@2x.png")
+                    "__STATIC__/images/icon/小视频@2x.png")
                 $(".myApprove-video").html("形象视频已认证")
                 $(".myApprove-video+.approveBtn").hide()
             }
 
             if (data.baseinfo.auth_identity_status == 0) {
                 $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
-                    "../static/images/icon/身份未认真@2x.png")
+                    "__STATIC__/images/icon/身份未认真@2x.png")
                 $(".myApprove-identity").html("身份未认证")
                 $(".myApprove-identity+.approveBtn").show()
             } else {
                 $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
-                    "../static/images/icon/身份未认真@2x.png")
+                    "__STATIC__/images/icon/身份未认真@2x.png")
                 $(".myApprove-identity").html("身份已认证")
                 $(".myApprove-identity+.approveBtn").hide()
             }
