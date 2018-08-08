@@ -9,12 +9,12 @@
     <script>
         var userinfoStr = '{$userinfo}';
 
-        sessionStorage['mUserInfo'] = userinfoStr;
-        sessionStorage.setItem('mUserInfo', userinfoStr);
+        sessionStorage["mUserInfo"] = JSON.stringify(userinfoStr);
+        sessionStorage.setItem("mUserInfo", JSON.stringify(userinfoStr));
 
         // window.onbeforeunload = function () {
-        //     if (sessionStorage['mUserInfo']) {
-        //         sessionStorage['mUserInfo'] = null;
+        //     if (sessionStorage["mUserInfo"]) {
+        //         sessionStorage["mUserInfo"] = null;
         //     }
         // }
     </script>
