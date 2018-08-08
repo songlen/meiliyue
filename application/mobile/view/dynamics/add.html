@@ -64,11 +64,11 @@
         var GlobalHost = "http://meiliyue.caapa.org";
         var Edit = {
             _user_id: "",
-            _type:"",
+            _type: "",
 
             //取消照片
             cancelPic: function (el) { //pic的a标签
-                if($(".mask").length==0){
+                if ($(".mask").length == 0) {
                     $('body').append($('<div class="mask"></div>'));
                 }
                 $('.confirmDelete').show()
@@ -211,8 +211,8 @@
                         var lat = position.coords.latitude;
                         var lon = position.coords.longitude;
                         // alert(lat, lon)
-                        // //var map = new BMap.Map("container");   // 创建Map实例
-                        // var point = new BMap.Point(lon, lat); // 创建点坐标
+                        // //var map = new BMap.Map("container");    // 创建Map实例
+                        // var point = new BMap.Point(lon, lat);   // 创建点坐标
                         // var gc = new BMap.Geocoder();
                         // gc.getLocation(point, function (rs) {
                         //     var addComp = rs.addressComponents;
@@ -246,24 +246,24 @@
                     user_id: Edit._user_id,
                     type: Edit._type, //1文字2图片3视频
                     content: contentStr,
-                    image:null,
-                    video:null,
+                    image: null,
+                    video: null,
                 }
 
-                var filesArr=[];
-                if($(".albumInput").length!==0){
-                    $(".albumInput").each(function(){
+                var filesArr = [];
+                if ($(".albumInput").length !== 0) {
+                    $(".albumInput").each(function () {
                         filesArr.push(this.files[0]);
                     });
 
                     switch (Edit._type) {
                         case 1:
                             break;
-                        case 2://图片
-                            postData.image=filesArr;
+                        case 2: //图片
+                            postData.image = filesArr;
                             break;
-                        case 3://视频
-                            postData.video=filesArr;
+                        case 3: //视频
+                            postData.video = filesArr;
                             break;
                         default:
                             break;
@@ -273,11 +273,11 @@
                 // return
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost+"/index.php/Api/Dynamics/add",
+                    url: GlobalHost + "/index.php/Api/Dynamics/add",
                     data: postData,
                     dataType: "json",
-                    processData : false,
-					contentType : false,
+                    processData: false,
+                    contentType: false,
                     success: function (result) {
                         console.log(result)
                     }
@@ -328,7 +328,7 @@
                 }
             },
             //添加视频
-            addVideo:function(){
+            addVideo: function () {
                 var $liTemp = $(
                     `
                         <li class="edit-pic-item">
@@ -344,8 +344,8 @@
                     event.stopPropagation();
                     Edit.cancelPic(this)
                 })
-                
-                
+
+
                 $liTemp.find(".albumInput").change(function () {
                     readURL(this);
                 })
@@ -368,7 +368,8 @@
 
                             //预览全屏视频
                             $liTemp.find('video').click(function () {
-                                let $fullScreen=$(`
+                                let $fullScreen = $(
+                                    `
                                     <div class="fullScreen">
                                         <div class="videoHeader">
                                             <div class="closeFullScreen"></div>
@@ -380,13 +381,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                `);
+                                `
+                                );
 
                                 //点击关闭事件
-                                $fullScreen.find(".closeFullScreen").click(function(){
+                                $fullScreen.find(".closeFullScreen").click(function () {
                                     $fullScreen.remove();
                                 });
-                                
+
                                 $("body").append($fullScreen);
                             });
 
@@ -422,17 +424,17 @@
                     }
                 }
             },
-            getPageInfo:function(){
+            getPageInfo: function () {
                 //_user_id
                 // Edit._user_id={$info['user_id']};
-                Edit._user_id=1;//测试用
+                Edit._user_id = 1; //测试用
 
                 //_type
-                let url=window.location.href;
-                // url="http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html";//测试用
-                let strTemp=url.split("/add/type/")[1];
-                let type=strTemp.substr(0,strTemp.length-5);
-                Edit._type=Number(type);
+                let url = window.location.href;
+                //url="http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html";  //测试用
+                let strTemp = url.split("/add/type/")[1];
+                let type = strTemp.substr(0, strTemp.length - 5);
+                Edit._type = Number(type);
             },
             eventsBind: function () {
                 //限制字数
@@ -447,9 +449,9 @@
                 })
                 //添加图片
                 $(".addPic").click(function () {
-                    if(Edit._type==3){//添加视频
+                    if (Edit._type == 3) { //添加视频
                         Edit.addVideo();
-                    }else{
+                    } else {
                         Edit.addPic();
                     }
                 })

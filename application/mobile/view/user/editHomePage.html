@@ -205,7 +205,7 @@
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
     <script>
-        var GlobalHost = "http://meiliyue.caapa.org"
+        var GlobalHost = "http://meiliyue.caapa.org";
         var EditHome = {
             user_id: "",
             curPermanent_province: "",
@@ -275,8 +275,8 @@
                     $(".income").html("填写").addClass("canChoose")
                 }
                 //常住地
-                data.baseinfo.permanent_province = "辽宁省"//测试用
-                data.baseinfo.permanent_city = "沈阳市"//测试用
+                data.baseinfo.permanent_province = "辽宁省";   //测试用
+                data.baseinfo.permanent_city = "沈阳市";  //测试用
                 if (data.baseinfo.permanent_province && data.baseinfo.permanent_province !== "" && data.baseinfo
                     .permanent_city && data.baseinfo.permanent_city !== "") {
                     EditHome.curPermanent_province = data.baseinfo.permanent_province
@@ -1010,7 +1010,7 @@
                     showDistrict: false,
                     onClose: function (event) {
                         console.log(event)
-                        var newValue = event.displayValue //是个数组，第一是省，第二是市
+                        var newValue = event.displayValue   //是个数组，第一是省，第二是市
                         //修改 常住地
                         var codesArr = $("#city-picker").attr("data-codes").split(",")
                         if (codesArr.length !== 0) {

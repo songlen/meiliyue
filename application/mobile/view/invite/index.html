@@ -305,17 +305,17 @@
                     // addressFixed: false,
                     showSelect: false,
                     inviteList: [],
-                    nowPageIndex: 1, //当前页码
+                    nowPageIndex: 1,  //当前页码
                     isPlusing: false,
 
-                    selectedText: "辽宁", //目前 默认值 辽宁
+                    selectedText: "辽宁",  //目前 默认值 辽宁
 
                     //筛选页面
                     sortList: ["最近发布", "近期约会", "离我最近"],
                     nowSortIndex: 0,
-                    nowSex: "全部", //当前性别： 全部 男 女
-                    nowProvince: null, //代码
-                    nowCity: null, //代码
+                    nowSex: "全部",  //当前性别： 全部 男 女
+                    nowProvince: null,  //代码
+                    nowCity: null,  //代码
                     onlyGift: false,
                     onlyVideo: false,
 
@@ -398,7 +398,7 @@
                             dataType: "json",
                             success: function (result) {
                                 console.log(result.data)
-                                if (isScroll) { //是滚动
+                                if (isScroll) {  //是滚动
                                     _self.inviteList = _self.inviteList.concat(result.data)
                                     
                                     if(result.data.length !== 0){
@@ -447,8 +447,8 @@
                         this.savePageToSession()
 
                         let options={
-                            originUserId:this.user_id,//从谁那 去的邀约详情
-                            toUserId:item.user_id,//去 谁的 邀约详情
+                            originUserId:this.user_id,  //从谁那 去的邀约详情
+                            toUserId:item.user_id,  //去 谁的 邀约详情
                             detailId:item.id,
                         };
 
@@ -537,7 +537,7 @@
                         }
                     },
                     //跳到邀约发布页面
-                    openReleaseInvite(type) { //type number 邀约类型
+                    openReleaseInvite(type) {   //type number 邀约类型
                         this.savePageToSession()
 
                         $(".plus")[0].click();
@@ -629,7 +629,7 @@
                         let head_pic=GlobalHost+item.head_pic;
                         console.log(head_pic)
                         this.getVideoUrl(toUserId,function(url){
-                            // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
+                            // url="https://media.w3.org/2010/05/sintel/trailer.mp4";  //测试用
                             self.showVideo({
                                 user_id:toUserId,
                                 head_pic:head_pic,
@@ -637,7 +637,7 @@
                             });
                         });
                     },
-                    getVideoUrl(user_id,callback){//user_id
+                    getVideoUrl(user_id,callback){  //user_id
                         $.ajax({
                             type: "POST",
                             url: GlobalHost+"/index.php/Api/user/getAuthVideoUrl",
@@ -647,7 +647,7 @@
                             dataType: "json",
                             success: function (result) {
                                 console.log(result)
-                                if(result.code==200){//测试用
+                                if(result.code==200){  //测试用
                                     let url=GlobalHost+result.data.video_url;
                                     callback(url);
                                 }
