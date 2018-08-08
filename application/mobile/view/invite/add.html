@@ -170,9 +170,10 @@
                     ReleInvite.user_id = Number(mUserInfo.user_id);
                     ReleInvite._user_sex = Number(mUserInfo.sex);
                 } else {
-                    ReleInvite.user_id = 1; //测试用
+                    ReleInvite._user_id = 1; //测试用
                     ReleInvite._user_sex = 2; //测试用
                 }
+                console.log(ReleInvite.user_id)
 
                 //type
                 var ulrStr = window.location.href;
