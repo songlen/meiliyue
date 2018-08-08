@@ -179,7 +179,8 @@ footer li a {
     /* tongzhou,下拉变方bug */
     width: 100%;
 }
-.videoStatus{
+
+.videoStatus {
     display: inline-block;
     width: 0.18rem;
     height: 0.18rem;
@@ -189,7 +190,8 @@ footer li a {
     right: 0.07rem;
     bottom: 0;
 }
-.details-page .videoStatus{
+
+.details-page .videoStatus {
     top: 0.32rem;
     left: 0.44rem;
 }
@@ -197,6 +199,7 @@ footer li a {
 .list-item .item-head .item-head-text .listName {
     font-size: 15px;
 }
+
 .list-item .addTime {
     margin-right: auto;
     font-size: 13px;
@@ -510,6 +513,7 @@ footer li a {
     display: inline-flex;
     flex-wrap: wrap;
 }
+
 .edit-pic .edit-pic-item video,
 .edit-pic .edit-pic-item img {
     width: 0.81rem;
@@ -991,7 +995,8 @@ a.operate {
     z-index: 6;
     background-color: #000;
 }
-.fullScreen .videoHeader{
+
+.fullScreen .videoHeader {
     position: fixed;
     top: 0;
     left: 0;
@@ -1004,7 +1009,8 @@ a.operate {
     align-items: center;
     justify-content: flex-end;
 }
-.fullScreen .videoHeader>.img-box{
+
+.fullScreen .videoHeader>.img-box {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -1012,9 +1018,11 @@ a.operate {
     margin-right: 15px;
     margin-left: 10px;
 }
-.fullScreen .videoHeader>.img-box>img{
+
+.fullScreen .videoHeader>.img-box>img {
     width: 100%;
 }
+
 .fullScreen .closeFullScreen {
     width: 30px;
     height: 30px;
@@ -1022,13 +1030,13 @@ a.operate {
     margin-right: auto;
     margin-left: 25px;
 }
-.fullScreen .videoOperate{
+
+.fullScreen .videoOperate {
     width: 30px;
     height: 30px;
     background: url(../images/icon/三个点.png) center center no-repeat;
     background-size: 100%;
 }
-
 
 .fullScreen .progressBar {
     display: block;
@@ -1055,7 +1063,8 @@ a.operate {
     position: relative;
     z-index: 1;
 }
-.fullScreen .fullScreenScroll .videoInput{
+
+.fullScreen .fullScreenScroll .videoInput {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -1066,9 +1075,11 @@ a.operate {
     align-items: center;
     font-size: 14px;
 }
+
 .fullScreen .fullScreenScroll .fullScreenWrap>video {
     background-color: #000;
 }
+
 .fullScreen .fullScreenScroll .fullScreenWrap .videoFooter {
     position: absolute;
     left: 0;
@@ -1079,13 +1090,15 @@ a.operate {
     align-items: center;
     justify-content: center;
 }
-.videoCommentBtn{
+
+.videoCommentBtn {
     width: 30px;
     height: 30px;
     background: url(../images/icon/评论-4.png) center center no-repeat;
     background-size: 100%;
 }
-.videoFooter .littleTri{
+
+.videoFooter .littleTri {
     width: 9px;
     height: 9px;
     border: 1px solid;
@@ -1136,4 +1149,60 @@ a.operate {
 .noComments img {
     width: 60px;
     height: 50px;
+}
+
+/* m弹出框 */
+
+/* 也是遮罩 */
+
+.msgWrap {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .3);
+    z-index: 2;
+}
+
+.msgWrap .msg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2rem;
+    height: 1.2rem;
+    border-radius: 5px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.msgWrap .msgText {
+    flex: 1 0 0;
+    padding: 0.05rem 0.1rem;
+    line-height: 0.3rem;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.msgWrap .msgCtrl {
+    height: 0.35rem;
+    line-height: 0.35rem;
+    text-align: center;
+    color: #6692fe;
+}
+
+.mLoading {
+    width: 1rem;
+    height: 0.5rem;
+    line-height: 0.5rem;
+    background-color: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border-radius: 5px;
+    text-align: center;
+    color: #000;
 }

@@ -27,24 +27,30 @@
     </header>
 
     <div class="edit-page">
-        <div class="edit-content">
-            <!-- <textarea name="" id="edit-text" placeholder="此刻你在想什么......"></textarea> -->
-            <div id="edit-text" contenteditable="true"></div>
-            <div class="edit-expression">
-                <!-- <span class="face"></span> -->
-                <span class="textCount">
-                    <span id="textCount">0</span>/1000</span>
+        <form id="dynamicForm" action="http://meiliyue.caapa.org/index.php/Api/Dynamics/add" method="post" enctype="multipart/form-data">
+            <!-- 隐藏域 -->
+            <input type="text" value="" name="user_id" style="display: none;">
+            <input type="text" value="" name="type" style="display: none;">
+            <input type="text" value="" name="content" style="display: none;">
+            <!-- 隐藏域 end -->
+            <div class="edit-content">
+                <!-- <textarea name="" id="edit-text" placeholder="此刻你在想什么......"></textarea> -->
+                <div id="edit-text" contenteditable="true"></div>
+                <div class="edit-expression">
+                    <!-- <span class="face"></span> -->
+                    <span class="textCount">
+                        <span id="textCount">0</span>/1000</span>
+                </div>
             </div>
-        </div>
 
-        <div class="edit-pic">
-            <ul class="showPicUl">
-                <a href="javascript:void(0)" class="addPic">
-                    <img src="__STATIC__/images/icon/add.png">
-                </a>
-            </ul>
-
-        </div>
+            <div class="edit-pic">
+                <ul class="showPicUl">
+                    <a href="javascript:void(0)" class="addPic">
+                        <img src="__STATIC__/images/icon/add.png">
+                    </a>
+                </ul>
+            </div>
+        </form>
     </div>
 
     <!-- 模态框 -->
@@ -66,6 +72,8 @@
     <!-- 表情插件-js -->
     <script src="__STATIC__/js/js-plugins/jQuery-emoji-master20160321/lib/script/jquery.mCustomScrollbar.min.js"></script>
     <script src="__STATIC__/js/js-plugins/jQuery-emoji-master20160321/dist/js/jquery.emoji.min.js"></script>
+    <!-- jquery.form-js -->
+    <script src="__STATIC__/js/js-plugins/jquery.form.js"></script>
     <script>
         var GlobalHost = "http://meiliyue.caapa.org";
         var Edit = {
@@ -248,57 +256,113 @@
                 // // __STATIC__/js/js-plugins/jQuery-emoji-master20160321/dist/img/tieba/14.jpg"
                 // // str.replace(/<img[^>]*>/g, "[图片]");
 
-                var postData = {
-                    user_id: Edit._user_id,
-                    type: Edit._type, //1文字2图片3视频
-                    content: contentStr,
-                    image: null,
-                    video: null,
-                }
+                // var postData = {
+                //     user_id: Edit._user_id,
+                //     type: Edit._type, //1文字2图片3视频
+                //     content: contentStr,
+                //     image: null,
+                //     video: null,
+                // }
 
-                var filesArr = [];
-                if ($(".albumInput").length !== 0) {
-                    $(".albumInput").each(function () {
-                        filesArr.push(this.files[0]);
-                    });
+                // var filesArr = [];
+                // if ($(".albumInput").length !== 0) {
+                //     $(".albumInput").each(function () {
+                //         filesArr.push(this.files[0]);
+                //     });
 
-                    switch (Edit._type) {
-                        case 1:
-                            break;
-                        case 2: //图片
-                            postData.image = filesArr;
-                            break;
-                        case 3: //视频
-                            postData.video = filesArr;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                console.log(postData)
+                //     switch (Edit._type) {
+                //         case 1:
+                //             break;
+                //         case 2: //图片
+                //             postData.image = filesArr;
+                //             break;
+                //         case 3: //视频
+                //             postData.video = filesArr;
+                //             break;
+                //         default:
+                //             break;
+                //     }
+                // }
+                // console.log(postData)
                 // return
-                $.ajax({
-                    type: "POST",
-                    url: GlobalHost + "/index.php/Api/Dynamics/add",
-                    data: postData,
-                    dataType: "json",
-                    processData: false,
-                    contentType: false,
-                    success: function (result) {
-                        console.log(result)
-                    }
-                })
+                // $.ajax({
+                //     type: "POST",
+                //     url: GlobalHost + "/index.php/Api/Dynamics/add",
+                //     data: postData,
+                //     dataType: "json",
+                //     processData: false,
+                //     contentType: false,
+                //     success: function (result) {
+                //         console.log(result)
+                //     }
+                // });
+
+                //jquery.form.js方法
+                $(":input[name='user_id']").val(Edit._user_id);
+                $(":input[name='type']").val(Edit._user_id);
+                $(":input[name='content']").val(contentStr);
+
+                Edit.openLoading();
+
+                $("#dynamicForm").ajaxSubmit(function (result) {  
+                    console.log(result)                  
+                    if (result.msg == "操作成功") {
+                        Edit.closeLoading("发布成功", function () {
+                            //关闭 返回
+                            window.history.back(-1);
+                        });
+                    }  
+                });
+
+            },
+            openLoading: function () {
+                if ($(".msgWrap").length == 0) {
+                    $("body").append($('<div class="msgWrap"></div>'));
+                }
+                if ($(".mLoading").length == 0) {
+                    $("body").append($('<div class="mLoading">处理中...</div>'));
+                }
+            },
+            closeLoading: function (resultMsg, callback) {
+                $(".mLoading").html(resultMsg);
+                setTimeout(function () {
+                    $(".mLoadingMask")
+                        .add($(".mLoading")).remove();
+                    callback();
+                }, 500);
+            },
+            messageWin: function (msg) {
+                if ($(".msgWrap").length == 0) {
+                    let $msgDiv = $(
+                        `
+                        <div class="msgWrap">
+                            <div class="msg">
+                                <p class="msgText">${msg}</p>
+                                <p class="msgCtrl">
+                                    <span class="closeMsg">确定</span>
+                                </p>
+                            </div>
+                        </div>
+                    `
+                    );
+                    //msg点击事件
+                    $msgDiv.find(".msgCtrl").click(function () {
+                        $msgDiv.remove();
+                    });
+                    $("body").append($msgDiv);
+                }
             },
             //添加图片
             addPic: function () {
-                // if ($(".edit-pic-item").length >= 9) {
-                //     alert("最多上传9张图片")
-                //     return
-                // }
+                if ($("img.showPic").length >= 9) {
+                    // alert("最多上传9张图片")
+                    Edit.messageWin("最多上传9张图片");
+                    return;
+                }
                 var $liTemp = $(
                     `
                         <li class="edit-pic-item">
-                            <input class="albumInput" type="file" accept="image/*" style="display: none">
+                            <input class="albumInput" name="image" type="file" accept="image/*" style="display: none">
                             <img class="showPic" data-index=${$(".edit-pic-item").length} src="__STATIC__/images/icon/tx.png">
                             <a href="javascript:void(0)" class="edit-closePic"></a>
                         </li>
@@ -348,10 +412,15 @@
             },
             //添加视频
             addVideo: function () {
+                if ($("video.showPic").length >= 1) {
+                    // alert("最多上传9张图片")
+                    Edit.messageWin("视频最多上传一个");
+                    return;
+                }
                 var $liTemp = $(
                     `
                         <li class="edit-pic-item">
-                            <input class="albumInput" style="display: none" type="file" accept="video/*" capture="camcorder">
+                            <input class="albumInput" name="video" style="display: none" type="file" accept="video/*" capture="camcorder">
                             <video class="showPic" src="" style="" preload="auto"></video>
                             <a href="javascript:void(0)" class="edit-closePic"></a>
                         </li>
@@ -372,14 +441,13 @@
                 $liTemp.find(".albumInput")[0].click()
 
                 function readURL(input) {
-                    console.log(input)
-                    console.log(input.files)
+                    // console.log(input)
+                    // console.log(input.files)
                     if (input.files && input.files[0]) {
-                        console.log(input.files[0])
+                        // console.log(input.files[0])
                         var reader = new FileReader();
                         reader.onload = function (e) {
-                            console.log(2)
-                            console.log(e)
+                            // console.log(e)
                             $liTemp.find('video').attr('src', e.target.result);
 
                             //添加视频成功 后
@@ -449,14 +517,14 @@
                 if (sessionStorage.getItem("mUserInfo")) {
                     let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
-                    Edit.user_id = Number(mUserInfo.user_id);
+                    Edit._user_id = Number(mUserInfo.user_id);
                 } else {
-                    Edit.user_id = 1; //测试用
+                    Edit._user_id = 1; //测试用
                 }
 
                 //_type
                 let url = window.location.href;
-                // url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html"; //测试用
+                url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html"; //测试用
                 let strTemp = url.split("/add/type/")[1];
                 let type = strTemp.substr(0, strTemp.length - 5);
                 Edit._type = Number(type);
