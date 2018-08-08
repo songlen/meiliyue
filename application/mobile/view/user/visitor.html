@@ -59,32 +59,33 @@
     <script type="text/javascript" src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script>
         var GlobalHost = "http://meiliyue.caapa.org";
-        var Visitors={
-            user_id:"",
+        var Visitors = {
+            user_id: "",
 
-            curList:"visiList",
-            isScroll:false,
-            loading:false,
+            curList: "visiList",
+            isScroll: false,
+            loading: false,
 
-            visiList:{
-                haveLoad:false,
-                page:1,
+            visiList: {
+                haveLoad: false,
+                page: 1,
             },
-            seenList:{
-                haveLoad:false,
-                page:1,
+            seenList: {
+                haveLoad: false,
+                page: 1,
             },
-            
 
-            updateDom:function(data){
-                let $curUl=$("."+Visitors.curList);
-                if(data&&data.length!==0){
-                    if(!Visitors.isScroll){
+
+            updateDom: function (data) {
+                let $curUl = $("." + Visitors.curList);
+                if (data && data.length !== 0) {
+                    if (!Visitors.isScroll) {
                         $curUl.html("");
                     }
-                    data.forEach(function(item,index){
-                        let timeStr=stampToStr(item.add_time);
-                        let $li=$(`
+                    data.forEach(function (item, index) {
+                        let timeStr = stampToStr(item.add_time);
+                        let $li = $(
+                            `
                             <li class="comments-item" data-toUserId=${item.user_id}>
                                 <div class="comments-avatar">
                                     <div class="comments-avatar-wrap">
@@ -107,32 +108,33 @@
 
                                 <img class="visitors-isnew" style="display:none;" src="__STATIC__/images/icon/火.png">
                             </li>
-                        `);
+                        `
+                        );
                         //视频认证
-                        if(item.auth_video_status==1){
+                        if (item.auth_video_status == 1) {
                             $li.find(".videoStatus").show();
                         }
                         // $li.find(".videoStatus").show(); //测试用
                         //sex
-                        if(item.sex==1){
+                        if (item.sex == 1) {
                             $li.find(".sexAge").addClass("male");
-                        }else{
+                        } else {
                             $li.find(".sexAge").addClass("female");
                         }
 
                         $curUl.append($li);
 
                     });
-                }else{
-                    if(Visitors[Visitors.curList].page!==1){
+                } else {
+                    if (Visitors[Visitors.curList].page !== 1) {
                         //无内容
                         $(".noComments").show();
                     }
                 }
-                
+
                 //updateDom后
                 //滚动加载的"正在加载"是否显示
-                if($curUl[0].scrollHeight>($(".visitors-page").height()-50)){
+                if ($curUl[0].scrollHeight > ($(".visitors-page").height() - 50)) {
                     $(".weui-loadmore").show();
                 }
 
@@ -140,26 +142,31 @@
                 // Visitors.eventsBindAfter();
 
             },
-            getVideoUrl:function(user_id,callback){ //user_id
+            getVideoUrl: function (user_id, callback) { //user_id
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost+"/index.php/Api/user/getAuthVideoUrl",
+                    url: GlobalHost + "/index.php/Api/user/getAuthVideoUrl",
                     data: {
-                        user_id:user_id
+                        user_id: user_id
                     },
                     dataType: "json",
                     success: function (result) {
                         console.log(result)
-                        if(result.code==200){ //测试用
-                            let url=GlobalHost+result.data.video_url;
+                        if (result.code == 200) { //测试用
+                            let url = GlobalHost + result.data.video_url;
                             callback(url);
                         }
                     }
                 });
             },
-            showVideo:function({user_id,head_pic,src}){
-                console.log(user_id,head_pic,src)
-                let $fullScreen=$(`
+            showVideo: function ({
+                user_id,
+                head_pic,
+                src
+            }) {
+                console.log(user_id, head_pic, src)
+                let $fullScreen = $(
+                    `
                     <div class="fullScreen">
                         <div class="videoHeader">
                             <div class="closeFullScreen"></div>
@@ -190,31 +197,32 @@
                             </div>
                         </div>
                     </div>
-                `);
+                `
+                );
 
                 //点击关闭事件
-                $fullScreen.find(".closeFullScreen").click(function(){
+                $fullScreen.find(".closeFullScreen").click(function () {
                     $fullScreen.remove();
                 });
-                
+
                 $("body").append($fullScreen);
             },
-            getListData:function(){
+            getListData: function () {
                 let getPage;
-                if(Visitors.isScroll){
-                    getPage=Visitors[Visitors.curList].page+1;
-                }else{
-                    getPage=1;
+                if (Visitors.isScroll) {
+                    getPage = Visitors[Visitors.curList].page + 1;
+                } else {
+                    getPage = 1;
                 }
-                let postData={
-                    user_id:Visitors.user_id,
-                    type:Visitors.curList=="visiList"?1:2,
-                    page:getPage,
+                let postData = {
+                    user_id: Visitors.user_id,
+                    type: Visitors.curList == "visiList" ? 1 : 2,
+                    page: getPage,
                 };
                 console.log(postData)
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost+"/index.php/api/user/visitor",
+                    url: GlobalHost + "/index.php/api/user/visitor",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -222,85 +230,92 @@
                         // result.data=result.data.concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data);//测试用
                         // result.data=[];//测试用
 
-                        if(Visitors.isScroll){
-                            if(result.data.length!==0){
+                        if (Visitors.isScroll) {
+                            if (result.data.length !== 0) {
                                 Visitors[Visitors.curList].page++;
                             }
-                            Visitors.isScroll=false;
+                            Visitors.isScroll = false;
                         }
 
                         Visitors.updateDom(result.data)
-                        
-                        Visitors[Visitors.curList].haveLoad=true;
+
+                        Visitors[Visitors.curList].haveLoad = true;
 
                         //下拉刷新done 滚动加载done
                         $(".comments-content").pullToRefreshDone();
-                        Visitors.loading=false;
+                        Visitors.loading = false;
                     }
                 });
             },
-            initPullToRefresh:function(){
+            initPullToRefresh: function () {
                 //下拉刷新
                 $(".comments-content").pullToRefresh(function () {
                     Visitors.getListData();
                 });
                 //滚动加载
-                $(".comments-content").infinite().on("infinite", function() {
-                    Visitors.isScroll=true;
+                $(".comments-content").infinite().on("infinite", function () {
+                    Visitors.isScroll = true;
                     //原
-                    if(Visitors.loading) return;
+                    if (Visitors.loading) return;
                     Visitors.loading = true;
                     Visitors.getListData();
                 });
                 //点击li去他人的主页
-                $(".visitors-page .comments-content>ul").delegate("li","click",function(){
+                $(".visitors-page .comments-content>ul").delegate("li", "click", function () {
                     //save?
 
-                    let user_id=Visitors.user_id;
-                    let toUserId=$(this).attr("data-toUserId");
-                    window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/"+user_id+"/toUserId/"+toUserId+".html";
+                    let user_id = Visitors.user_id;
+                    let toUserId = $(this).attr("data-toUserId");
+                    window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
+                        user_id + "/toUserId/" + toUserId + ".html";
                 });
             },
-            eventsBind:function(){
+            eventsBind: function () {
                 //back
-                $(".back").click(function(){
+                $(".back").click(function () {
                     window.history.back(-1);
                 });
                 //切换tab
-                $(".visitors-page>header .title a").click(function(){
+                $(".visitors-page>header .title a").click(function () {
                     $(this).addClass("actived").siblings().removeClass("actived");
 
-                    let className=$(this).attr("data-list");
+                    let className = $(this).attr("data-list");
                     console.log(className)
-                    $("."+className).show().siblings("ul").hide();
+                    $("." + className).show().siblings("ul").hide();
 
-                    Visitors.curList=className;
+                    Visitors.curList = className;
 
                     //切换时，如果没加载就加载
-                    if(!Visitors[Visitors.curList].haveLoad){
+                    if (!Visitors[Visitors.curList].haveLoad) {
                         Visitors.getListData();
                     }
                 });
                 //点击视频认证
                 $(".visiList")
-                .add($(".seenList")).delegate(".videoStatus","click",function(event){
-                    event.stopPropagation();
-                    let toUserId=Number($(this).closest(".comments-item").attr("data-toUserId"));
-                    let head_pic=$(this).closest(".comments-avatar").find("img").attr("src");
-                    console.log(head_pic)
-                    Visitors.getVideoUrl(toUserId,function(url){
-                        // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
-                        Visitors.showVideo({
-                            user_id:toUserId,
-                            head_pic:head_pic,
-                            src:url
+                    .add($(".seenList")).delegate(".videoStatus", "click", function (event) {
+                        event.stopPropagation();
+                        let toUserId = Number($(this).closest(".comments-item").attr("data-toUserId"));
+                        let head_pic = $(this).closest(".comments-avatar").find("img").attr("src");
+                        console.log(head_pic)
+                        Visitors.getVideoUrl(toUserId, function (url) {
+                            // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
+                            Visitors.showVideo({
+                                user_id: toUserId,
+                                head_pic: head_pic,
+                                src: url
+                            });
                         });
                     });
-                });
             },
-            init:function(){
+            init: function () {
                 //我的user_id
-                Visitors.user_id=1;
+                if (sessionStorage.getItem("mUserInfo")) {
+                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                    console.log(mUserInfo)
+                    Visitors.user_id = Number(mUserInfo.user_id);
+                } else {
+                    Visitors.user_id = 1; //测试用
+                }
 
                 Visitors.initPullToRefresh();
 
@@ -316,34 +331,34 @@
         function stampToDate(timestamp) {
             var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
             Y = date.getFullYear() + '-';
-            M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-            D = (date.getDate()<10?"0"+date.getDate():date.getDate()) + ' ';
-            h = (date.getHours()<10?"0"+date.getHours():date.getHours()) + ':';
-            m = (date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes());
+            M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+            D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + ' ';
+            h = (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ':';
+            m = (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
             // s = date.getSeconds();
-            return Y+M+D+h+m;
+            return Y + M + D + h + m;
         }
         //时间戳转文字
-        function stampToStr (stamp) { //传来的stamp十位数
+        function stampToStr(stamp) { //传来的stamp十位数
             if (!stamp) return '';
 
-            let nowStamp=Math.round((new Date().getTime())/1000);
-            let howLong=nowStamp-stamp;
+            let nowStamp = Math.round((new Date().getTime()) / 1000);
+            let howLong = nowStamp - stamp;
 
-            if(howLong<60){  //1分钟内
+            if (howLong < 60) { //1分钟内
                 return "1分钟内";
-            }else if(howLong<3600){  //1小时内，显示分钟数
-                let minutes=Math.floor(howLong/60);
-                return minutes+"分钟前";
-            }else if(howLong<43200){  //12小时内，显示小时数
-                let hours=Math.floor(howLong/3600);
-                return hours+"小时前";
-            }else if(howLong>=43200&&howLong<86400){  //大于12小时，小于24小时
-                let dateStr=stampToDate(stamp);
+            } else if (howLong < 3600) { //1小时内，显示分钟数
+                let minutes = Math.floor(howLong / 60);
+                return minutes + "分钟前";
+            } else if (howLong < 43200) { //12小时内，显示小时数
+                let hours = Math.floor(howLong / 3600);
+                return hours + "小时前";
+            } else if (howLong >= 43200 && howLong < 86400) { //大于12小时，小于24小时
+                let dateStr = stampToDate(stamp);
                 console.log(dateStr)
-                let minStr=dateStr.substr(dateStr.length-5);
-                return "昨天 "+minStr;
-            }else if(howLong>86400){  //大于24小时，直接显示时间
+                let minStr = dateStr.substr(dateStr.length - 5);
+                return "昨天 " + minStr;
+            } else if (howLong > 86400) { //大于24小时，直接显示时间
                 return stampToDate(stamp);
             }
         }

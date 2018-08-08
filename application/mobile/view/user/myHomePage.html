@@ -34,7 +34,7 @@
                     </div>
                     <span class="videoStatus" style="display: none;"></span>
                 </div>
-                
+
                 <div class="avatar-content">
                     <span class="sexAge">
                         <i class="sex"></i>
@@ -359,7 +359,7 @@
         user_id: "",
         toUserId: "",
         isSelf: false,
-        attentionStatus: 0,  //userid对touserid的关注状态
+        attentionStatus: 0, //userid对touserid的关注状态
 
         updateDom: function (data) {
 
@@ -373,13 +373,13 @@
             if (data.baseinfo.head_pic && data.baseinfo.head_pic !== "") {
                 $(".avatar-pic img").attr("src", GlobalHost + data.baseinfo.head_pic)
             }
-            if(data.baseinfo.auth_video_status===1){
+            if (data.baseinfo.auth_video_status === 1) {
                 $(".edit-personal-avatar .videoStatus").show();
             }
             $(".avatar-content .sexAge").addClass(sexClass)
             $(".avatar-content .sexAge .age").html(data.baseinfo.age)
             // $(".edit-personal-constellation").html() //星座
-            if (Homepage.isSelf) {  //我的主页
+            if (Homepage.isSelf) { //我的主页
                 $(".editHomePage").show()
                 $("footer").hide()
                 $(".haveAttend").hide()
@@ -401,16 +401,16 @@
                 $("footer").show()
                 $(".haveAttend").show()
                 switch (data.baseinfo.attention) {
-                    case 0:   //未关注
+                    case 0: //未关注
                         $(".haveAttend").find(".attend").show()
                         break;
-                    case 1:   //已关注
+                    case 1: //已关注
                         $(".haveAttend").find(".attended").show()
                         break;
-                    case 2:  //已被关注
+                    case 2: //已被关注
                         $(".haveAttend").find(".attend").show()
                         break;
-                    case 3:   //相互关注
+                    case 3: //相互关注
                         $(".haveAttend").find(".attendAll").show()
                         break;
                     default:
@@ -471,31 +471,37 @@
             })
 
             if (data.baseinfo.mobile_validated == 0) {
-                $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src", "__STATIC__/images/icon/微信@2x.png")
+                $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
+                    "__STATIC__/images/icon/微信@2x.png")
                 $(".myApprove-phone").html("手机号未认证")
                 // $(".myApprove-phone+.approveBtn").show()
             } else {
-                $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src", "__STATIC__/images/icon/微信@2x.png")
+                $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
+                    "__STATIC__/images/icon/微信@2x.png")
                 $(".myApprove-phone").html("手机号已认证")
                 $(".myApprove-phone+.approveBtn").hide()
             }
 
             if (data.baseinfo.auth_video_status == 0) {
-                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/视频未认证@2x.png")
+                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
+                    "__STATIC__/images/icon/视频未认证@2x.png")
                 $(".myApprove-video").html("形象视频未认证")
                 // $(".myApprove-video+.approveBtn").show()
             } else {
-                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/小视频@2x.png")
+                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
+                    "__STATIC__/images/icon/小视频@2x.png")
                 $(".myApprove-video").html("形象视频已认证")
                 $(".myApprove-video+.approveBtn").hide()
             }
 
             if (data.baseinfo.auth_identity_status == 0) {
-                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/身份未认真@2x.png")
+                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
+                    "__STATIC__/images/icon/身份未认真@2x.png")
                 $(".myApprove-identity").html("身份未认证")
                 // $(".myApprove-identity+.approveBtn").show()
             } else {
-                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src","__STATIC__/images/icon/身份未认真@2x.png")
+                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
+                    "__STATIC__/images/icon/身份未认真@2x.png")
                 $(".myApprove-identity").html("身份已认证")
                 $(".myApprove-identity+.approveBtn").hide()
             }
@@ -594,7 +600,7 @@
 
             //最近活跃时间
             if (data.baseinfo.active_time && data.baseinfo.active_time !== "") {
-                let timeStr=stampToStr(data.baseinfo.active_time);
+                let timeStr = stampToStr(data.baseinfo.active_time);
                 $(".active_time").html(timeStr);
             } else {
                 if (Homepage.isSelf) {
@@ -617,7 +623,7 @@
                     $(".active_time").html("填写")
                 }
             }
-            
+
             //updateDom之后
 
             //根据sesstion 返回页面滚动位置
@@ -627,7 +633,7 @@
 
                 //滚动位置
                 setTimeout(function () {
-                    $(".homepage .all-content")[0].scrollTop =pageData.pageScrollTop
+                    $(".homepage .all-content")[0].scrollTop = pageData.pageScrollTop
                 }, 0);
             }
 
@@ -661,35 +667,38 @@
                 }
             })
         },
-        openLoading:function(){
-            if($(".mLoadingMask").length==0){
+        openLoading: function () {
+            if ($(".mLoadingMask").length == 0) {
                 $("body").append($('<div class="mLoadingMask"></div>'));
             }
-            if($(".mLoading").length==0){
+            if ($(".mLoading").length == 0) {
                 $("body").append($('<div class="mLoading"></div>'));
             }
         },
-        closeLoading:function(){
+        closeLoading: function () {
             $(".mLoadingMask")
-            .add($(".mLoading")).remove();
+                .add($(".mLoading")).remove();
         },
         //上传普通/精华图片
-        uploadPic:function({type,file},callback){ //type类型：1普通，2精华/file文件
-            var postData={
-                user_id:Homepage.user_id,
-                type:type,
-                file_type:1,
-                file:file,
+        uploadPic: function ({
+            type,
+            file
+        }, callback) { //type类型：1普通，2精华/file文件
+            var postData = {
+                user_id: Homepage.user_id,
+                type: type,
+                file_type: 1,
+                file: file,
             };
             console.log(postData)
             // return
             $.ajax({
                 type: "POST",
-                url: GlobalHost+"/index.php/Api/User/uploadPhoto",
+                url: GlobalHost + "/index.php/Api/User/uploadPhoto",
                 data: postData,
                 dataType: "json",
-                processData : false,
-                contentType : false,
+                processData: false,
+                contentType: false,
                 success: function (result) {
                     console.log(result)
                     callback();
@@ -701,7 +710,7 @@
             //     alert("最多上传9张图片")
             //     return
             // }
-            var type=Number($(el).attr("data-type")); //1普通图片，2精华图片
+            var type = Number($(el).attr("data-type")); //1普通图片，2精华图片
             var $liTemp = $(
                 `
                     <li class="edit-pic-item">
@@ -730,9 +739,9 @@
                         // $(el).closest(".myPhotos").prepend($liTemp)
                         // console.log(input.value)
                         Homepage.uploadPic({
-                            type:type,
-                            file:input.files[0]
-                        },function(){
+                            type: type,
+                            file: input.files[0]
+                        }, function () {
                             $(el).closest(".myPhotos").prepend($liTemp);
                         });
                     }
@@ -1231,17 +1240,22 @@
         },
         savePageSession: function () {
             //key : homePage
-            let scroll=$(".homepage .all-content")[0].scrollTop;
+            let scroll = $(".homepage .all-content")[0].scrollTop;
             let pageData = {
                 pageScrollTop: scroll
             }
             console.log(pageData)
-            
+
             sessionStorage.setItem('homePage', JSON.stringify(pageData))
         },
-        showVideo:function({user_id,head_pic,src}){
-            console.log(user_id,head_pic,src)
-            let $fullScreen=$(`
+        showVideo: function ({
+            user_id,
+            head_pic,
+            src
+        }) {
+            console.log(user_id, head_pic, src)
+            let $fullScreen = $(
+                `
                 <div class="fullScreen">
                     <div class="videoHeader">
                         <div class="closeFullScreen"></div>
@@ -1272,13 +1286,14 @@
                         </div>
                     </div>
                 </div>
-            `);
+            `
+            );
 
             //点击关闭事件
-            $fullScreen.find(".closeFullScreen").click(function(){
+            $fullScreen.find(".closeFullScreen").click(function () {
                 $fullScreen.remove();
             });
-            
+
             $("body").append($fullScreen);
 
         },
@@ -1346,7 +1361,8 @@
                 //保存页面数据
 
                 var type = $(this).attr("data-type")
-                window.location.href = GlobalHost + "/index.php/mobile/invite/add/type/" + type + ".html"
+                window.location.href = GlobalHost + "/index.php/mobile/invite/add/type/" + type +
+                    ".html"
             })
             //修改个人主页里的资料
             if (Homepage.isSelf) {
@@ -1363,7 +1379,7 @@
                     }, 3000)
 
                     $(".attend").hide()
-                    if (Homepage.attentionStatus == 2) {  //本来就是已被关注了
+                    if (Homepage.attentionStatus == 2) { //本来就是已被关注了
                         $(".attendAll").show()
 
                         Homepage.attentionStatus = 3
@@ -1409,23 +1425,31 @@
                 window.location.href = "editHomePage.html"
             })
             //点击视频认证
-            $(".edit-personal-avatar").delegate(".videoStatus","click",function(){
-                let option={
-                    user_id:1,
-                    head_pic:"/public/upload/head_pic/20180728/938806dc024e113e09aa3b0321e2b91e.jpg",
-                    src:"https://media.w3.org/2010/05/sintel/trailer.mp4",
+            $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
+                let option = {
+                    user_id: 1,
+                    head_pic: "/public/upload/head_pic/20180728/938806dc024e113e09aa3b0321e2b91e.jpg",
+                    src: "https://media.w3.org/2010/05/sintel/trailer.mp4",
                 };
                 Homepage.showVideo(option);
             });
         },
         init: function () {
             //得到user_id
-            Homepage.user_id = 1
-            Homepage.toUserId = 1
-            if (Homepage.user_id == Homepage.toUserId) {
-                Homepage.isSelf = true
+            if (sessionStorage.getItem("mUserInfo")) {
+                let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                console.log(mUserInfo)
+                Homepage.user_id = Number(mUserInfo.user_id);
+                Homepage.toUserId = Number(mUserInfo.user_id);
+            } else {
+                Homepage.user_id = 1; //测试用
+                Homepage.toUserId = 1; //测试用
             }
-            
+
+            if (Homepage.user_id == Homepage.toUserId) {
+                Homepage.isSelf = true;
+            }
+
             //获取用户信息
             Homepage.getDataUpdateDom()
         }
@@ -1437,34 +1461,34 @@
     function stampToDate(timestamp) {
         var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
         Y = date.getFullYear() + '-';
-        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-        D = (date.getDate()<10?"0"+date.getDate():date.getDate()) + ' ';
-        h = (date.getHours()<10?"0"+date.getHours():date.getHours()) + ':';
-        m = (date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes());
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+        D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + ' ';
+        h = (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ':';
+        m = (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
         // s = date.getSeconds();
-        return Y+M+D+h+m;
+        return Y + M + D + h + m;
     }
     //时间戳转文字
-    function stampToStr (stamp) {   //传来的stamp十位数
+    function stampToStr(stamp) { //传来的stamp十位数
         if (!stamp) return '';
 
-        let nowStamp=Math.round((new Date().getTime())/1000);
-        let howLong=nowStamp-stamp;
+        let nowStamp = Math.round((new Date().getTime()) / 1000);
+        let howLong = nowStamp - stamp;
 
-        if(howLong<60){  //1分钟内
+        if (howLong < 60) { //1分钟内
             return "1分钟内";
-        }else if(howLong<3600){  //1小时内，显示分钟数
-            let minutes=Math.floor(howLong/60);
-            return minutes+"分钟前";
-        }else if(howLong<43200){  //12小时内，显示小时数
-            let hours=Math.floor(howLong/3600);
-            return hours+"小时前";
-        }else if(howLong>=43200&&howLong<86400){  //大于12小时，小于24小时
-            let dateStr=stampToDate(stamp);
+        } else if (howLong < 3600) { //1小时内，显示分钟数
+            let minutes = Math.floor(howLong / 60);
+            return minutes + "分钟前";
+        } else if (howLong < 43200) { //12小时内，显示小时数
+            let hours = Math.floor(howLong / 3600);
+            return hours + "小时前";
+        } else if (howLong >= 43200 && howLong < 86400) { //大于12小时，小于24小时
+            let dateStr = stampToDate(stamp);
             console.log(dateStr)
-            let minStr=dateStr.substr(dateStr.length-5);
-            return "昨天 "+minStr;
-        }else if(howLong>86400){  //大于24小时，直接显示时间
+            let minStr = dateStr.substr(dateStr.length - 5);
+            return "昨天 " + minStr;
+        } else if (howLong > 86400) { //大于24小时，直接显示时间
             return stampToDate(stamp);
         }
     }
