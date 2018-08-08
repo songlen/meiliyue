@@ -6,7 +6,7 @@ use think\Db;
 use think\Config;
 
  
-class Invite extends Base {
+class Local extends Base {
 	// 登录成功后加载的隐藏页面 用于前端保存用户信息
 	public function saveUserInfo(){
 		$user_id = I('user_id');
