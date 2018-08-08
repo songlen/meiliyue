@@ -35,8 +35,8 @@ class Base extends Controller {
 
         $data = "\r\n".date('Y-m-d H:i:s')." ".$pathinfo." method: {$method} \r\n param: ".var_export($param, true);
 
-        $logPath = ROOT_PATH.'/runtime/log/'.date('Ymd').'/requestlog.txt';
+        // $logPath = ROOT_PATH.'/runtime/log/'.date('Ymd').'/requestlog.txt';
 
-        file_put_contents($logPath, $data, FILE_APPEND);
+        file_put_contents('runtime/log/request.log', $data, FILE_APPEND);
     }
 }
