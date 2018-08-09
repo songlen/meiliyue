@@ -412,7 +412,7 @@ footer li a {
 }
 
 .invitation .items li .bottom .more ul {
-  flex: 1;
+  flex: 1 0 0;
 }
 
 .invitation .items .bottom .more ul li {
@@ -1673,6 +1673,7 @@ li.detailImages img {
   flex: 1 0 0;
   padding: 0.05rem 0.1rem;
   line-height: 0.3rem;
+  text-align: center;
   border-bottom: 1px solid #e2e2e2;
 }
 
@@ -1776,4 +1777,11 @@ li.edit-pic-item {
   border-radius: 5px;
   text-align: center;
   color: #000;
+}
+
+/* 邀约详情is_jiesong */
+
+.is_jiesong,
+.with_confidante {
+  margin-right: 0.05rem;
 }

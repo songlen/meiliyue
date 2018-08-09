@@ -5,8 +5,12 @@
     <meta charset="UTF-8">
     <title>我感兴趣</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css">
+    <!-- jquery-weui-css -->
+    <link rel="stylesheet" href="__STATIC__/css/weui.css">
+    <link rel="stylesheet" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
+    <!-- 页面-css -->
+    <link rel="stylesheet" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" href="__STATIC__/css/common.css">
     <script>
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
@@ -54,7 +58,7 @@
                             <span class="description">description</span>
                         </li>
                         <!-- <li class="detailImages">
-                            <img src="__STATIC__/images/icon/tx.png">
+                            <img class="inviImg" data-index=${index} src=${GlobalHost+src}>
                         </li> -->
                         <li>
                             <span class="smallDot"></span>
@@ -77,6 +81,18 @@
                     地点：
                     <span class="areaPlace">time</span>
                 </li>
+                <li class="clearfix">
+                    <span class="fl is_jiesong" style="display: none;">
+                        <input type="checkbox" checked="checked" id="myCheck">
+                        <label></label>
+                        <label>需要接送我</label>
+                    </span>
+                    <span class="fl with_confidante" style="display: none;">
+                        <input type="checkbox" checked="checked" id="myCheck1">
+                        <label></label>
+                        <label>对方可携带三两好友</label>
+                    </span>
+                </li>
             </ul>
         </div>
     </div>
@@ -91,6 +107,9 @@
     <button class="interest">我感兴趣</button>
 
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- jquery-weui-js -->
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/swiper.min.js"></script>
     <script>
         var GlobalHost = "http://meiliyue.caapa.org";
         var Interested = {
@@ -150,6 +169,7 @@
             },
             //根据inviteItem更新Dom
             updateDom: function (data) {
+                console.log(data)
                 $(".img-box img").attr("src", GlobalHost + data.head_pic)
                 $(".person .name").html(data.nickname)
                 if (data.sex == 1) {
@@ -162,23 +182,48 @@
                 $(".inviteDetail .inviteDetail-list li .title").html(data.title)
                 $(".inviteDetail .inviteDetail-list li .description").html(data.description)
                 //图片
-                // if (item.image && item.image !== "") {
-                //     //还要改 item.image格式？
+                if (data.image && data.image !== "" && data.image.length !== 0) {
+                    let $li = $("<li class='detailImages'></li>");
+                    data.image.forEach(function (src, index) {
+                        $li.append($(
+                            `
+                            <img class="inviImg" data-index=${index} src=${GlobalHost+src}>
+                            `
+                        ));
+                    });
 
-                //     var $li = $("<li class='detailImages'></li>")
-                //     $li.append($("<img src='__STATIC__/images/icon/tx.png'>"))
-                //     $(".descriptionLi").after($li)
-
-                //     //点击img查看大图
-                //     $(".detailImages img").click(function () {
-                //         //
-                //         console.log(2)
-                //     })
-                // }
+                    $(".descriptionLi").after($li)
+                }
                 $(".inviteDetail .inviteDetail-list li .payType").html(data.pay);
                 $(".inviteDetail .inviteDetail-list li .otherSideSex").html(data.object);
                 $(".areaTime .detailTime").html(data.time)
                 $(".areaTime .areaPlace").html(data.place)
+                //接送，携带好友
+                if (data.is_jiesong === 1) {
+                    $(".is_jiesong").show();
+                }
+                if (data.with_confidante === 1) {
+                    $(".with_confidante").show();
+                }
+
+                //如果看自己的邀约详情，不显示“我感兴趣”
+                if (Interested.originUserId == Interested.toUserId) {
+                    $(".interest").hide();
+                }
+            },
+            showFullPic: function (el) {
+                let index = $(el).attr("data-index");
+                let srcArr = [];
+                $(".detailImages img.inviImg").each(function () {
+                    // srcArr.unshift($(this).attr("src"));
+                    srcArr.push($(this).attr("src"));
+                });
+                console.log(srcArr)
+                let swiper = $.photoBrowser({
+                    items: srcArr
+                });
+                // swiper.open(index);
+                swiper.open();
             },
             eventsBind: function () {
                 //返回
@@ -203,6 +248,11 @@
                 $(".interested .img-box").click(function () {
                     window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
                         Interested.originUserId + "/toUserId/" + Interested.toUserId + ".html";
+                });
+                //点击邀约详情的图片 查看大图
+                $(".inviteDetail-list").delegate("img.inviImg", "click", function () {
+                    console.log($(this).attr("src"))
+                    Interested.showFullPic(this);
                 });
             },
             init: function () {

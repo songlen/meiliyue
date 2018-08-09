@@ -106,7 +106,7 @@ $(function () {
             toHtml(value) {
                 console.log(44444)
                 value = "" + value;
-                return value.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+                return value.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "");
             },
             cutTab(pageStr) {
                 if (pageStr == "area" && this.nowPage == "area") {
@@ -188,9 +188,6 @@ $(function () {
             },
             toggleReleasing() {
                 this.isReleasing = !this.isReleasing
-            },
-            sendFlower() {
-                console.log("送花")
             },
             handleScroll() {
                 let scrollTop = document.getElementsByClassName('pageWrap')[0].scrollTop
@@ -415,9 +412,74 @@ $(function () {
                 });
 
                 $("body").append($fullScreen);
-            }
+            },
+            messageWin: function (msg) {
+                if ($(".msgWrap").length == 0) {
+                    let $msgDiv = $(
+                        `
+                        <div class="msgWrap">
+                            <div class="msg">
+                                <p class="msgText">${msg}</p>
+                                <p class="msgCtrl">
+                                    <span class="closeMsg">确定</span>
+                                </p>
+                            </div>
+                        </div>
+                    `
+                    );
+                    //msg点击事件
+                    $msgDiv.find(".msgCtrl").click(function () {
+                        $msgDiv.remove();
+                    });
+                    $("body").append($msgDiv);
+                }
+            },
+            //动态列表送花
+            giveFlower: function (item) {
+                var _self = this;
+                console.log(item)
+                //用户id  动态id
+                var postData = {
+                    user_id: this.user_id,
+                    dynamic_id: item.dynamic_id
+                }
+                console.log(postData)
+                // this.messageWin("您的小花数量不足！");//测试用
+                // return;
+                $.ajax({
+                    type: "POST",
+                    url: GlobalHost + "/index.php/Api/Dynamics/giveFlower",
+                    data: postData,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+                        if (result.msg == "操作成功" && result.code !== 400) {
+                            //小花数量加一
+                            item.flower_num = item.flower_num + 1;
+                        } else { //送花失败
+                            _self.messageWin("您的小花数量不足！");
+                        }
+                    }
+                });
+            },
+            closeReleasing: function () {
+                if (this.isReleasing) {
+                    console.log(event)
+                    if ($(event.target).closest(".release-start").length == 0) {
+                        this.isReleasing = false;
+                    }
+                }
+            },
         }
     });
+
+    // //someEventBind
+    // $(".body").click(function () {
+    //     console.log("body")
+    //     if (dongtaiVm.isReleasing) {
+    //         dongtaiVm.isReleasing = false;
+    //     }
+    // });
 });
 //时间戳转日期时间
 function stampToDate(timestamp) {

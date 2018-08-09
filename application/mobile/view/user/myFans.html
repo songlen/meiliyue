@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>好友</title>
+    <title>我的粉丝</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <!-- jquery-weui-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
@@ -19,99 +19,13 @@
 <body class="friends-page">
     <header>
         <a href="javascript:void(0)" class="back"></a>
-        <a href="javascript:void(0)" class="searchFriend">添加好友</a>
-        <div class="title">好友</div>
+        <div class="title">我的粉丝</div>
     </header>
 
     <div class="friends-content">
-        <ul class="friends-tabcut">
-            <li data-tab="friends" class="actived">好友</li>
-            <li data-tab="attention">关注</li>
-            <li data-tab="fans">粉丝</li>
-        </ul>
-
         <!-- tabs -->
-        <!-- 好友 -->
-        <div class="tabs friends-tab">
-            <div class="friends-list">
-                <ul class="friendsUl">
-                </ul>
-
-                <div class="no-friends" style="display: none;">
-                    <img src="__STATIC__/images/icon/暂无要找内容.png">
-                    <p>你现在没有任何好友</p>
-                    <p>快去认识新朋友</p>
-                </div>
-            </div>
-
-            <!-- <div class="recommends">
-                <p class="recommends-title">新人推荐</p>
-                <ul>
-                    <li class="newFriendItem">
-                        <div class="friendHeadWrap">
-                            <img src="__STATIC__/images/icon/tx.png">
-                        </div>
-
-                        <div class="recommends-content">
-                            <div>
-                                <span class="listName">浪漫王子</span>
-                                <span class="sexAge male">
-                                    <i class="sex"></i>
-                                    <span class="age">23</span>
-                                </span>
-                            </div>
-                            <span class="addFriend"></span>
-                            <p class="signature">看看电影</p>
-                        </div>
-                    </li>
-                    <li class="newFriendItem">
-                        <div class="friendHeadWrap">
-                            <img src="__STATIC__/images/icon/tx.png">
-                        </div>
-
-                        <div class="recommends-content">
-                            <div>
-                                <span class="listName">浪漫王子</span>
-                                <span class="sexAge male">
-                                    <i class="sex"></i>
-                                    <span class="age">23</span>
-                                </span>
-                            </div>
-                            <span class="addFriend"></span>
-                            <p class="signature">看看电影</p>
-                        </div>
-                    </li>
-                </ul>
-            </div> -->
-
-        </div>
-        <!-- 关注 -->
-        <div class="tabs attention-tab" style="display: none;">
-            <div class="weui-pull-to-refresh__layer">
-                <div class='weui-pull-to-refresh__arrow'></div>
-                <div class='weui-pull-to-refresh__preloader'></div>
-                <div class="down">下拉刷新</div>
-                <div class="up">释放刷新</div>
-                <div class="refresh">正在刷新</div>
-            </div>
-
-            <div class="friends-list">
-                <ul class="attentionUl">
-                </ul>
-
-                <div class="no-attention" style="display: none;">
-                    <img src="__STATIC__/images/icon/暂无要找内容.png" alt="">
-                    <p>你现在没有关注任何人</p>
-                </div>
-
-                <div class="weui-loadmore" style="display: none;">
-                    <i class="weui-loading"></i>
-                    <span class="weui-loadmore__tips">正在加载</span>
-                </div>
-            </div>
-        </div>
         <!-- 粉丝 -->
-        <div class="tabs fans-tab" style="display: none;">
+        <div class="tabs fans-tab">
             <div class="weui-pull-to-refresh__layer">
                 <div class='weui-pull-to-refresh__arrow'></div>
                 <div class='weui-pull-to-refresh__preloader'></div>
@@ -133,11 +47,7 @@
                 <span class="weui-loadmore__tips">正在加载</span>
             </div>
         </div>
-
         <!-- tabs end -->
-
-
-
     </div>
 
 
@@ -146,20 +56,15 @@
     <script type="text/javascript" src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script>
         var GlobalHost = "http://meiliyue.caapa.org";
-        var Friends = {
+        var Fans = {
             user_id: "",
 
             isScroll: false,
+            loading: false,
 
-            curList: "", //attentionList fansList
-            attentionList: {
-                haveLoad: false,
-                type: 1,
-                page: 1,
-            },
             fansList: {
+                list: [],
                 haveLoad: false,
-                type: 2,
                 page: 1,
             },
 
@@ -167,16 +72,16 @@
             savePageData: function () {
                 //key : friendPage
                 let pageData = {
-                    curList: Friends.curList,
+                    curList: Fans.curList,
                     attentionList: {
-                        haveLoad: Friends.attentionList.haveLoad,
-                        type: Friends.attentionList.type,
-                        page: Friends.attentionList.page
+                        haveLoad: Fans.attentionList.haveLoad,
+                        type: Fans.attentionList.type,
+                        page: Fans.attentionList.page
                     },
                     fansList: {
-                        haveLoad: Friends.fansList.haveLoad,
-                        type: Friends.fansList.type,
-                        page: Friends.fansList.page
+                        haveLoad: Fans.fansList.haveLoad,
+                        type: Fans.fansList.type,
+                        page: Fans.fansList.page
                     },
 
                     //scrollTop: document.getElementsByClassName('pageWrap')[0].scrollTop
@@ -186,31 +91,10 @@
                 sessionStorage.setItem('friendPage', JSON.stringify(pageData))
             },
             updateDom: function (data) {
+                console.log(data)
+                let $curUl = $(".fansUl");
                 if (data && data.length !== 0) {
-                    data.forEach(function (item, index) {
-                        let $li = $(
-                            `
-                            <li class="friendItem" data-userId=${item.user_id}>
-                                <div class="friendHeadWrap">
-                                    <img src="${GlobalHost+item.head_pic}">
-                                </div>
-                                <label>${item.nickname}</label>
-                            </li>
-                        `
-                        );
-
-                        $(".friendsUl").append($li);
-                    });
-                } else {
-                    $(".noFriends").show();
-                }
-            },
-            updateDomAttend: function (data) {
-                // debugger
-                let curTabStr = $(".friends-tabcut li.actived").attr("data-tab");
-                let $curUl = $("." + curTabStr + "Ul");
-                if (data && data.length !== 0) {
-                    if (!Friends.isScroll) {
+                    if (!Fans.isScroll) {
                         $curUl.html("");
                     }
                     data.forEach(function (item, index) {
@@ -250,20 +134,18 @@
                             $li.find(".sexAge").addClass("female");
                         }
                         //是否为好友(相互关注)
-                        if (item.twoway == 1) {
+                        if (item.twoway == 1) { //我也关注他了
                             $li.find(".attentionOperate").show();
-                        } else {
-                            if (curTabStr == "fans") {
-                                $li.find(".addFriend").show();
-                            }
+                        } else { //我没关注他
+                            $li.find(".addFriend").show();
                         }
 
                         $curUl.append($li);
 
                     });
                 } else {
-                    if (Friends[Friends.curList].page !== 1) {
-                        $(".no-" + curTabStr).show();
+                    if (Fans.fansList.page == 1) {
+                        $(".no-fans").show();
                     }
                 }
 
@@ -274,26 +156,26 @@
                 }
 
                 //绑定dom update后才能绑定的事件？
-                Friends.eventsBindAfter();
+                Fans.eventsBindAfter();
 
             },
-            getAttendList: function () {
+            getFansList: function () {
                 let getPage;
-                if (Friends.isScroll) {
-                    getPage = Friends[Friends.curList].page + 1;
+                if (Fans.isScroll) {
+                    getPage = Fans.fansList.page + 1;
                 } else {
                     getPage = 1;
                 }
 
                 let postData = {
-                    user_id: Friends.user_id,
-                    type: Friends[Friends.curList].type,
+                    user_id: Fans.user_id,
+                    type: 2, //粉丝
                     page: getPage,
                 };
-                console.log(postData)
+
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/user/attentionFans",
+                    url: GlobalHost + "/index.php/Api/user/friend",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -302,58 +184,40 @@
                         // result.data=result.data.concat(result.data).concat(result.data).concat(result.data).concat(result.data)//测试用
                         // result.data=[];//测试用
 
-                        if (Friends.isScroll) {
+                        if (Fans.isScroll) {
                             if (result.data.length !== 0) {
-                                // Visitors.page++;
+                                Fans.fansList.page++;
+                                Fans.fansList.list = Fans.fansList.list.concat(result
+                                    .data); //保存数据
                             }
-                            Friends.isScroll = false;
+                            Fans.isScroll = false;
+                        } else {
+                            Fans.fansList.list = result.data; //保存数据
                         }
 
-                        Friends.updateDomAttend(result.data);
+                        Fans.updateDom(result.data);
 
-                        Friends[Friends.curList].haveLoad = true;
+                        Fans.fansList.haveLoad = true;
 
                         //下拉刷新done 滚动加载done
-                        $(".attention-tab")
-                            .add($(".fans-tab"))
-                            .pullToRefreshDone();
-                        Friends.loading = false;
-                    }
-                });
-            },
-            getFriendsList: function () {
-                $.ajax({
-                    type: "POST",
-                    url: GlobalHost + "/index.php/Api/user/friend",
-                    data: {
-                        user_id: Friends.user_id
-                    },
-                    dataType: "json",
-                    success: function (result) {
-                        console.log(result.data)
-
-                        // result.data=result.data.concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data);//测试用
-                        // result.data=[];//测试用
-
-                        Friends.updateDom(result.data);
+                        $(".tabs").pullToRefreshDone();
+                        Fans.loading = false;
                     }
                 });
             },
             initPullToRefresh: function () {
                 //下拉刷新
-                $(".attention-tab")
-                    .add($(".fans-tab")).pullToRefresh(function () {
-                        Friends.getAttendList();
-                    });
+                $(".tabs").pullToRefresh(function () {
+                    Fans.getAttendList();
+                });
                 //滚动加载
-                $(".attention-tab")
-                    .add($(".fans-tab")).infinite().on("infinite", function () {
-                        Friends.isScroll = true;
-                        //
-                        if (Friends.loading) return;
-                        Friends.loading = true;
-                        Friends.getAttendList();
-                    });
+                $(".tabs").infinite().on("infinite", function () {
+                    Fans.isScroll = true;
+                    //
+                    if (Fans.loading) return;
+                    Fans.loading = true;
+                    Fans.getAttendList();
+                });
             },
             openLoading: function () {
                 if ($(".mask").length == 0) {
@@ -374,11 +238,11 @@
                     let $li = $(this).closest("li");
                     let toUserId = $li.attr("data-userId");
                     let postData = {
-                        user_id: Friends.user_id,
-                        toUserId: Number(toUserId),
+                        user_id: Fans.user_id,
+                        friend_id: Number(toUserId),
                     };
                     console.log(postData)
-                    Friends.openLoading();
+                    // Fans.openLoading();
                     $.ajax({
                         type: "POST",
                         url: GlobalHost + "/index.php/Api/User/attention",
@@ -387,13 +251,20 @@
                         success: function (result) {
                             console.log(result)
 
-                            Friends.closeLoading();
+                            // Fans.closeLoading();
                             // setTimeout(function(){
-                            //     Friends.closeLoading();
+                            //     Fans.closeLoading();
                             // },200)
+
+                            // if (result.code == 200) {
+                            $li.find(".attentionOperate").show();
+                            $li.find(".addFriend").hide();
+                            // }
                         }
                     });
                 });
+                //取消关注
+                //
             },
             eventsBind: function () {
                 //back
@@ -408,9 +279,9 @@
                     $("." + tabName + "-tab").show().siblings(".tabs").hide();
 
                     if (tabName !== "friends") {
-                        Friends.curList = tabName + "List";
-                        if (!Friends[Friends.curList].haveLoad) {
-                            Friends.getAttendList();
+                        Fans.curList = tabName + "List";
+                        if (!Fans[Fans.curList].haveLoad) {
+                            Fans.getAttendList();
                         }
                     }
                 });
@@ -419,7 +290,7 @@
                     .add($(".fansUl")).delegate(".friendItem-avatar", "click", function () {
                         //savePageData()
 
-                        let user_id = Friends.user_id;
+                        let user_id = Fans.user_id;
                         let toUserId = $(this).closest("li").attr("data-toUserId");
                         window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
                             user_id + "/toUserId/" + toUserId + ".html";
@@ -430,24 +301,24 @@
                 if (sessionStorage.getItem("mUserInfo")) {
                     let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
-                    Friends.user_id = Number(mUserInfo.user_id);
+                    Fans.user_id = Number(mUserInfo.user_id);
                 } else {
-                    Friends.user_id = 1; //测试用
+                    Fans.user_id = 1; //测试用
                 }
 
-                Friends.initPullToRefresh();
+                Fans.initPullToRefresh();
 
                 //从session获取之前的页面数据
                 if (sessionStorage.getItem("friendPage")) {
                     let pageData = JSON.parse(sessionStorage.getItem("friendPage"))
                     console.log(pageData)
 
-                    Friends.curList = pageData.curList;
-                    Friends.attentionList = {
+                    Fans.curList = pageData.curList;
+                    Fans.attentionList = {
                         haveLoad: false,
                         page: 1
                     };
-                    Friends.fansList = {
+                    Fans.fansList = {
                         haveLoad: false,
                         page: 1
                     };
@@ -455,7 +326,7 @@
                     //tab页
                     $(".friends-tabcut li").removeClass("actived");
                     $(".tabs").hide();
-                    switch (Friends.curList) {
+                    switch (Fans.curList) {
                         case "":
                             $(".friends-tabcut .friends").addClass("actived");
                             $(".friends-tab").show();
@@ -475,16 +346,15 @@
                     // setTimeout(function () {
                     //     document.getElementsByClassName('comments-content')[0].scrollTop = pageData.scrollTop;
                     // }, 0);
+                } else {
+                    Fans.getFansList();
                 }
 
-
-                Friends.getFriendsList();
-
-                Friends.eventsBind();
+                Fans.eventsBind();
             }
         };
         $(function () {
-            Friends.init();
+            Fans.init();
         });
     </script>
 </body>

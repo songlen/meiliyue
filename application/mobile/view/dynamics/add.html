@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <div class="edit-pic">
+            <div class="edit-pic" style="display: none;">
                 <ul class="showPicUl">
                     <a href="javascript:void(0)" class="addPic">
                         <img src="__STATIC__/images/icon/add.png">
@@ -218,35 +218,6 @@
                     }]
                 });
             },
-            //获取地理位置
-            getAddress: function () {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function (position) {
-                        var lat = position.coords.latitude;
-                        var lon = position.coords.longitude;
-                        // alert(lat, lon)
-                        // //var map = new BMap.Map("container");    // 创建Map实例
-                        // var point = new BMap.Point(lon, lat);   // 创建点坐标
-                        // var gc = new BMap.Geocoder();
-                        // gc.getLocation(point, function (rs) {
-                        //     var addComp = rs.addressComponents;
-                        //     var curCity = {
-                        //         id: '',
-                        //         name: addComp.province,
-                        //         date: curDateTime()
-                        //     };
-                        //     //当前定位城市
-                        //     $.cookie('VPIAO_MOBILE_CURRENTCITY', JSON.stringify(curCity), {
-                        //         expires: 7,
-                        //         path: '/'
-                        //     });
-                        //     //alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street);
-                        //     if (successFunc != undefined)
-                        //         successFunc(addComp);
-                        // });
-                    })
-                }
-            },
             //发动态
             sendDynamic: function () {
 
@@ -299,7 +270,7 @@
 
                 //jquery.form.js方法
                 $(":input[name='user_id']").val(Edit._user_id);
-                $(":input[name='type']").val(Edit._user_id);
+                $(":input[name='type']").val(Edit._type);
                 $(":input[name='content']").val(contentStr);
 
                 Edit.openLoading();
@@ -354,6 +325,7 @@
             },
             //添加图片
             addPic: function () {
+                console.log("添加img")
                 if ($("img.showPic").length >= 9) {
                     // alert("最多上传9张图片")
                     Edit.messageWin("最多上传9张图片");
@@ -362,7 +334,7 @@
                 var $liTemp = $(
                     `
                         <li class="edit-pic-item">
-                            <input class="albumInput" name="image" type="file" accept="image/*" style="display: none">
+                            <input class="albumInput" name="image[]" type="file" accept="image/*" style="display: none">
                             <img class="showPic" data-index=${$(".edit-pic-item").length} src="__STATIC__/images/icon/tx.png">
                             <a href="javascript:void(0)" class="edit-closePic"></a>
                         </li>
@@ -412,8 +384,8 @@
             },
             //添加视频
             addVideo: function () {
+                console.log("添加video")
                 if ($("video.showPic").length >= 1) {
-                    // alert("最多上传9张图片")
                     Edit.messageWin("视频最多上传一个");
                     return;
                 }
@@ -507,7 +479,8 @@
                     let count = vInnerHtml.length
                     document.getElementById('textCount').innerHTML = count
                     if (count >= 1000) {
-                        alert("最多输入1000个字符")
+                        // alert("最多输入1000个字符")
+                        Edit.messageWin("最多输入1000个字符");
                     }
                 }
             },
@@ -524,10 +497,18 @@
 
                 //_type
                 let url = window.location.href;
-                url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html"; //测试用
+                // url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/2.html"; //测试用
                 let strTemp = url.split("/add/type/")[1];
                 let type = strTemp.substr(0, strTemp.length - 5);
                 Edit._type = Number(type);
+
+                //updateDom
+                Edit.updateDom();
+            },
+            updateDom: function () {
+                if (Edit._type !== 1) {
+                    $(".edit-pic").show();
+                }
             },
             eventsBind: function () {
                 //限制字数

@@ -264,6 +264,12 @@ footer li a {
     width: calc(30% - 5px);
 }
 
+.list-item .item-content>p img.emoji_icon {
+    width: 0.2rem;
+    height: 0.2rem;
+    vertical-align: middle;
+}
+
 .list-item .item-comment {
     display: flex;
     justify-content: flex-end;
@@ -342,7 +348,8 @@ footer li a {
     left: 50%;
     top: 50%;
     width: 3.55rem;
-    height: 3.04rem;
+    /* height: 3.04rem; */
+    height: 2.3rem;
     background-color: #fff;
     z-index: 4;
     transform: translate(-50%, -50%);
@@ -644,6 +651,12 @@ a.operate {
 .details-content .details-content-text img {
     width: calc(33.3333% - 1px);
     margin-top: 5px;
+}
+
+.details-content .details-content-text img.emoji_icon {
+    width: 0.2rem;
+    height: 0.2rem;
+    vertical-align: middle;
 }
 
 .details-content .details-flower {
@@ -1183,6 +1196,7 @@ a.operate {
     flex: 1 0 0;
     padding: 0.05rem 0.1rem;
     line-height: 0.3rem;
+    text-align: center;
     border-bottom: 1px solid #e2e2e2;
 }
 

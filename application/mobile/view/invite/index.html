@@ -77,7 +77,7 @@
                     <div class="addressWrap">
                         <div class="address clearfix" @click="opentSelect">
                             <span class="fl" @click.stop="cancelSelectList">{{selectedText}}
-                                <span class="cancelSelected" v-cloak v-if="selectedText!=='辽宁'"></span>
+                                <span class="cancelSelected" v-cloak v-if="selectedText!==defaultArea.text"></span>
                             </span>
                             <span class="select fr">筛选</span>
                         </div>
@@ -141,8 +141,9 @@
                                         <li v-cloak v-if="item.place&&item.place!==''">
                                             <span class="smallDot"></span>{{item.place}}</li>
                                     </ul>
-                                    <div v-cloak v-if="item.image&&item.image!==''">
-                                        <img :src="GlobalHost+item.image">
+                                    <!-- 图片 -->
+                                    <div v-cloak v-if="item.image&&item.image!==''&&item.image.length!==0">
+                                        <img :src="GlobalHost+item.image[0]">
                                     </div>
                                 </div>
                             </div>
@@ -250,14 +251,14 @@
                                     <input type="text" id='city-picker' />
                                 </a>
                             </li>
-                            <li class="present clearfix">
+                            <!-- <li class="present clearfix">
                                 <div class="weui-cell weui-cell_switch">
                                     <div class="weui-cell__bd">礼物</div>
                                     <div class="weui-cell__ft">
                                         <input class="weui-switch" type="checkbox">
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                             <li class="select clearfix">
                                 <div class="weui-cell weui-cell_switch">
                                     <div class="weui-cell__bd">只看视频认证用户</div>
@@ -281,6 +282,8 @@
     <!-- jquery-weui-js -->
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
+    <!-- areaCode -->
+    <script src="__STATIC__/js/areaCodeArr.js"></script>
     <!-- my-js -->
     <script>
         $(function () {
@@ -309,7 +312,11 @@
                     nowPageIndex: 1, //当前页码
                     isPlusing: false,
 
-                    selectedText: "辽宁", //目前 默认值 辽宁
+                    selectedText: "",
+                    defaultArea: {
+                        text: "",
+                        code: "",
+                    },
 
                     //筛选页面
                     sortList: ["最近发布", "近期约会", "离我最近"],
@@ -326,18 +333,34 @@
                     type() {
                         return this.optionsList.indexOf(this.nowOptionBtn) == 0 ? null : this.optionsList
                             .indexOf(this.nowOptionBtn)
+                    },
+                    order_type() {
+                        return this.nowSortIndex + 1;
                     }
                 },
                 mounted() {
                     let _self = this
-                    //获取我的user_id
+                    //userInfo
                     if (sessionStorage.getItem("mUserInfo")) {
                         let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
                         console.log(mUserInfo)
                         this.user_id = Number(mUserInfo.user_id);
+                        var proCode = mUserInfo.province.toString();
                     } else {
                         this.user_id = 1; //测试用
+                        var proCode = "370000"; //山东 测试用
                     }
+
+                    //默认省
+                    let proObj = codeToAreaObj(proCode);
+                    _self.defaultArea.text = proObj.name;
+                    _self.defaultArea.code = proObj.code;
+                    _self.selectedText = proObj.name;
+                    _self.nowProvince = proObj.code;
+
+
+
+
 
                     //监听scrollTop，改变筛选条样式
                     document.getElementsByClassName('dropRefresh')[0].addEventListener('scroll', this.handleAddress);
@@ -377,18 +400,25 @@
                 methods: {
                     //获取邀约列表
                     getInviteList({
-                        longitude = "41",
-                        latitude = "123",
+                        // order_type = 1,
+                        longitude = "",
+                        latitude = "",
                         type = null,
                         sex = null,
-                        province = null,
+                        province = this.nowProvince, //正式的
+                        // province = null, //测试用
                         city = null,
                         auth_video = null,
                         page = 1,
                     } = {}, isScroll) {
-                        //
                         let _self = this
+                        if (_self.order_type == 3) {
+                            let postion = this.getLocalPosition();
+                            longitude = postion[0];
+                            latitude = postion[1];
+                        }
                         let postDataTemp = {
+                            order_type: _self.order_type,
                             longitude: longitude,
                             latitude: latitude,
                             type: type,
@@ -435,19 +465,64 @@
                     },
                     //点击option
                     handleOption(btnStr) {
-                        this.nowOptionBtn = btnStr
+                        let _self = this;
+                        this.nowOptionBtn = btnStr;
                         let type = this.optionsList.indexOf(btnStr)
+                        let sex
+                        switch (this.nowSex) {
+                            case "全部":
+                                sex = null
+                                break;
+                            case "男":
+                                sex = "1"
+                                break;
+                            case "女":
+                                sex = "2"
+                                break;
+                            default:
+                                break;
+                        }
                         this.getInviteList({
-                            type: type !== 0 ? type : null
+                            type: type !== 0 ? type : null,
+                            sex: sex,
+                            province: _self.nowProvince,
+                            city: _self.nowCity,
+                            onlyVideo: _self.onlyVideo
                         })
                     },
                     //默认img
                     defaultImg(event) {
                         event.target.src = "__STATIC__/images/icon/tx.png"
                     },
-                    //获取地理位置
-                    getLocalAddress() {
+                    //获取当前地理位置
+                    getLocalPosition: function () { //返回一个数组， 经 纬度
+                        let position = [null, null];
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition( // 该函数有如下三个参数
+                                function (pos) { // 如果成果则执行该回调函数
+                                    console.log(
+                                        '  经度：' + pos.coords.latitude +
+                                        '  纬度：' + pos.coords.longitude +
+                                        '  高度：' + pos.coords.altitude +
+                                        '  精确度(经纬)：' + pos.coords.accuracy +
+                                        '  精确度(高度)：' + pos.coords.altitudeAccuracy +
+                                        '  速度：' + pos.coords.speed
+                                    );
 
+                                    position[0] = pos.coords.latitude;
+                                    position[1] = pos.coords.longitude;
+                                },
+                                function (err) { // 如果失败则执行该回调函数
+                                    console.log(err.message);
+                                }, { // 附带参数
+                                    // enableHighAccuracy: false, // 提高精度(耗费资源)
+                                    // timeout: 3000, // 超过timeout则调用失败的回调函数
+                                    // maximumAge: 1000 // 获取到的地理信息的有效期，超过有效期则重新获取一次位置信息
+                                }
+                            );
+                        }
+
+                        return position;
                     },
                     //打开邀约详情页面
                     openInviteDetail(item) {
@@ -462,7 +537,7 @@
 
                         let toUrl = GlobalHost + "/index.php/mobile/invite/detail.html?options=" + JSON
                             .stringify(options);
-                        // toUrl="detail.html?options="+JSON.stringify(options);//测试用
+                        // toUrl = "detail.html?options=" + JSON.stringify(options); //测试用
                         console.log(toUrl)
 
                         window.location.href = toUrl;
@@ -527,7 +602,7 @@
                     },
                     //取消筛选条件，加载所有数据
                     cancelSelectList() {
-                        if (this.selectedText !== "辽宁") {
+                        if (this.selectedText !== this.defaultArea.text) {
                             let type = this.type
                             this.getInviteList({
                                 type: type
@@ -538,7 +613,7 @@
                                 scrollTop: 0
                             }, 300)
 
-                            this.selectedText = "辽宁"
+                            this.selectedText = this.defaultArea.text;
                             this.nowProvince = null
                             this.nowCity = null
 
@@ -774,7 +849,7 @@
 
                         console.log(textTemp)
 
-                        this.selectedText = textTemp.trim() == "" ? "辽宁" : textTemp
+                        this.selectedText = textTemp.trim() == "" ? this.defaultArea.text : textTemp
                         //更新筛选条件text end
 
                         this.getInviteList({

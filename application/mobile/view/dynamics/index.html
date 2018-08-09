@@ -17,7 +17,7 @@
 </head>
 
 <body class="dongtai">
-    <div class="vueWrap" id="dongtaiApp">
+    <div class="vueWrap" id="dongtaiApp" @click="closeReleasing">
         <div class="allWrap" :class="{blur:isReleasing}">
             <header>
                 <div class="tabCut" :class="{actived:nowPage=='area'}" @click="cutTab('area')">
@@ -90,9 +90,9 @@
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
-                                    <div class="flowerWrap" @click="sendFlower">
-                                        <img src="__STATIC__/images/icon/花1.png">
-                                        <img style="display: none;" src="__STATIC__/images/icon/花2.png">
+                                    <div class="flowerWrap" @click.stop="giveFlower(item)">
+                                        <img v-cloak v-if="item.flower_num>0" src="__STATIC__/images/icon/花2.png">
+                                        <img v-cloak v-else src="__STATIC__/images/icon/花1.png">
                                     </div>
                                     <span class="flowerNum" v-cloak v-if="item.flower_num>0">{{item.flower_num}}</span>
                                 </div>
@@ -190,7 +190,7 @@
 
         <!-- 模糊之外 -->
 
-        <div class="release" :class="{actived:isReleasing}" @click="toggleReleasing"></div>
+        <div class="release" :class="{actived:isReleasing}" @click.stop="toggleReleasing"></div>
 
         <div class="release-start" v-cloak v-show="isReleasing">
             <h5>发布动态</h5>
@@ -201,12 +201,12 @@
                 </div>
                 <div class="release-btn" @click="openEdit(2)">
                     <img src="__STATIC__/images/icon/选照片@2x.png">
-                    <p>选照片</p>
+                    <p>图片</p>
                 </div>
-                <div class="release-btn" @click="openEdit(2)">
+                <!-- <div class="release-btn" @click="openEdit(2)">
                     <img src="__STATIC__/images/icon/拍照@2x.png">
                     <p>拍照</p>
-                </div>
+                </div> -->
                 <div class="release-btn" @click="openEdit(3)">
                     <img src="__STATIC__/images/icon/小视频@2x.png">
                     <p>小视频</p>

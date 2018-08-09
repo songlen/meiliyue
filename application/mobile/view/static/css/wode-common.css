@@ -223,7 +223,7 @@ a.close {
 }
 
 .publicPic {
-    height: 0.9rem;
+    /* height: 0.9rem; */
 }
 
 .publicPic .publicPic-title,
@@ -238,6 +238,8 @@ a.close {
 
 .publicPic ul {
     display: inline-flex;
+    flex: 1 0 0;
+    flex-wrap: wrap;
 }
 
 .edit-pic-item img {
@@ -249,6 +251,9 @@ a.close {
     font-size: 0;
     margin: 0.05rem;
     position: relative;
+    width: 0.66rem;
+    height: 0.66rem;
+    overflow: hidden;
 }
 
 .edit-pic-item .edit-closePic {
@@ -488,11 +493,11 @@ a.close {
     color: #000;
 }
 
-.mLoading::after {
+/* .mLoading::after {
     content: "处理中...";
     display: inline;
     color: #000;
-}
+} */
 
 /* 评论 */
 
@@ -643,7 +648,7 @@ a.close {
     margin-left: -0.2rem;
 } */
 
-.videoStatus{
+.videoStatus {
     display: inline-block;
     width: 0.2rem;
     height: 0.2rem;
@@ -653,13 +658,15 @@ a.close {
     right: 0.13rem;
     bottom: 0.14rem;
 }
+
 .comments-page .videoStatus,
-.visitors-page .videoStatus{
+.visitors-page .videoStatus {
     width: 0.18rem;
     height: 0.18rem;
     bottom: 0;
     right: -0.03rem;
 }
+
 .fans-tab .comments-text,
 .attention-tab .comments-text,
 .comments-item .comments-text {
@@ -818,7 +825,8 @@ a.close {
 
 .friends-content .tabs {
     position: absolute;
-    top: 0.34rem;
+    /* top: 0.34rem; */
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
@@ -909,23 +917,22 @@ li.friendItem {
 
 .addFriend {
     background: url(../images/icon/添加好友@2x.png) center center no-repeat;
-    background-size: 100%;
+    background-size: 100% 100%;
     width: 0.2rem;
     height: 0.22rem;
     float: right;
     margin-right: 0.14rem;
-    margin-top: -0.12rem;
+    margin-top: -0.2rem;
 }
 
 .attentionOperate {
     background: url(../images/icon/通过好友@2x.png) center center no-repeat;
     background-size: 100% 100%;
     width: 0.2rem;
-    height: 0.2rem;
+    height: 0.22rem;
     float: right;
     margin-right: 0.14rem;
-    /* margin-top: -0.05rem; */
-    margin-top: -0.12rem;
+    margin-top: -0.2rem;
 }
 
 .fans-tab .comments-item {
@@ -1839,7 +1846,8 @@ ul.signatureList li.actived {
     z-index: 6;
     background-color: #000;
 }
-.fullScreen .videoHeader{
+
+.fullScreen .videoHeader {
     position: fixed;
     top: 0;
     left: 0;
@@ -1852,7 +1860,8 @@ ul.signatureList li.actived {
     align-items: center;
     justify-content: flex-end;
 }
-.fullScreen .videoHeader>.img-box{
+
+.fullScreen .videoHeader>.img-box {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -1860,9 +1869,11 @@ ul.signatureList li.actived {
     margin-right: 15px;
     margin-left: 10px;
 }
-.fullScreen .videoHeader>.img-box>img{
+
+.fullScreen .videoHeader>.img-box>img {
     width: 100%;
 }
+
 .fullScreen .closeFullScreen {
     width: 30px;
     height: 30px;
@@ -1870,13 +1881,13 @@ ul.signatureList li.actived {
     margin-right: auto;
     margin-left: 25px;
 }
-.fullScreen .videoOperate{
+
+.fullScreen .videoOperate {
     width: 30px;
     height: 30px;
     background: url(../images/icon/三个点.png) center center no-repeat;
     background-size: 100%;
 }
-
 
 .fullScreen .progressBar {
     display: block;
@@ -1903,7 +1914,8 @@ ul.signatureList li.actived {
     position: relative;
     z-index: 1;
 }
-.fullScreen .fullScreenScroll .videoInput{
+
+.fullScreen .fullScreenScroll .videoInput {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -1914,9 +1926,11 @@ ul.signatureList li.actived {
     align-items: center;
     font-size: 14px;
 }
+
 .fullScreen .fullScreenScroll .fullScreenWrap>video {
     background-color: #000;
 }
+
 .fullScreen .fullScreenScroll .fullScreenWrap .videoFooter {
     position: absolute;
     left: 0;
@@ -1927,13 +1941,15 @@ ul.signatureList li.actived {
     align-items: center;
     justify-content: center;
 }
-.videoCommentBtn{
+
+.videoCommentBtn {
     width: 30px;
     height: 30px;
     background: url(../images/icon/评论-4.png) center center no-repeat;
     background-size: 100%;
 }
-.videoFooter .littleTri{
+
+.videoFooter .littleTri {
     width: 9px;
     height: 9px;
     border: 1px solid;

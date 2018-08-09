@@ -250,7 +250,7 @@
             savePageData: function () {
                 //key : visitorPage
                 let pageData = {
-                    nowList: Visitors.curList,
+                    curList: Visitors.curList,
                     visiList: {
                         haveLoad: Visitors.visiList.haveLoad,
                         page: Visitors.visiList.page
@@ -359,10 +359,13 @@
                     };
 
                     //tab页
+                    // debugger
                     $("header .title a").removeClass("actived");
-                    $("[data-list='" + Visitors.curList + "']").addClass("actived").
+                    // debugger
+                    $("[data-list='" + Visitors.curList + "']").addClass("actived");
+                    // debugger
                     $("." + Visitors.curList).show().siblings("ul").hide();
-
+                    // debugger
                     //滚动位置
                     setTimeout(function () {
                         document.getElementsByClassName('comments-content')[0].scrollTop = pageData.scrollTop;

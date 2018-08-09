@@ -208,12 +208,13 @@
                 }
                 //dynamic_id
                 var ulrStr = window.location.href;
-                //ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/155.html" //测试用
+                // ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/155.html" //测试用
                 var strTemp = ulrStr.split("/detail/id/")[1];
                 Details.dynamic_id = Number(strTemp.substr(0, strTemp.length - 5));
+                console.log(Details.dynamic_id)
 
                 //这条动态的发布者的id
-                Details.dynamic_origin_id = Number('{$info["user_id"]}');
+                Details.dynamic_origin_id = Number('{$info["user_id"]}'); //????
                 // Details.dynamic_origin_id = 1; //测试用
                 console.log(Details.dynamic_origin_id)
             },
@@ -222,7 +223,7 @@
                 //用户id  动态id
                 var postData = {
                     user_id: Details.user_id,
-                    dynamics_id: Details.dynamic_id
+                    dynamic_id: Details.dynamic_id
                 }
 
                 $.ajax({
@@ -232,18 +233,18 @@
                     dataType: "json",
                     success: function (result) {
                         //这里需要更多信息？？
-                        let sendedFlowersCount = 2 //已送2朵小花
-                        let leftFlowersCount = 99 //自己剩余99朵小花
-                        if (result.msg == "操作成功") {
-                            //显示提示弹窗
-                            $(".flowerDialog .sendSuccessCount").text(sendedFlowersCount)
-                            $(".flowerDialog .dialogLeftFlowers").text(leftFlowersCount)
-                            $(".flowerDialog").show().addClass('mfadeout')
-                            clearTimeout(Details._flowerTimer)
-                            Details._flowerTimer = setTimeout(function () {
-                                $('.flowerDialog').hide().removeClass('mfadeout')
-                            }, 1300)
-                            //显示提示弹窗 end
+                        // let sendedFlowersCount = 2 //已送2朵小花
+                        // let leftFlowersCount = 99 //自己剩余99朵小花
+                        if (result.msg == "操作成功" && result.code !== 400) {
+                            // //显示提示弹窗
+                            // $(".flowerDialog .sendSuccessCount").text(sendedFlowersCount)
+                            // $(".flowerDialog .dialogLeftFlowers").text(leftFlowersCount)
+                            // $(".flowerDialog").show().addClass('mfadeout')
+                            // clearTimeout(Details._flowerTimer)
+                            // Details._flowerTimer = setTimeout(function () {
+                            //     $('.flowerDialog').hide().removeClass('mfadeout')
+                            // }, 1300)
+                            // //显示提示弹窗 end
                             //小花池里增加一朵小花
                             $(".flowerPool").prepend($(
                                 '<div class="flowerItem"><img src="__STATIC__/images/icon/花3.png"></div>'
@@ -257,11 +258,33 @@
                             }
                             //已有小花数量加一
                             $(".flowerCount").html(Number($(".flowerCount").html()) + 1)
+                        } else {
+                            Details.messageWin("您的小花数量不足！");
                         }
                     }
                 })
             },
-
+            messageWin: function (msg) {
+                if ($(".msgWrap").length == 0) {
+                    let $msgDiv = $(
+                        `
+                        <div class="msgWrap">
+                            <div class="msg">
+                                <p class="msgText">${msg}</p>
+                                <p class="msgCtrl">
+                                    <span class="closeMsg">确定</span>
+                                </p>
+                            </div>
+                        </div>
+                    `
+                    );
+                    //msg点击事件
+                    $msgDiv.find(".msgCtrl").click(function () {
+                        $msgDiv.remove();
+                    });
+                    $("body").append($msgDiv);
+                }
+            },
             //申请查看主页
             applyHomepage: function () {
                 console.log(3)

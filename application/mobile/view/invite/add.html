@@ -224,6 +224,19 @@
 
                 //
             },
+            initSomeDom: function () {
+                //地点，时间 选择器
+                $("#city-picker").cityPicker({
+                    title: "请选择地区",
+                    showDistrict: false
+                });
+                $("#datetime-picker").calendar({
+                    dateFormat: "yyyy-mm-dd"
+                });
+                //复选框
+                document.getElementById("myCheck").checked = false;
+                document.getElementById("myCheck1").checked = false;
+            },
             //改变 地址 选择器默认值
             setAreaDefault: function () {
 
@@ -273,9 +286,8 @@
                 }
             },
             addPic: function () {
-                if ($(".edit-pic-item").length >= 9) {
-                    // alert("最多上传9张图片")
-                    ReleInvite.messageWin("最多上传9张图片");
+                if ($(".edit-pic-item").length >= 3) {
+                    ReleInvite.messageWin("最多上传3张图片");
                     return;
                 }
                 var $liTemp = $(
@@ -532,16 +544,11 @@
                 });
             },
             init: function () {
+                //获取页面基本信息
                 ReleInvite.getPageData()
 
                 //初始化 地点 时间 选择器
-                $("#city-picker").cityPicker({
-                    title: "请选择地区",
-                    showDistrict: false
-                });
-                $("#datetime-picker").calendar({
-                    dateFormat: "yyyy-mm-dd"
-                });
+                ReleInvite.initSomeDom();
 
                 //
                 ReleInvite.eventsBind()

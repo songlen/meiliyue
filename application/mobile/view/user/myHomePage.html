@@ -48,7 +48,10 @@
                     </span>
                     <p>
                         <img class="areaPic" src="__STATIC__/images/icon/定位-2.png">
-                        <span class="edit-personal-area">北京</span>&nbsp;
+                        <span class="edit-personal-area">
+                            <span class="province"></span>
+                            <span class="province-city"></span>
+                        </span>&nbsp;
                         <span class="distance" style="display: none;">2km</span>
                     </p>
                 </div>
@@ -352,6 +355,10 @@
 
 </body>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- jquery.form-js -->
+<script src="__STATIC__/js/js-plugins/jquery.form.js"></script>
+<!-- areaCodeArr.js -->
+<script src="__STATIC__/js/areaCodeArr.js"></script>
 <script>
     var GlobalHost = "http://meiliyue.caapa.org"
     var Homepage = {
@@ -430,13 +437,25 @@
                 }
                 $(".distance").show()
             }
-            $(".edit-personal-area").html(data.baseinfo.city)
-            if (data.photos) {
-                $(".picCount").html(data.photos.length)
-                //个人相册
-                // data.photos.forEach(function(item,index){
+            //地区
+            let qqq
+            $(".province").html(codeToAreaObj(data.baseinfo.province.toString()).name);
+            $(".province-city").html(codeToAreaObj(data.baseinfo.city.toString()).name);
 
-                // })
+            //精华照片
+            if (data.photos && data.photos !== "" && data.photos.length !== 0) {
+                $(".picCount").html(data.photos.length);
+                data.photos.forEach(function (item) {
+                    var $liTemp = $(
+                        `
+                            <li class="edit-pic-item">
+                                <img class="showPic" src=${GlobalHost+item.url}>
+                            </li>
+                        `
+                    );
+
+
+                });
             }
             //TA的邀约
             $(".myInviteCount").html(data.invite.length)
@@ -444,7 +463,8 @@
                 $(".noInvite").show()
             } else {
                 data.invite.forEach(function (value, index) {
-                    $(".myInvite-tip").append($('<p data-id="' + value.id + '">' + value.title + '</p>'))
+                    $(".myInvite-tip").append($('<p class="inviDetail" data-id="' + value.id + '">' +
+                        value.title + '</p>'))
                 })
             }
             //TA的动态
@@ -672,53 +692,85 @@
                 $("body").append($('<div class="mLoadingMask"></div>'));
             }
             if ($(".mLoading").length == 0) {
-                $("body").append($('<div class="mLoading"></div>'));
+                $("body").append($('<div class="mLoading">处理中...</div>'));
             }
         },
-        closeLoading: function () {
-            $(".mLoadingMask")
-                .add($(".mLoading")).remove();
+        closeLoading: function (resultMsg, callback) {
+            // $(".mLoadingMask")
+            //     .add($(".mLoading")).remove();
+            $(".mLoading").html(resultMsg);
+            setTimeout(function () {
+                $(".mLoadingMask")
+                    .add($(".mLoading")).remove();
+                callback();
+            }, 500);
         },
         //上传普通/精华图片
-        uploadPic: function ({
-            type,
-            file
-        }, callback) { //type类型：1普通，2精华/file文件
-            var postData = {
-                user_id: Homepage.user_id,
-                type: type,
-                file_type: 1,
-                file: file,
-            };
-            console.log(postData)
-            // return
-            $.ajax({
-                type: "POST",
-                url: GlobalHost + "/index.php/Api/User/uploadPhoto",
-                data: postData,
-                dataType: "json",
-                processData: false,
-                contentType: false,
-                success: function (result) {
-                    console.log(result)
+        uploadPic: function (type, $li, callback) { //type类型：1普通，2精华
+            // var postData = {
+            //     user_id: Homepage.user_id,
+            //     type: type,
+            //     file_type: 1,
+            //     file: file,
+            // };
+            // console.log(postData)
+            // // return
+            // $.ajax({
+            //     type: "POST",
+            //     url: GlobalHost + "/index.php/Api/User/uploadPhoto",
+            //     data: postData,
+            //     dataType: "json",
+            //     processData: false,
+            //     contentType: false,
+            //     success: function (result) {
+            //         console.log(result)
+            //         callback();
+            //     }
+            // });
+
+            // jquery.form.js方法
+            $li.find(":input[name='user_id']").val(Homepage.user_id);
+            $li.find(":input[name='type']").val(type);
+            $li.find(":input[name='file_type']").val(1);
+
+            Homepage.openLoading();
+            console.log("上传")
+            console.log($li.find("#homeForm"))
+            $li.find("#homeForm").ajaxSubmit(function (result) {  
+                console.log(result)                  
+                // if (result.msg == "操作成功") {
+                console.log("上传结束")
+                Homepage.closeLoading("上传成功", function () {
                     callback();
-                }
+                });
+                // }  
             });
+
         },
         addMyPhotos: function (el) {
             // if ($(".edit-pic-item").length >= 9) {
             //     alert("最多上传9张图片")
             //     return
             // }
+            var url = GlobalHost + "/index.php/Api/User/uploadPhoto";
             var type = Number($(el).attr("data-type")); //1普通图片，2精华图片
             var $liTemp = $(
                 `
                     <li class="edit-pic-item">
-                        <input class="albumInput" type="file" accept="image/*" style="display: none">
+                        
                         <img class="showPic" src="__STATIC__/images/icon/tx.png">
+
+                        <div class="homeFormWrap" style="display:none;">
+                            <form id="homeForm" action=${url} method="post" enctype="multipart/form-data">
+                                <input type="text" value="" name="user_id" style="display: none;">
+                                <input type="text" value="" name="type" style="display: none;">
+                                <input type="text" value="" name="file_type" style="display: none;">
+                                <input class="albumInput" type="file" name="file[]" accept="image/*" style="display: none">
+                            </form>
+                        </div>
                     </li>
                 `
-            )
+            );
 
             $liTemp.find(".albumInput").change(function () {
                 readURL(this);
@@ -735,13 +787,9 @@
                         // console.log(e)
                         $liTemp.find('.showPic').attr('src', e.target.result);
 
-                        //添加图片成功 后
-                        // $(el).closest(".myPhotos").prepend($liTemp)
-                        // console.log(input.value)
-                        Homepage.uploadPic({
-                            type: type,
-                            file: input.files[0]
-                        }, function () {
+                        //上传图片+回调
+                        Homepage.uploadPic(type, $liTemp, function () {
+                            $(".homeFormWrap").remove();
                             $(el).closest(".myPhotos").prepend($liTemp);
                         });
                     }
@@ -1422,7 +1470,7 @@
             //点击编辑资料
             $(".gotoEditHomePage").click(function () {
                 Homepage.savePageSession()
-                window.location.href = "editHomePage.html"
+                window.location.href = GlobalHost + "/index.php/mobile/user/editHomePage.html";
             })
             //点击视频认证
             $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
@@ -1432,6 +1480,27 @@
                     src: "https://media.w3.org/2010/05/sintel/trailer.mp4",
                 };
                 Homepage.showVideo(option);
+            });
+            //点击我的邀约，跳邀约详情
+            $(".myInvite-tip").delegate("p.inviDetail", "click", function () {
+                let options = {
+                    originUserId: Homepage.user_id, //从谁那 去的邀约详情
+                    toUserId: Homepage.user_id, //去 谁的 邀约详情
+                    detailId: Number($(this).attr("data-id")),
+                };
+
+                let toUrl = GlobalHost + "/index.php/mobile/invite/detail.html?options=" + JSON
+                    .stringify(options);
+                //toUrl = "detail.html?options=" + JSON.stringify(options); //测试用
+                console.log(toUrl)
+
+                window.location.href = toUrl;
+            });
+            //点击我的动态，跳动态详情
+            $(".myTalkList").delegate(".myTalk-item", "click", function () {
+                let detailId = $(this).attr("data-id");
+                window.location.href = GlobalHost + '/index.php/mobile/dynamics/detail/id/' + detailId +
+                    '.html';
             });
         },
         init: function () {
