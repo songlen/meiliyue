@@ -1,3 +1,4 @@
 public/upload/
 application/database.php
+application/api/logic/SmsLogic.php
 runtime/*
