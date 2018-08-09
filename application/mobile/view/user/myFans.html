@@ -208,7 +208,7 @@
             initPullToRefresh: function () {
                 //下拉刷新
                 $(".tabs").pullToRefresh(function () {
-                    Fans.getAttendList();
+                    Fans.getFansList();
                 });
                 //滚动加载
                 $(".tabs").infinite().on("infinite", function () {
@@ -216,7 +216,7 @@
                     //
                     if (Fans.loading) return;
                     Fans.loading = true;
-                    Fans.getAttendList();
+                    Fans.getFansList();
                 });
             },
             openLoading: function () {
@@ -271,30 +271,15 @@
                 $(".back").click(function () {
                     window.history.back(-1);
                 });
-                //切换tab
-                $(".friends-tabcut li").click(function () {
-                    $(this).addClass("actived").siblings().removeClass("actived");
-
-                    let tabName = $(this).attr("data-tab");
-                    $("." + tabName + "-tab").show().siblings(".tabs").hide();
-
-                    if (tabName !== "friends") {
-                        Fans.curList = tabName + "List";
-                        if (!Fans[Fans.curList].haveLoad) {
-                            Fans.getAttendList();
-                        }
-                    }
-                });
                 //点击 头像 进入他人的个人主页
-                $(".attentionUl")
-                    .add($(".fansUl")).delegate(".friendItem-avatar", "click", function () {
-                        //savePageData()
+                $(".fansUl").delegate(".friendItem", "click", function () {
+                    //savePageData()
 
-                        let user_id = Fans.user_id;
-                        let toUserId = $(this).closest("li").attr("data-toUserId");
-                        window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
-                            user_id + "/toUserId/" + toUserId + ".html";
-                    });
+                    let user_id = Fans.user_id;
+                    let toUserId = $(this).attr("data-toUserId");
+                    window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
+                        user_id + "/toUserId/" + toUserId + ".html";
+                });
             },
             init: function () {
                 //user_id
