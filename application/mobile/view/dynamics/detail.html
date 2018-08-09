@@ -91,8 +91,8 @@
                 </div>
                 <ul>
                     <li class="details-comments-item" v-cloak v-for="(item,index) in commentsList" :key="index">
-                        <div style="position: relative;">
-                            <div class="comment-headWrap" @click="applyHomepage">
+                        <div style="position: relative;" v-cloak>
+                            <div class="comment-headWrap" v-cloak @click="applyHomepage">
                                 <img :src="GlobalHost+item.head_pic" @error="defaultImg">
                                 <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
                             </div>
@@ -102,23 +102,23 @@
 
                         <div class="details-comments-content">
                             <div class="details-item-head">
-                                <span class="nickname">{{item.nickname}}</span>
-                                <span class="detailsTime">{{item.add_time | stampToStr}}</span>
+                                <span class="nickname" v-cloak>{{item.nickname}}</span>
+                                <span class="detailsTime" v-cloak>{{item.add_time | stampToStr}}</span>
                             </div>
-                            <div class="details-comments-text" @click="startComment(1,item)">{{item.content}}</div>
+                            <div class="details-comments-text" v-cloak @click="startComment(1,item)">{{item.content}}</div>
 
                             <!-- 二级评论 -->
                             <div class="details-comments-content-second" v-cloak v-if="item.sub&&item.sub.length!==0">
                                 <ul class="comments-second-ul">
                                     <li v-cloak v-for="(subItem,subIndex) in item.sub" :key="subIndex">
                                         <div class="details-item-head">
-                                            <span class="nickname">{{subItem.nickname}}</span>
-                                            <span class="detailsTime">{{subItem.add_time | stampToStr}}</span>
+                                            <span class="nickname" v-cloak>{{subItem.nickname}}</span>
+                                            <span class="detailsTime" v-cloak>{{subItem.add_time | stampToStr}}</span>
                                         </div>
                                         <div class="details-comments-text">
                                             <span class="replyWrap">回复
-                                                <span class="replyPerson">{{subItem.reply_nickname}}</span>：</span>
-                                            <span class="details-second-text" @click="startComment(1,subItem)">{{subItem.content}}</span>
+                                                <span class="replyPerson" v-cloak>{{subItem.reply_nickname}}</span>：</span>
+                                            <span class="details-second-text" v-cloak @click="startComment(1,subItem)">{{subItem.content}}</span>
                                         </div>
                                     </li>
                                 </ul>

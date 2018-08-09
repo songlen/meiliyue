@@ -21,7 +21,7 @@
         <div class="allWrap" :class="{blur:isReleasing}">
             <header>
                 <div class="tabCut" :class="{actived:nowPage=='area'}" @click="cutTab('area')">
-                    <span v-cloak v-text="nowArea"></span>
+                    <div style="width: 100%;text-align: center;" v-cloak>{{nowArea}}</div>
                     <ul class="mSelect" v-show="isShowArea">
                         <li v-cloak @click.stop="cutArea('同城')">
                             同城
@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                             <div class="item-content">
-                                <p>{{item.content}}</p>
+                                <p v-html="toHtml(item.content)"></p>
                                 <!-- <img v-for="img in item.image" src="__STATIC__/images/icon/tx.png"> -->
                             </div>
                             <div class="item-comment">

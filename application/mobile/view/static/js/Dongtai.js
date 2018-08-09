@@ -100,9 +100,14 @@ $(function () {
                 } else if (howLong > 86400) { //大于24小时，直接显示时间
                     return stampToDate(stamp);
                 }
-            }
+            },
         },
         methods: {
+            toHtml(value) {
+                console.log(44444)
+                value = "" + value;
+                return value.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+            },
             cutTab(pageStr) {
                 if (pageStr == "area" && this.nowPage == "area") {
                     // this.isShowArea = true
