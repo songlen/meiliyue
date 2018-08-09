@@ -124,7 +124,7 @@ class Invite extends Base {
         $info = M('invite')->alias('i')
             ->join('users u', 'i.user_id=u.user_id', 'left')
             ->where($where)
-            ->field('u.user_id, head_pic, auth_video_status, nickname, u.sex, u.age, i.id invite_id, i.title, i.description, i.time, i.place, image, i.object, i.pay')
+            ->field('u.user_id, head_pic, auth_video_status, nickname, u.sex, u.age, i.id invite_id, i.title, i.description, i.time, i.place, image, i.object, i.pay, i.is_jiesong, i.with_confidante')
             ->find();
 
         if($info['image']) $info['image'] = unserialize($info['image']);
