@@ -37,7 +37,7 @@ class User extends Base {
             $uploadPath = UPLOAD_PATH.'auth_video/';
        }
 
-        if (!file_exists($uploadPath)){
+        if (!is_dir($uploadPath)){
             mkdir($uploadPath, 0777, true);
         }
         // 执行上传
@@ -63,25 +63,28 @@ class User extends Base {
                 response_success(array('head_pic'=>$fullPath));
             }
             // 记录认证视频
-            if($type == 'auth_video' && $action == 'add'){
-                Db::name('users_auth_video')->insert(array('user_id'=>$user_id, 'auth_video_url'=> $fullPath));
-            }
-            // 如果是修改认证视频
-            if($type == 'auth_video' && $action == 'edit'){
-                Db::name('users_auth_video')->update(array('user_id'=>$user_id, 'auth_video_url'=> $fullPath));
-                // 如果需要重新认证还需要修改用户表中的认证字段
-            }
-            /************ 上传形象视频，更新动态 *********/
             if($type == 'auth_video'){
-                $dynamics_data = array(
-                    'user_id' => $user_id,
-                    'type' => 3,
-                    'description' => '更新了形象视频',
-                    'video' => $fullPath,
-                    'origin' => 3,
-                    'add_time' => time(),
-                );
-                D('dynamics')->add($dynamics_data);
+                $count = Db::name('users_auth_video')->where('user_id', $user_id)->count();
+                if($count){
+                    Db::name('users_auth_video')->where('user_id', $user_id)->update(array('auth_video_url'=> $fullPath, 'add_time' => time()));
+                } else {
+                    Db::name('users_auth_video')->insert(array('user_id'=>$user_id, 'auth_video_url'=> $fullPath, 'add_time' => time()));
+
+                }
+                // 更新用户表视频认证状态
+                Db::name('users')->where('user_id', $user_id)->setField('auth_video_status', 1);
+                /************ 上传形象视频，更新动态 *********/
+                /*if($type == 'auth_video'){
+                    $dynamics_data = array(
+                        'user_id' => $user_id,
+                        'type' => 3,
+                        'description' => '更新了形象视频',
+                        'video' => $fullPath,
+                        'origin' => 3,
+                        'add_time' => time(),
+                    );
+                    D('dynamics')->add($dynamics_data);
+                }*/
             }
 
             response_success();
@@ -327,7 +330,7 @@ class User extends Base {
             ->select();
 
         /************** 我的精华照片 *********/
-        $data['photos'] = M('user_photo')
+        $data['quintessence_photos'] = M('user_photo')
             ->where('user_id', $user_id)
             ->where('type', 2)
             ->field('id, thumb, url, type, file_type')

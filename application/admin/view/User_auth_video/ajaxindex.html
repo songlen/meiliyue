@@ -2,7 +2,7 @@
     <table>
         <tbody>
         <volist name="lists" id="list">
-            <tr data-id="{$list['id']}">
+            <tr data-id="{$list['id']}" user_id="{$list['user_id']}">
                 <td class="sign">
                     <div style="width: 24px;"><i class="ico-check"></i></div>
                 </td>
@@ -20,16 +20,16 @@
                 </td>
                 <td align="left" class="">
                     <div style="text-align: center; width: 120px;">
-                        <select name="" id="">
+                        <select name="status" id="">
                             <option value="1">待审核</option>
-                            <option value="1">已通过</option>
-                            <option value="1">未审核</option>
+                            <option value="2">已通过</option>
+                            <option value="3">未通过</option>
                         </select>
                     </div>
                 </td>
                 <td align="center" class="handle">
                     <div style="text-align: center; width: 170px; max-width:250px;">
-                        <a class="btn blue" href="{:U('Admin/UserAuthVideo/video',array('id'=>$list['id']))}">播放视频</a>
+                        <a class="btn blue" href="{:U('Admin/UserAuthVideo/video',array('id'=>$list['id']))}">查看视频</a>
                         
                     </div>
                 </td>
@@ -77,4 +77,20 @@
         }, function () {
         });
     }
+
+
+    // 修改状态
+    $('select[name=status]').change(function(){
+        var user_id = $(this).parents('tr').attr('user_id');
+        var id = $(this).parents('tr').attr('data-id');
+        var status = $(this).val();
+
+        $.ajax({
+            url: "index.php/admin/UserAuthVideo/changeStatus/id/"+id+"/user_id/"+user_id+"/status/"+status,
+            type: 'get',
+            success:function(data){
+                layer.mag('操作成功');
+            }
+        })
+    })
 </script>
