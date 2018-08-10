@@ -66,7 +66,8 @@ class Invite extends Base {
             
             foreach ($lists as $k => &$item) {
                 // 反序列化图片
-                $item['image'] = $item['image'] ? unserialize($item['image']) : '';
+                $image = $item['image'] ? unserialize($item['image']) : '';
+                $item['image'] = $image ? $image[0] : '';
 
                 // 计算用户和发布者之间的距离，sql计算出来的是米 这里转换成 km
                 $item['distince'] = round($item['distince']/1000, 2); 

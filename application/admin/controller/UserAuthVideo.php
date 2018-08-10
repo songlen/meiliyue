@@ -40,4 +40,23 @@ class UserAuthVideo extends Base {
         $this->assign('pager',$Page);
         return $this->fetch();
     }
+
+    public function video(){
+    	$id = I('id');
+
+    	$video = M('UsersAuthVideo')->where('id', $id)->field('auth_video_url')->find();
+
+    	$this->assign('auth_video_url', $video['auth_video_url']);
+    	return $this->fetch();
+    }
+
+    public function changeStatus(){
+    	$id = I('id');
+    	$status = I('status');
+    	$user_id = I('user_id');
+
+    	M('UsersAuthVideo')->where('id', $id)->setField('status', $status);
+    	M('users')->where('user_id', $user_id)->setField('auth_video_status', $status);
+
+    }
  }
