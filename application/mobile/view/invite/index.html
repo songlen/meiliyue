@@ -76,7 +76,7 @@
 
                     <div class="addressWrap">
                         <div class="address clearfix" @click="opentSelect">
-                            <span class="fl" @click.stop="cancelSelectList">{{selectedText}}
+                            <span class="fl" v-cloak @click.stop="cancelSelectList">{{selectedText}}
                                 <span class="cancelSelected" v-cloak v-if="selectedText!==defaultArea.text"></span>
                             </span>
                             <span class="select fr">筛选</span>
@@ -681,6 +681,9 @@
                     },
                     gotoInviteDetail(item) {
                         this.savePageToSession();
+
+                        console.log(GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
+                            this.user_id + "/toUserId/" + item.user_id + ".html")
 
                         window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
                             this.user_id + "/toUserId/" + item.user_id + ".html";

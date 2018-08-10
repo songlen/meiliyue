@@ -104,7 +104,7 @@
             <li class="home-cancel">取消</li>
         </ul>
     </div>
-    <button class="interest">我感兴趣</button>
+    <button class="interest" style="display: none;">我感兴趣</button>
 
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <!-- jquery-weui-js -->
@@ -132,6 +132,7 @@
             getPageData: function () {
                 //处理url参数
                 var urlOptionStr = window.location.search
+                // urlOptionStr = "?options={%22originUserId%22:2,%22toUserId%22:1,%22detailId%22:15}"; //测试用
                 console.log(urlOptionStr)
 
                 if (urlOptionStr.indexOf("?") != -1) {
@@ -207,8 +208,8 @@
                 }
 
                 //如果看自己的邀约详情，不显示“我感兴趣”
-                if (Interested.originUserId == Interested.toUserId) {
-                    $(".interest").hide();
+                if (Interested.originUserId !== Interested.toUserId) {
+                    $(".interest").show();
                 }
             },
             showFullPic: function (el) {

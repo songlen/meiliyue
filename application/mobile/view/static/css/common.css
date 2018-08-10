@@ -1024,6 +1024,11 @@ footer li a {
 
 header .search {
   background: none;
+  margin: 0;
+  height: 100%;
+  width: auto;
+  line-height: 50px;
+  text-align: center;
 }
 
 .selectPage {

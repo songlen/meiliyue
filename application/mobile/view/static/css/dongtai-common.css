@@ -657,6 +657,7 @@ a.operate {
     width: 0.2rem;
     height: 0.2rem;
     vertical-align: middle;
+    margin: 0;
 }
 
 .details-content .details-flower {

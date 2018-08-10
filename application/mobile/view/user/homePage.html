@@ -16,7 +16,7 @@
     <div class="allWrap">
         <header>
             <a class="back homepageBack" href="javascript:void(0)"></a>
-            <div class="title">nickname</div>
+            <div class="title"></div>
             <a class="operate" href="javascript:void(0)"></a>
         </header>
 
@@ -37,7 +37,7 @@
                 <div class="avatar-content">
                     <span class="sexAge">
                         <i class="sex"></i>
-                        <span class="age">age</span>
+                        <span class="age"></span>
                     </span>
                     <span class="edit-personal-constellation">摩羯座</span>
                     <span class="haveAttend">
@@ -47,8 +47,8 @@
                     </span>
                     <p>
                         <img class="areaPic" src="__STATIC__/images/icon/定位-2.png">
-                        <span class="edit-personal-area">北京</span>&nbsp;
-                        <span class="distance">2km</span>
+                        <span class="edit-personal-area"></span>&nbsp;
+                        <span class="distance"></span>
                     </p>
                 </div>
             </div>
@@ -163,37 +163,37 @@
                         <li class="aboutMe-item">
                             <label>感情状况</label>
                             <div class="aboutMe-item-content">
-                                <span class="modifyData emotion_status">emotion_status</span>
+                                <span class="modifyData emotion_status"></span>
                             </div>
                         </li>
                         <li class="aboutMe-item">
                             <label>职业</label>
                             <div class="aboutMe-item-content">
-                                <span class="modifyData profession">profession</span>
+                                <span class="modifyData profession"></span>
                             </div>
                         </li>
                         <li class="aboutMe-item">
                             <label>收入</label>
                             <div class="aboutMe-item-content">
-                                <span class="modifyData income">income</span>
+                                <span class="modifyData income"></span>
                             </div>
                         </li>
                         <li class="aboutMe-item">
                             <label>身高</label>
                             <div class="aboutMe-item-content">
-                                <span class="modifyData height">height</span>
+                                <span class="modifyData height"></span>
                             </div>
                         </li>
                         <li class="aboutMe-item">
                             <label>体重</label>
                             <div class="aboutMe-item-content">
-                                <span class="modifyData weight">weight</span>
+                                <span class="modifyData weight"></span>
                             </div>
                         </li>
                         <li class="aboutMe-item signatureItem">
                             <label>个性签名</label>
                             <div class="aboutMe-item-content">
-                                <span class="modifyData signature">0</span>
+                                <span class="modifyData signature"></span>
                             </div>
                         </li>
                         <!-- <li class="aboutMe-item">
@@ -205,7 +205,7 @@
                         <li class="aboutMe-item">
                             <label>最近活跃时间</label>
                             <div class="aboutMe-item-content">
-                                <span class="modifyData active_time">0</span>
+                                <span class="modifyData active_time"></span>
                             </div>
                         </li>
                         <li class="aboutMe-item satis_parts_item">
@@ -317,9 +317,15 @@
             }
             //获取toUserId
             var ulrStr = window.location.href;
-            //ulrStr = "http://meiliyue.caapa.org/index.php/mobile/user/homePage/user_id/1/toUserId/2.html" //测试用
+            // ulrStr = "http://meiliyue.caapa.org/index.php/mobile/user/homePage/user_id/1/toUserId/1.html" //测试用 如果是1去1 就有问题了
             var strTemp = ulrStr.split("/toUserId/")[1];
+
             Homepage.toUserId = Number(strTemp.substr(0, strTemp.length - 5));
+            console.log(Homepage.user_id, Homepage.toUserId)
+            //测试用
+            if (Homepage.user_id == Homepage.toUserId) {
+                Homepage.user_id = Homepage.user_id + 1;
+            }
         },
         updateDom: function (data) {
 
@@ -378,7 +384,8 @@
                 $(".noInvite").show()
             } else {
                 data.invite.forEach(function (value, index) {
-                    $(".myInvite-tip").append($('<p data-id="' + value.id + '">' + value.title + '</p>'))
+                    $(".myInvite-tip").append($('<p class="inviDetail" data-id="' + value.id + '">' +
+                        value.title + '</p>'))
                 })
             }
             //TA的动态
@@ -766,6 +773,27 @@
                         src: url
                     });
                 });
+            });
+            //点击我的邀约，跳邀约详情
+            $(".myInvite-tip").delegate("p.inviDetail", "click", function () {
+                let options = {
+                    originUserId: Homepage.user_id, //从谁那 去的邀约详情
+                    toUserId: Homepage.toUserId, //去 谁的 邀约详情
+                    detailId: Number($(this).attr("data-id")),
+                };
+
+                let toUrl = GlobalHost + "/index.php/mobile/invite/detail.html?options=" + JSON
+                    .stringify(options);
+                //toUrl = "detail.html?options=" + JSON.stringify(options); //测试用
+                console.log(toUrl)
+
+                window.location.href = toUrl;
+            });
+            //点击我的动态，跳动态详情
+            $(".myTalkList").delegate(".myTalk-item", "click", function () {
+                let detailId = $(this).attr("data-id");
+                window.location.href = GlobalHost + '/index.php/mobile/dynamics/detail/id/' + detailId +
+                    '.html';
             });
         },
         init: function () {

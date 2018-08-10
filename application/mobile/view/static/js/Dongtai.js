@@ -24,7 +24,9 @@ $(function () {
                 isLoad: false,
                 page: 1
             },
+
             isReleasing: false,
+            isLoading: false,
         },
         computed: {
             nowDataList() {
@@ -94,7 +96,6 @@ $(function () {
                     return hours + "小时前";
                 } else if (howLong >= 43200 && howLong < 86400) { //大于12小时，小于24小时
                     let dateStr = stampToDate(stamp);
-                    console.log(dateStr)
                     let minStr = dateStr.substr(dateStr.length - 5);
                     return "昨天 " + minStr;
                 } else if (howLong > 86400) { //大于24小时，直接显示时间
@@ -104,7 +105,6 @@ $(function () {
         },
         methods: {
             toHtml(value) {
-                console.log(44444)
                 value = "" + value;
                 return value.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "");
             },
@@ -154,7 +154,8 @@ $(function () {
                     user_id: user_id,
                     range: range, //1同城2全网
                     attention: attention, //1关注
-                    jizha: jizha //1叽喳
+                    jizha: jizha, //1叽喳
+                    page: page,
                 }
                 console.log(postData)
                 $.ajax({
@@ -183,6 +184,7 @@ $(function () {
 
                         //下拉刷新done
                         $(".pageWrap").pullToRefreshDone();
+                        self.isLoading = false;
                     }
                 })
             },
@@ -196,34 +198,37 @@ $(function () {
                 let ulHeight = document.getElementsByClassName(this.nowPage + "-page")[0].clientHeight
                 // console.log(ulHeight)
                 if (scrollTop > 0 && scrollTop + wrapHeight > ulHeight) {
-                    console.log(this.nowDataList)
-                    let postData = {}
-                    switch (this.nowDataList) {
-                        case "areaDataList":
-                            postData = {
-                                user_id: this.user_id,
-                                range: this.nowArea == "同城" ? 1 : 2,
-                                page: this[this.nowDataList].page + 1
-                            }
-                            break;
-                        case "attendedDataList":
-                            postData = {
-                                user_id: this.user_id,
-                                attention: 1,
-                                page: this.attendedDataList.page + 1
-                            }
-                            break;
-                        case "videoDataList":
-                            postData = {
-                                user_id: this.user_id,
-                                jizha: 1,
-                                page: this.videoDataList.page + 1
-                            }
-                            break;
-                        default:
-                            break;
+                    if (!this.isLoading) {
+                        console.log(this.nowDataList)
+                        let postData = {}
+                        switch (this.nowDataList) {
+                            case "areaDataList":
+                                postData = {
+                                    user_id: this.user_id,
+                                    range: this.nowArea == "同城" ? 1 : 2,
+                                    page: this[this.nowDataList].page + 1
+                                }
+                                break;
+                            case "attendedDataList":
+                                postData = {
+                                    user_id: this.user_id,
+                                    attention: 1,
+                                    page: this.attendedDataList.page + 1
+                                }
+                                break;
+                            case "videoDataList":
+                                postData = {
+                                    user_id: this.user_id,
+                                    jizha: 1,
+                                    page: this.videoDataList.page + 1
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        this.isLoading = true;
+                        this.getListData(this.nowDataList, true, postData)
                     }
-                    this.getListData(this.nowDataList, true, postData)
                 }
             },
             openEdit(type) { //动态类型

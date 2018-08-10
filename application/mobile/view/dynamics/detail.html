@@ -41,7 +41,8 @@
                 </div>
                 <div class="details-content-text">
                     <p class="dynamic-text details-comments-text" @click="startComment(0)">
-                        {$info.content}
+                        <!-- {$info.content} -->
+                        {$info.content.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "")}
                     </p>
                     <if condition="$item['type'] == 2 && !empty($item['image'])">
                         <foreach name="$item.image" item="image">
