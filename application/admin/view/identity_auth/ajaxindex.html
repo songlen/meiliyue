@@ -29,7 +29,7 @@
                 </td>
                 <td align="center" class="handle">
                     <div style="text-align: center; width: 170px; max-width:250px;">
-                        <a class="btn blue" href="{:U('Admin/UserAuthVideo/video',array('id'=>$list['id']))}">查看视频</a>
+                        <a class="btn blue" href="{:U('Admin/IdentityAuth/image',array('id'=>$list['id']))}">查看图片</a>
                         
                     </div>
                 </td>
@@ -86,10 +86,10 @@
         var status = $(this).val();
 
         $.ajax({
-            url: "index.php/admin/UserAuthVideo/changeStatus/id/"+id+"/user_id/"+user_id+"/status/"+status,
+            url: "index.php/admin/IdentityAuth/changeStatus/id/"+id+"/user_id/"+user_id+"/status/"+status,
             type: 'get',
             success:function(data){
-                layer.mag('操作成功');
+                layer.msg('操作成功');
             }
         })
     })

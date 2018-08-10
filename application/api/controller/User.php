@@ -198,11 +198,15 @@ class User extends Base {
             'user_id' => $user_id,
             'image' => serialize($image),
             'add_time' => time(),
+            'status' => '1',
         );
 
-        if(M('identity_auth')->insert($data)){
+        $count = M('identity_auth')->where('user_id', $user_id)->count();
+        if($count){
+            M('identity_auth')->where('user_id', $user_id)->update($data)
             response_success('', '操作成功');
         } else {
+            M('identity_auth')->insert($data)
             response_error('', '操作失败');
         }
     }
