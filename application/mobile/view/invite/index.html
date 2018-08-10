@@ -21,7 +21,7 @@
         <span class="title">邀约</span>
     </header>
 
-    <div class="main-content invitation indexPage" id="indexPageApp">
+    <div class="main-content invitation indexPage" id="indexPageApp" @click="closeReleasing">
 
         <div class="blurDiv" :class="{blur:isPlusing}">
 
@@ -171,11 +171,11 @@
 
         <!-- 模态框及其他 -->
 
-        <div class="plus" :class="{actived:isPlusing}" @click="isPlusing=!isPlusing"></div>
+        <div class="plus" :class="{actived:isPlusing}" @click.stop="isPlusing=!isPlusing"></div>
 
         <div class="m_shade" v-cloak v-if="isPlusing"></div>
 
-        <div class="mask" v-cloak v-show="isPlusing">
+        <div class="mask release-start" v-cloak v-show="isPlusing">
             <div class="title">发起邀约</div>
             <div class="box-top">
                 <ul>
@@ -512,10 +512,11 @@
 
                                     position[0] = pos.coords.latitude;
                                     position[1] = pos.coords.longitude;
-                                    alert(pos.coords.latitude+pos.coords.longitude)
+                                    alert(pos.coords.latitude +"??"+ pos.coords.longitude)
                                 },
                                 function (err) { // 如果失败则执行该回调函数
                                     console.log(err.message);
+                                    alert(err.message)
                                 }, { // 附带参数
                                     // enableHighAccuracy: false, // 提高精度(耗费资源)
                                     // timeout: 3000, // 超过timeout则调用失败的回调函数
@@ -789,6 +790,14 @@
                         });
 
                         $("body").append($fullScreen);
+                    },
+                    closeReleasing: function () {
+                        if (this.isPlusing) {
+                            console.log(event)
+                            if ($(event.target).closest(".release-start").length == 0) {
+                                this.isPlusing = false;
+                            }
+                        }
                     },
 
                     //筛选页面-----------------------------------------------
