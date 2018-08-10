@@ -142,8 +142,8 @@
                                             <span class="smallDot"></span>{{item.place}}</li>
                                     </ul>
                                     <!-- 图片 -->
-                                    <div v-cloak v-if="item.image&&item.image!==''&&item.image.length!==0">
-                                        <img :src="GlobalHost+item.image[0]">
+                                    <div v-cloak v-if="item.image&&item.image!==''">
+                                        <img :src="GlobalHost+item.image">
                                     </div>
                                 </div>
                             </div>
@@ -429,6 +429,7 @@
                             page: page
                         }
                         console.log(postDataTemp)
+                        alert(JSON.stringify(postDataTemp))
                         $.ajax({
                             type: "POST",
                             url: GlobalHost + "/index.php/Api/Invite/index",
@@ -511,6 +512,7 @@
 
                                     position[0] = pos.coords.latitude;
                                     position[1] = pos.coords.longitude;
+                                    alert(pos.coords.latitude+pos.coords.longitude)
                                 },
                                 function (err) { // 如果失败则执行该回调函数
                                     console.log(err.message);
