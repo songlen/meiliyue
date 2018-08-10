@@ -42,7 +42,8 @@ class Auth extends Base {
         M('users')->where('user_id', $user['user_id'])->update($updateData);
 
         
-        $userInfo = controller('api/User')->getUserInfo($user['user_id']);
+        $userInfo = M('users')->where('user_id', $user['user_id'])->find();
+        unset($userInfo['password']);
        	response_success($userInfo);
     }
 
@@ -68,7 +69,7 @@ class Auth extends Base {
     }
 
     /**
-     *  注册
+     *  手机号注册
      */
     public function register() {
     	$mobile = I('mobile');
@@ -122,6 +123,7 @@ class Auth extends Base {
             'latitude' => $latitude,
             'active_time' => time(),
             'is_line' => '1',
+            'phoneOrwechat' => $mobile,
     	);
 
     	$user_id = M('users')->insertGetId($map);
@@ -129,7 +131,8 @@ class Auth extends Base {
            response_error('', '注册失败');
         }
         
-        $userInfo = controller('api/User')->getUserInfo($user_id);
+        $userInfo = M('users')->where('user_id', $user_id)->find();
+        unset($userInfo['password']);
         return response_success($userInfo, '注册成功');
     }
 
