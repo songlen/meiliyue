@@ -36,7 +36,7 @@ class Index extends Base {
         // $income = I('income');
         $satisfactory_parts = I('satisfactory_parts');
 
-        $field = 'user_id, head_pic, nickname, active_time, longitude, latitude';
+        $field = 'user_id, head_pic, nickname, active_time, longitude, latitude, auth_video_status';
 
         // 排序
         if($order_type == '1'){
