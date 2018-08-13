@@ -183,8 +183,8 @@
             //获取页面基本参数
             getPageData: function () {
                 //user_id sex
-                if (sessionStorage.getItem("mUserInfo")) {
-                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null) {
+                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     ReleInvite._user_id = Number(mUserInfo.user_id);
                     ReleInvite._user_sex = Number(mUserInfo.sex);

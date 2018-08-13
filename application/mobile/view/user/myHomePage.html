@@ -647,8 +647,8 @@
             //updateDom之后
 
             //根据sesstion 返回页面滚动位置
-            if (sessionStorage.getItem("homePage")) {
-                let pageData = JSON.parse(sessionStorage.getItem("homePage"))
+            if (localStorage.getItem("homePage")&&localStorage.getItem("homePage")!==null) {
+                let pageData = JSON.parse(localStorage.getItem("homePage"))
                 console.log(pageData)
 
                 //滚动位置
@@ -1294,7 +1294,7 @@
             }
             console.log(pageData)
 
-            sessionStorage.setItem('homePage', JSON.stringify(pageData))
+            localStorage.setItem('homePage', JSON.stringify(pageData))
         },
         showVideo: function ({
             user_id,
@@ -1505,8 +1505,8 @@
         },
         init: function () {
             //得到user_id
-            if (sessionStorage.getItem("mUserInfo")) {
-                let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+            if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null) {
+                let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                 console.log(mUserInfo)
                 Homepage.user_id = Number(mUserInfo.user_id);
                 Homepage.toUserId = Number(mUserInfo.user_id);
