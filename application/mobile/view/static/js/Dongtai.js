@@ -43,8 +43,8 @@ $(function () {
             //----------------------------------------
 
             //先查session,把session的值放到data里
-            if (sessionStorage.getItem("dongtaiPage")) {
-                let dongtaiPageData = JSON.parse(sessionStorage.getItem("dongtaiPage"))
+            if (localStorage.getItem("dongtaiPage") && localStorage.getItem("dongtaiPage") !== null) {
+                let dongtaiPageData = JSON.parse(localStorage.getItem("dongtaiPage"))
                 console.log(dongtaiPageData)
 
                 this.user_id = dongtaiPageData.user_id
@@ -63,8 +63,8 @@ $(function () {
             }
 
             //获取user_id
-            if (sessionStorage.getItem("mUserInfo")) {
-                let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+            if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null) {
+                let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                 console.log(mUserInfo)
                 this.user_id = Number(mUserInfo.user_id);
             } else {
@@ -257,7 +257,7 @@ $(function () {
                 }
                 console.log(pageData)
 
-                sessionStorage.setItem('dongtaiPage', JSON.stringify(pageData))
+                localStorage.setItem('dongtaiPage', JSON.stringify(pageData))
             },
             //打开全屏小视频
             videoFullScreen() {
@@ -307,7 +307,13 @@ $(function () {
 
                 let user_id = this.user_id;
                 let toUserId = item.user_id;
-                window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                let url = "";
+                if (user_id === toUserId) {
+                    url = GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                } else {
+                    url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                }
+                window.location.href = url;
             },
             //初始化下拉刷新
             initPullToRefresh() {
