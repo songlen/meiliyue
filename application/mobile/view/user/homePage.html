@@ -308,8 +308,8 @@
 
         getUserId: function () {
             //得到user_id
-            if (sessionStorage.getItem("mUserInfo")) {
-                let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+            if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null) {
+                let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                 console.log(mUserInfo)
                 Homepage.user_id = mUserInfo.user_id;
             } else {
@@ -323,9 +323,9 @@
             Homepage.toUserId = Number(strTemp.substr(0, strTemp.length - 5));
             console.log(Homepage.user_id, Homepage.toUserId)
             //测试用
-            if (Homepage.user_id == Homepage.toUserId) {
-                Homepage.user_id = Homepage.user_id + 1;
-            }
+            // if (Homepage.user_id == Homepage.toUserId) {
+            //     Homepage.user_id = Homepage.user_id + 1;
+            // }
         },
         updateDom: function (data) {
 

@@ -1082,8 +1082,8 @@
             },
             init: function () {
                 //得到user_id
-                if (sessionStorage.getItem("mUserInfo")) {
-                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null) {
+                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     EditHome.user_id = Number(mUserInfo.user_id);
                 } else {

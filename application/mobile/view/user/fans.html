@@ -88,7 +88,7 @@
                 };
                 console.log(pageData)
 
-                sessionStorage.setItem('friendPage', JSON.stringify(pageData))
+                localStorage.setItem('friendPage', JSON.stringify(pageData))
             },
             updateDom: function (data) {
                 console.log(data)
@@ -283,8 +283,8 @@
             },
             init: function () {
                 //user_id
-                if (sessionStorage.getItem("mUserInfo")) {
-                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null) {
+                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     Fans.user_id = Number(mUserInfo.user_id);
                 } else {
@@ -294,8 +294,8 @@
                 Fans.initPullToRefresh();
 
                 //从session获取之前的页面数据
-                if (sessionStorage.getItem("friendPage")) {
-                    let pageData = JSON.parse(sessionStorage.getItem("friendPage"))
+                if (localStorage.getItem("friendPage")&&localStorage.getItem("friendPage")!==null) {
+                    let pageData = JSON.parse(localStorage.getItem("friendPage"))
                     console.log(pageData)
 
                     Fans.curList = pageData.curList;
