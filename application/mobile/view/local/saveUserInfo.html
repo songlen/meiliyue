@@ -9,14 +9,23 @@
     <script>
         var userinfoStr = '{$userinfo}';
 
-        sessionStorage["mUserInfo"] = JSON.stringify(userinfoStr);
-        sessionStorage.setItem("mUserInfo", JSON.stringify(userinfoStr));
+        // sessionStorage["mUserInfo"] = JSON.stringify(userinfoStr);
+        // sessionStorage.setItem("mUserInfo", JSON.stringify(userinfoStr));
 
         // window.onbeforeunload = function () {
         //     if (sessionStorage["mUserInfo"]) {
         //         sessionStorage["mUserInfo"] = null;
         //     }
         // }
+
+        localStorage["mUserInfo"] = JSON.stringify(userinfoStr);
+        localStorage.setItem("mUserInfo", JSON.stringify(userinfoStr));
+
+        window.onbeforeunload = function () {
+            if (localStorage["mUserInfo"]) {
+                localStorage["mUserInfo"] = null;
+            }
+        }
     </script>
 </body>
 

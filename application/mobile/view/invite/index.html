@@ -341,15 +341,15 @@
                 mounted() {
                     let _self = this
                     //userInfo
-                    if (sessionStorage.getItem("mUserInfo")) {
+                    if (localStorage.getItem("mUserInfo")) {
                         alert(1)
-                        alert(JSON.parse(sessionStorage.getItem("mUserInfo")))
-                        let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                        alert(JSON.parse(localStorage.getItem("mUserInfo")))
+                        let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                         console.log(mUserInfo)
                         this.user_id = Number(mUserInfo.user_id);
                         var proCode = mUserInfo.province.toString();
                     } else {
-                        alert("无session")
+                        alert("无local")
                         this.user_id = 1; //测试用
                         var proCode = "370000"; //山东 测试用
                     }
@@ -377,9 +377,9 @@
                         showDistrict: false
                     });
 
-                    //先查session,把session的值放到data里
-                    if (sessionStorage.getItem("inviIndexPage")) {
-                        let inviIndexPageData = JSON.parse(sessionStorage.getItem("inviIndexPage"))
+                    //先查local,把local的值放到data里
+                    if (localStorage.getItem("inviIndexPage")) {
+                        let inviIndexPageData = JSON.parse(localStorage.getItem("inviIndexPage"))
                         console.log(inviIndexPageData)
 
                         this.nowOptionBtn = inviIndexPageData.nowOptionBtn
@@ -416,8 +416,8 @@
                     } = {}, isScroll) {
                         let _self = this
                         if (_self.order_type == 3) {
-                            if (sessionStorage.getItem("mUserInfo")) {
-                                let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem(
+                            if (localStorage.getItem("mUserInfo")) {
+                                let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem(
                                     "mUserInfo")));
                                 console.log(mUserInfo)
 
@@ -623,7 +623,7 @@
                         }
                         // console.log(pageData)
 
-                        sessionStorage.setItem('inviIndexPage', JSON.stringify(pageData))
+                        localStorage.setItem('inviIndexPage', JSON.stringify(pageData))
                     },
                     //下拉刷新 滚动加载
                     initPullToRefresh() {
