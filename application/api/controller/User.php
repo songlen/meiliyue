@@ -471,7 +471,7 @@ class User extends Base {
             ->where('f.user_id', $user_id)
             ->where('twoway', '1')
             ->order('f.id desc')
-            ->field('friend_id user_id, head_pic, nickname, auth_video_status')
+            ->field('friend_id user_id, head_pic, nickname, auth_video_status, rongyun_token')
             ->select();
 
         response_success($lists);
