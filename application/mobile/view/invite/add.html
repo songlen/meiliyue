@@ -186,7 +186,7 @@
                 if (sessionStorage.getItem("mUserInfo")) {
                     let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
-                    ReleInvite.user_id = Number(mUserInfo.user_id);
+                    ReleInvite._user_id = Number(mUserInfo.user_id);
                     ReleInvite._user_sex = Number(mUserInfo.sex);
                 } else {
                     ReleInvite._user_id = 1; //测试用
@@ -412,7 +412,7 @@
                 $(":input[name='user_sex']").val(ReleInvite._user_sex);
                 $(":input[name='type']").val(ReleInvite._type);
                 if (ReleInvite._theme == "其他") {
-                    $(":input[name='title']").val($(".inviteTheme .mTitle").val().trim());
+                    $(":input[name='title']").val($(".inviteTheme #mTitle").val().trim());
                 } else {
                     $(":input[name='title']").val(ReleInvite._theme);
                 }
