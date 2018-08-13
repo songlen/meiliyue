@@ -49,13 +49,6 @@ class User extends Base {
      */
     public function addFriend(){
 
-        if($this->reques->isPost()){
-            $uuid = I('uuid');
-            $user = M('users')->where('uuid', $uuid)
-                ->field('user_id, head_pic, nickname, sex, age, signature')
-                ->find();
-            response_success($user);
-        }
         return $this->fetch();
     }
 

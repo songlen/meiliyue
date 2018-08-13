@@ -477,6 +477,32 @@ class User extends Base {
         response_success($lists);
     }
 
+    // 通过uuid查找人，用来加好友
+    public function searchFriend(){
+        $user_id = I('user_id'); // 我的id
+        $uuid = I('uuid'); // 要搜索的id
+
+        $friendInfo = M('users')->where('uuid', $uuid)
+            ->field('user_id, head_pic, nickname, sex, age, signature, auth_video_status')
+            ->find();
+
+        if(empty($friendInfo)) response_error('', '用户不存在');
+        if($friendInfo['user_id'] == $user_id) response_error('', '不能添加自己为好友');
+
+        /***************** 查看好友关系是怎么样的 *****************/
+        $friend = M('friend')->where(array('user_id'=>$user_id, 'friend_id'=>$friendInfo['user_id']))->find();
+        $friendInfo['attention'] = 0; // 未关注
+        if($friend){
+            $friendInfo['attention'] = 1; // 已关注
+            if($friend['twoway']) $friendInfo['attention'] = 3; // 好友
+        } else {
+            $friend = M('friend')->where(array('user_id'=>$toUserId, 'friend_id'=>$user['user_id']))->find();
+            if($friend) $friendInfo['attention'] = 2; // 被关注
+        }
+
+        response_success($friendInfo);
+    }
+
     /**
      * [friend 关注和粉丝]
      * @param type 1 关注 2 粉丝
