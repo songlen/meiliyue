@@ -388,7 +388,8 @@
             },
             init: function () {
                 //user_id
-                if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null) {
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
+                    localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     Comments.user_id = Number(mUserInfo.user_id);
