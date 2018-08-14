@@ -247,8 +247,15 @@
                 })
                 //点击头像看他人的个人主页
                 $(".interested .img-box").click(function () {
-                    window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
-                        Interested.originUserId + "/toUserId/" + Interested.toUserId + ".html";
+                    let url = "";
+                    if (Interested.originUserId !== Interested.toUserId) {
+                        url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + Interested.originUserId +
+                            "/toUserId/" + Interested.toUserId + ".html";
+                    } else {
+                        url = GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                    }
+
+                    window.location.href =url;
                 });
                 //点击邀约详情的图片 查看大图
                 $(".inviteDetail-list").delegate("img.inviImg", "click", function () {
