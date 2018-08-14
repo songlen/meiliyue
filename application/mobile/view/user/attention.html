@@ -82,7 +82,7 @@
                     scrollTop: document.getElementsByClassName('tabs')[0].scrollTop
                 };
 
-                localStorage.setItem('myAttentionPage', JSON.stringify(pageData))
+                sessionStorage.setItem('myAttentionPage', JSON.stringify(pageData))
             },
             updateDomAttend: function (data) {
                 console.log(data)
@@ -211,7 +211,7 @@
             },
             seesionToDom: function () {
                 console.log(334)
-                let pageData = JSON.parse(localStorage.getItem("myAttentionPage"))
+                let pageData = JSON.parse(sessionStorage.getItem("myAttentionPage"))
                 console.log(pageData)
 
                 Attend.attentionList = {
@@ -256,8 +256,8 @@
             },
             init: function () {
                 //user_id
-                if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null) {
-                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                if (sessionStorage.getItem("mUserInfo")) {
+                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     Attend.user_id = Number(mUserInfo.user_id);
                 } else {
@@ -267,7 +267,7 @@
                 Attend.initPullToRefresh();
 
                 //从session获取之前的页面数据
-                if (localStorage.getItem("myAttentionPage")&&localStorage.getItem("myAttentionPage")!==null) {
+                if (sessionStorage.getItem("myAttentionPage")) {
                     Attend.seesionToDom();
                 } else {
                     Attend.getAttendList();

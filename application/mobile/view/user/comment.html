@@ -333,7 +333,7 @@
                 }
                 console.log(pageData)
 
-                localStorage.setItem('commentPage', JSON.stringify(pageData));
+                sessionStorage.setItem('commentPage', JSON.stringify(pageData));
             },
             openLoading: function () {
                 if ($(".mLoadingMask").length == 0) {
@@ -388,8 +388,8 @@
             },
             init: function () {
                 //user_id
-                if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null) {
-                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                if (sessionStorage.getItem("mUserInfo")) {
+                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     Comments.user_id = Number(mUserInfo.user_id);
                 } else {

@@ -264,7 +264,7 @@
                 }
                 console.log(pageData)
 
-                localStorage.setItem('visitorPage', JSON.stringify(pageData));
+                sessionStorage.setItem('visitorPage', JSON.stringify(pageData));
             },
             initPullToRefresh: function () {
                 //下拉刷新
@@ -329,8 +329,8 @@
             },
             init: function () {
                 //我的user_id
-                if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null) {
-                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                if (sessionStorage.getItem("mUserInfo")) {
+                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     Visitors.user_id = Number(mUserInfo.user_id);
                 } else {
@@ -340,8 +340,8 @@
                 Visitors.initPullToRefresh();
 
                 //从session拿到之前页面数据
-                if (localStorage.getItem("visitorPage")&&localStorage.getItem("visitorPage")!==null) {
-                    let pageData = JSON.parse(localStorage.getItem("visitorPage"))
+                if (sessionStorage.getItem("visitorPage")) {
+                    let pageData = JSON.parse(sessionStorage.getItem("visitorPage"))
                     console.log(pageData)
 
                     Visitors.curList = pageData.curList;
