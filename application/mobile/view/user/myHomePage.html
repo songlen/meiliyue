@@ -647,7 +647,8 @@
             //updateDom之后
 
             //根据sesstion 返回页面滚动位置
-            if (sessionStorage.getItem("homePage")) {
+            if (sessionStorage.getItem("homePage") && sessionStorage.getItem("homePage") !== null && sessionStorage.getItem(
+                    "homePage") !== "null") {
                 let pageData = JSON.parse(sessionStorage.getItem("homePage"))
                 console.log(pageData)
 
@@ -1505,8 +1506,9 @@
         },
         init: function () {
             //得到user_id
-            if (sessionStorage.getItem("mUserInfo")) {
-                let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+            if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null && localStorage
+                .getItem("mUserInfo") !== "null") {
+                let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                 console.log(mUserInfo)
                 Homepage.user_id = Number(mUserInfo.user_id);
                 Homepage.toUserId = Number(mUserInfo.user_id);

@@ -283,8 +283,9 @@
             },
             init: function () {
                 //user_id
-                if (sessionStorage.getItem("mUserInfo")) {
-                    let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
+                    localStorage.getItem("mUserInfo") !== "null") {
+                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     Fans.user_id = Number(mUserInfo.user_id);
                 } else {
@@ -294,7 +295,8 @@
                 Fans.initPullToRefresh();
 
                 //从session获取之前的页面数据
-                if (sessionStorage.getItem("friendPage")) {
+                if (sessionStorage.getItem("friendPage") && sessionStorage.getItem("friendPage") !== null &&
+                    sessionStorage.getItem("friendPage") !== "null") {
                     let pageData = JSON.parse(sessionStorage.getItem("friendPage"))
                     console.log(pageData)
 

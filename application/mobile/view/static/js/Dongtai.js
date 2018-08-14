@@ -63,8 +63,8 @@ $(function () {
             }
 
             //获取user_id
-            if (sessionStorage.getItem("mUserInfo") && sessionStorage.getItem("mUserInfo") !== null) {
-                let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+            if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null && localStorage.getItem("mUserInfo") !== "null") {
+                let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                 console.log(mUserInfo)
                 this.user_id = Number(mUserInfo.user_id);
             } else {
