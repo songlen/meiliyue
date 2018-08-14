@@ -9,8 +9,8 @@
     <script>
         var userinfoStr = '{$userinfo}';
 
-        sessionStorage["mUserInfo"] = JSON.stringify(userinfoStr);
-        sessionStorage.setItem("mUserInfo", JSON.stringify(userinfoStr));
+        localStorage["mUserInfo"] = JSON.stringify(userinfoStr);
+        localStorage.setItem("mUserInfo", JSON.stringify(userinfoStr));
 
         // window.onbeforeunload = function () {
         //     if (sessionStorage["mUserInfo"]) {

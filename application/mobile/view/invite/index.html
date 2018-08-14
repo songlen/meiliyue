@@ -341,15 +341,16 @@
                 mounted() {
                     let _self = this
                     //userInfo
-                    if (sessionStorage.getItem("mUserInfo")) {
+                    if (localStorage.getItem("mUserInfo")) {
                         alert(1)
-                        alert(JSON.parse(sessionStorage.getItem("mUserInfo")))
-                        let mUserInfo = JSON.parse(JSON.parse(sessionStorage.getItem("mUserInfo")));
+                        alert(localStorage.getItem("mUserInfo"))
+                        alert(JSON.parse(localStorage.getItem("mUserInfo")))
+                        let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                         console.log(mUserInfo)
                         this.user_id = Number(mUserInfo.user_id);
                         var proCode = mUserInfo.province.toString();
                     } else {
-                        alert("无session")
+                        alert("无session/local")
                         this.user_id = 1; //测试用
                         var proCode = "370000"; //山东 测试用
                     }
