@@ -341,7 +341,7 @@
                 mounted() {
                     let _self = this
                     //userInfo
-                    if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null) {
+                    if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null) {
                         alert(1)
                         alert(JSON.parse(localStorage.getItem("mUserInfo")))
                         let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
@@ -378,8 +378,7 @@
                     });
 
                     //先查local,把local的值放到data里
-                    if (localStorage.getItem("inviIndexPage") && localStorage.getItem("inviIndexPage") !==
-                        null && localStorage.getItem("inviIndexPage") !== "null") {
+                    if (localStorage.getItem("inviIndexPage")&&localStorage.getItem("inviIndexPage")!==null) {
                         let inviIndexPageData = JSON.parse(localStorage.getItem("inviIndexPage"))
                         console.log(inviIndexPageData)
 
@@ -417,8 +416,7 @@
                     } = {}, isScroll) {
                         let _self = this
                         if (_self.order_type == 3) {
-                            if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !==
-                                null && localStorage.getItem("mUserInfo") !== "null") {
+                            if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null) {
                                 let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem(
                                     "mUserInfo")));
                                 console.log(mUserInfo)
