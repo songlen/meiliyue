@@ -21,12 +21,12 @@
         localStorage["mUserInfo"] = JSON.stringify(userinfoStr);
         localStorage.setItem("mUserInfo", JSON.stringify(userinfoStr));
 
-        // window.onbeforeunload = function () {
-        //     if (localStorage["mUserInfo"] && localStorage["mUserInfo"] !== null && localStorage["mUserInfo"] !==
-        //         "null") {
-        //         localStorage["mUserInfo"] = null;
-        //     }
-        // }
+        window.onbeforeunload = function () {
+            if (localStorage["mUserInfo"] && localStorage["mUserInfo"] !== null && localStorage["mUserInfo"] !==
+                "null") {
+                localStorage["mUserInfo"] = null;
+            }
+        }
     </script>
 </body>
 
