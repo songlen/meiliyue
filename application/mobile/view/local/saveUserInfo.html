@@ -9,6 +9,8 @@
     <script>
         var userinfoStr = '{$userinfo}';
 
+        alert("这是saveUser:"+userinfoStr);
+
         localStorage["mUserInfo"] = JSON.stringify(userinfoStr);
         localStorage.setItem("mUserInfo", JSON.stringify(userinfoStr));
 
