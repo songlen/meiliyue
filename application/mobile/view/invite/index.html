@@ -154,7 +154,7 @@
                 </div>
 
 
-                <div class="weui-loadmore">
+                <div class="weui-loadmore" v-cloak v-show="isLoading">
                     <i class="weui-loading"></i>
                     <span class="weui-loadmore__tips">正在加载</span>
                 </div>
@@ -466,9 +466,9 @@
                                 $(".dropRefresh").pullToRefreshDone();
                                 _self.isLoading = false;
 
-                                if (result.data.length == 0) {
-                                    $(".weui-loadmore").hide();
-                                }
+                                // if (result.data.length == 0) {
+                                //     $(".weui-loadmore").hide();
+                                // }
                             }
                         })
                     },
