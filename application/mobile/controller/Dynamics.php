@@ -37,6 +37,10 @@ class Dynamics extends Base {
             ->field('u.user_id, head_pic, nickname, u.sex, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time, d.flower_num')
             ->find();
 
+        if($info) {
+            $info['content'] = htmlentities($info['content']);
+        }
+
         // 图片类型，取出图片
         if($info['type'] == '2'){
             $dynamics_image = M('dynamics_image')->where('dynamic_id', $info['dynamic_id'])->field('image')->select();
