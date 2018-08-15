@@ -21,8 +21,8 @@
         <div class="allWrap" :class="{blur:isReleasing}">
             <header>
                 <div class="tabCut" :class="{actived:nowPage=='area'}" @click="cutTab('area')">
-                    <div style="width: 100%;text-align: center;" v-cloak>{{nowArea}}</div>
-                    <ul class="mSelect" v-show="isShowArea">
+                    <div style="text-align: center;" v-cloak>{{nowArea}}</div>
+                    <ul class="mSelect" v-cloak v-show="isShowArea">
                         <li v-cloak @click.stop="cutArea('同城')">
                             同城
                         </li>
@@ -252,8 +252,8 @@
 
     <!-- -------------------------------------- -->
 
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script src="__STATIC__/js/vue.js"></script>
+    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+    <script src="__STATIC__/js/vue.min.js"></script>
     <!-- jquery-weui-js -->
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>

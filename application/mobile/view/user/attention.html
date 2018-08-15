@@ -8,7 +8,7 @@
     <!-- jquery-weui-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
-    <!-- 页面-js -->
+    <!-- 页面-css -->
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
     <script type="text/javascript">
@@ -53,7 +53,7 @@
     </div>
 
 
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
     <!-- jquery-weui-js -->
     <script type="text/javascript" src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script>
@@ -82,7 +82,7 @@
                     scrollTop: document.getElementsByClassName('tabs')[0].scrollTop
                 };
 
-                localStorage.setItem('myAttentionPage', JSON.stringify(pageData))
+                sessionStorage.setItem('myAttentionPage', JSON.stringify(pageData))
             },
             updateDomAttend: function (data) {
                 console.log(data)
@@ -211,7 +211,7 @@
             },
             seesionToDom: function () {
                 console.log(334)
-                let pageData = JSON.parse(localStorage.getItem("myAttentionPage"))
+                let pageData = JSON.parse(sessionStorage.getItem("myAttentionPage"))
                 console.log(pageData)
 
                 Attend.attentionList = {
@@ -268,8 +268,8 @@
                 Attend.initPullToRefresh();
 
                 //从session获取之前的页面数据
-                if (localStorage.getItem("myAttentionPage") && localStorage.getItem("myAttentionPage") !== null &&
-                    localStorage.getItem("myAttentionPage") !== "null") {
+                if (sessionStorage.getItem("myAttentionPage") && sessionStorage.getItem("myAttentionPage") !== null &&
+                    sessionStorage.getItem("myAttentionPage") !== "null") {
                     Attend.seesionToDom();
                 } else {
                     Attend.getAttendList();

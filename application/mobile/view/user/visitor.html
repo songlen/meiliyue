@@ -54,7 +54,7 @@
     </div>
 
 
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
     <!-- jquery-weui-js -->
     <script type="text/javascript" src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script>
@@ -264,7 +264,7 @@
                 }
                 console.log(pageData)
 
-                localStorage.setItem('visitorPage', JSON.stringify(pageData));
+                sessionStorage.setItem('visitorPage', JSON.stringify(pageData));
             },
             initPullToRefresh: function () {
                 //下拉刷新
@@ -341,9 +341,9 @@
                 Visitors.initPullToRefresh();
 
                 //从session拿到之前页面数据
-                if (localStorage.getItem("visitorPage") && localStorage.getItem("visitorPage") !== null &&
-                    localStorage.getItem("visitorPage") !== "null") {
-                    let pageData = JSON.parse(localStorage.getItem("visitorPage"))
+                if (sessionStorage.getItem("visitorPage") && sessionStorage.getItem("visitorPage") !== null &&
+                    sessionStorage.getItem("visitorPage") !== "null") {
+                    let pageData = JSON.parse(sessionStorage.getItem("visitorPage"))
                     console.log(pageData)
 
                     Visitors.curList = pageData.curList;

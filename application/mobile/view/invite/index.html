@@ -276,9 +276,9 @@
     </div>
 
     <!-- -------------------------------------------------------------- -->
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
     <!-- vue-js -->
-    <script src="__STATIC__/js/vue.js"></script>
+    <script src="__STATIC__/js/vue.min.js"></script>
     <!-- jquery-weui-js -->
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
@@ -340,18 +340,26 @@
                 },
                 mounted() {
                     let _self = this
-                    //userInfo
-                    if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null) {
-                        alert(1)
-                        alert(JSON.parse(localStorage.getItem("mUserInfo")))
+                    //userInfo user_id province
+                    let proCode;
+                    if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
+                        localStorage.getItem("mUserInfo") !== "null") {
+                        // alert(1)
+                        // alert(localStorage.getItem("mUserInfo"))
+                        // alert(JSON.parse(localStorage.getItem("mUserInfo")))
                         let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                         console.log(mUserInfo)
                         this.user_id = Number(mUserInfo.user_id);
-                        var proCode = mUserInfo.province.toString();
+                        //默认省
+                        if (mUserInfo.province.toString().length !== 6) { //获取的省编码有问题
+                            proCode = "370000"; //山东 测试用
+                        } else {
+                            proCode = mUserInfo.province.toString();
+                        }
                     } else {
-                        alert("无local")
+                        // alert("无session/local")
                         this.user_id = 1; //测试用
-                        var proCode = "370000"; //山东 测试用
+                        proCode = "370000"; //山东 测试用
                     }
 
                     //默认省
@@ -377,10 +385,10 @@
                         showDistrict: false
                     });
 
-                    //先查local,把local的值放到data里
-                    if (localStorage.getItem("inviIndexPage") && localStorage.getItem("inviIndexPage") !==
-                        null && localStorage.getItem("inviIndexPage") !== "null") {
-                        let inviIndexPageData = JSON.parse(localStorage.getItem("inviIndexPage"))
+                    //先查session,把session的值放到data里
+                    if (sessionStorage.getItem("inviIndexPage") && sessionStorage.getItem("inviIndexPage") !==
+                        null && sessionStorage.getItem("inviIndexPage") !== "null") {
+                        let inviIndexPageData = JSON.parse(sessionStorage.getItem("inviIndexPage"))
                         console.log(inviIndexPageData)
 
                         this.nowOptionBtn = inviIndexPageData.nowOptionBtn
@@ -625,7 +633,7 @@
                         }
                         // console.log(pageData)
 
-                        localStorage.setItem('inviIndexPage', JSON.stringify(pageData))
+                        sessionStorage.setItem('inviIndexPage', JSON.stringify(pageData))
                     },
                     //下拉刷新 滚动加载
                     initPullToRefresh() {

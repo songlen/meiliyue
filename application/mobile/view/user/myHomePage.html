@@ -354,7 +354,7 @@
     </div>
 
 </body>
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
 <!-- jquery.form-js -->
 <script src="__STATIC__/js/js-plugins/jquery.form.js"></script>
 <!-- areaCodeArr.js -->
@@ -647,9 +647,9 @@
             //updateDom之后
 
             //根据sesstion 返回页面滚动位置
-            if (localStorage.getItem("homePage") && localStorage.getItem("homePage") !== null && localStorage.getItem(
+            if (sessionStorage.getItem("homePage") && sessionStorage.getItem("homePage") !== null && sessionStorage.getItem(
                     "homePage") !== "null") {
-                let pageData = JSON.parse(localStorage.getItem("homePage"))
+                let pageData = JSON.parse(sessionStorage.getItem("homePage"))
                 console.log(pageData)
 
                 //滚动位置
@@ -1295,7 +1295,7 @@
             }
             console.log(pageData)
 
-            localStorage.setItem('homePage', JSON.stringify(pageData))
+            sessionStorage.setItem('homePage', JSON.stringify(pageData))
         },
         showVideo: function ({
             user_id,

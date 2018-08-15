@@ -43,8 +43,8 @@ $(function () {
             //----------------------------------------
 
             //先查session,把session的值放到data里
-            if (localStorage.getItem("dongtaiPage") && localStorage.getItem("dongtaiPage") !== null) {
-                let dongtaiPageData = JSON.parse(localStorage.getItem("dongtaiPage"))
+            if (sessionStorage.getItem("dongtaiPage") && sessionStorage.getItem("dongtaiPage") !== null) {
+                let dongtaiPageData = JSON.parse(sessionStorage.getItem("dongtaiPage"))
                 console.log(dongtaiPageData)
 
                 this.user_id = dongtaiPageData.user_id
@@ -63,7 +63,7 @@ $(function () {
             }
 
             //获取user_id
-            if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null) {
+            if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null && localStorage.getItem("mUserInfo") !== "null") {
                 let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                 console.log(mUserInfo)
                 this.user_id = Number(mUserInfo.user_id);
@@ -257,7 +257,7 @@ $(function () {
                 }
                 console.log(pageData)
 
-                localStorage.setItem('dongtaiPage', JSON.stringify(pageData))
+                sessionStorage.setItem('dongtaiPage', JSON.stringify(pageData))
             },
             //打开全屏小视频
             videoFullScreen() {
