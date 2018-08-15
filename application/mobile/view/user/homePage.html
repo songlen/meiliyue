@@ -312,7 +312,7 @@
                 .getItem("mUserInfo") !== "null") {
                 let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                 console.log(mUserInfo)
-                Homepage.user_id = mUserInfo.user_id;
+                Homepage.user_id = Number(mUserInfo.user_id);
             } else {
                 Homepage.user_id = 1; //测试用
             }

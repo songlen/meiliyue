@@ -385,6 +385,19 @@
                         });
                     });
                 });
+                //点击评论头像去个人主页
+                $(".commentsList").delegate(".comments-avatar-wrap", "click", function () {
+                    event.stopPropagation();
+                    let user_id = Comments.user_id;
+                    let toUserId = Number($(this).closest(".comments-item").attr("data-userId"));
+                    let url = "";
+                    if (user_id === toUserId) {
+                        url = GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                    } else {
+                        url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                    }
+                    window.location.href = url;
+                });
             },
             init: function () {
                 //user_id

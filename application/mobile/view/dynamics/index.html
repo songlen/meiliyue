@@ -177,7 +177,15 @@
                         </li>
                     </ul>
                 </div>
+                
 
+
+                <div style="min-height: 4.6em;">
+                    <div class="weui-loadmore" v-cloak v-show="isLoading">
+                        <i class="weui-loading"></i>
+                        <span class="weui-loadmore__tips">正在加载</span>
+                    </div>
+                </div>
             </div>
 
             <div class="mask" v-cloak v-if="isReleasing"></div>

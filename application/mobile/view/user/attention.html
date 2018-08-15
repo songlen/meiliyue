@@ -245,7 +245,8 @@
                 });
                 //点击 头像 进入他人的个人主页
                 $(".attentionUl").delegate("li.friendItem", "click", function () {
-                    Attend.savePageData()
+                    event.stopPropagation();
+                    Attend.savePageData();
 
                     let user_id = Attend.user_id;
                     let toUserId = $(this).attr("data-toUserId");

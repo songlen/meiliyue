@@ -239,7 +239,8 @@
 
                 })
                 //点击头像看他人的个人主页
-                $(".interested .img-box").click(function () {
+                $(".interested .img-box").click(function (event) {
+                    event.stopPropagation();
                     let url = "";
                     if (Interested.originUserId !== Interested.toUserId) {
                         url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + Interested.originUserId +
