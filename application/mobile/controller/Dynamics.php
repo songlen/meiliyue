@@ -38,7 +38,7 @@ class Dynamics extends Base {
             ->find();
 
         if($info) {
-            $info['content'] = htmlentities($info['content']);
+            $info['content'] = html_entity_decode($info['content']);
         }
 
         // 图片类型，取出图片
