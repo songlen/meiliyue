@@ -5,11 +5,7 @@
     <meta charset="UTF-8">
     <title>我的关注</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <!-- jquery-weui-css -->
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
-    <!-- 页面-css -->
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css-dist/user-attention.min.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
@@ -53,9 +49,7 @@
     </div>
 
 
-    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
-    <!-- jquery-weui-js -->
-    <script type="text/javascript" src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
+    <script src="__STATIC__/js-dist/user-attention.min.js"></script>
     <script>
         var GlobalHost = "http://meiliyue.caapa.org";
         var Attend = {
@@ -91,14 +85,19 @@
                     if (!Attend.isScroll) {
                         $curUl.html("");
                     }
-
                     data.forEach(function (item, index) {
+                        let headUrl;
+                        if (item.head_pic && item.head_pic !== "") {
+                            headUrl = GlobalHost + item.head_pic;
+                        } else {
+                            headUrl = "__STATIC__/images/icon/tx.png";
+                        }
                         let $li = $(
                             `
                             <li class="friendItem" data-userId=${item.user_id}>
                                 <div class="friendItem-avatar">
                                     <div class="friendHeadWrap">
-                                        <img src=${GlobalHost+item.head_pic}>
+                                        <img src=${headUrl}>
                                     </div>
                                     <span class="videoStatus"></span>
                                 </div>
@@ -268,7 +267,8 @@
                 Attend.initPullToRefresh();
 
                 //从session获取之前的页面数据
-                if (sessionStorage.getItem("myAttentionPage") && sessionStorage.getItem("myAttentionPage") !== null &&
+                if (sessionStorage.getItem("myAttentionPage") && sessionStorage.getItem("myAttentionPage") !==
+                    null &&
                     sessionStorage.getItem("myAttentionPage") !== "null") {
                     Attend.seesionToDom();
                 } else {

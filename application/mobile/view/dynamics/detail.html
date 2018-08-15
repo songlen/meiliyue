@@ -183,8 +183,7 @@
     </div>
 
 
-    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
-    <script src="__STATIC__/js/vue.min.js"></script>
+    <script src="__STATIC__/js-dist/dynamics-detail.min.js"></script>
     <script>
         var GlobalHost = "http://meiliyue.caapa.org";
         var Details = {
@@ -209,7 +208,9 @@
                 }
                 //dynamic_id
                 var ulrStr = window.location.href;
-                // ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/155.html" //测试用
+                if(ulrStr.indexOf("file://") > -1){
+                    ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/155.html" //测试用
+                }
                 var strTemp = ulrStr.split("/detail/id/")[1];
                 Details.dynamic_id = Number(strTemp.substr(0, strTemp.length - 5));
                 console.log(Details.dynamic_id)

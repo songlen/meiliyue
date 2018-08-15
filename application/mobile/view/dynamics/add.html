@@ -5,14 +5,7 @@
     <meta charset="UTF-8">
     <title>发动态</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <!-- jquery-weui-css -->
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
-    <link rel="stylesheet" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
-    <!-- 表情插件-css -->
-    <link rel="stylesheet" href="__STATIC__/js/js-plugins/jQuery-emoji-master20160321/lib/css/jquery.mCustomScrollbar.min.css">
-    <link rel="stylesheet" href="__STATIC__/js/js-plugins/jQuery-emoji-master20160321/dist/css/jquery.emoji.css">
-    <!-- 页面-css -->
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css-dist/dynamics-add.min.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/dongtai-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
@@ -492,7 +485,10 @@
 
                 //_type
                 let url = window.location.href;
-                // url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html"; //测试用
+                console.log(url)
+                if (url.indexOf("file://") > -1) {
+                    url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html"; //测试用
+                }
                 let strTemp = url.split("/add/type/")[1];
                 let type = strTemp.substr(0, strTemp.length - 5);
                 Edit._type = Number(type);

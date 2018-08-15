@@ -5,11 +5,7 @@
     <meta charset="UTF-8">
     <title>动态</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <!-- jquery-weui-css -->
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
-    <link rel="stylesheet" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
-    <!-- 页面-css -->
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css-dist/dynamics-index.min.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/dongtai-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
@@ -126,7 +122,7 @@
                                 </div>
                             </div>
                             <div class="item-content">
-                                <p>{{item.content}}</p>
+                                <p v-html="toHtml(item.content)"></p>
                                 <!-- <img v-for="img in item.image" src="__STATIC__/images/icon/tx.png"> -->
                             </div>
                             <div class="item-comment">
@@ -140,9 +136,9 @@
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
-                                    <div class="flowerWrap" @click="sendFlower">
-                                        <img src="__STATIC__/images/icon/花1.png">
-                                        <img style="display: none;" src="__STATIC__/images/icon/花2.png">
+                                    <div class="flowerWrap" @click.stop="giveFlower(item)">
+                                        <img v-cloak v-if="item.flower_num>0" src="__STATIC__/images/icon/花2.png">
+                                        <img v-cloak v-else src="__STATIC__/images/icon/花1.png">
                                     </div>
                                     <span class="flowerNum" v-cloak v-if="item.flower_num>0">{{item.flower_num}}</span>
                                 </div>
@@ -251,12 +247,7 @@
     </div>
 
     <!-- -------------------------------------- -->
-
-    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
-    <script src="__STATIC__/js/vue.min.js"></script>
-    <!-- jquery-weui-js -->
-    <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
-    <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
+    <script src="__STATIC__/js-dist/dynamics-index.min.js"></script>
     <!-- 页面-js -->
     <script src="__STATIC__/js/Dongtai.js"></script>
 </body>

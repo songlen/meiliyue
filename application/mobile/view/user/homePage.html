@@ -318,7 +318,9 @@
             }
             //获取toUserId
             var ulrStr = window.location.href;
-            // ulrStr = "http://meiliyue.caapa.org/index.php/mobile/user/homePage/user_id/1/toUserId/1.html" //测试用 如果是1去1 就有问题了
+            if (ulrStr.indexOf("file://") > -1) {
+                ulrStr = "http://meiliyue.caapa.org/index.php/mobile/user/homePage/user_id/1/toUserId/2.html" //测试用 如果是1去1 就有问题了
+            }
             var strTemp = ulrStr.split("/toUserId/")[1];
 
             Homepage.toUserId = Number(strTemp.substr(0, strTemp.length - 5));
