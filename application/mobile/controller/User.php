@@ -54,13 +54,13 @@ class User extends Base {
 
     // 查看别人主页
     public function homePage(){
-
+file_put_contents('runtime/log/request.log', "\r\n homepage", FILE_APPEND);
         return $this->fetch();
     }
 
     // 我的个人主页
     public function myHomePage(){
-
+file_put_contents('runtime/log/request.log', "\r\n myhomepage", FILE_APPEND);
         return $this->fetch();
     }
 
