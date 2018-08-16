@@ -184,8 +184,8 @@
 
 
     <script src="__STATIC__/js-dist/dynamics-detail.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <script>
-        var GlobalHost = "http://meiliyue.caapa.org";
         var dynamic_origin_id='{$info["user_id"]}';
         var Details = {
             user_id: "",
@@ -231,7 +231,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/Dynamics/giveFlower",
+                    url: Global.host + "/index.php/Api/Dynamics/giveFlower",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -262,37 +262,16 @@
                             //已有小花数量加一
                             $(".flowerCount").html(Number($(".flowerCount").html()) + 1)
                         } else {
-                            Details.messageWin("您的小花数量不足！");
+                            Global.messageWin("您的小花数量不足！");
                         }
                     }
                 })
-            },
-            messageWin: function (msg) {
-                if ($(".msgWrap").length == 0) {
-                    let $msgDiv = $(
-                        `
-                        <div class="msgWrap">
-                            <div class="msg">
-                                <p class="msgText">${msg}</p>
-                                <p class="msgCtrl">
-                                    <span class="closeMsg">确定</span>
-                                </p>
-                            </div>
-                        </div>
-                    `
-                    );
-                    //msg点击事件
-                    $msgDiv.find(".msgCtrl").click(function () {
-                        $msgDiv.remove();
-                    });
-                    $("body").append($msgDiv);
-                }
             },
             initVue: function () {
                 var commentsVm = new Vue({
                     el: "#vueApp",
                     data: {
-                        GlobalHost: GlobalHost,
+                        GlobalHost: Global.host,
 
                         commentsList: [],
                         isWhisper: false,
@@ -306,27 +285,7 @@
                     filters: {
                         //时间戳 转 文字
                         stampToStr: function (stamp) { //传来的stamp十位数
-                            if (!stamp) return '';
-
-                            let nowStamp = Math.round((new Date().getTime()) / 1000);
-                            let howLong = nowStamp - stamp;
-
-                            if (howLong < 60) { //1分钟内
-                                return "1分钟内";
-                            } else if (howLong < 3600) { //1小时内，显示分钟数
-                                let minutes = Math.floor(howLong / 60);
-                                return minutes + "分钟前";
-                            } else if (howLong < 43200) { //12小时内，显示小时数
-                                let hours = Math.floor(howLong / 3600);
-                                return hours + "小时前";
-                            } else if (howLong >= 43200 && howLong < 86400) { //大于12小时，小于24小时
-                                let dateStr = stampToDate(stamp);
-                                console.log(dateStr)
-                                let minStr = dateStr.substr(dateStr.length - 5);
-                                return "昨天 " + minStr;
-                            } else if (howLong > 86400) { //大于24小时，直接显示时间
-                                return stampToDate(stamp);
-                            }
+                            return Global.stampToStr(stamp);
                         }
                     },
                     methods: {
@@ -553,17 +512,6 @@
         $(function () {
             Details.init()
         });
-        //时间戳转日期时间
-        function stampToDate(timestamp) {
-            var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-            Y = date.getFullYear() + '-';
-            M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-            D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + ' ';
-            h = (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ':';
-            m = (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
-            // s = date.getSeconds();
-            return Y + M + D + h + m;
-        }
     </script>
 </body>
 

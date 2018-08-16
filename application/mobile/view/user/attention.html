@@ -50,8 +50,8 @@
 
 
     <script src="__STATIC__/js-dist/user-attention.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <script>
-        var GlobalHost = "http://meiliyue.caapa.org";
         var Attend = {
             user_id: "",
 
@@ -88,7 +88,7 @@
                     data.forEach(function (item, index) {
                         let headUrl;
                         if (item.head_pic && item.head_pic !== "") {
-                            headUrl = GlobalHost + item.head_pic;
+                            headUrl = Global.host + item.head_pic;
                         } else {
                             headUrl = "__STATIC__/images/icon/tx.png";
                         }
@@ -164,7 +164,7 @@
                 console.log(postData)
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/user/attentionFans",
+                    url: Global.host + "/index.php/Api/user/attentionFans",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -226,18 +226,6 @@
                     document.getElementsByClassName('tabs')[0].scrollTop = pageData.scrollTop;
                 }, 0);
             },
-            openLoading: function () {
-                if ($(".mask").length == 0) {
-                    $("body").append($('<div class="mLoadingMask"></div>'));
-                }
-                if ($(".mLoading").length == 0) {
-                    $("body").append($('<div class="mLoading"></div>'));
-                }
-            },
-            closeLoading: function () {
-                $(".mLoadingMask")
-                    .add($(".mLoading")).remove();
-            },
             eventsBind: function () {
                 //back
                 $(".back").click(function () {
@@ -250,7 +238,7 @@
 
                     let user_id = Attend.user_id;
                     let toUserId = $(this).attr("data-toUserId");
-                    window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
+                    window.location.href = Global.host + "/index.php/mobile/user/homePage/user_id/" +
                         user_id + "/toUserId/" + toUserId + ".html";
                 });
             },

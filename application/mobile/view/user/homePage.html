@@ -296,8 +296,8 @@
 
 </body>
 <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+<script src="__STATIC__/js/Global.js"></script>
 <script>
-    var GlobalHost = "http://meiliyue.caapa.org"
     var Homepage = {
         _mTimer: null,
         user_id: "",
@@ -340,7 +340,7 @@
 
             $(".homepage>.allWrap>header .title").html(data.baseinfo.nickname)
             if (data.baseinfo.head_pic && data.baseinfo.head_pic !== "") {
-                $(".avatar-pic img").attr("src", GlobalHost + data.baseinfo.head_pic);
+                $(".avatar-pic img").attr("src", Global.host + data.baseinfo.head_pic);
                 Homepage.head_pic = data.baseinfo.head_pic;
             }
             if (data.baseinfo.auth_video_status === 2) {
@@ -544,7 +544,7 @@
                 user_id: Homepage.user_id,
                 toUserId: Homepage.toUserId
             }
-            var url = GlobalHost + "/index.php/Api/User/homePage"
+            var url = Global.host + "/index.php/Api/User/homePage"
             console.log(postData)
 
             $.ajax({
@@ -567,7 +567,7 @@
             console.log(postData)
             $.ajax({
                 type: "POST",
-                url: GlobalHost + "/index.php/Api/User/attention",
+                url: Global.host + "/index.php/Api/User/attention",
                 data: postData,
                 dataType: "json",
                 success: function (result) {
@@ -584,7 +584,7 @@
             console.log(postData)
             $.ajax({
                 type: "POST",
-                url: GlobalHost + "/index.php/Api/User/cancelAttention",
+                url: Global.host + "/index.php/Api/User/cancelAttention",
                 data: postData,
                 dataType: "json",
                 success: function (result) {
@@ -660,7 +660,7 @@
         getVideoUrl: function (user_id, callback) {
             $.ajax({
                 type: "POST",
-                url: GlobalHost + "/index.php/Api/user/getAuthVideoUrl",
+                url: Global.host + "/index.php/Api/user/getAuthVideoUrl",
                 data: {
                     user_id: user_id
                 },
@@ -668,7 +668,7 @@
                 success: function (result) {
                     console.log(result)
                     if (result.code == 200) {
-                        let url = GlobalHost + result.data.video_url;
+                        let url = Global.host + result.data.video_url;
                         callback(url);
                     }
                 }
@@ -772,7 +772,7 @@
                     // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
                     Homepage.showVideo({
                         user_id: Homepage.toUserId,
-                        head_pic: GlobalHost + Homepage.head_pic,
+                        head_pic: Global.host + Homepage.head_pic,
                         src: url
                     });
                 });
@@ -785,7 +785,7 @@
                     detailId: Number($(this).attr("data-id")),
                 };
 
-                let toUrl = GlobalHost + "/index.php/mobile/invite/detail.html?options=" + JSON
+                let toUrl = Global.host + "/index.php/mobile/invite/detail.html?options=" + JSON
                     .stringify(options);
                 //toUrl = "detail.html?options=" + JSON.stringify(options); //测试用
                 console.log(toUrl)
@@ -795,7 +795,7 @@
             //点击我的动态，跳动态详情
             $(".myTalkList").delegate(".myTalk-item", "click", function () {
                 let detailId = $(this).attr("data-id");
-                window.location.href = GlobalHost + '/index.php/mobile/dynamics/detail/id/' + detailId +
+                window.location.href = Global.host + '/index.php/mobile/dynamics/detail/id/' + detailId +
                     '.html';
             });
         },

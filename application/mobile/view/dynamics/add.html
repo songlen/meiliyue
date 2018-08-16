@@ -59,6 +59,7 @@
 
     <!-- ------------------------------------ -->
     <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <!-- jquery-weui-js -->
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
     <script src="__STATIC__/js/js-plugins/jquery-weui-build/swiper.min.js"></script>
@@ -68,7 +69,6 @@
     <!-- jquery.form-js -->
     <script src="__STATIC__/js/js-plugins/jquery.form.js"></script>
     <script>
-        var GlobalHost = "http://meiliyue.caapa.org";
         var Edit = {
             _user_id: "",
             _type: "",
@@ -266,12 +266,13 @@
                 $(":input[name='type']").val(Edit._type);
                 $(":input[name='content']").val(contentStr);
 
-                Edit.openLoading();
+                // Edit.openLoading();
+                Global.openLoading();
 
                 $("#dynamicForm").ajaxSubmit(function (result) {  
                     console.log(result)                  
                     if (result.msg == "操作成功") {
-                        Edit.closeLoading("发布成功", function () {
+                        Global.closeLoading("发布成功", function () {
                             //关闭 返回
                             window.history.back(-1);
                         });
@@ -279,48 +280,11 @@
                 });
 
             },
-            openLoading: function () {
-                if ($(".msgWrap").length == 0) {
-                    $("body").append($('<div class="msgWrap"></div>'));
-                }
-                if ($(".mLoading").length == 0) {
-                    $("body").append($('<div class="mLoading">处理中...</div>'));
-                }
-            },
-            closeLoading: function (resultMsg, callback) {
-                $(".mLoading").html(resultMsg);
-                setTimeout(function () {
-                    $(".mLoadingMask")
-                        .add($(".mLoading")).remove();
-                    callback();
-                }, 500);
-            },
-            messageWin: function (msg) {
-                if ($(".msgWrap").length == 0) {
-                    let $msgDiv = $(
-                        `
-                        <div class="msgWrap">
-                            <div class="msg">
-                                <p class="msgText">${msg}</p>
-                                <p class="msgCtrl">
-                                    <span class="closeMsg">确定</span>
-                                </p>
-                            </div>
-                        </div>
-                    `
-                    );
-                    //msg点击事件
-                    $msgDiv.find(".msgCtrl").click(function () {
-                        $msgDiv.remove();
-                    });
-                    $("body").append($msgDiv);
-                }
-            },
             //添加图片
             addPic: function () {
                 if ($("img.showPic").length >= 9) {
                     // alert("最多上传9张图片")
-                    Edit.messageWin("最多上传9张图片");
+                    Global.messageWin("最多上传9张图片");
                     return;
                 }
                 var $liTemp = $(
@@ -377,7 +341,7 @@
             addVideo: function () {
                 console.log("添加video")
                 if ($("video.showPic").length >= 1) {
-                    Edit.messageWin("视频最多上传一个");
+                    Global.messageWin("视频最多上传一个");
                     return;
                 }
                 var $liTemp = $(
@@ -467,7 +431,7 @@
                     document.getElementById('textCount').innerHTML = count
                     if (count >= 1000) {
                         // alert("最多输入1000个字符")
-                        Edit.messageWin("最多输入1000个字符");
+                        Global.messageWin("最多输入1000个字符");
                     }
                 }
             },

@@ -1,9 +1,8 @@
 $(function () {
-    var GlobalHost = "http://meiliyue.caapa.org";
     var dongtaiVm = new Vue({
         el: "#dongtaiApp",
         data: {
-            GlobalHost: GlobalHost,
+            GlobalHost: Global.host,
 
             user_id: "",
             isShowArea: false,
@@ -95,11 +94,11 @@ $(function () {
                     let hours = Math.floor(howLong / 3600);
                     return hours + "小时前";
                 } else if (howLong >= 43200 && howLong < 86400) { //大于12小时，小于24小时
-                    let dateStr = stampToDate(stamp);
+                    let dateStr = Global.stampToDate(stamp);
                     let minStr = dateStr.substr(dateStr.length - 5);
                     return "昨天 " + minStr;
                 } else if (howLong > 86400) { //大于24小时，直接显示时间
-                    return stampToDate(stamp);
+                    return Global.stampToDate(stamp);
                 }
             },
         },
@@ -160,7 +159,7 @@ $(function () {
                 console.log(postData)
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/dynamics/index",
+                    url: self.GlobalHost + "/index.php/Api/dynamics/index",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -237,7 +236,7 @@ $(function () {
 
                 // window.location.href = "edit.html"
 
-                window.location.href = GlobalHost + "/index.php/mobile/dynamics/add/type/" + type + ".html";
+                window.location.href = this.GlobalHost + "/index.php/mobile/dynamics/add/type/" + type + ".html";
             },
             //头像加载失败，默认图片
             defaultImg(event) {
@@ -300,7 +299,7 @@ $(function () {
             gotoDongtaiDetail(item) {
                 this.savePageToSession();
 
-                window.location.href = GlobalHost + '/index.php/mobile/dynamics/detail/id/' + item.dynamic_id + '.html'
+                window.location.href = this.GlobalHost + '/index.php/mobile/dynamics/detail/id/' + item.dynamic_id + '.html'
             },
             gotoHomePage(item) {
                 this.savePageToSession();
@@ -309,9 +308,9 @@ $(function () {
                 let toUserId = item.user_id;
                 let url = "";
                 if (user_id === toUserId) {
-                    url = GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                    url = this.GlobalHost + "/index.php/mobile/user/myHomePage.html";
                 } else {
-                    url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                    url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
                 }
                 window.location.href = url;
             },
@@ -350,7 +349,7 @@ $(function () {
             openVideoScreen(item) {
                 let self = this;
                 let toUserId = item.user_id;
-                let head_pic = GlobalHost + item.head_pic;
+                let head_pic = this.GlobalHost + item.head_pic;
                 console.log(head_pic)
                 this.getVideoUrl(toUserId, function (url) {
                     // url="https://media.w3.org/2010/05/sintel/trailer.mp4";  //测试用
@@ -362,9 +361,10 @@ $(function () {
                 });
             },
             getVideoUrl(user_id, callback) { //user_id
+                let self=this;
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/user/getAuthVideoUrl",
+                    url: self.GlobalHost + "/index.php/Api/user/getAuthVideoUrl",
                     data: {
                         user_id: user_id
                     },
@@ -372,7 +372,7 @@ $(function () {
                     success: function (result) {
                         console.log(result)
                         if (result.code == 200) { //测试用
-                            let url = GlobalHost + result.data.video_url;
+                            let url = self.GlobalHost + result.data.video_url;
                             callback(url);
                         }
                     }
@@ -425,25 +425,7 @@ $(function () {
                 $("body").append($fullScreen);
             },
             messageWin: function (msg) {
-                if ($(".msgWrap").length == 0) {
-                    let $msgDiv = $(
-                        `
-                        <div class="msgWrap">
-                            <div class="msg">
-                                <p class="msgText">${msg}</p>
-                                <p class="msgCtrl">
-                                    <span class="closeMsg">确定</span>
-                                </p>
-                            </div>
-                        </div>
-                    `
-                    );
-                    //msg点击事件
-                    $msgDiv.find(".msgCtrl").click(function () {
-                        $msgDiv.remove();
-                    });
-                    $("body").append($msgDiv);
-                }
+                Global.messageWin(msg);
             },
             //动态列表送花
             giveFlower: function (item) {
@@ -459,7 +441,7 @@ $(function () {
                 // return;
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/Dynamics/giveFlower",
+                    url: _self.GlobalHost + "/index.php/Api/Dynamics/giveFlower",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -492,14 +474,3 @@ $(function () {
     //     }
     // });
 });
-//时间戳转日期时间
-function stampToDate(timestamp) {
-    var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    Y = date.getFullYear() + '-';
-    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-    D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + ' ';
-    h = (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ':';
-    m = (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
-    // s = date.getSeconds();
-    return Y + M + D + h + m;
-}

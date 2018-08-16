@@ -54,7 +54,7 @@
                             <span class="description">description</span>
                         </li>
                         <!-- <li class="detailImages">
-                            <img class="inviImg" data-index=${index} src=${GlobalHost+src}>
+                            <img class="inviImg" data-index=${index} src=${Global.host+src}>
                         </li> -->
                         <li>
                             <span class="smallDot"></span>
@@ -103,8 +103,8 @@
     <button class="interest" style="display: none;">我感兴趣</button>
 
     <script src="__STATIC__/js-dist/invite-detail.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <script>
-        var GlobalHost = "http://meiliyue.caapa.org";
         var Interested = {
             originUserId: "",
             toUserId: "",
@@ -146,7 +146,7 @@
             getInviteData: function () {
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/invite/detail",
+                    url: Global.host + "/index.php/Api/invite/detail",
                     data: {
                         id: Interested.detailId
                     },
@@ -164,7 +164,7 @@
             //根据inviteItem更新Dom
             updateDom: function (data) {
                 console.log(data)
-                $(".img-box img").attr("src", GlobalHost + data.head_pic)
+                $(".img-box img").attr("src", Global.host + data.head_pic)
                 $(".person .name").html(data.nickname)
                 if (data.sex == 1) {
                     $(".sexAge").addClass("male");
@@ -181,7 +181,7 @@
                     data.image.forEach(function (src, index) {
                         $li.append($(
                             `
-                            <img class="inviImg" data-index=${index} src=${GlobalHost+src}>
+                            <img class="inviImg" data-index=${index} src=${Global.host+src}>
                             `
                         ));
                     });
@@ -243,10 +243,10 @@
                     event.stopPropagation();
                     let url = "";
                     if (Interested.originUserId !== Interested.toUserId) {
-                        url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + Interested.originUserId +
+                        url = Global.host + "/index.php/mobile/user/homePage/user_id/" + Interested.originUserId +
                             "/toUserId/" + Interested.toUserId + ".html";
                     } else {
-                        url = GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                        url = Global.host + "/index.php/mobile/user/myHomePage.html";
                     }
 
                     window.location.href =url;
