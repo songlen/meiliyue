@@ -54,6 +54,11 @@ class User extends Base {
 
     // 查看别人主页
     public function homePage(){
+        $user_id = I('user_id');
+        $toUserId = I('toUserId');
+        if($user_id == $toUserId){
+            $this->redirect('user/myHomePage');
+        }
 file_put_contents('runtime/log/request.log', "\r\n homepage", FILE_APPEND);
         return $this->fetch();
     }
