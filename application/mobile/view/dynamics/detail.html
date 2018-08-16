@@ -92,7 +92,7 @@
                 <ul>
                     <li class="details-comments-item" v-cloak v-for="(item,index) in commentsList" :key="index">
                         <div style="position: relative;" v-cloak>
-                            <div class="comment-headWrap" v-cloak @click="applyHomepage">
+                            <div class="comment-headWrap" v-cloak @click="applyHomepage(item)">
                                 <img :src="GlobalHost+item.head_pic" @error="defaultImg">
                                 <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
                             </div>
@@ -183,10 +183,10 @@
     </div>
 
 
-    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
-    <script src="__STATIC__/js/vue.min.js"></script>
+    <script src="__STATIC__/js-dist/dynamics-detail.min.js"></script>
     <script>
         var GlobalHost = "http://meiliyue.caapa.org";
+        var dynamic_origin_id='{$info["user_id"]}';
         var Details = {
             user_id: "",
             dynamic_id: "",
@@ -209,15 +209,17 @@
                 }
                 //dynamic_id
                 var ulrStr = window.location.href;
-                // ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/155.html" //测试用
+                if(ulrStr.indexOf("file://") > -1){
+                    ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/155.html" //测试用
+                }
                 var strTemp = ulrStr.split("/detail/id/")[1];
                 Details.dynamic_id = Number(strTemp.substr(0, strTemp.length - 5));
                 console.log(Details.dynamic_id)
 
                 //这条动态的发布者的id
-                Details.dynamic_origin_id = Number('{$info["user_id"]}'); //????
+                Details.dynamic_origin_id = Number(dynamic_origin_id);
                 // Details.dynamic_origin_id = 1; //测试用
-                console.log(Details.dynamic_origin_id)
+                console.log("动态发布者："+Details.dynamic_origin_id)
             },
             //送花
             giveFlower: function () {
@@ -285,16 +287,6 @@
                     });
                     $("body").append($msgDiv);
                 }
-            },
-            //申请查看主页
-            applyHomepage: function () {
-                console.log(3)
-                if ($(".mask").length == 0) {
-                    $('body').append($('<div class="mask"></div>'))
-                }
-                $('.avatarOperating').show()
-                // $('.avatarOperating').show().animate({'bottom':'0'},300)
-                $('body').css('overflow', 'hidden')
             },
             initVue: function () {
                 var commentsVm = new Vue({
@@ -456,13 +448,25 @@
                         defaultImg: function (event) {
                             event.target.src = "__STATIC__/images/icon/tx.png"
                         },
-                        applyHomepage: function () {
-                            if ($(".mask").length == 0) {
-                                $('body').append($('<div class="mask"></div>'))
+                        applyHomepage: function (item) {
+                            //申请去个人主页
+                            // if ($(".mask").length == 0) {
+                            //     $('body').append($('<div class="mask"></div>'))
+                            // }
+                            // $('.avatarOperating').show()
+                            // // $('.avatarOperating').show().animate({'bottom':'0'},300)
+                            // $('body').css('overflow', 'hidden')
+
+                            //去个人主页
+                            let user_id = Details.user_id;
+                            let toUserId = item.user_id;
+                            let url = "";
+                            if (user_id === toUserId) {
+                                url = GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                            } else {
+                                url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
                             }
-                            $('.avatarOperating').show()
-                            // $('.avatarOperating').show().animate({'bottom':'0'},300)
-                            $('body').css('overflow', 'hidden')
+                            window.location.href = url;
                         },
                         //点自己的评论了，提问是否删除
                         toggleDelete: function (el) {
@@ -522,6 +526,19 @@
                     $('.avatarOperating-jubao').hide()
                     // })
                     $('body').css('overflow', 'auto')
+                });
+                //点击这条动态的头像去个人主页
+                $(".details-headImgWrap").click(function(event){
+                    event.stopPropagation();
+                    let user_id = Details.user_id;
+                    let toUserId = Details.dynamic_origin_id;
+                    let url = "";
+                    if (user_id === toUserId) {
+                        url = GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                    } else {
+                        url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                    }
+                    window.location.href = url;
                 });
             },
             init: function () {

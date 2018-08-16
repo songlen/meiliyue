@@ -52,7 +52,8 @@ header {
     border: 1px solid #a8a8a8;
     overflow: hidden;
     position: absolute;
-    top: 100%;
+    /* top: 100%; */
+    top: 50px;
 }
 
 /* .dongtai header>div .mSelect::after {
@@ -305,7 +306,7 @@ footer li a {
 .list-item .item-comment>div span {
     font-size: 14px;
     position: absolute;
-    margin-top: 0.03rem;
+    margin-top: 0.01rem;
     margin-left: 0.01rem;
 }
 

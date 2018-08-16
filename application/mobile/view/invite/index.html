@@ -5,11 +5,7 @@
     <meta charset="UTF-8">
     <title>邀约</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <!-- jquery-weui-css -->
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/weui.css">
-    <link rel="stylesheet" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
-    <!-- my-css -->
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css-dist/invite-index.min.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/common.css">
     <script>
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
@@ -106,7 +102,7 @@
                             </span>
                             <div class="top">
                                 <div style="position: relative;">
-                                    <div class="img-box" @click="gotoInviteDetail(item)">
+                                    <div class="img-box" @click.stop="gotoHomePage(item)">
                                         <img :src="GlobalHost+item.head_pic" @error="defaultImg">
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click="showVideo(item)"></span>
@@ -158,7 +154,7 @@
                 </div>
 
 
-                <div class="weui-loadmore">
+                <div class="weui-loadmore" v-cloak v-show="isLoading">
                     <i class="weui-loading"></i>
                     <span class="weui-loadmore__tips">正在加载</span>
                 </div>
@@ -275,16 +271,7 @@
 
     </div>
 
-    <!-- -------------------------------------------------------------- -->
-    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
-    <!-- vue-js -->
-    <script src="__STATIC__/js/vue.min.js"></script>
-    <!-- jquery-weui-js -->
-    <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
-    <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
-    <!-- areaCode -->
-    <script src="__STATIC__/js/areaCodeArr.js"></script>
-    <!-- my-js -->
+    <script src="__STATIC__/js-dist/invite-index.min.js"></script>
     <script>
         $(function () {
             var GlobalHost = "http://meiliyue.caapa.org";
@@ -347,6 +334,7 @@
                         // alert(1)
                         // alert(localStorage.getItem("mUserInfo"))
                         // alert(JSON.parse(localStorage.getItem("mUserInfo")))
+                        console.log(1)
                         let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                         console.log(mUserInfo)
                         this.user_id = Number(mUserInfo.user_id);
@@ -357,7 +345,8 @@
                             proCode = mUserInfo.province.toString();
                         }
                     } else {
-                        // alert("无session/local")
+                        // alert("无localStorage")
+                        console.log("无session/local")
                         this.user_id = 1; //测试用
                         proCode = "370000"; //山东 测试用
                     }
@@ -406,7 +395,8 @@
 
                         return;
                     }
-
+                    
+                    // alert("ajax");
                     this.getInviteList()
                 },
                 methods: {
@@ -476,9 +466,9 @@
                                 $(".dropRefresh").pullToRefreshDone();
                                 _self.isLoading = false;
 
-                                if (result.data.length == 0) {
-                                    $(".weui-loadmore").hide();
-                                }
+                                // if (result.data.length == 0) {
+                                //     $(".weui-loadmore").hide();
+                                // }
                             }
                         })
                     },
@@ -692,14 +682,19 @@
                         //     }, true)
                         // });
                     },
-                    gotoInviteDetail(item) {
+                    //去个人主页
+                    gotoHomePage(item) {
                         this.savePageToSession();
 
-                        console.log(GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
-                            this.user_id + "/toUserId/" + item.user_id + ".html")
-
-                        window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
-                            this.user_id + "/toUserId/" + item.user_id + ".html";
+                        let user_id = this.user_id;
+                        let toUserId = item.user_id;
+                        let url = "";
+                        if (user_id === toUserId) {
+                            url = GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                        } else {
+                            url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                        }
+                        window.location.href = url;
                     },
                     openVideoScreen(item) {
                         let self = this;
