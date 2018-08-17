@@ -152,4 +152,7 @@ let Global = (function () {
     }
 })();
 
-Global.gotoApp();
+function getJavaFiles(args){
+    console.log(args)
+    alert(args)
+}
