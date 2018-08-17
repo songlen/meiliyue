@@ -32,8 +32,33 @@ let Global = (function () {
                 </div>
             `
             );
-            //msg点击事件
-            $msgDiv.find(".msgCtrl").click(function () {
+            $msgDiv.find(".closeMsg").click(function () {
+                $msgDiv.remove();
+            });
+            $("body").append($msgDiv);
+        }
+    }
+
+    function messageConfirWin(msg, callback) {
+        if ($(".msgWrap").length == 0) {
+            let $msgDiv = $(
+                `
+                <div class="msgWrap">
+                    <div class="msg">
+                        <p class="msgText">${msg}</p>
+                        <p class="msgCtrl">
+                            <span class="closeMsg">取消</span>
+                            <span class="gotoCallback">确定</span>
+                        </p>
+                    </div>
+                </div>
+            `
+            );
+            $msgDiv.find(".closeMsg").click(function () {
+                $msgDiv.remove();
+            });
+            $msgDiv.find(".gotoCallback").click(function () {
+                callback();
                 $msgDiv.remove();
             });
             $("body").append($msgDiv);
@@ -98,6 +123,19 @@ let Global = (function () {
         }
     }
 
+    function gotoApp(funcStr) {
+        let u = navigator.userAgent;
+        let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        console.log(isAndroid,isiOS)
+        if(isAndroid){
+            window.Android[funcStr]();
+        }else if(isiOS){
+            //
+            console.log(3)
+        }
+    }
+
     //暴露的接口------------------------
     return {
         //值
@@ -106,8 +144,12 @@ let Global = (function () {
         openLoading,
         closeLoading,
         messageWin,
+        messageConfirWin,
         bindLimitCount, //无表情
         stampToDate,
-        stampToStr
+        stampToStr,
+        gotoApp
     }
 })();
+
+Global.gotoApp();
