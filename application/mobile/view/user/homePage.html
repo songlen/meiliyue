@@ -205,7 +205,7 @@
                         <li class="aboutMe-item">
                             <label>最近活跃时间</label>
                             <div class="aboutMe-item-content">
-                                <span class="modifyData active_time"></span>
+                                <span class="modifyData active_time canChoose">查看</span>
                             </div>
                         </li>
                         <li class="aboutMe-item satis_parts_item">
@@ -296,14 +296,17 @@
 
 </body>
 <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+<script src="__STATIC__/js/Global.js"></script>
 <script>
-    var GlobalHost = "http://meiliyue.caapa.org"
     var Homepage = {
         _mTimer: null,
         user_id: "",
         toUserId: "",
         head_pic: "",
         attentionStatus: 0, //userid对touserid的关注状态
+
+        mUserInfo:{}, //我的信息
+        baseinfo:{}, //该个人主页用户的信息
 
 
         getUserId: function () {
@@ -312,9 +315,11 @@
                 .getItem("mUserInfo") !== "null") {
                 let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                 console.log(mUserInfo)
+                Homepage.mUserInfo=mUserInfo;
                 Homepage.user_id = Number(mUserInfo.user_id);
             } else {
                 Homepage.user_id = 1; //测试用
+                Homepage.mUserInfo.is_vip=0; //测试用
             }
             //获取toUserId
             var ulrStr = window.location.href;
@@ -340,7 +345,7 @@
 
             $(".homepage>.allWrap>header .title").html(data.baseinfo.nickname)
             if (data.baseinfo.head_pic && data.baseinfo.head_pic !== "") {
-                $(".avatar-pic img").attr("src", GlobalHost + data.baseinfo.head_pic);
+                $(".avatar-pic img").attr("src", Global.host + data.baseinfo.head_pic);
                 Homepage.head_pic = data.baseinfo.head_pic;
             }
             if (data.baseinfo.auth_video_status === 2) {
@@ -413,7 +418,7 @@
             $(".approveBtn").each(function () {
                 $(this).html(approveBtnText)
             })
-
+            //手机号
             if (data.baseinfo.mobile_validated == 0) {
                 $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
                     "__STATIC__/images/icon/微信@2x.png")
@@ -423,9 +428,23 @@
                 $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
                     "__STATIC__/images/icon/微信@2x.png")
                 $(".myApprove-phone").html("手机号已认证")
-                $(".myApprove-phone+.approveBtn").hide()
+                $(".myApprove-phone+.approveBtn").hide();
+                $(".myApprove-phone").click(function(){
+                    // if(Homepage.mUserInfo.is_vip==0){
+                    //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
+                    //         //去vip申请页面
+                    //     });
+                    //     return;
+                    // }else{
+                    //     if(Homepage.baseinfo.phoneOwechat&&Homepage.baseinfo.phoneOwechat!==""){
+                    //         Global.messageWin(`微信/手机号：${Homepage.baseinfo.phoneOwechat}`);
+                    //     }
+                    // }
+                    if(Homepage.baseinfo.phoneOwechat&&Homepage.baseinfo.phoneOwechat!==""){
+                        Global.messageWin(`微信/手机号：${Homepage.baseinfo.phoneOwechat}`);
+                    }
+                });
             }
-
             if (data.baseinfo.auth_video_status == 0) {
                 $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
                     "__STATIC__/images/icon/视频未认证@2x.png")
@@ -508,23 +527,19 @@
             } else {
                 $(".weight").html("未填")
             }
-            //对爱情的看法
+            //个性签名
             if (data.baseinfo.signature && data.baseinfo.signature !== "") {
                 $(".signature").html(data.baseinfo.signature)
+                $(".signature").click(function(){
+                    Global.messageWin(data.baseinfo.signature);
+                });
             } else {
-                $(".signature").html("未填")
+                $(".signature").html("未填");
             }
 
             //对另一半的要求？
 
 
-            //最近活跃时间
-            if (data.baseinfo.active_time && data.baseinfo.active_time !== "") {
-                let timeStr = stampToStr(data.baseinfo.active_time);
-                $(".active_time").html(timeStr);
-            } else {
-                // $(".active_time").html("填写")
-            }
             //最满意部位
             if (data.baseinfo.satisfactory_parts && data.baseinfo.satisfactory_parts !== "") {
                 $(".satisfactory_parts").append($('<ul class="clearfix"></ul>'))
@@ -533,7 +548,7 @@
                     $(".satisfactory_parts ul").append($('<li>' + value + '</li>'))
                 })
             } else {
-                $(".active_time").html("未填")
+                $(".satisfactory_parts").html("未填")
             }
 
             //
@@ -544,7 +559,7 @@
                 user_id: Homepage.user_id,
                 toUserId: Homepage.toUserId
             }
-            var url = GlobalHost + "/index.php/Api/User/homePage"
+            var url = Global.host + "/index.php/Api/User/homePage"
             console.log(postData)
 
             $.ajax({
@@ -555,6 +570,8 @@
                 success: function (result) {
                     console.log(result.data)
 
+                    Homepage.baseinfo=result.data.baseinfo;
+                    
                     Homepage.updateDom(result.data)
                 }
             })
@@ -567,7 +584,7 @@
             console.log(postData)
             $.ajax({
                 type: "POST",
-                url: GlobalHost + "/index.php/Api/User/attention",
+                url: Global.host + "/index.php/Api/User/attention",
                 data: postData,
                 dataType: "json",
                 success: function (result) {
@@ -584,7 +601,7 @@
             console.log(postData)
             $.ajax({
                 type: "POST",
-                url: GlobalHost + "/index.php/Api/User/cancelAttention",
+                url: Global.host + "/index.php/Api/User/cancelAttention",
                 data: postData,
                 dataType: "json",
                 success: function (result) {
@@ -660,7 +677,7 @@
         getVideoUrl: function (user_id, callback) {
             $.ajax({
                 type: "POST",
-                url: GlobalHost + "/index.php/Api/user/getAuthVideoUrl",
+                url: Global.host + "/index.php/Api/user/getAuthVideoUrl",
                 data: {
                     user_id: user_id
                 },
@@ -668,7 +685,7 @@
                 success: function (result) {
                     console.log(result)
                     if (result.code == 200) {
-                        let url = GlobalHost + result.data.video_url;
+                        let url = Global.host + result.data.video_url;
                         callback(url);
                     }
                 }
@@ -761,18 +778,28 @@
                 })
             })
             //点击 “关注” 系列 end
-
-            //查看个性签名
-            $(".signatureItem").click(function () {
-                Homepage.showSignature();
-            });
             //点击视频认证
             $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
+                // if(Homepage.mUserInfo.is_vip<2){
+                //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
+                //         //去vip申请页面
+                //     });
+                //     return;
+                // }else{
+                //     Homepage.getVideoUrl(Homepage.toUserId, function (url) {
+                //         // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
+                //         Homepage.showVideo({
+                //             user_id: Homepage.toUserId,
+                //             head_pic: Global.host + Homepage.head_pic,
+                //             src: url
+                //         });
+                //     });
+                // }
                 Homepage.getVideoUrl(Homepage.toUserId, function (url) {
                     // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
                     Homepage.showVideo({
                         user_id: Homepage.toUserId,
-                        head_pic: GlobalHost + Homepage.head_pic,
+                        head_pic: Global.host + Homepage.head_pic,
                         src: url
                     });
                 });
@@ -785,7 +812,7 @@
                     detailId: Number($(this).attr("data-id")),
                 };
 
-                let toUrl = GlobalHost + "/index.php/mobile/invite/detail.html?options=" + JSON
+                let toUrl = Global.host + "/index.php/mobile/invite/detail.html?options=" + JSON
                     .stringify(options);
                 //toUrl = "detail.html?options=" + JSON.stringify(options); //测试用
                 console.log(toUrl)
@@ -795,8 +822,22 @@
             //点击我的动态，跳动态详情
             $(".myTalkList").delegate(".myTalk-item", "click", function () {
                 let detailId = $(this).attr("data-id");
-                window.location.href = GlobalHost + '/index.php/mobile/dynamics/detail/id/' + detailId +
+                window.location.href = Global.host + '/index.php/mobile/dynamics/detail/id/' + detailId +
                     '.html';
+            });
+            //点击查看最近活跃时间
+            $(".active_time").click(function(){
+                // if(Homepage.mUserInfo.is_vip<3){
+                //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
+                //         //去vip申请页面
+                //     });
+                //     return;
+                // }else{
+                //     let timeStr = Global.stampToStr(Homepage.baseinfo.active_time);
+                //     Global.messageWin(`最近活跃时间：${timeStr}`);
+                // }
+                let timeStr = Global.stampToStr(Homepage.baseinfo.active_time);
+                Global.messageWin(`最近活跃时间：${timeStr}`);
             });
         },
         init: function () {
@@ -810,41 +851,6 @@
     $(function () {
         Homepage.init()
     });
-    //时间戳转日期时间
-    function stampToDate(timestamp) {
-        var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-        Y = date.getFullYear() + '-';
-        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-        D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + ' ';
-        h = (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ':';
-        m = (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
-        // s = date.getSeconds();
-        return Y + M + D + h + m;
-    }
-    //时间戳转文字
-    function stampToStr(stamp) { //传来的stamp十位数
-        if (!stamp) return '';
-
-        let nowStamp = Math.round((new Date().getTime()) / 1000);
-        let howLong = nowStamp - stamp;
-
-        if (howLong < 60) { //1分钟内
-            return "1分钟内";
-        } else if (howLong < 3600) { //1小时内，显示分钟数
-            let minutes = Math.floor(howLong / 60);
-            return minutes + "分钟前";
-        } else if (howLong < 43200) { //12小时内，显示小时数
-            let hours = Math.floor(howLong / 3600);
-            return hours + "小时前";
-        } else if (howLong >= 43200 && howLong < 86400) { //大于12小时，小于24小时
-            let dateStr = stampToDate(stamp);
-            console.log(dateStr)
-            let minStr = dateStr.substr(dateStr.length - 5);
-            return "昨天 " + minStr;
-        } else if (howLong > 86400) { //大于24小时，直接显示时间
-            return stampToDate(stamp);
-        }
-    }
 </script>
 
 </html>

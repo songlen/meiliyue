@@ -88,8 +88,8 @@
     </div>
 
     <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <script>
-        const GlobalHost = "http://meiliyue.caapa.org";
         let AddFriend = {
             user_id: "",
             uuid: "",
@@ -112,7 +112,7 @@
             isValid(value) {
                 let idReg = /^\d{8}$/;
                 if (!idReg.test(value)) {
-                    AddFriend.messageWin("请输入正确格式的ID（8位数字）");
+                    Global.messageWin("请输入正确格式的ID（8位数字）");
                     return false;
                 }
                 return true;
@@ -125,7 +125,7 @@
                 };
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/User/cancelAttention",
+                    url: Global.host + "/index.php/Api/User/cancelAttention",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -144,7 +144,7 @@
                 };
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/User/attention",
+                    url: Global.host + "/index.php/Api/User/attention",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -164,7 +164,7 @@
                                                 data-oldStatus=${data.attention}>
                             <div class="friendItem-avatar">
                                 <div class="friendHeadWrap">
-                                    <img src=${GlobalHost+data.head_pic}>
+                                    <img src=${Global.host+data.head_pic}>
                                 </div>
                                 <span class="videoStatus" style="display:none;"></span>
                             </div>
@@ -231,7 +231,7 @@
                 let result = AddFriend.isValid($("#addFInput").val().trim());
                 if (result) { //验证通过
                     if (AddFriend.uuid == Number($("#addFInput").val().trim())) { //如果搜索的是自己
-                        AddFriend.messageWin("请搜索除自己以外的用户");
+                        Global.messageWin("请搜索除自己以外的用户");
                         return;
                     }
                     let postData = {
@@ -239,58 +239,19 @@
                         uuid: $("#addFInput").val().trim()
                         // uuid: 88888888 //测试用
                     };
-                    AddFriend.openLoading();
+                    Global.openLoading();
                     $.ajax({
                         type: "POST",
-                        url: GlobalHost + "/index.php/Api/user/searchFriend",
+                        url: Global.host + "/index.php/Api/user/searchFriend",
                         data: postData,
                         dataType: "json",
                         success: function (result) {
                             console.log(result)
-                            AddFriend.closeLoading("处理中...", function () {
+                            Global.closeLoading("处理中...", function () {
                                 AddFriend.updataDom(result.data);
-                            });
+                            },300);
                         }
                     });
-                }
-            },
-            openLoading: function () {
-                if ($(".mLoadingMask").length == 0) {
-                    $("body").append($('<div class="mLoadingMask"></div>'));
-                }
-                if ($(".mLoading").length == 0) {
-                    $("body").append($('<div class="mLoading">处理中...</div>'));
-                }
-            },
-            closeLoading: function (resultMsg, callback) {
-                // $(".mLoadingMask")
-                //     .add($(".mLoading")).remove();
-                $(".mLoading").html(resultMsg);
-                setTimeout(function () {
-                    $(".mLoadingMask")
-                        .add($(".mLoading")).remove();
-                    callback();
-                }, 300);
-            },
-            messageWin: function (msg) {
-                if ($(".msgWrap").length == 0) {
-                    let $msgDiv = $(
-                        `
-                        <div class="msgWrap">
-                            <div class="msg">
-                                <p class="msgText">${msg}</p>
-                                <p class="msgCtrl">
-                                    <span class="closeMsg">确定</span>
-                                </p>
-                            </div>
-                        </div>
-                    `
-                    );
-                    //msg点击事件
-                    $msgDiv.find(".msgCtrl").click(function () {
-                        $msgDiv.remove();
-                    });
-                    $("body").append($msgDiv);
                 }
             },
             eventsBind() {
@@ -332,9 +293,9 @@
                     let $li = $(this).closest(".friendItem");
                     let friend_id = Number($li.attr("data-userId"));
                     let oldStatus = Number($li.attr("data-oldStatus"));
-                    AddFriend.openLoading();
+                    Global.openLoading();
                     AddFriend.addAttend(friend_id, function () {
-                        AddFriend.closeLoading("关注成功", function () {
+                        Global.closeLoading("关注成功", function () {
                             // debugger
                             switch (oldStatus) {
                                 case 0: //原来是未关注
@@ -365,7 +326,7 @@
 
                     //     $li.attr("data-oldStatus", 0);
                     // });
-                    AddFriend.messageWin("您已关注该用户");
+                    Global.messageWin("您已关注该用户");
                 });
                 //点击 相互关注
                 $(".attentionUl").delegate(".attendAll", "click", function () {
@@ -377,7 +338,7 @@
 
                     //     $li.attr("data-oldStatus", 2);
                     // });
-                    AddFriend.messageWin("您已关注该用户");
+                    Global.messageWin("您已关注该用户");
                 });
                 // 关注系列 end
             },

@@ -355,8 +355,8 @@
 
 </body>
 <script src="__STATIC__/js-dist/user-myHomePage.min.js"></script>
+<script src="__STATIC__/js/Global.js"></script>
 <script>
-    var GlobalHost = "http://meiliyue.caapa.org"
     var Homepage = {
         _mTimer: null,
         user_id: "",
@@ -374,7 +374,7 @@
 
             $(".homepage>.allWrap>header .title").html(data.baseinfo.nickname)
             if (data.baseinfo.head_pic && data.baseinfo.head_pic !== "") {
-                $(".avatar-pic img").attr("src", GlobalHost + data.baseinfo.head_pic)
+                $(".avatar-pic img").attr("src", Global.host + data.baseinfo.head_pic)
             }
             if (data.baseinfo.auth_video_status === 2) {
                 $(".edit-personal-avatar .videoStatus").show();
@@ -445,7 +445,7 @@
                     var $liTemp = $(
                         `
                             <li class="edit-pic-item">
-                                <img class="showPic" src=${GlobalHost+item.url}>
+                                <img class="showPic" src=${Global.host+item.url}>
                             </li>
                         `
                     );
@@ -488,7 +488,7 @@
 
             if (data.baseinfo.mobile_validated == 0) {
                 $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/微信@2x.png")
+                    "__STATIC__/images/icon/微信好友@2x.png")
                 $(".myApprove-phone").html("手机号未认证")
                 // $(".myApprove-phone+.approveBtn").show()
             } else {
@@ -505,7 +505,7 @@
                 // $(".myApprove-video+.approveBtn").show()
             } else {
                 $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/小视频@2x.png")
+                    "__STATIC__/images/icon/视频已认证@2x.png")
                 $(".myApprove-video").html("形象视频已认证")
                 $(".myApprove-video+.approveBtn").hide()
             }
@@ -517,7 +517,7 @@
                 // $(".myApprove-identity+.approveBtn").show()
             } else {
                 $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/身份未认真@2x.png")
+                    "__STATIC__/images/icon/身份已认真@2x.png")
                 $(".myApprove-identity").html("身份已认证")
                 $(".myApprove-identity+.approveBtn").hide()
             }
@@ -634,9 +634,9 @@
                 })
             } else {
                 if (Homepage.isSelf) {
-                    $(".active_time").html("请选择").addClass("canChoose")
+                    $(".satisfactory_parts").html("请选择").addClass("canChoose")
                 } else {
-                    $(".active_time").html("填写")
+                    $(".satisfactory_parts").html("填写")
                 }
             }
 
@@ -665,10 +665,10 @@
             var url = ""
             if (Homepage.user_id == Homepage.toUserId) {
                 //我的主页
-                url = GlobalHost + "/index.php/Api/User/myHomePage"
+                url = Global.host + "/index.php/Api/User/myHomePage"
             } else {
                 //访问他人主页
-                url = GlobalHost + "/index.php/Api/User/homePage"
+                url = Global.host + "/index.php/Api/User/homePage"
             }
             console.log(postData)
 
@@ -684,24 +684,6 @@
                 }
             })
         },
-        openLoading: function () {
-            if ($(".mLoadingMask").length == 0) {
-                $("body").append($('<div class="mLoadingMask"></div>'));
-            }
-            if ($(".mLoading").length == 0) {
-                $("body").append($('<div class="mLoading">处理中...</div>'));
-            }
-        },
-        closeLoading: function (resultMsg, callback) {
-            // $(".mLoadingMask")
-            //     .add($(".mLoading")).remove();
-            $(".mLoading").html(resultMsg);
-            setTimeout(function () {
-                $(".mLoadingMask")
-                    .add($(".mLoading")).remove();
-                callback();
-            }, 500);
-        },
         //上传普通/精华图片
         uploadPic: function (type, $li, callback) { //type类型：1普通，2精华
             // var postData = {
@@ -714,7 +696,7 @@
             // // return
             // $.ajax({
             //     type: "POST",
-            //     url: GlobalHost + "/index.php/Api/User/uploadPhoto",
+            //     url: Global.host + "/index.php/Api/User/uploadPhoto",
             //     data: postData,
             //     dataType: "json",
             //     processData: false,
@@ -730,14 +712,14 @@
             $li.find(":input[name='type']").val(type);
             $li.find(":input[name='file_type']").val(1);
 
-            Homepage.openLoading();
+            Global.openLoading();
             console.log("上传")
             console.log($li.find("#homeForm"))
             $li.find("#homeForm").ajaxSubmit(function (result) {  
                 console.log(result)                  
                 // if (result.msg == "操作成功") {
                 console.log("上传结束")
-                Homepage.closeLoading("上传成功", function () {
+                Global.closeLoading("上传成功", function () {
                     callback();
                 });
                 // }  
@@ -749,7 +731,7 @@
             //     alert("最多上传9张图片")
             //     return
             // }
-            var url = GlobalHost + "/index.php/Api/User/uploadPhoto";
+            var url = Global.host + "/index.php/Api/User/uploadPhoto";
             var type = Number($(el).attr("data-type")); //1普通图片，2精华图片
             var $liTemp = $(
                 `
@@ -801,7 +783,7 @@
             }
             $.ajax({
                 type: "POST",
-                url: GlobalHost + "/index.php/Api/User/attention",
+                url: Global.host + "/index.php/Api/User/attention",
                 data: postData,
                 dataType: "json",
                 success: function (result) {
@@ -817,7 +799,7 @@
             }
             $.ajax({
                 type: "POST",
-                url: GlobalHost + "/index.php/Api/User/cancelAttention",
+                url: Global.host + "/index.php/Api/User/cancelAttention",
                 data: postData,
                 dataType: "json",
                 success: function (result) {
@@ -1152,25 +1134,11 @@
                     $(".modifyDataWrap").hide()
                     $(".modifyDataWrap").html("")
                 })
-                textarea.onchange = function () {
-                    limitCount(this)
-                }
-                textarea.onkeydown = function () {
-                    limitCount(this)
-                }
-                textarea.onkeyup = function () {
-                    limitCount(this)
-                }
-
-                function limitCount(el) {
-                    let valueStr = el.value
-                    let count = 50 - valueStr.length
-                    if (count <= 0) {
-                        el.value = el.value.substring(0, 50)
-                        count = 0
-                    }
-                    $(".signatureCount").html(count)
-                }
+                Global.bindLimitCount(
+                    textarea,
+                    50,
+                    $(".signatureCount")[0]
+                );
                 // $(".signatureList li").click(function () {
                 //     $(this).addClass("actived").siblings().removeClass("actived")
                 //     textarea.value = $(this).find("p").text()
@@ -1274,7 +1242,7 @@
             console.log(postData)
             $.ajax({
                 type: "POST",
-                url: GlobalHost + "/index.php/Api/User/changeInfo",
+                url: Global.host + "/index.php/Api/User/changeInfo",
                 data: postData,
                 dataType: "json",
                 success: function (result) {
@@ -1306,7 +1274,7 @@
                         <div class="closeFullScreen"></div>
                         <div class="videoOperate"></div>
                         <div class="img-box">
-                            <img src=${GlobalHost+head_pic}>
+                            <img src=${Global.host+head_pic}>
                         </div>
                     </div>
 
@@ -1406,7 +1374,7 @@
                 //保存页面数据
 
                 var type = $(this).attr("data-type")
-                window.location.href = GlobalHost + "/index.php/mobile/invite/add/type/" + type +
+                window.location.href = Global.host + "/index.php/mobile/invite/add/type/" + type +
                     ".html"
             })
             //修改个人主页里的资料
@@ -1467,7 +1435,7 @@
             //点击编辑资料
             $(".gotoEditHomePage").click(function () {
                 Homepage.savePageSession()
-                window.location.href = GlobalHost + "/index.php/mobile/user/editHomePage.html";
+                window.location.href = Global.host + "/index.php/mobile/user/editHomePage.html";
             })
             //点击视频认证
             $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
@@ -1486,7 +1454,7 @@
                     detailId: Number($(this).attr("data-id")),
                 };
 
-                let toUrl = GlobalHost + "/index.php/mobile/invite/detail.html?options=" + JSON
+                let toUrl = Global.host + "/index.php/mobile/invite/detail.html?options=" + JSON
                     .stringify(options);
                 //toUrl = "detail.html?options=" + JSON.stringify(options); //测试用
                 console.log(toUrl)
@@ -1496,7 +1464,7 @@
             //点击我的动态，跳动态详情
             $(".myTalkList").delegate(".myTalk-item", "click", function () {
                 let detailId = $(this).attr("data-id");
-                window.location.href = GlobalHost + '/index.php/mobile/dynamics/detail/id/' + detailId +
+                window.location.href = Global.host + '/index.php/mobile/dynamics/detail/id/' + detailId +
                     '.html';
             });
         },

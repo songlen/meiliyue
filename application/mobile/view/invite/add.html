@@ -138,8 +138,8 @@
     </div>
 
     <script src="__STATIC__/js-dist/invite-add.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <script type="text/javascript">
-        var GlobalHost = "http://meiliyue.caapa.org";
         var ReleInvite = {
             inviteList: [{
                 title: "旅行",
@@ -233,53 +233,9 @@
             setAreaDefault: function () {
 
             },
-            //限制字数
-            bindLimitCount: function () {
-                let textarea = document.getElementById('descripTextarea')
-                textarea.onchange = function () {
-                    limitCount(this)
-                }
-                textarea.onkeydown = function () {
-                    limitCount(this)
-                }
-                textarea.onkeyup = function () {
-                    limitCount(this)
-                }
-
-                function limitCount(el) {
-                    let vInnerHtml = el.value
-                    el.value = el.value.substring(0, 200) //限制字数
-                    let count = vInnerHtml.length
-                    document.getElementsByClassName('textCount')[0].innerHTML = count
-                    if (count >= 200) {
-                        ReleInvite.messageWin("最多输入200个字");
-                    }
-                }
-            },
-            messageWin: function (msg) {
-                if ($(".msgWrap").length == 0) {
-                    let $msgDiv = $(
-                        `
-                        <div class="msgWrap">
-                            <div class="msg">
-                                <p class="msgText">${msg}</p>
-                                <p class="msgCtrl">
-                                    <span class="closeMsg">确定</span>
-                                </p>
-                            </div>
-                        </div>
-                    `
-                    );
-                    //msg点击事件
-                    $msgDiv.find(".msgCtrl").click(function () {
-                        $msgDiv.remove();
-                    });
-                    $("body").append($msgDiv);
-                }
-            },
             addPic: function () {
                 if ($(".edit-pic-item").length >= 3) {
-                    ReleInvite.messageWin("最多上传3张图片");
+                    Global.messageWin("最多上传3张图片");
                     return;
                 }
                 var $liTemp = $(
@@ -323,7 +279,7 @@
                 //主题
                 let title = $("#mTitle").length !== 0 ? $("#mTitle").val().trim() : $(".inviteTheme").text();
                 if (title === "") {
-                    ReleInvite.messageWin("请填写主题");
+                    Global.messageWin("请填写主题");
                     return;
                 }
                 //省市code
@@ -336,7 +292,7 @@
 
                 if (!cityCodes || $("#datetime-picker").val() == "") {
                     // alter("地点和时间请填写完整");
-                    ReleInvite.messageWin("地点和时间请填写完整");
+                    Global.messageWin("地点和时间请填写完整");
                     return;
                 }
 
@@ -421,34 +377,18 @@
                 $(":input[name='latitude']").val("");
 
 
-                ReleInvite.openLoading();
+                Global.openLoading();
 
                 $("#releInviteForm").ajaxSubmit(function (result) {  
                     console.log(result)                  
                     if (result.msg == "操作成功") {
-                        ReleInvite.closeLoading("发布成功", function () {
+                        Global.closeLoading("发布成功", function () {
                             //关闭 返回
                             window.history.back(-1);
                         });
                     }  
                 });
 
-            },
-            openLoading: function () {
-                if ($(".msgWrap").length == 0) {
-                    $("body").append($('<div class="msgWrap"></div>'));
-                }
-                if ($(".mLoading").length == 0) {
-                    $("body").append($('<div class="mLoading">处理中...</div>'));
-                }
-            },
-            closeLoading: function (resultMsg, callback) {
-                $(".mLoading").html(resultMsg);
-                setTimeout(function () {
-                    $(".mLoadingMask")
-                        .add($(".mLoading")).remove();
-                    callback();
-                }, 500);
             },
             cancelPic: function (el) { //pic的a标签
                 if ($(".msgWrap").length == 0) {
@@ -492,7 +432,11 @@
                     $(this).addClass('active').siblings().removeClass('active')
                 })
                 //让textarea限制字数
-                ReleInvite.bindLimitCount()
+                Global.bindLimitCount(
+                    document.getElementById("descripTextarea"),
+                    200,
+                    document.getElementsByClassName("textCount")[0]
+                );
                 //发布邀约
                 $(".publish").click(function () {
                     ReleInvite.publishInvit()

@@ -48,8 +48,8 @@
 
 
     <script src="__STATIC__/js-dist/user-fans.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <script>
-        var GlobalHost = "http://meiliyue.caapa.org";
         var Fans = {
             user_id: "",
 
@@ -94,7 +94,7 @@
                     data.forEach(function (item, index) {
                         let headUrl;
                         if(item.head_pic&&item.head_pic!==""){
-                            headUrl=GlobalHost+item.head_pic;
+                            headUrl=Global.host+item.head_pic;
                         }else{
                             headUrl="__STATIC__/images/icon/tx.png";
                         }
@@ -175,7 +175,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/user/friend",
+                    url: Global.host + "/index.php/Api/user/friend",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -219,18 +219,6 @@
                     Fans.getFansList();
                 });
             },
-            openLoading: function () {
-                if ($(".mask").length == 0) {
-                    $("body").append($('<div class="mLoadingMask"></div>'));
-                }
-                if ($(".mLoading").length == 0) {
-                    $("body").append($('<div class="mLoading"></div>'));
-                }
-            },
-            closeLoading: function () {
-                $(".mLoadingMask")
-                    .add($(".mLoading")).remove();
-            },
             eventsBindAfter: function () {
                 //对粉丝 加关注
                 $(".addFriend").click(function (event) {
@@ -245,7 +233,7 @@
                     // Fans.openLoading();
                     $.ajax({
                         type: "POST",
-                        url: GlobalHost + "/index.php/Api/User/attention",
+                        url: Global.host + "/index.php/Api/User/attention",
                         data: postData,
                         dataType: "json",
                         success: function (result) {
@@ -277,7 +265,7 @@
 
                     let user_id = Fans.user_id;
                     let toUserId = $(this).attr("data-toUserId");
-                    window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
+                    window.location.href = Global.host + "/index.php/mobile/user/homePage/user_id/" +
                         user_id + "/toUserId/" + toUserId + ".html";
                 });
             },

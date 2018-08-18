@@ -209,8 +209,8 @@
 
 
     <script src="__STATIC__/js-dist/user-editHomePage.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <script>
-        var GlobalHost = "http://meiliyue.caapa.org";
         var EditHome = {
             user_id: "",
             curPermanent_province: "",
@@ -981,7 +981,7 @@
                 console.log(postData)
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/User/changeInfo",
+                    url: Global.host + "/index.php/Api/User/changeInfo",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -998,7 +998,7 @@
                 }
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/User/myHomePage",
+                    url: Global.host + "/index.php/Api/User/myHomePage",
                     data: postData,
                     dataType: "json",
                     success: function (result) {

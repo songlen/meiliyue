@@ -1687,6 +1687,15 @@ li.detailImages img {
   line-height: 0.35rem;
   text-align: center;
   color: #6692fe;
+  display: flex;
+}
+
+.msgWrap .msgCtrl>span {
+  flex: 1 0 0;
+}
+
+.msgWrap .msgCtrl>span:nth-of-type(2) {
+  border-left: 1px solid #e2e2e2;
 }
 
 /* 添加邀约，上传图片 */

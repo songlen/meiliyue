@@ -70,8 +70,8 @@
     <!-- 回复评论page end -->
 
     <script src="__STATIC__/js-dist/user-comment.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <script>
-        var GlobalHost = "http://meiliyue.caapa.org";
         var Comments = {
             user_id: "",
 
@@ -88,7 +88,7 @@
                         let timeStr = stampToStr(item.add_time);
                         let headUrl;
                         if(item.head_pic&&item.head_pic!==""){
-                            headUrl=GlobalHost+item.head_pic;
+                            headUrl=Global.host+item.head_pic;
                         }else{
                             headUrl="__STATIC__/images/icon/tx.png";
                         }
@@ -176,7 +176,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/user/commentList",
+                    url: Global.host + "/index.php/Api/user/commentList",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -246,17 +246,17 @@
                 };
                 console.log(postData)
 
-                Comments.openLoading();
+                Global.openLoading();
 
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/user/commentList",
+                    url: Global.host + "/index.php/Api/user/commentList",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
                         console.log(result)
 
-                        Comments.closeLoading();
+                        Global.closeLoading("完成");
                         $(".replyBack")[0].click();
                     }
                 });
@@ -264,7 +264,7 @@
             getVideoUrl: function (user_id, callback) { //user_id
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/user/getAuthVideoUrl",
+                    url: Global.host + "/index.php/Api/user/getAuthVideoUrl",
                     data: {
                         user_id: user_id
                     },
@@ -272,7 +272,7 @@
                     success: function (result) {
                         console.log(result)
                         if (result.code == 200) { //测试用
-                            let url = GlobalHost + result.data.video_url;
+                            let url = Global.host + result.data.video_url;
                             callback(url);
                         }
                     }
@@ -335,19 +335,6 @@
 
                 sessionStorage.setItem('commentPage', JSON.stringify(pageData));
             },
-            openLoading: function () {
-                if ($(".mLoadingMask").length == 0) {
-                    $("body").append($('<div class="mLoadingMask"></div>'));
-                }
-                if ($(".mLoading").length == 0) {
-                    $("body").append($('<div class="mLoading"></div>'));
-                }
-            },
-            closeLoading: function () {
-                $(".mLoadingMask")
-                    .add($(".mLoading"))
-                    .remove();
-            },
             eventsBind: function () {
                 //点击li
                 $(".commentsList").delegate(".comments-text", "click", function () {
@@ -367,7 +354,7 @@
                     Comments.savePageData();
 
                     let dynamicId = $(".commentsReply-content").attr("data-dynamicId");
-                    window.location.href = GlobalHost + "/index.php/mobile/dynamics/detail/id/" +
+                    window.location.href = Global.host + "/index.php/mobile/dynamics/detail/id/" +
                         dynamicId + ".html";
                 });
                 //点击视频认证
@@ -392,9 +379,9 @@
                     let toUserId = Number($(this).closest(".comments-item").attr("data-userId"));
                     let url = "";
                     if (user_id === toUserId) {
-                        url = GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                        url = Global.host + "/index.php/mobile/user/myHomePage.html";
                     } else {
-                        url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                        url = Global.host + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
                     }
                     window.location.href = url;
                 });

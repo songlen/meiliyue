@@ -51,8 +51,8 @@
 
 
     <script src="__STATIC__/js-dist/user-visitor.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <script>
-        var GlobalHost = "http://meiliyue.caapa.org";
         var Visitors = {
             user_id: "",
 
@@ -77,10 +77,10 @@
                         $curUl.html("");
                     }
                     data.forEach(function (item, index) {
-                        let timeStr = stampToStr(item.add_time);
+                        let timeStr = Global.stampToStr(item.add_time);
                         let headUrl;
                         if(item.head_pic&&item.head_pic!==""){
-                            headUrl=GlobalHost+item.head_pic;
+                            headUrl=Global.host+item.head_pic;
                         }else{
                             headUrl="__STATIC__/images/icon/tx.png";
                         }
@@ -145,7 +145,7 @@
             getVideoUrl: function (user_id, callback) { //user_id
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/Api/user/getAuthVideoUrl",
+                    url: Global.host + "/index.php/Api/user/getAuthVideoUrl",
                     data: {
                         user_id: user_id
                     },
@@ -153,7 +153,7 @@
                     success: function (result) {
                         console.log(result)
                         if (result.code == 200) { //测试用
-                            let url = GlobalHost + result.data.video_url;
+                            let url = Global.host + result.data.video_url;
                             callback(url);
                         }
                     }
@@ -222,7 +222,7 @@
                 console.log(postData)
                 $.ajax({
                     type: "POST",
-                    url: GlobalHost + "/index.php/api/user/visitor",
+                    url: Global.host + "/index.php/api/user/visitor",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -286,7 +286,7 @@
 
                     let user_id = Visitors.user_id;
                     let toUserId = $(this).attr("data-toUserId");
-                    window.location.href = GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
+                    window.location.href = Global.host + "/index.php/mobile/user/homePage/user_id/" +
                         user_id + "/toUserId/" + toUserId + ".html";
                 });
             },
@@ -384,41 +384,6 @@
         $(function () {
             Visitors.init();
         });
-        //时间戳转日期时间
-        function stampToDate(timestamp) {
-            var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-            Y = date.getFullYear() + '-';
-            M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-            D = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + ' ';
-            h = (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ':';
-            m = (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
-            // s = date.getSeconds();
-            return Y + M + D + h + m;
-        }
-        //时间戳转文字
-        function stampToStr(stamp) { //传来的stamp十位数
-            if (!stamp) return '';
-
-            let nowStamp = Math.round((new Date().getTime()) / 1000);
-            let howLong = nowStamp - stamp;
-
-            if (howLong < 60) { //1分钟内
-                return "1分钟内";
-            } else if (howLong < 3600) { //1小时内，显示分钟数
-                let minutes = Math.floor(howLong / 60);
-                return minutes + "分钟前";
-            } else if (howLong < 43200) { //12小时内，显示小时数
-                let hours = Math.floor(howLong / 3600);
-                return hours + "小时前";
-            } else if (howLong >= 43200 && howLong < 86400) { //大于12小时，小于24小时
-                let dateStr = stampToDate(stamp);
-                console.log(dateStr)
-                let minStr = dateStr.substr(dateStr.length - 5);
-                return "昨天 " + minStr;
-            } else if (howLong > 86400) { //大于24小时，直接显示时间
-                return stampToDate(stamp);
-            }
-        }
     </script>
 </body>
 
