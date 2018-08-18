@@ -319,7 +319,7 @@
                 Homepage.user_id = Number(mUserInfo.user_id);
             } else {
                 Homepage.user_id = 1; //测试用
-                Homepage.mUserInfo.is_vip=0; //测试用
+                Homepage.mUserInfo.level=0; //测试用
             }
             var ulrStr = window.location.href;
             if(!ulrStr.indexOf(".html")>-1){ //点击在线头像的时候，后面不带.html
@@ -436,7 +436,7 @@
                 $(".myApprove-phone").html("手机号已认证")
                 $(".myApprove-phone+.approveBtn").hide();
                 $(".myApprove-phone").click(function(){
-                    // if(Homepage.mUserInfo.is_vip==0){
+                    // if(Homepage.mUserInfo.level==0){
                     //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
                     //         //去vip申请页面
                     //     });
@@ -786,7 +786,7 @@
             //点击 “关注” 系列 end
             //点击视频认证
             $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
-                // if(Homepage.mUserInfo.is_vip<2){
+                // if(Homepage.mUserInfo.level<2){
                 //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
                 //         //去vip申请页面
                 //     });
@@ -833,7 +833,7 @@
             });
             //点击查看最近活跃时间
             $(".active_time").click(function(){
-                // if(Homepage.mUserInfo.is_vip<3){
+                // if(Homepage.mUserInfo.level<3){
                 //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
                 //         //去vip申请页面
                 //     });
