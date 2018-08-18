@@ -325,14 +325,14 @@
             if(!ulrStr.indexOf(".html")>-1){ //点击在线头像的时候，后面不带.html
                 ulrStr=ulrStr+".html";
             }
-            alert(ulrStr)
+            // alert(ulrStr)
             if (ulrStr.indexOf("file://") > -1) {
                 ulrStr = "http://meiliyue.caapa.org/index.php/mobile/user/homePage/user_id/1/toUserId/21.html" //测试用 如果是1去1 就有问题了
             }
             var strTemp = ulrStr.split("/toUserId/")[1];
-            alert(strTemp)
+            // alert(strTemp)
             console.log(strTemp)
-            alert(strTemp.substr(0, strTemp.length - 5))
+            // alert(strTemp.substr(0, strTemp.length - 5))
 
             Homepage.toUserId = Number(strTemp.substr(0, strTemp.length - 5));
             console.log(Homepage.user_id, Homepage.toUserId)
