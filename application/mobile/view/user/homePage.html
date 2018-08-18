@@ -321,8 +321,10 @@
                 Homepage.user_id = 1; //测试用
                 Homepage.mUserInfo.is_vip=0; //测试用
             }
-            //获取toUserId
             var ulrStr = window.location.href;
+            if(!ulrStr.indexOf(".html")>-1){ //点击在线头像的时候，后面不带.html
+                ulrStr=ulrStr+".html";
+            }
             alert(ulrStr)
             if (ulrStr.indexOf("file://") > -1) {
                 ulrStr = "http://meiliyue.caapa.org/index.php/mobile/user/homePage/user_id/1/toUserId/21.html" //测试用 如果是1去1 就有问题了
