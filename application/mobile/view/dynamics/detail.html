@@ -209,6 +209,9 @@
                 }
                 //dynamic_id
                 var ulrStr = window.location.href;
+                if(!ulrStr.indexOf(".html")>-1){ //后面不带.html
+                    ulrStr=ulrStr+".html";
+                }
                 if(ulrStr.indexOf("file://") > -1){
                     ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/155.html" //测试用
                 }

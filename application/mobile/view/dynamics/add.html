@@ -450,6 +450,9 @@
                 //_type
                 let url = window.location.href;
                 console.log(url)
+                if(!url.indexOf(".html")>-1){ //后面不带.html
+                    url=url+".html";
+                }
                 if (url.indexOf("file://") > -1) {
                     url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html"; //测试用
                 }
