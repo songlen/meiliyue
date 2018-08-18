@@ -59,7 +59,7 @@ class User extends Base {
         if($user_id == $toUserId){
             $this->redirect('user/myHomePage');
         }
-file_put_contents('runtime/log/request.log', "\r\n homepage", FILE_APPEND);
+file_put_contents('runtime/log/request.log', "\r\n homepage-$user_id-$toUserId", FILE_APPEND);
         return $this->fetch();
     }
 

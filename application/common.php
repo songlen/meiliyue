@@ -551,8 +551,6 @@ function accountLog($user_id, $user_money = 0,$pay_points = 0, $desc = '',$distr
         'order_sn' => $order_sn
     );
     /* 更新用户信息 */
-//    $sql = "UPDATE __PREFIX__users SET user_money = user_money + $user_money," .
-//        " pay_points = pay_points + $pay_points, distribut_money = distribut_money + $distribut_money WHERE user_id = $user_id";
     $update_data = array(
         'user_money'        => ['exp','user_money+'.$user_money],
         'pay_points'        => ['exp','pay_points+'.$pay_points],
