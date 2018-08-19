@@ -136,29 +136,47 @@ class Auth extends Base {
         return response_success($userInfo, '注册成功');
     }
 
-    public function wx_login(){
-        $openid = I('openid');
+    /*
+     * 第三方登录接口
+     * account_id 微信 openid 微博 id
+     * sex 1 男 2 女
+     */
+    public function third_login(){
+        $account_id = I('account_id');
         $nickname = I('nickname');
-        $headimgurl = I('headimgurl');
+        $head_pic = I('head_pic');
         $sex = I('sex/d');
+        $type = I('type');
 
         // 检测用户是否已注册
-        $user = Db::name('users')->where("openid=$openid")->find();
-        if($user){
-            $user_id = $user['user_id'];
+        $user_third = Db::name('user_third')->where("account_id='$account_id'")->field('user_id')->find();
+        if($user_third){
+            $user_id = $user_third['user_id'];
         } else {
             $data = array(
-                'openid' => $openid,
+                'account_id' => $account_id,
                 'nickname' => $nickname,
-                'head_pic' => $headimgurl,
+                'head_pic' => $head_pic,
                 'sex' => $sex,
-                'token' => md5(time().mt_rand(1,999999999)),
+                'type' => $type,
+            );
+            // 将信息写入第三方登录表
+            $id = Db::name('user_third')->insertGetId($data);
+
+            // 将信息写入用户表
+            $userData = array(
+                'nickname' => $nickname,
+                'head_pic' => $head_pic,
+                'sex' => $sex,
             );
 
-            $user_id = Db::name('users')->insertGetId($data);
+            $user_id = Db::name('users')->insertGetId($userData);
+            // 更新三方登录表记录的user_id
+            Db::name('user_third')->where('id', $id)->update(array('user_id'=>$user_id));
         }
 
-        $userInfo = $this->getUserInfo($user_id);
+        $userInfo = M('users')->where('user_id', $user_id)->find();
+        unset($userInfo['password']);
 
         response_success($userInfo);
     }
