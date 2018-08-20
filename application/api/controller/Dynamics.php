@@ -106,7 +106,7 @@ class Dynamics extends Base {
 
         /********************** 上传图片 *********************/
         if($_FILES['image'] && $data['type'] == '2'){
-            $data['image'] = json_decode(html_entity_decode(I('image')), true));
+            $data['image'] = json_decode(html_entity_decode(I('image'), true);
         }
         /************************ 上传视频 **********************/
         if($_FILES['video'] && $data['type'] == '3'){
