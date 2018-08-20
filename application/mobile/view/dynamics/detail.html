@@ -209,7 +209,7 @@
                 }
                 //dynamic_id
                 var ulrStr = window.location.href;
-                if(!ulrStr.indexOf(".html")>-1){ //后面不带.html
+                if(!(ulrStr.indexOf(".html")>-1)){ //后面不带.html
                     ulrStr=ulrStr+".html";
                 }
                 if(ulrStr.indexOf("file://") > -1){

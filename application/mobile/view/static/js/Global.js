@@ -200,6 +200,7 @@ function getJavaFiles(args) {
 //url => blob
 function fetchAB(url, cb) {
     console.log(url);
+    alert("fetch"+url)
     var xhr = new XMLHttpRequest;
     xhr.open('get', url);
     xhr.responseType = 'blob';
