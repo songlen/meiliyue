@@ -116,7 +116,7 @@ class Dynamics extends Base {
             }
         }
         /************************ 上传视频 **********************/
-        if($_FILES['video'] && $data['type'] == '3'){
+        if($data['type'] == '3'){
             $data['video'] = I('video');
         }
 
@@ -124,6 +124,22 @@ class Dynamics extends Base {
             response_success('', '操作成功');
         } else {
             response_error('', '操作失败');
+        }
+    }
+
+    /**
+     * [fileUpload 上传动态视频]
+     * @param   $[video] [<文件名>]
+     * @return [type] [description]
+     */
+    public function uploadFile(){
+        $FileLogic = new FileLogic();
+        $uploadPath = UPLOAD_PATH.'dynamics/video';
+        $result = $FileLogic->uploadSingleFile('video', $uploadPath);
+        if($result['status'] == '1'){
+            response_success(array('filepath'=>$result['fullPath']));
+        } else {
+            response_error('', '文件上传失败');
         }
     }
 
