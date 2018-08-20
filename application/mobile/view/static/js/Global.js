@@ -174,7 +174,6 @@ function getJavaFiles(args) {
                     <img class="showPic" data-index=${$(".edit-pic-item").length} src=${args} alt="上传文件">
                 </li>
             `);
-            $li.find(".showPic").attr('src', e.target.result);
 
             //添加图片成功 后
             $(".showPicUl").prepend($li);
