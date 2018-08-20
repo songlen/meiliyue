@@ -227,3 +227,6 @@ function fetchAB(url, cb) {
 //     }
 //     reader.readAsDataURL(blob);
 // }
+
+console.log("global.js")
+alert("global.js")
