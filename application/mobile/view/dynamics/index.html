@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>动态</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/css-dist/dynamics-index.min.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/dongtai-common.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css-dist/dynamics-index.min.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/dongtai-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
@@ -54,7 +54,7 @@
                                 <div style="position: relative;">
                                     <div class="item-headWrap" @click.stop="gotoHomePage(item)">
                                         <img :src="GlobalHost+item.head_pic" @error="defaultImg">
-                                        <!-- <img v-cloak v-else src="../static/images/icon/tx.png"> -->
+                                        <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click.stop="openVideoScreen(item)"></span>
                                     <!-- 测试用 -->
@@ -73,22 +73,22 @@
                             </div>
                             <div class="item-content">
                                 <p v-html="toHtml(item.content)"></p>
-                                <!-- <img v-for="img in item.image" src="../static/images/icon/tx.png"> -->
+                                <!-- <img v-for="img in item.image" src="__STATIC__/images/icon/tx.png"> -->
                             </div>
                             <div class="item-comment">
                                 <span class="addTime">{{item.add_time | stampToStr}}</span>
                                 <div class="person" v-cloak v-if="item.viewer_count>0">
-                                    <img src="../static/images/icon/kekan.png">
+                                    <img src="__STATIC__/images/icon/kekan.png">
                                     <span>{{item.viewer_count}}</span>
                                 </div>
                                 <div>
-                                    <img src="../static/images/icon/price.png">
+                                    <img src="__STATIC__/images/icon/price.png">
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
                                     <div class="flowerWrap" @click.stop="giveFlower(item)">
-                                        <img v-cloak v-if="item.flower_num>0" src="../static/images/icon/花2.png">
-                                        <img v-cloak v-else src="../static/images/icon/花1.png">
+                                        <img v-cloak v-if="item.flower_num>0" src="__STATIC__/images/icon/花2.png">
+                                        <img v-cloak v-else src="__STATIC__/images/icon/花1.png">
                                     </div>
                                     <span class="flowerNum" v-cloak v-if="item.flower_num>0">{{item.flower_num}}</span>
                                 </div>
@@ -104,7 +104,7 @@
                                 <div style="position: relative;">
                                     <div class="item-headWrap" @click.stop="gotoHomePage(item)">
                                         <img :src="GlobalHost+item.head_pic" @error="defaultImg">
-                                        <!-- <img v-cloak v-else src="../static/images/icon/tx.png"> -->
+                                        <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click.stop="openVideoScreen(item)"></span>
                                     <!-- 测试用 -->
@@ -123,22 +123,22 @@
                             </div>
                             <div class="item-content">
                                 <p v-html="toHtml(item.content)"></p>
-                                <!-- <img v-for="img in item.image" src="../static/images/icon/tx.png"> -->
+                                <!-- <img v-for="img in item.image" src="__STATIC__/images/icon/tx.png"> -->
                             </div>
                             <div class="item-comment">
                                 <span class="addTime">{{item.add_time | stampToStr}}</span>
                                 <div class="person" v-cloak v-if="item.viewer_count>0">
-                                    <img src="../static/images/icon/kekan.png">
+                                    <img src="__STATIC__/images/icon/kekan.png">
                                     <span>{{item.viewer_count}}</span>
                                 </div>
                                 <div>
-                                    <img src="../static/images/icon/price.png">
+                                    <img src="__STATIC__/images/icon/price.png">
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
                                     <div class="flowerWrap" @click.stop="giveFlower(item)">
-                                        <img v-cloak v-if="item.flower_num>0" src="../static/images/icon/花2.png">
-                                        <img v-cloak v-else src="../static/images/icon/花1.png">
+                                        <img v-cloak v-if="item.flower_num>0" src="__STATIC__/images/icon/花2.png">
+                                        <img v-cloak v-else src="__STATIC__/images/icon/花1.png">
                                     </div>
                                     <span class="flowerNum" v-cloak v-if="item.flower_num>0">{{item.flower_num}}</span>
                                 </div>
@@ -147,7 +147,7 @@
                     </ul>
 
                     <div class="noComments" style="display: none;">
-                        <img src="../static/images/icon/暂无要找内容.png">
+                        <img src="__STATIC__/images/icon/暂无要找内容.png">
                         <p>暂无任何内容</p>
                     </div>
                 </div>
@@ -200,19 +200,19 @@
             <h5>发布动态</h5>
             <div class="release-group">
                 <div class="release-btn" @click="openEdit(1)">
-                    <img src="../static/images/icon/文字@2x.png">
+                    <img src="__STATIC__/images/icon/文字@2x.png">
                     <p>文字</p>
                 </div>
                 <div class="release-btn" @click="openEdit(2)">
-                    <img src="../static/images/icon/选照片@2x.png">
+                    <img src="__STATIC__/images/icon/选照片@2x.png">
                     <p>图片</p>
                 </div>
                 <!-- <div class="release-btn" @click="openEdit(2)">
-                    <img src="../static/images/icon/拍照@2x.png">
+                    <img src="__STATIC__/images/icon/拍照@2x.png">
                     <p>拍照</p>
                 </div> -->
                 <div class="release-btn" @click="openEdit(3)">
-                    <img src="../static/images/icon/小视频@2x.png">
+                    <img src="__STATIC__/images/icon/小视频@2x.png">
                     <p>小视频</p>
                 </div>
             </div>
@@ -226,7 +226,7 @@
                 <div class="closeFullScreen" @click="closeFullScreen"></div>
                 <div class="videoOperate"></div>
                 <div class="img-box">
-                    <img src="../static/images/icon/tx.png">
+                    <img src="__STATIC__/images/icon/tx.png">
                 </div>
             </div>
 
@@ -255,10 +255,10 @@
     </div>
 
     <!-- -------------------------------------- -->
-    <script src="../static/js-dist/dynamics-index.min.js"></script>
-    <script src="../static/js/Global.js"></script>
+    <script src="__STATIC__/js-dist/dynamics-index.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <!-- 页面-js -->
-    <script src="../static/js/Dongtai.js"></script>
+    <script src="__STATIC__/js/Dongtai.js"></script>
 </body>
 
 </html>
