@@ -518,11 +518,12 @@ footer li a {
     flex-wrap: wrap;
 }
 
-.edit-pic ul.showPicUl {
+.showPicUl {
     display: inline-flex;
     flex-wrap: wrap;
 }
 
+.showPic,
 .edit-pic .edit-pic-item video,
 .edit-pic .edit-pic-item img {
     width: 0.81rem;
@@ -545,7 +546,7 @@ footer li a {
     margin-left: -0.16rem;
 }
 
-.edit-pic ul.showPicUl a.addPic {
+.showPicUl a.addPic {
     display: inline-block;
     width: 0.81rem;
     height: 0.81rem;
