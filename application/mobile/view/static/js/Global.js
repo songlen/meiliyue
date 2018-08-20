@@ -156,7 +156,7 @@ function getJavaFiles(args) {
     console.log(args)
     alert("修改过"+args)
 
-    args='C:/Users/xq/Desktop/timg.jpg';
+    // args='C:/Users/xq/Desktop/timg.jpg'; //测试用
 
     fetchAB(args, function (abf) {
         let url = args.toLowerCase();
