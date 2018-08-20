@@ -161,6 +161,8 @@ function getJavaFiles(args) {
         alert(url)
         if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) { //是图片
             alert(1)
+            blob.type="image/jpeg";
+            alert(blob.type)
             let reader = new FileReader();
             reader.onload = function (e) {
                 alert(3)
@@ -179,6 +181,8 @@ function getJavaFiles(args) {
             reader.readAsDataURL(blob);
         } else if (url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1) { //是视频
             alert(2)
+            blob.type="video/mp4";
+            alert(blob.type)
             let reader = new FileReader();
             reader.onload = function (e) {
                 alert(4)
