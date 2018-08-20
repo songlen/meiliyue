@@ -11,8 +11,8 @@ class UserLogic {
     public function getRocketNum($user_id){
         $num = 0;
         // 查看用户是否是vip
-        $user = M('users')->where('user_id', $user_id)->field('is_vip, rockets')->find();
-        if($user['is_vip']){
+        $user = M('users')->where('user_id', $user_id)->field('level, rockets')->find();
+        if($user['level'] > 0){
             $num = 2; // 如果是vip 免费2个
         } else {
             $num = 1; // 否则 1 个

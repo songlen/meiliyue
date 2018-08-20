@@ -92,7 +92,7 @@ class Index extends Base {
         $user_id = I('user_id');
 
         // 查看用户是否是vip
-        $user = M('users')->where('user_id', $user_id)->field('is_vip, rockets')->find();
+        $user = M('users')->where('user_id', $user_id)->field('level, rockets')->find();
 
         $userLogic = new UserLogic();
         $rocket_num = $userLogic->getRocketNum($user_id);
