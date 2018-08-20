@@ -65,7 +65,7 @@ let Global = (function () {
         }
     }
 
-    function bindLimitCount(element, textCount, showElment) {
+    function bindLimitCount(element, textCount, showElement) {
         element.onchange = function () {
             limitCount(this)
         }
@@ -79,8 +79,8 @@ let Global = (function () {
         function limitCount(el) {
             el.value = el.value.substring(0, textCount)
             let count = el.value.length
-            if (showElment) {
-                showElment.innerHTML = count
+            if (showElement) {
+                showElement.innerHTML = count
             }
             if (count >= textCount) {
                 messageWin(`最多输入${textCount}个字符`);
@@ -141,106 +141,75 @@ let Global = (function () {
         //值
         host: "http://meiliyue.caapa.org",
         //方法
-        openLoading,
-        closeLoading,
-        messageWin,
-        messageConfirWin,
-        bindLimitCount, //无表情
-        stampToDate,
-        stampToStr,
+        openLoading, //msg
+        closeLoading, //msg:完成瞬间显示的文字;callback;delay:人工设定延迟
+        messageWin, //msg
+        messageConfirWin, //msg;callback：点击确定的回调
+        bindLimitCount, //element:textarea元素;textCount:限制的字数;showElement:实时显示字数的元素  注:没有表情插件的
+        stampToDate, //stamp  注:10位或13位都可以
+        stampToStr, //stamp:10位时间戳
         gotoApp
     }
 })();
 
-function getJavaFiles(args) {
+function getJavaFiles(args) { // 路径/plulic/../..
     console.log(args)
-    // args="file://"+args;
-    alert("修改过"+args)
+    alert(args)
 
-    let $li = $(`
-        <li class="edit-pic-item">
-            <img class="showPic" data-index=${$(".edit-pic-item").length} src=${'"'+args+'"'} alt="上传文件">
-        </li>
-    `);
+    // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
-    //添加图片成功 后
-    $(".showPicUl").prepend($li);
+    let src = Global.host + args;
+    let url = args.toLowerCase();
 
-    // args='C:/Users/xq/Desktop/微信图片_20180820114149.jpg'; //测试用
-    return;
-    fetchAB(args, function (abf) {
-        let url = args.toLowerCase();
-        if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) { //是图片
-            let blob=new Blob([abf],{type:"image/jpeg"});
-            console.log(blob)
-            console.log(blob.size)
-            console.log(blob.type)
-            alert(blob)
-            alert(blob.size)
-            alert(blob.type)
-
-            alert(`
-                <li class="edit-pic-item">
-                    <img class="showPic" data-index=${$(".edit-pic-item").length} src=${'"'+args+'"'} alt="上传文件">
-                </li>
-            `)
-
-            let $li = $(`
-                <li class="edit-pic-item">
-                    <img class="showPic" data-index=${$(".edit-pic-item").length} src=${'"'+args+'"'} alt="上传文件">
-                </li>
-            `);
-
-            //添加图片成功 后
-            $(".showPicUl").prepend($li);
-
-            // let reader = new FileReader();
-            // reader.onload = function (e) {
-            //     let $li = $(`
-            //         <li class="edit-pic-item">
-            //             <img class="showPic" data-index=${$(".edit-pic-item").length} src="../static/images/icon/tx.png" alt="上传文件">
-            //         </li>
-            //     `);
-            //     console.log(e.target.result,e.target.result.length)
-            //     alert(e.target.result)
-            //     alert(e.target.result.length)
-            //     $li.find(".showPic").attr('src', e.target.result);
-
-            //     //添加图片成功 后
-            //     $(".showPicUl").prepend($li);
-
-            //     // //取消图片
-            //     // $liTemp.find("a.edit-closePic").click(function () {
-            //     //     Edit.cancelPic(this)
-            //     // })
-            // }
-            // reader.readAsDataURL(blob);
-        } else if (url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1) { //是视频
-            let blob=new Blob([abf],{type:"video/mp4"});
-            console.log(blob)
-            console.log(blob.size)
-            console.log(blob.type)
-            alert(blob)
-            alert(blob.size)
-            alert(blob.type)
-            let reader = new FileReader();
-            reader.onload = function (e) {
-                // $liTemp.find('.showPic').attr('src', e.target.result);
-
-                alert(e.target.result)
-
-                // //添加图片成功 后
-                // $(".showPicUl").prepend($liTemp)
-
-                // //取消图片
-                // $liTemp.find("a.edit-closePic").click(function () {
-                //     Edit.cancelPic(this)
-                // })
-
-            }
-            reader.readAsDataURL(blob);
+    //是图片
+    if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) {
+        if ($("img.showPic").length >= 9) {
+            Global.messageWin("最多上传9张图片");
+            return;
         }
-    });
+
+        let $liTemp = $(`
+            <li class="edit-pic-item">
+                <img class="showPic" data-index=${$(".edit-pic-item").length} src="${src}" alt="上传文件">
+                <a href="javascript:void(0)" class="edit-closePic"></a>
+            </li>
+        `);
+
+        //取消图片
+        $liTemp.find("a.edit-closePic").click(function () {
+            let self=this;
+            Global.messageConfirWin("你尚未发布，确认删除？", function () {
+                $(self).closest('.edit-pic-item').remove();
+            });
+        })
+
+        //添加图片成功 后
+        $(".showPicUl").prepend($liTemp);
+    }
+    //是视频
+    else if (url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1) {
+        if ($("video.showPic").length >= 1) {
+            Global.messageWin("视频最多上传一个");
+            return;
+        }
+
+        let $liTemp = $(`
+            <li class="edit-pic-item">
+                <video class="showPic" src="${src}" style="" preload="auto"></video>
+                <a href="javascript:void(0)" class="edit-closePic"></a>
+            </li>
+        `);
+
+        //取消图片
+        $liTemp.find("a.edit-closePic").click(function () {
+            Global.messageConfirWin("你尚未发布，确认删除？", function () {
+                $(this).closest('.edit-pic-item').remove();
+            });
+        })
+
+        //添加图片成功 后
+        $(".showPicUl").prepend($liTemp);
+    }
 }
 
 //url => blob
@@ -254,20 +223,3 @@ function fetchAB(url, cb) {
     };
     xhr.send();
 };
-
-// function readBlob(blob) {
-//     var reader = new FileReader();
-//     reader.onload = function (e) {
-//         $liTemp.find('.showPic').attr('src', e.target.result);
-
-//         //添加图片成功 后
-//         $(".showPicUl").prepend($liTemp)
-
-//         //取消图片
-//         $liTemp.find("a.edit-closePic").click(function () {
-//             Edit.cancelPic(this)
-//         })
-
-//     }
-//     reader.readAsDataURL(blob);
-// }

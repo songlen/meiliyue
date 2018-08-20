@@ -88,9 +88,11 @@ header {
     content: '';
     display: block;
     border-bottom: 3px solid #ffe459;
-    width: 0.35rem;
+    width: 0.36rem;
+    margin-left: -0.18rem;
     position: absolute;
     bottom: 1px;
+    left: 50%;
 }
 
 .dongtai header>div>select {
@@ -530,13 +532,16 @@ footer li a {
 .showPic,
 .edit-pic .edit-pic-item video,
 .edit-pic .edit-pic-item img {
-    width: 0.81rem;
-    height: 0.81rem;
+    /* width: 0.81rem;
+    height: 0.81rem; */
+    width: 100%;
 }
 
 .edit-pic .edit-pic-item {
     font-size: 0;
     margin: 0.05rem;
+    width: 0.81rem;
+    height: 0.81rem;
     overflow: hidden;
 }
 
