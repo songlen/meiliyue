@@ -156,6 +156,8 @@ function getJavaFiles(args) {
     console.log(args)
     alert("修改过"+args)
 
+    args='C:/Users/xq/Desktop/timg.jpg';
+
     fetchAB(args, function (abf) {
         let url = args.toLowerCase();
         alert(url)
@@ -167,12 +169,16 @@ function getJavaFiles(args) {
             let reader = new FileReader();
             reader.onload = function (e) {
                 alert(3)
-                let $img = $(`<img src="../images/icon/tx.png" alt="上传文件"/>`);
+                let $li = $(`
+                    <li class="edit-pic-item">
+                        <img class="showPic" data-index=${$(".edit-pic-item").length} src="../static/images/icon/tx.png" alt="上传文件">
+                    </li>
+                `);
                 alert(e.target.result)
-                $img.attr('src', e.target.result);
+                $li.find(".showPic").attr('src', e.target.result);
 
                 //添加图片成功 后
-                $(".showPicUl").prepend($img);
+                $(".showPicUl").prepend($li);
 
                 // //取消图片
                 // $liTemp.find("a.edit-closePic").click(function () {
@@ -214,7 +220,6 @@ function fetchAB(url, cb) {
     xhr.open('get', url);
     xhr.responseType = 'arraybuffer';
     xhr.onload = function () {
-        alert(xhr.response.type)
         cb(xhr.response); //arraybuffer
     };
     xhr.send();
