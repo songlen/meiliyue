@@ -171,13 +171,13 @@ function getJavaFiles(args) {
 
             alert(`
                 <li class="edit-pic-item">
-                    <img class="showPic" data-index=${$(".edit-pic-item").length} src=${args} alt="上传文件">
+                    <img class="showPic" data-index=${$(".edit-pic-item").length} src="${'"'+args+'"'}" alt="上传文件">
                 </li>
             `)
 
             let $li = $(`
                 <li class="edit-pic-item">
-                    <img class="showPic" data-index=${$(".edit-pic-item").length} src="${args}" alt="上传文件">
+                    <img class="showPic" data-index=${$(".edit-pic-item").length} src="${'"'+args+'"'}" alt="上传文件">
                 </li>
             `);
 
