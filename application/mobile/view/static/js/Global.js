@@ -156,7 +156,7 @@ function getJavaFiles(args) {
     console.log(args)
     alert("修改过"+args)
 
-    args='C:/Users/xq/Desktop/微信图片_20180820114149.jpg'; //测试用
+    // args='C:/Users/xq/Desktop/微信图片_20180820114149.jpg'; //测试用
 
     fetchAB(args, function (abf) {
         let url = args.toLowerCase();
