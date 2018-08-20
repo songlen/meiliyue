@@ -143,12 +143,18 @@ class Auth extends Base {
      * account_id 微信 openid 微博 id
      * sex 1 男 2 女
      */
-    public function third_login(){
+    public function third_register(){
+        $type = I('type');
         $account_id = I('account_id');
         $nickname = I('nickname');
         $head_pic = I('head_pic');
         $sex = I('sex/d');
-        $type = I('type');
+
+        $birthday = I('birthday');
+        $country = I('country');
+        $province = I('province');
+        $city = I('city');
+        $qq = I('qq');
         $longitude = I('longitude');
         $latitude = I('latitude');
 
@@ -157,7 +163,7 @@ class Auth extends Base {
         if($user_third){
             $user_id = $user_third['user_id'];
         } else {
-            $data = array(
+            $third_data = array(
                 'account_id' => $account_id,
                 'nickname' => $nickname,
                 'head_pic' => $head_pic,
@@ -165,13 +171,27 @@ class Auth extends Base {
                 'type' => $type,
             );
             // 将信息写入第三方登录表
-            $id = Db::name('user_third')->insertGetId($data);
+            $id = Db::name('user_third')->insertGetId($third_data);
 
             // 将信息写入用户表
+            $uuid = generateUuid();
             $userData = array(
-                'nickname' => $nickname,
-                'head_pic' => $head_pic,
+                'uuid' => $uuid,
+                'nickname' => $mobile,
+                'reg_time' => time(),
+                'last_login' => time(),
+                'token' => md5(time().mt_rand(1,999999999)),
                 'sex' => $sex,
+                'birthday' => $birthday,
+                'country' => $country,
+                'province' => $province,
+                'city' => $city,
+                'qq' => $qq,
+                'longitude' => $longitude,
+                'latitude' => $latitude,
+                'active_time' => time(),
+                'is_line' => '1',
+                'phoneOrwechat' => $mobile,
             );
 
             $user_id = Db::name('users')->insertGetId($userData);
@@ -183,6 +203,47 @@ class Auth extends Base {
         unset($userInfo['password']);
 
         response_success($userInfo);
+    }
+
+    public function third_login(){
+        $account_id = I('account_id');
+        $type = I('type');
+
+        $user_third = Db::name('user_third')->where("account_id='$account_id' and type='$type'")->field('user_id')->find();
+        if (!$user_third) {
+            response_error('', '账号不存在！');
+        }
+
+        $userInfo = Db::name('users')->where('user_id', $user_third['user_id'])->find();
+
+        if ($userInfo['is_lock'] == 1) {
+            response_error('', '账号异常已被锁定！');
+        }
+        
+        // 更新活跃时间、在线状态
+        $updateData = array(
+            'active_time' => time(),
+            'is_line' => '1',
+        );
+        M('users')->where('user_id', $userInfo['user_id'])->update($updateData);
+
+
+        unset($userInfo['password']);
+        response_success($userInfo);
+    }
+
+    /**
+     * [thirdIsRegister 检测第三方登录是否已经授权]
+     * @return [type] [description]
+     */
+    public function thirdIsRegister(){
+        $account_id = I('account_id');
+        $type = I('type');
+        if(!in_array($type, array('weixin', 'qq', 'weibo'))) response_error('', '类型不正确');
+
+        $is_register = Db::name('user_third')->where(array('account_id'=>$account_id, 'type'=>$type))->count();
+
+        response_success(array('is_register'=>$is_register));
     }
 
     /**
