@@ -156,7 +156,7 @@ function getJavaFiles(args) {
     console.log(args)
     alert("修改过"+args)
 
-    // args='C:/Users/xq/Desktop/timg.jpg'; //测试用
+    args='C:/Users/xq/Desktop/微信图片_20180820114149.jpg'; //测试用
 
     fetchAB(args, function (abf) {
         let url = args.toLowerCase();
@@ -174,7 +174,9 @@ function getJavaFiles(args) {
                         <img class="showPic" data-index=${$(".edit-pic-item").length} src="../static/images/icon/tx.png" alt="上传文件">
                     </li>
                 `);
+                console.log(e.target.result,e.target.result.length)
                 alert(e.target.result)
+                alert(e.target.result.length)
                 $li.find(".showPic").attr('src', e.target.result);
 
                 //添加图片成功 后
