@@ -105,34 +105,32 @@ class Dynamics extends Base {
         $data['add_time'] = time();
 
         /********************** 上传图片 *********************/
-        if($data['type'] == '2'){
-            $data['image'] = I('image');
+        if($_FILES['image'] && $data['type'] == '2'){
+            $FileLogic = new FileLogic();
+            $uploadPath = UPLOAD_PATH.'dynamics/image';
+            $result = $FileLogic->uploadMultiFile('image', $uploadPath);
+            if($result['status'] == '1'){
+                $data['image'] = $result['image'];
+            } else {
+                response_error('', '文件上传失败');
+            }
         }
         /************************ 上传视频 **********************/
-        if($data['type'] == '3'){
-            $data['video'] = I('video');
+        if($_FILES['video'] && $data['type'] == '3'){
+            $FileLogic = new FileLogic();
+            $uploadPath = UPLOAD_PATH.'dynamics/video';
+            $result = $FileLogic->uploadSingleFile('video', $uploadPath);
+            if($result['status'] == '1'){
+                $data['video'] = $result['fullPath'];
+            } else {
+                response_error('', '文件上传失败');
+            }
         }
 
         if(D('dynamics')->add($data)){
             response_success('', '操作成功');
         } else {
             response_error('', '操作失败');
-        }
-    }
-
-    /**
-     * [fileUpload 上传动态视频]
-     * @param   $[video] [<文件名>]
-     * @return [type] [description]
-     */
-    public function uploadFile(){
-        $FileLogic = new FileLogic();
-        $uploadPath = UPLOAD_PATH.'dynamics/video';
-        $result = $FileLogic->uploadSingleFile('video', $uploadPath);
-        if($result['status'] == '1'){
-            response_success(array('filepath'=>$result['fullPath']));
-        } else {
-            response_error('', '文件上传失败');
         }
     }
 

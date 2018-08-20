@@ -352,10 +352,12 @@
 
                     //默认省
                     let proObj = codeToAreaObj(proCode);
-                    _self.defaultArea.text = proObj.name;
-                    _self.defaultArea.code = proObj.code;
+                    _self.defaultArea.text = proObj.name; 
+                    _self.defaultArea.code = proObj.code; 
+                    // _self.defaultArea.text = "";
+                    // _self.defaultArea.code = "";
                     _self.selectedText = proObj.name;
-                    _self.nowProvince = proObj.code;
+                    // _self.nowProvince = proObj.code; //人太少测试用 先用全国
 
 
 

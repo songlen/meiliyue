@@ -154,7 +154,7 @@ let Global = (function () {
 
 function getJavaFiles(args) {
     console.log(args)
-    args="file://"+args;
+    // args="file://"+args;
     alert("修改过"+args)
 
     let $li = $(`

@@ -42,11 +42,13 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 0.62rem;
+    /* width: 0.62rem; */
+    flex: 0 0 0.62rem;
+    position: relative;
 }
 
 .dongtai header>div .mSelect {
-    width: 0.62rem;
+    /* width: 0.62rem; */
     /* height: ; */
     border-radius: 5px;
     border: 1px solid #a8a8a8;
@@ -54,6 +56,8 @@ header {
     position: absolute;
     /* top: 100%; */
     top: 50px;
+    left: 0;
+    right: 0;
 }
 
 /* .dongtai header>div .mSelect::after {
