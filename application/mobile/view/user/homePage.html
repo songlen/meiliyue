@@ -322,7 +322,7 @@
                 Homepage.mUserInfo.level=0; //测试用
             }
             var ulrStr = window.location.href;
-            if(!ulrStr.indexOf(".html")>-1){ //点击在线头像的时候，后面不带.html
+            if(!(ulrStr.indexOf(".html")>-1)){ //点击在线头像的时候，后面不带.html
                 ulrStr=ulrStr+".html";
             }
             // alert(ulrStr)

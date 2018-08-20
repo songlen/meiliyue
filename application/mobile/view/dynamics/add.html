@@ -450,15 +450,21 @@
                 //_type
                 let url = window.location.href;
                 console.log(url)
-                if(!url.indexOf(".html")>-1){ //后面不带.html
+                url="http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/2.html"
+                // alert(url)
+                // console.log(!(url.indexOf(".html")>-1))
+                if(!(url.indexOf(".html")>-1)){ //后面不带.html
+                    console.log("没有")
                     url=url+".html";
                 }
                 if (url.indexOf("file://") > -1) {
-                    url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/3.html"; //测试用
+                    url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/1.html"; //测试用
                 }
+                // alert(url)
                 let strTemp = url.split("/add/type/")[1];
                 let type = strTemp.substr(0, strTemp.length - 5);
                 Edit._type = Number(type);
+                // alert(Edit._type)
 
                 //updateDom
                 Edit.updateDom();
