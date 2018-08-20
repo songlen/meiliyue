@@ -17,7 +17,7 @@ class Common extends Base {
 
     /**
      * [fileUpload 上传动态视频]
-     * @param   $[video] [<文件名>]
+     * @param   $[file] [<文件名>]
      * @param [type] $[type] [<类型 动态视频:dynamic_video 动态图片: dynamic_image>]
      * @return [type] [description]
      */

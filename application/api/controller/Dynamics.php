@@ -197,11 +197,10 @@ class Dynamics extends Base {
         response_success($new_comments);
     }
 
-
     /**
      * 生成目录树结构
      */
-      private function _tree($data){
+    private function _tree($data){
 
         $tree = array();
         foreach ($data as $item) {
