@@ -165,6 +165,7 @@ function getJavaFiles(args) {
             reader.onload = function (e) {
                 alert(3)
                 let $img = $(`<img src="../images/icon/tx.png" alt="上传文件"/>`);
+                alert(e.target.result)
                 $img.attr('src', e.target.result);
 
                 //添加图片成功 后
@@ -227,6 +228,3 @@ function fetchAB(url, cb) {
 //     }
 //     reader.readAsDataURL(blob);
 // }
-
-console.log("global.js")
-alert("global.js")
