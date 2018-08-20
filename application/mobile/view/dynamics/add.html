@@ -25,6 +25,9 @@
             <input type="text" value="" name="user_id" style="display: none;">
             <input type="text" value="" name="type" style="display: none;">
             <input type="text" value="" name="content" style="display: none;">
+
+            <input type="text" value="" name="image" style="display: none;">
+            <input type="text" value="" name="video" style="display: none;">
             <!-- 隐藏域 end -->
             <div class="edit-content">
                 <!-- <textarea name="" id="edit-text" placeholder="此刻你在想什么......"></textarea> -->
@@ -46,17 +49,6 @@
         </form>
     </div>
 
-    <!-- 模态框 -->
-    <div class="confirmDelete" style="display: none;">
-        <p>
-            你尚未发布，确认删除？
-        </p>
-        <div class="confirmDelete-btngroup">
-            <a href="javascript:void(0)" class="cancelDelete">取消</a>
-            <a href="javascript:void(0)" class="delete">确定</a>
-        </div>
-    </div>
-
     <!-- ------------------------------------ -->
     <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
     <script src="__STATIC__/js/Global.js"></script>
@@ -73,26 +65,6 @@
             _user_id: "",
             _type: "",
 
-            //取消照片
-            cancelPic: function (el) { //pic的a标签
-                if ($(".mask").length == 0) {
-                    $('body').append($('<div class="mask"></div>'));
-                }
-                $('.confirmDelete').show()
-
-                //取消删除
-                $(".cancelDelete").click(function () {
-                    $('.mask').remove()
-                    $('.confirmDelete').hide()
-                })
-                //确认删除
-                $(".delete").click(function () {
-                    $('.mask').remove()
-                    $('.confirmDelete').hide()
-
-                    $(el).closest('.edit-pic-item').remove()
-                })
-            },
             //生成表情插件
             generateFace: function () {
                 $("#edit-text").emoji({
@@ -216,57 +188,26 @@
 
                 var contentStr = document.getElementById("edit-text").innerHTML.trim();
 
-                // var saveContentStr = contentStr.replace(/<img class=\"emoji_icon\" src=\"([^>]*)\">/g, "$1");
-                // // __STATIC__/js/js-plugins/jQuery-emoji-master20160321/dist/img/tieba/14.jpg"
-                // // str.replace(/<img[^>]*>/g, "[图片]");
-
-                // var postData = {
-                //     user_id: Edit._user_id,
-                //     type: Edit._type, //1文字2图片3视频
-                //     content: contentStr,
-                //     image: null,
-                //     video: null,
-                // }
-
-                // var filesArr = [];
-                // if ($(".albumInput").length !== 0) {
-                //     $(".albumInput").each(function () {
-                //         filesArr.push(this.files[0]);
-                //     });
-
-                //     switch (Edit._type) {
-                //         case 1:
-                //             break;
-                //         case 2: //图片
-                //             postData.image = filesArr;
-                //             break;
-                //         case 3: //视频
-                //             postData.video = filesArr;
-                //             break;
-                //         default:
-                //             break;
-                //     }
-                // }
-                // console.log(postData)
-                // return
-                // $.ajax({
-                //     type: "POST",
-                //     url: GlobalHost + "/index.php/Api/Dynamics/add",
-                //     data: postData,
-                //     dataType: "json",
-                //     processData: false,
-                //     contentType: false,
-                //     success: function (result) {
-                //         console.log(result)
-                //     }
-                // });
-
                 //jquery.form.js方法
                 $(":input[name='user_id']").val(Edit._user_id);
                 $(":input[name='type']").val(Edit._type);
                 $(":input[name='content']").val(contentStr);
 
-                // Edit.openLoading();
+                if (Edit._type == 2) { //图片
+                    let srcArr = [];
+                    $("img.showPic").each(function () {
+                        let srcTemp = "/public/" + $(this).attr("src").split("/public/")[1];
+                        srcArr.push(srcTemp);
+                    });
+                    console.log(srcArr)
+                    let imageJson = JSON.stringify(srcArr)
+                    console.log(imageJson)
+                    $(":input[name='image']").val(imageJson);
+                } else if (Edit._type == 3) { //视频
+                    let videoStr = "/public/" + $("img.showPic").attr("src").split("/public/")[1];
+                    $(":input[name='video']").val(videoStr);
+                }
+
                 Global.openLoading();
 
                 $("#dynamicForm").ajaxSubmit(function (result) {  
@@ -279,50 +220,6 @@
                     }  
                 });
 
-            },
-            //添加图片
-            addPic: function () {
-                if ($("img.showPic").length >= 9) {
-                    // alert("最多上传9张图片")
-                    Global.messageWin("最多上传9张图片");
-                    return;
-                }
-                var $liTemp = $(
-                    `
-                        <li class="edit-pic-item">
-                            <input class="albumInput" name="image[]" type="file" accept="image/*" value="" style="display: none">
-                            <img class="showPic" data-index=${$(".edit-pic-item").length} src="__STATIC__/images/icon/tx.png">
-                            <a href="javascript:void(0)" class="edit-closePic"></a>
-                        </li>
-                    `
-                );
-
-                $liTemp.find(".albumInput").change(function () {
-                    readURL(this);
-                });
-                readURL(this);
-
-                //触发点击input file
-                $liTemp.find(".albumInput")[0].click()
-
-                function readURL(input) {
-                    if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            $liTemp.find('.showPic').attr('src', e.target.result);
-
-                            //添加图片成功 后
-                            $(".showPicUl").prepend($liTemp)
-
-                            //取消图片
-                            $liTemp.find("a.edit-closePic").click(function () {
-                                Edit.cancelPic(this)
-                            })
-
-                        }
-                        reader.readAsDataURL(input.files[0]);
-                    }
-                }
             },
             showFullPic: function (el) {
                 let index = $(el).attr("data-index");
@@ -356,8 +253,7 @@
 
                 //取消视频
                 $liTemp.find("a.edit-closePic").click(function (event) {
-                    event.stopPropagation();
-                    Edit.cancelPic(this)
+
                 })
 
 
@@ -422,15 +318,11 @@
                 }
 
                 function limitCount(el) {
-                    // console.log(el)
-                    // console.log(el.innerHTML)
                     let vInnerHtml = el.innerHTML.replace(/<img[^>]*>/g, "图").trim()
                     console.log(vInnerHtml)
-                    // el.value = el.value.substring(0, 1000)
                     let count = vInnerHtml.length
                     document.getElementById('textCount').innerHTML = count
                     if (count >= 1000) {
-                        // alert("最多输入1000个字符")
                         Global.messageWin("最多输入1000个字符");
                     }
                 }
@@ -452,12 +344,12 @@
                 console.log(url)
                 // alert(url)
                 // console.log(!(url.indexOf(".html")>-1))
-                if(!(url.indexOf(".html")>-1)){ //后面不带.html
+                if (!(url.indexOf(".html") > -1)) { //后面不带.html
                     console.log("没有")
-                    url=url+".html";
+                    url = url + ".html";
                 }
                 if (url.indexOf("file://") > -1) {
-                    url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/1.html"; //测试用
+                    url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/2.html"; //测试用
                 }
                 // alert(url)
                 let strTemp = url.split("/add/type/")[1];
@@ -486,12 +378,23 @@
                 })
                 //添加图片
                 $(".addPic").click(function () {
-                    // if (Edit._type == 3) { //添加视频
-                    //     Edit.addVideo();
-                    // } else {
-                    //     Edit.addPic();
-                    // }
+                    //视频
+                    if(Edit._type==3){
+                        if ($("video.showPic").length >= 1) {
+                            Global.messageWin("视频最多上传一个");
+                            return;
+                        }
+                    }
+                    //图片
+                    else{
+                        if ($("img.showPic").length >= 9) {
+                            Global.messageWin("最多上传9张图片");
+                            return;
+                        }
+                    }
+
                     window.Android.gotoJavaCamera(Edit._type); //type为3是拍视频，不为3是拍照
+                    // getJavaFiles(""); //测试用
                 })
                 //点击图片显示大图
                 $(".showPicUl").delegate("img.showPic", "click", function () {

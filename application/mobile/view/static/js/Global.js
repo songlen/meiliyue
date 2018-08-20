@@ -163,11 +163,6 @@ function getJavaFiles(args) { // 路径/plulic/../..
 
     //是图片
     if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) {
-        if ($("img.showPic").length >= 9) {
-            Global.messageWin("最多上传9张图片");
-            return;
-        }
-
         let $liTemp = $(`
             <li class="edit-pic-item">
                 <img class="showPic" data-index=${$(".edit-pic-item").length} src="${src}" alt="上传文件">
@@ -176,8 +171,9 @@ function getJavaFiles(args) { // 路径/plulic/../..
         `);
 
         //取消图片
-        $liTemp.find("a.edit-closePic").click(function () {
-            let self=this;
+        $liTemp.find("a.edit-closePic").click(function (event) {
+            event.stopPropagation();
+            let self = this;
             Global.messageConfirWin("你尚未发布，确认删除？", function () {
                 $(self).closest('.edit-pic-item').remove();
             });
@@ -187,12 +183,7 @@ function getJavaFiles(args) { // 路径/plulic/../..
         $(".showPicUl").prepend($liTemp);
     }
     //是视频
-    else if (url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1) {
-        if ($("video.showPic").length >= 1) {
-            Global.messageWin("视频最多上传一个");
-            return;
-        }
-
+    else if (url.indexOf(".mp4") > -1 || url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1) {
         let $liTemp = $(`
             <li class="edit-pic-item">
                 <video class="showPic" src="${src}" style="" preload="auto"></video>
@@ -211,15 +202,3 @@ function getJavaFiles(args) { // 路径/plulic/../..
         $(".showPicUl").prepend($liTemp);
     }
 }
-
-//url => blob
-function fetchAB(url, cb) {
-    console.log(url);
-    var xhr = new XMLHttpRequest;
-    xhr.open('get', url);
-    xhr.responseType = 'arraybuffer';
-    xhr.onload = function () {
-        cb(xhr.response); //arraybuffer
-    };
-    xhr.send();
-};

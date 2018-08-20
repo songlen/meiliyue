@@ -137,6 +137,14 @@
         </div>
     </div>
 
+    <div class="avatarOperating" style="display: none;">
+        <ul>
+            <li class="">添加图片</li>
+            <li class="">添加视频</li>
+            <li class="home-cancel">取消</li>
+        </ul>
+    </div>
+
     <script src="__STATIC__/js-dist/invite-add.min.js"></script>
     <script src="__STATIC__/js/Global.js"></script>
     <script type="text/javascript">
@@ -446,7 +454,9 @@
                 });
                 //添加图片
                 $(".addPic").click(function () {
-                    ReleInvite.addPic();
+                    // ReleInvite.addPic();
+
+                    window.Android.gotoJavaCamera(Edit._type);
                 });
                 //点击图片显示大图
                 $(".showPicUl").delegate(".showPic", "click", function () {
