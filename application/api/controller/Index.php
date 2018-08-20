@@ -102,7 +102,9 @@ class Index extends Base {
         if($count > $rocket_num){
             response_error('', '系统赠送的1个火箭已使用，VIP可每天置顶两次');
         } else {
-            M('users')->where('user_id', $user_id)->update(array('active_time'=> time()));
+            $sort = M('users')->max('sort');
+            $sort = $sort+1;
+            M('users')->where('user_id', $user_id)->update(array('sort'=> );
             $rocket_log_data = array(
                 'user_id' => $user_id,
                 'used_date' => date('Y-m-d'),
