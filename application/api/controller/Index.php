@@ -40,7 +40,7 @@ class Index extends Base {
 
         // 排序
         if($order_type == '1'){
-            $order = 'active_time desc';
+            $order = 'sort desc, active_time desc';
         }
         if($order_type == '2'){
             $GeographyLogic = new GeographyLogic();
