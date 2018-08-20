@@ -184,6 +184,8 @@ function getJavaFiles(args) {
                 alert(4)
                 // $liTemp.find('.showPic').attr('src', e.target.result);
 
+                alert(e.target.result)
+
                 // //添加图片成功 后
                 // $(".showPicUl").prepend($liTemp)
 
@@ -206,8 +208,8 @@ function fetchAB(url, cb) {
     xhr.open('get', url);
     xhr.responseType = 'blob';
     xhr.onload = function () {
-        alert(xhr.response)
-        cb(xhr.response);
+        alert(xhr.response.type)
+        cb(xhr.response); //blob
     };
     xhr.send();
 };
