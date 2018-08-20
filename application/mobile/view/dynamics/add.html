@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>发动态</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css-dist/dynamics-add.min.css">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/dongtai-common.css">
+    <link rel="stylesheet" type="text/css" href="../static/css-dist/dynamics-add.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/dongtai-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
@@ -39,7 +39,7 @@
             <div class="edit-pic" style="display: none;">
                 <ul class="showPicUl">
                     <a href="javascript:void(0)" class="addPic">
-                        <img src="__STATIC__/images/icon/add.png">
+                        <img src="../static/images/icon/add.png">
                     </a>
                 </ul>
             </div>
@@ -58,16 +58,16 @@
     </div>
 
     <!-- ------------------------------------ -->
-    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
-    <script src="__STATIC__/js/Global.js"></script>
+    <script src="../static/js/jquery-3.1.1.min.js"></script>
+    <script src="../static/js/Global.js"></script>
     <!-- jquery-weui-js -->
-    <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
-    <script src="__STATIC__/js/js-plugins/jquery-weui-build/swiper.min.js"></script>
+    <script src="../static/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
+    <script src="../static/js/js-plugins/jquery-weui-build/swiper.min.js"></script>
     <!-- 表情插件-js -->
-    <script src="__STATIC__/js/js-plugins/jQuery-emoji-master20160321/lib/script/jquery.mCustomScrollbar.min.js"></script>
-    <script src="__STATIC__/js/js-plugins/jQuery-emoji-master20160321/dist/js/jquery.emoji.min.js"></script>
+    <script src="../static/js/js-plugins/jQuery-emoji-master20160321/lib/script/jquery.mCustomScrollbar.min.js"></script>
+    <script src="../static/js/js-plugins/jQuery-emoji-master20160321/dist/js/jquery.emoji.min.js"></script>
     <!-- jquery.form-js -->
-    <script src="__STATIC__/js/js-plugins/jquery.form.js"></script>
+    <script src="../static/js/js-plugins/jquery.form.js"></script>
     <script>
         var Edit = {
             _user_id: "",
@@ -100,7 +100,7 @@
                     animation: 'fade',
                     icons: [{
                         name: "贴吧表情",
-                        path: "__STATIC__/js/js-plugins/jQuery-emoji-master20160321/dist/img/tieba/",
+                        path: "../static/js/js-plugins/jQuery-emoji-master20160321/dist/img/tieba/",
                         maxNum: 50,
                         file: ".jpg",
                         placeholder: ":{alias}:",
@@ -217,7 +217,7 @@
                 var contentStr = document.getElementById("edit-text").innerHTML.trim();
 
                 // var saveContentStr = contentStr.replace(/<img class=\"emoji_icon\" src=\"([^>]*)\">/g, "$1");
-                // // __STATIC__/js/js-plugins/jQuery-emoji-master20160321/dist/img/tieba/14.jpg"
+                // // ../static/js/js-plugins/jQuery-emoji-master20160321/dist/img/tieba/14.jpg"
                 // // str.replace(/<img[^>]*>/g, "[图片]");
 
                 // var postData = {
@@ -291,7 +291,7 @@
                     `
                         <li class="edit-pic-item">
                             <input class="albumInput" name="image[]" type="file" accept="image/*" value="" style="display: none">
-                            <img class="showPic" data-index=${$(".edit-pic-item").length} src="__STATIC__/images/icon/tx.png">
+                            <img class="showPic" data-index=${$(".edit-pic-item").length} src="../static/images/icon/tx.png">
                             <a href="javascript:void(0)" class="edit-closePic"></a>
                         </li>
                     `
@@ -457,7 +457,7 @@
                     url=url+".html";
                 }
                 if (url.indexOf("file://") > -1) {
-                    url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/1.html"; //测试用
+                    url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/2.html"; //测试用
                 }
                 // alert(url)
                 let strTemp = url.split("/add/type/")[1];
@@ -491,7 +491,9 @@
                     // } else {
                     //     Edit.addPic();
                     // }
-                    window.Android.gotoJavaCamera(Edit._type); //type为3是拍视频，不为3是拍照
+
+                    // window.Android.gotoJavaCamera(Edit._type); //type为3是拍视频，不为3是拍照
+                    getJavaFiles(""); //测试用
                 })
                 //点击图片显示大图
                 $(".showPicUl").delegate("img.showPic", "click", function () {
