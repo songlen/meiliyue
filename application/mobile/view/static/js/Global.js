@@ -156,12 +156,13 @@ function getJavaFiles(args) {
     console.log(args)
     alert("修改过"+args)
 
-    fetchAB(args, function (blob) {
+    fetchAB(args, function (abf) {
         let url = args.toLowerCase();
         alert(url)
         if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) { //是图片
             alert(1)
-            blob.type="image/jpeg";
+            let blob=new Blob([abf],{type:"image/jpeg"});
+            alert(blob)
             alert(blob.type)
             let reader = new FileReader();
             reader.onload = function (e) {
@@ -181,7 +182,8 @@ function getJavaFiles(args) {
             reader.readAsDataURL(blob);
         } else if (url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1) { //是视频
             alert(2)
-            blob.type="video/mp4";
+            let blob=new Blob([abf],{type:"video/mp4"});
+            alert(blob)
             alert(blob.type)
             let reader = new FileReader();
             reader.onload = function (e) {
@@ -210,10 +212,10 @@ function fetchAB(url, cb) {
     alert("fetchUrl"+url)
     var xhr = new XMLHttpRequest;
     xhr.open('get', url);
-    xhr.responseType = 'blob';
+    xhr.responseType = 'arraybuffer';
     xhr.onload = function () {
         alert(xhr.response.type)
-        cb(xhr.response); //blob
+        cb(xhr.response); //arraybuffer
     };
     xhr.send();
 };
