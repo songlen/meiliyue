@@ -154,7 +154,7 @@ let Global = (function () {
 
 function getJavaFiles(args) {
     console.log(args)
-    alert(args)
+    alert("修改过"+args)
 
     fetchAB(args, function (blob) {
         let url = args.toLowerCase();
@@ -200,7 +200,7 @@ function getJavaFiles(args) {
 //url => blob
 function fetchAB(url, cb) {
     console.log(url);
-    alert("fetch"+url)
+    alert("fetchUrl"+url)
     var xhr = new XMLHttpRequest;
     xhr.open('get', url);
     xhr.responseType = 'blob';
@@ -211,19 +211,22 @@ function fetchAB(url, cb) {
     xhr.send();
 };
 
-function readBlob(blob) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-        $liTemp.find('.showPic').attr('src', e.target.result);
+// function readBlob(blob) {
+//     var reader = new FileReader();
+//     reader.onload = function (e) {
+//         $liTemp.find('.showPic').attr('src', e.target.result);
 
-        //添加图片成功 后
-        $(".showPicUl").prepend($liTemp)
+//         //添加图片成功 后
+//         $(".showPicUl").prepend($liTemp)
 
-        //取消图片
-        $liTemp.find("a.edit-closePic").click(function () {
-            Edit.cancelPic(this)
-        })
+//         //取消图片
+//         $liTemp.find("a.edit-closePic").click(function () {
+//             Edit.cancelPic(this)
+//         })
 
-    }
-    reader.readAsDataURL(blob);
-}
+//     }
+//     reader.readAsDataURL(blob);
+// }
+
+console.log("global.js")
+alert("global.js")
