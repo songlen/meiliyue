@@ -156,46 +156,60 @@ function getJavaFiles(args) {
     console.log(args)
     alert("修改过"+args)
 
-    // args='C:/Users/xq/Desktop/微信图片_20180820114149.jpg'; //测试用
+    args='C:/Users/xq/Desktop/微信图片_20180820114149.jpg'; //测试用
 
     fetchAB(args, function (abf) {
         let url = args.toLowerCase();
-        alert(url)
         if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) { //是图片
-            alert(1)
             let blob=new Blob([abf],{type:"image/jpeg"});
+            console.log(blob)
+            console.log(blob.size)
+            console.log(blob.type)
             alert(blob)
+            alert(blob.size)
             alert(blob.type)
-            let reader = new FileReader();
-            reader.onload = function (e) {
-                alert(3)
-                let $li = $(`
-                    <li class="edit-pic-item">
-                        <img class="showPic" data-index=${$(".edit-pic-item").length} src="../static/images/icon/tx.png" alt="上传文件">
-                    </li>
-                `);
-                console.log(e.target.result,e.target.result.length)
-                alert(e.target.result)
-                alert(e.target.result.length)
-                $li.find(".showPic").attr('src', e.target.result);
 
-                //添加图片成功 后
-                $(".showPicUl").prepend($li);
+            let $li = $(`
+                <li class="edit-pic-item">
+                    <img class="showPic" data-index=${$(".edit-pic-item").length} src=${args} alt="上传文件">
+                </li>
+            `);
+            $li.find(".showPic").attr('src', e.target.result);
 
-                // //取消图片
-                // $liTemp.find("a.edit-closePic").click(function () {
-                //     Edit.cancelPic(this)
-                // })
-            }
-            reader.readAsDataURL(blob);
+            //添加图片成功 后
+            $(".showPicUl").prepend($li);
+
+            // let reader = new FileReader();
+            // reader.onload = function (e) {
+            //     let $li = $(`
+            //         <li class="edit-pic-item">
+            //             <img class="showPic" data-index=${$(".edit-pic-item").length} src="../static/images/icon/tx.png" alt="上传文件">
+            //         </li>
+            //     `);
+            //     console.log(e.target.result,e.target.result.length)
+            //     alert(e.target.result)
+            //     alert(e.target.result.length)
+            //     $li.find(".showPic").attr('src', e.target.result);
+
+            //     //添加图片成功 后
+            //     $(".showPicUl").prepend($li);
+
+            //     // //取消图片
+            //     // $liTemp.find("a.edit-closePic").click(function () {
+            //     //     Edit.cancelPic(this)
+            //     // })
+            // }
+            // reader.readAsDataURL(blob);
         } else if (url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1) { //是视频
-            alert(2)
             let blob=new Blob([abf],{type:"video/mp4"});
+            console.log(blob)
+            console.log(blob.size)
+            console.log(blob.type)
             alert(blob)
+            alert(blob.size)
             alert(blob.type)
             let reader = new FileReader();
             reader.onload = function (e) {
-                alert(4)
                 // $liTemp.find('.showPic').attr('src', e.target.result);
 
                 alert(e.target.result)
