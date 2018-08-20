@@ -154,6 +154,7 @@ let Global = (function () {
 
 function getJavaFiles(args) {
     console.log(args)
+    args="file://"+args;
     alert("修改过"+args)
 
     // args='C:/Users/xq/Desktop/微信图片_20180820114149.jpg'; //测试用
