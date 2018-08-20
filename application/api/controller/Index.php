@@ -104,7 +104,7 @@ class Index extends Base {
         } else {
             $sort = M('users')->max('sort');
             $sort = $sort+1;
-            M('users')->where('user_id', $user_id)->update(array('sort'=> );
+            M('users')->where('user_id', $user_id)->update(array('sort'=> $sort);
             $rocket_log_data = array(
                 'user_id' => $user_id,
                 'used_date' => date('Y-m-d'),
