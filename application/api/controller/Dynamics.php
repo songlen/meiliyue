@@ -117,14 +117,7 @@ class Dynamics extends Base {
         }
         /************************ 上传视频 **********************/
         if($_FILES['video'] && $data['type'] == '3'){
-            $FileLogic = new FileLogic();
-            $uploadPath = UPLOAD_PATH.'dynamics/video';
-            $result = $FileLogic->uploadSingleFile('video', $uploadPath);
-            if($result['status'] == '1'){
-                $data['video'] = $result['fullPath'];
-            } else {
-                response_error('', '文件上传失败');
-            }
+            $data['video'] = I('video');
         }
 
         if(D('dynamics')->add($data)){
