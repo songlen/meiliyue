@@ -169,9 +169,15 @@ function getJavaFiles(args) {
             alert(blob.size)
             alert(blob.type)
 
-            let $li = $(`
+            alert(`
                 <li class="edit-pic-item">
                     <img class="showPic" data-index=${$(".edit-pic-item").length} src=${args} alt="上传文件">
+                </li>
+            `)
+
+            let $li = $(`
+                <li class="edit-pic-item">
+                    <img class="showPic" data-index=${$(".edit-pic-item").length} src="${args}" alt="上传文件">
                 </li>
             `);
 
@@ -230,7 +236,6 @@ function getJavaFiles(args) {
 //url => blob
 function fetchAB(url, cb) {
     console.log(url);
-    alert("fetchUrl"+url)
     var xhr = new XMLHttpRequest;
     xhr.open('get', url);
     xhr.responseType = 'arraybuffer';
