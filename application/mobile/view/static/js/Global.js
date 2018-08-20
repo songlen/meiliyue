@@ -158,10 +158,13 @@ function getJavaFiles(args) {
 
     fetchAB(args, function (blob) {
         let url = args.toLowerCase();
+        alert(url)
         if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) { //是图片
+            alert(1)
             let reader = new FileReader();
             reader.onload = function (e) {
-                let $img = $(`<img src="../images/icon/tx.png" alt="上传文件"></img>`);
+                alert(3)
+                let $img = $(`<img src="../images/icon/tx.png" alt="上传文件"/>`);
                 $img.attr('src', e.target.result);
 
                 //添加图片成功 后
@@ -174,8 +177,10 @@ function getJavaFiles(args) {
             }
             reader.readAsDataURL(blob);
         } else if (url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1) { //是视频
+            alert(2)
             let reader = new FileReader();
             reader.onload = function (e) {
+                alert(4)
                 // $liTemp.find('.showPic').attr('src', e.target.result);
 
                 // //添加图片成功 后
@@ -199,6 +204,7 @@ function fetchAB(url, cb) {
     xhr.open('get', url);
     xhr.responseType = 'blob';
     xhr.onload = function () {
+        alert(xhr.response)
         cb(xhr.response);
     };
     xhr.send();
