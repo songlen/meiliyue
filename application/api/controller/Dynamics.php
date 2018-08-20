@@ -105,15 +105,8 @@ class Dynamics extends Base {
         $data['add_time'] = time();
 
         /********************** 上传图片 *********************/
-        if($_FILES['image'] && $data['type'] == '2'){
-            $FileLogic = new FileLogic();
-            $uploadPath = UPLOAD_PATH.'dynamics/image';
-            $result = $FileLogic->uploadMultiFile('image', $uploadPath);
-            if($result['status'] == '1'){
-                $data['image'] = $result['image'];
-            } else {
-                response_error('', '文件上传失败');
-            }
+        if($data['type'] == '2'){
+            $data['image'] = I('image');
         }
         /************************ 上传视频 **********************/
         if($data['type'] == '3'){

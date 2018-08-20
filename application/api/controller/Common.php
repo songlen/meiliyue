@@ -18,12 +18,15 @@ class Common extends Base {
     /**
      * [fileUpload 上传动态视频]
      * @param   $[video] [<文件名>]
-     * @param [type] $[type] [<类型 danamic_video 动态视频>]
+     * @param [type] $[type] [<类型 动态视频:dynamic_video 动态图片: dynamic_image>]
      * @return [type] [description]
      */
     public function uploadFile(){
         $type = I('type');
         switch ($type) {
+            case 'danamic_image':
+                $uploadPath = UPLOAD_PATH.'dynamics/image';
+                break;
             case 'danamic_video':
                 $uploadPath = UPLOAD_PATH.'dynamics/video';
                 break;
@@ -33,7 +36,7 @@ class Common extends Base {
                 break;
         }
 
-        if(empty($_FILES)) response_error('文件不能我空');
+        if(empty($_FILES)) response_error('文件不能为空');
 
         $FileLogic = new FileLogic();
         $result = $FileLogic->uploadSingleFile('file', $uploadPath);
