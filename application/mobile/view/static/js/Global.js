@@ -157,8 +157,17 @@ function getJavaFiles(args) {
     args="file://"+args;
     alert("修改过"+args)
 
-    // args='C:/Users/xq/Desktop/微信图片_20180820114149.jpg'; //测试用
+    let $li = $(`
+        <li class="edit-pic-item">
+            <img class="showPic" data-index=${$(".edit-pic-item").length} src=${'"'+args+'"'} alt="上传文件">
+        </li>
+    `);
 
+    //添加图片成功 后
+    $(".showPicUl").prepend($li);
+
+    // args='C:/Users/xq/Desktop/微信图片_20180820114149.jpg'; //测试用
+    return;
     fetchAB(args, function (abf) {
         let url = args.toLowerCase();
         if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) { //是图片
