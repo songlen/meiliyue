@@ -127,10 +127,10 @@ let Global = (function () {
         let u = navigator.userAgent;
         let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
         let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-        console.log(isAndroid,isiOS)
-        if(isAndroid){
+        console.log(isAndroid, isiOS)
+        if (isAndroid) {
             window.Android[funcStr]();
-        }else if(isiOS){
+        } else if (isiOS) {
             //
             console.log(3)
         }
@@ -152,7 +152,71 @@ let Global = (function () {
     }
 })();
 
-function getJavaFiles(args){
+function getJavaFiles(args) {
     console.log(args)
     alert(args)
+
+    fetchAB(args, function (blob) {
+        let url = args.toLowerCase();
+        if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) { //是图片
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                let $img = $(`<img src="../images/icon/tx.png" alt="上传文件"></img>`);
+                $img.attr('src', e.target.result);
+
+                //添加图片成功 后
+                $(".showPicUl").prepend($img);
+
+                // //取消图片
+                // $liTemp.find("a.edit-closePic").click(function () {
+                //     Edit.cancelPic(this)
+                // })
+            }
+            reader.readAsDataURL(blob);
+        } else if (url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1) { //是视频
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                // $liTemp.find('.showPic').attr('src', e.target.result);
+
+                // //添加图片成功 后
+                // $(".showPicUl").prepend($liTemp)
+
+                // //取消图片
+                // $liTemp.find("a.edit-closePic").click(function () {
+                //     Edit.cancelPic(this)
+                // })
+
+            }
+            reader.readAsDataURL(blob);
+        }
+    });
+}
+
+//url => blob
+function fetchAB(url, cb) {
+    console.log(url);
+    var xhr = new XMLHttpRequest;
+    xhr.open('get', url);
+    xhr.responseType = 'blob';
+    xhr.onload = function () {
+        cb(xhr.response);
+    };
+    xhr.send();
+};
+
+function readBlob(blob) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        $liTemp.find('.showPic').attr('src', e.target.result);
+
+        //添加图片成功 后
+        $(".showPicUl").prepend($liTemp)
+
+        //取消图片
+        $liTemp.find("a.edit-closePic").click(function () {
+            Edit.cancelPic(this)
+        })
+
+    }
+    reader.readAsDataURL(blob);
 }
