@@ -81,7 +81,9 @@ class Auth extends Base {
     	$country = I('country');
     	$province = I('province');
     	$city = I('city');
-    	$qq = I('qq');
+        $qq = I('qq');
+        $longitude = I('longitude');
+        $latitude = I('latitude');
 
     	if(check_mobile($mobile) == false){
     		response_error('', '手机号格式错误');
@@ -147,6 +149,8 @@ class Auth extends Base {
         $head_pic = I('head_pic');
         $sex = I('sex/d');
         $type = I('type');
+        $longitude = I('longitude');
+        $latitude = I('latitude');
 
         // 检测用户是否已注册
         $user_third = Db::name('user_third')->where("account_id='$account_id'")->field('user_id')->find();
