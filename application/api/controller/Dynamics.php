@@ -105,11 +105,11 @@ class Dynamics extends Base {
         $data['add_time'] = time();
 
         /********************** 上传图片 *********************/
-        if($_FILES['image'] && $data['type'] == '2'){
+        if($data['type'] == '2'){
             $data['image'] = json_decode(html_entity_decode(I('image')), true);
         }
         /************************ 上传视频 **********************/
-        if($_FILES['video'] && $data['type'] == '3'){
+        if($data['type'] == '3'){
             $data['video'] = I('video');
         }
 
