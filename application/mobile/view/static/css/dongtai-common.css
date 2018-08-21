@@ -29,6 +29,7 @@ header {
     display: flex;
     height: 50px;
     line-height: 50px;
+    z-index: 3;
 }
 
 .dongtai header {
@@ -1241,4 +1242,15 @@ a.operate {
     border-radius: 5px;
     text-align: center;
     color: #000;
+}
+
+/* 修改表情插件样式 */
+
+.emoji_btn {
+    width: .26rem;
+    height: .26rem;
+}
+
+.emoji_container .emoji_icons ul li {
+    flex: 0 0 7.69230%;
 }

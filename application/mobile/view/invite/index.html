@@ -509,16 +509,7 @@
                         console.log(item)
                         this.savePageToSession()
 
-                        let options = {
-                            originUserId: this.user_id, //从谁那 去的邀约详情
-                            toUserId: item.user_id, //去 谁的 邀约详情
-                            detailId: item.id,
-                        };
-
-                        let toUrl = this.GlobalHost + "/index.php/mobile/invite/detail.html?options=" + JSON
-                            .stringify(options);
-                        // toUrl = "detail.html?options=" + JSON.stringify(options); //测试用
-                        console.log(toUrl)
+                        let toUrl = this.GlobalHost + "/index.php/mobile/invite/detail/id/"+item.id+".html";
 
                         window.location.href = toUrl;
                     },

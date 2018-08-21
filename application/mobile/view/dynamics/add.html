@@ -204,7 +204,7 @@
                     console.log(imageJson)
                     $(":input[name='image']").val(imageJson);
                 } else if (Edit._type == 3) { //视频
-                    let videoStr = "/public/" + $("img.showPic").attr("src").split("/public/")[1];
+                    let videoStr = "/public/" + $("video.showPic").attr("src").split("/public/")[1];
                     $(":input[name='video']").val(videoStr);
                 }
 

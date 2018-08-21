@@ -136,6 +136,14 @@ let Global = (function () {
         }
     }
 
+    function eleCantClick(ele) {
+        $(ele).addClass("eventsDisabled");
+    }
+
+    function eleCanClick(ele) {
+        $(ele).removeClass("eventsDisabled");
+    }
+
     //暴露的接口------------------------
     return {
         //值
@@ -148,7 +156,9 @@ let Global = (function () {
         bindLimitCount, //element:textarea元素;textCount:限制的字数;showElement:实时显示字数的元素  注:没有表情插件的
         stampToDate, //stamp  注:10位或13位都可以
         stampToStr, //stamp:10位时间戳
-        gotoApp
+        gotoApp,
+        eleCantClick, //让元素无法点击 ele:元素
+        eleCanClick //ele:元素
     }
 })();
 
@@ -174,7 +184,7 @@ function getJavaFiles(args) { // 路径/plulic/../..
         $liTemp.find("a.edit-closePic").click(function (event) {
             event.stopPropagation();
             let self = this;
-            Global.messageConfirWin("你尚未发布，确认删除？", function () {
+            Global.messageConfirWin("尚未发布，确认删除？", function () {
                 $(self).closest('.edit-pic-item').remove();
             });
         })
@@ -192,9 +202,11 @@ function getJavaFiles(args) { // 路径/plulic/../..
         `);
 
         //取消图片
-        $liTemp.find("a.edit-closePic").click(function () {
-            Global.messageConfirWin("你尚未发布，确认删除？", function () {
-                $(this).closest('.edit-pic-item').remove();
+        $liTemp.find("a.edit-closePic").click(function (event) {
+            event.stopPropagation();
+            let self = this;
+            Global.messageConfirWin("尚未发布，确认删除？", function () {
+                $(self).closest('.edit-pic-item').remove();
             });
         })
 

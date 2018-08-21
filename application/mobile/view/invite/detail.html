@@ -18,80 +18,102 @@
         <span class="title">邀约详情</span>
         <a href="javascript:void(0)" class="operate fr"></a>
     </header>
-    <div class="main-content invitation">
-        <div class="items invite-detail">
-            <ul>
-                <li>
-                    <div class="top">
-                        <div class="img-box">
-                            <img src="__STATIC__/images/icon/tx.png">
-                        </div>
-                        <div class="details">
-                            <div class="person">
-                                <span class="name">寻你！</span>
-                                <span class="sexAge">
-                                    <i class="sex"></i>
-                                    <span class="age">23</span>
-                                </span>
-                                <!-- <span class="distance fr">
-                                    <span class="distanceText">100</span>km
-                                </span> -->
+
+    <div class="invitation-enrollWrap">
+
+        <div class="main-content invitation">
+            <div class="items invite-detail">
+                <ul>
+                    <li>
+                        <div class="top">
+                            <div class="img-box">
+                                <img src="__STATIC__/images/icon/tx.png">
                             </div>
-                            <div class="" style="margin-top: 10px;">发布邀约</div>
+                            <div class="details">
+                                <div class="person">
+                                    <span class="name"></span>
+                                    <span class="sexAge">
+                                        <i class="sex"></i>
+                                        <span class="age"></span>
+                                    </span>
+                                    <!-- <span class="distance fr">
+                                        <span class="distanceText">100</span>km
+                                    </span> -->
+                                </div>
+                                <div class="" style="margin-top: 10px;"></div>
+                            </div>
                         </div>
-                    </div>
 
-                </li>
-                <!-- 邀约详情 -->
-                <li class="detail inviteDetail">
-                    <ul class="inviteDetail-list">
-                        <li>
-                            <span class="bigDot"></span>
-                            <span class="title">title</span>
-                        </li>
-                        <li class="descriptionLi">
-                            <span class="smallDot"></span>
-                            <span class="description">description</span>
-                        </li>
-                        <!-- <li class="detailImages">
-                            <img class="inviImg" data-index=${index} src=${Global.host+src}>
-                        </li> -->
-                        <li>
-                            <span class="smallDot"></span>
-                            <span class="payType">AA</span>
-                        </li>
-                        <li>
-                            <span class="smallDot"></span>
-                            <span class="otherSideSex">otherSideSex</span>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+                    </li>
+                    <!-- 邀约详情 -->
+                    <li class="detail inviteDetail">
+                        <ul class="inviteDetail-list">
+                            <li>
+                                <span class="bigDot"></span>
+                                <span class="title"></span>
+                            </li>
+                            <li class="descriptionLi">
+                                <span class="smallDot"></span>
+                                <span class="description"></span>
+                            </li>
+                            <!-- <li class="detailImages">
+                                <img class="inviImg" data-index=${index} src=${Global.host+src}>
+                            </li> -->
+                            <li>
+                                <span class="smallDot"></span>
+                                <span class="payType"></span>
+                            </li>
+                            <li>
+                                <span class="smallDot"></span>
+                                <span class="otherSideSex"></span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
 
-            <ul class="areaTime">
-                <li>
-                    时间：
-                    <span class="detailTime">time</span>
-                </li>
-                <li>
-                    地点：
-                    <span class="areaPlace">time</span>
-                </li>
-                <li class="clearfix">
-                    <span class="fl is_jiesong" style="display: none;">
-                        <input type="checkbox" checked="checked" id="myCheck">
-                        <label></label>
-                        <label>需要接送我</label>
-                    </span>
-                    <span class="fl with_confidante" style="display: none;">
-                        <input type="checkbox" checked="checked" id="myCheck1">
-                        <label></label>
-                        <label>对方可携带三两好友</label>
-                    </span>
-                </li>
-            </ul>
+                <ul class="areaTime">
+                    <li>
+                        时间：
+                        <span class="detailTime"></span>
+                    </li>
+                    <li>
+                        地点：
+                        <span class="areaPlace"></span>
+                    </li>
+                    <li class="clearfix">
+                        <span class="fl is_jiesong" style="display: none;">
+                            <input type="checkbox" checked="checked" id="myCheck">
+                            <label></label>
+                            <label>需要接送我</label>
+                        </span>
+                        <span class="fl with_confidante" style="display: none;">
+                            <input type="checkbox" checked="checked" id="myCheck1">
+                            <label></label>
+                            <label>对方可携带三两好友</label>
+                        </span>
+                    </li>
+                </ul>
+            </div>
         </div>
+
+        <button class="interest" style="display: none;">我感兴趣</button>
+
+        <div class="enrollWrap" style="display:none;">
+            <div class="enrollTips">
+                邀约留言仅双方可见
+            </div>
+            <div class="enroll-list">
+                <div class="enrollTitle">
+                    报名人数(共计<span class="interestedCount"></span>人)
+                </div>
+                <ul class="enrollUl">
+                </ul>
+            </div>
+        </div>
+
     </div>
+
+    <!-- 弹框 -->
     <div class="_shade"></div>
     <div class="avatarOperating" style="display: none;">
         <ul>
@@ -100,48 +122,44 @@
             <li class="home-cancel">取消</li>
         </ul>
     </div>
-    <button class="interest" style="display: none;">我感兴趣</button>
+
+    <!-- --------------------------------------------- -->
 
     <script src="__STATIC__/js-dist/invite-detail.min.js"></script>
     <script src="__STATIC__/js/Global.js"></script>
     <script>
         var Interested = {
-            originUserId: "",
-            toUserId: "",
-            detailId: "",
+            originUserId: "", //自己的user_id
+            toUserId: "", //这条邀约发布者的user_id
+            detailId: "", //这条邀约的id
 
 
-            //处理ulr参数func,返回obj
-            getUrlOptions: function (urlOptionStr) { //urlOptionStr = window.location.search
-                var requestObj = {}
-                var str = urlOptionStr.substr(1);
-                var strs = str.split("&");
-                for (var i = 0; i < strs.length; i++) {
-                    requestObj[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]) //unescape?
-                }
-                return requestObj
-            },
             //获取一些页面参数
             getPageData: function () {
-                //处理url参数
-                var urlOptionStr = window.location.search
-                // urlOptionStr = "?options={%22originUserId%22:2,%22toUserId%22:1,%22detailId%22:15}"; //测试用
-                console.log(urlOptionStr)
-
-                if (urlOptionStr.indexOf("?") != -1) {
-                    var urlOptionObj = Interested.getUrlOptions(urlOptionStr)
-
-                    var options = JSON.parse(urlOptionObj.options)
-                    console.log(options)
-
-                    //
-                    Interested.originUserId = options.originUserId;
-                    Interested.toUserId = options.toUserId;
-                    Interested.detailId = options.detailId;
-
-                    //ajax邀约详情信息
-                    Interested.getInviteData();
+                //originUserId我自己的user_id
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
+                    localStorage.getItem("mUserInfo") !== "null") {
+                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                    console.log(mUserInfo)
+                    Interested.originUserId = Number(mUserInfo.user_id);
+                } else {
+                    // Interested.originUserId = 21; //测试用
+                    Interested.originUserId = 1; //测试用 自己看自己
                 }
+
+                //detailId
+                let url = window.location.href;
+                if (!(url.indexOf(".html") > -1)) { //没有.html
+                    url = url + ".html";
+                }
+                if (url.indexOf("file:///") > -1) {
+                    url = "http://meiliyue.caapa.org/index.php/mobile/invite/detail/id/19.html"; //测试用
+                }
+                let strTemp = url.split("/detail/id/")[1];
+                Interested.detailId = Number(strTemp.substr(0, strTemp.length - 5));
+
+                //ajax邀约详情信息
+                Interested.getInviteData();
             },
             getInviteData: function () {
                 $.ajax({
@@ -154,8 +172,10 @@
                     success: function (result) {
                         console.log(result)
 
-                        //更新dom
                         if (result.data && result.data !== "") {
+                            Interested.toUserId = result.data.user_id;
+
+                            //更新dom
                             Interested.updateDom(result.data);
                         }
                     }
@@ -200,10 +220,106 @@
                     $(".with_confidante").show();
                 }
 
-                //如果看自己的邀约详情，不显示“我感兴趣”
+                //不是自己的邀约
                 if (Interested.originUserId !== Interested.toUserId) {
                     $(".interest").show();
                 }
+                //是自己的邀约
+                else {
+                    // $(".enroll-list").show();
+                    Interested.showInterestedList();
+                }
+
+                // Interested.showInterestedList(); //测试用
+            },
+            getInterested: function () {
+                let btn = document.getElementsByClassName("interest")[0];
+                let postData = {
+                    user_id: Interested.originUserId,
+                    invite_id: Interested.detailId
+                };
+                console.log(postData)
+                Global.eleCantClick(btn);
+                $.ajax({
+                    type: "POST",
+                    url: Global.host + "/index.php/Api/invite/enroll",
+                    data: postData,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+
+                        if (result.msg == "您已感兴趣此邀约") {
+                            Global.messageWin("您已感兴趣此邀约");
+                        } else {
+                            Global.messageWin("成功感兴趣此邀约");
+                        }
+
+                        Global.eleCanClick(btn);
+                    }
+                });
+            },
+            showInterestedList: function () {
+                $.ajax({
+                    type: "POST",
+                    url: Global.host + "/index.php/Api/invite/getEnroll",
+                    data: {
+                        invite_id: Interested.detailId
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+                        if (result.data && result.data !== "" && result.data.length !== 0) {
+
+                            //update list dom
+                            let inArr=result.data;
+
+                            $(".interestedCount").html(inArr.length);
+                            inArr.forEach(function(item){
+                                let headUrl="";
+                                if(item.head_pic&&item.head_pic!==""){
+                                    headUrl=Global.host+item.head_pic;
+                                }else{
+                                    headUrl="__STATIC__/images/icon/tx.png";
+                                }
+                                let $liTemp=$(`
+                                    <li class="comments-item" data-toUserId=${item.user_id}>
+                                        <div class="comments-avatar">
+                                            <div class="comments-avatar-wrap">
+                                                <img src="${headUrl}">
+                                            </div>
+                                            <span class="videoStatus" style="display:none;"></span>
+                                        </div>
+
+                                        <div class="comments-text">
+                                            <div class="comments-text-item">
+                                                <span class="listName">${item.nickname}</span>
+                                                <span class="sexAge">
+                                                    <i class="sex"></i>
+                                                    <span class="age">${item.age}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                `);
+
+                                //视频认证
+                                if(item.auth_video_status==2){
+                                    $liTemp.find(".videoStatus").show();
+                                }
+                                //sex
+                                if (item.sex == 1) { //男
+                                    $liTemp.find(".sexAge").addClass("male");
+                                } else {
+                                    $liTemp.find(".sexAge").addClass("female");
+                                }
+
+                                $(".enrollUl").append($liTemp);
+                            });
+
+                            $(".enrollWrap").show();
+                        }
+                    }
+                });
             },
             showFullPic: function (el) {
                 let index = $(el).attr("data-index");
@@ -227,7 +343,6 @@
                 //更多操作
                 $("a.operate").click(function () {
                     $("._shade").add($('.avatarOperating')).show()
-                    // $('.avatarOperating').show().animate({'bottom':'0'},300)
                 })
                 //更多操作-取消
                 $(".avatarOperating .home-cancel").click(function () {
@@ -235,9 +350,8 @@
                 })
                 //我感兴趣
                 $(".interest").click(function () {
-                    //感兴趣
-
-                })
+                    Interested.getInterested();
+                });
                 //点击头像看他人的个人主页
                 $(".interested .img-box").click(function (event) {
                     event.stopPropagation();
@@ -249,12 +363,23 @@
                         url = Global.host + "/index.php/mobile/user/myHomePage.html";
                     }
 
-                    window.location.href =url;
+                    window.location.href = url;
                 });
                 //点击邀约详情的图片 查看大图
                 $(".inviteDetail-list").delegate("img.inviImg", "click", function () {
                     console.log($(this).attr("src"))
                     Interested.showFullPic(this);
+                });
+
+                //点击报名的人 进入个人主页
+                $(".enrollUl").delegate("li.comments-item","click",function(event){
+                    event.stopPropagation();
+                    
+                    let user_id = Interested.originUserId;
+                    let toUserId = $(this).closest(".comments-item").attr("data-toUserId");
+                    let url = Global.host + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                    console.log(url)
+                    window.location.href = url;
                 });
             },
             init: function () {

@@ -35,6 +35,8 @@
             <input type="text" value="" name="with_confidante" style="display: none;">
             <input type="text" value="" name="longitude" style="display: none;">
             <input type="text" value="" name="latitude" style="display: none;">
+
+            <input type="text" value="" name="file[]" style="display: none;">
             <!-- 隐藏域 end -->
             <div class="theme items">
                 <ul>
@@ -137,13 +139,14 @@
         </div>
     </div>
 
-    <div class="avatarOperating" style="display: none;">
+    <!-- 邀约不能上传视频，不用选择 -->
+    <!-- <div class="avatarOperating" style="display: none;">
         <ul>
-            <li class="">添加图片</li>
-            <li class="">添加视频</li>
+            <li class="goAddPic">添加图片</li>
+            <li class="goAddVideo">添加视频</li>
             <li class="home-cancel">取消</li>
         </ul>
-    </div>
+    </div> -->
 
     <script src="__STATIC__/js-dist/invite-add.min.js"></script>
     <script src="__STATIC__/js/Global.js"></script>
@@ -194,8 +197,8 @@
 
                 //type
                 var ulrStr = window.location.href;
-                if(!(ulrStr.indexOf(".html")>-1)){ //后面不带.html
-                    ulrStr=ulrStr+".html";
+                if (!(ulrStr.indexOf(".html") > -1)) { //后面不带.html
+                    ulrStr = ulrStr + ".html";
                 }
                 if (ulrStr.indexOf("file://") > -1) {
                     ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html" //测试用
@@ -228,13 +231,17 @@
                 //
             },
             initSomeDom: function () {
-                //地点，时间 选择器
+                //地点选择器
                 $("#city-picker").cityPicker({
                     title: "请选择地区",
                     showDistrict: false
                 });
+                //时间选择器
+                let curDate = Global.stampToDate(new Date().getTime() - 86400000);
+                console.log(curDate.substr(0, 10))
                 $("#datetime-picker").calendar({
-                    dateFormat: "yyyy-mm-dd"
+                    dateFormat: "yyyy-mm-dd",
+                    minDate: curDate.substr(0, 10)
                 });
                 //复选框
                 document.getElementById("myCheck").checked = false;
@@ -243,47 +250,6 @@
             //改变 地址 选择器默认值
             setAreaDefault: function () {
 
-            },
-            addPic: function () {
-                if ($(".edit-pic-item").length >= 3) {
-                    Global.messageWin("最多上传3张图片");
-                    return;
-                }
-                var $liTemp = $(
-                    `
-                    <li class="edit-pic-item">
-                        <input class="albumInput" name="file[]" type="file" accept="image/*" value="" style="display: none">
-                        <img class="showPic" data-index=${$(".edit-pic-item").length} src="__STATIC__/images/icon/tx.png">
-                        <a href="javascript:void(0)" class="edit-closePic"></a>
-                    </li>
-                    `
-                );
-
-                $liTemp.find(".albumInput").bind("change", function () {
-                    readURL(this);
-                });
-                readURL(this);
-
-                //触发点击input file
-                $liTemp.find(".albumInput")[0].click();
-
-                function readURL(input) {
-                    if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            $liTemp.find('.showPic').attr('src', e.target.result);
-
-                            //添加图片成功 后
-                            $(".showPicUl").prepend($liTemp);
-
-                            //取消图片
-                            $liTemp.find("a.edit-closePic").click(function () {
-                                ReleInvite.cancelPic(this)
-                            })
-                        }
-                        reader.readAsDataURL(input.files[0]);
-                    }
-                }
             },
             //发布邀约
             publishInvit: function () {
@@ -307,65 +273,6 @@
                     return;
                 }
 
-                //file
-                // let fileArr = [];
-                // if ($(".albumInput").length !== 0) {
-                //     $(".albumInput").each(function () {
-                //         fileArr.push(this.files[0]);
-                //         // fileArr.push(new FormData(this));
-                //     });
-                // }
-
-                // let posiArr=ReleInvite.getLocalPosition();
-                // console.log(fileArr)
-                // var postData = {
-                //     user_id: ReleInvite._user_id,
-                //     user_sex: ReleInvite._user_sex,
-                //     type: ReleInvite._type,
-                //     title: ReleInvite._theme,
-
-                //     description: $("#descripTextarea").val().trim(),
-                //     time: $("#datetime-picker").val(),
-                //     province: provinceCode,
-                //     city: cityCode,
-                //     place: $(".detailPlace-inputWrap>input").val().trim(),
-                //     object: $(".otherSide .choose .active").text(),
-                //     pay: $(".payMoney .choose .active").text(),
-                //     is_jiesong: $("#myCheck").is(':checked') ? 1 : 0,
-                //     with_confidante: $("#myCheck1").is(':checked') ? 1 : 0,
-
-                //     file: fileArr, //支持多张图片 //测试用
-                //     // file:[],
-
-                //     // longitude: posiArr[0], 
-                //     // latitude: posiArr[1], 
-                //     longitude: "",
-                //     latitude: "",
-                // }
-
-                // console.log(postData)
-
-                // $.ajax({
-                //     type: "POST",
-                //     url: GlobalHost + "/index.php/Api/invite/add",
-                //     data: postData,
-                //     dataType: "json",
-                //     cache: false,
-                //     processData: false,
-                //     contentType: false,
-                //     success: function (result) {
-                //         console.log(result)
-                //         if (result.msg == "操作成功") {
-
-                //             ReleInvite.closeLoading("发布成功", function () {
-                //                 //关闭 返回
-                //                 //window.history.back(-1)
-                //             });
-                //         }
-                //     }
-                // });
-
-
                 //jquery.form.js方法
                 $(":input[name='user_id']").val(ReleInvite._user_id);
                 $(":input[name='user_sex']").val(ReleInvite._user_sex);
@@ -387,6 +294,16 @@
                 $(":input[name='longitude']").val("");
                 $(":input[name='latitude']").val("");
 
+                let srcArr = [];
+                $("img.showPic").each(function () {
+                    let srcTemp = "/public/" + $(this).attr("src").split("/public/")[1];
+                    srcArr.push(srcTemp);
+                });
+                console.log(srcArr)
+                let imageJson = JSON.stringify(srcArr)
+                console.log(imageJson)
+                $(":input[name='file[]']").val(imageJson);
+
 
                 Global.openLoading();
 
@@ -400,25 +317,6 @@
                     }  
                 });
 
-            },
-            cancelPic: function (el) { //pic的a标签
-                if ($(".msgWrap").length == 0) {
-                    $('body').append($('<div class="msgWrap"></div>'));
-                }
-                $('.confirmDelete').show()
-
-                //取消删除
-                $(".cancelDelete").click(function () {
-                    $('.msgWrap').remove()
-                    $('.confirmDelete').hide()
-                })
-                //确认删除
-                $(".delete").click(function () {
-                    $('.msgWrap').remove()
-                    $('.confirmDelete').hide()
-
-                    $(el).closest('.edit-pic-item').remove()
-                })
             },
             showFullPic: function (el) {
                 let index = $(el).attr("data-index");
@@ -450,14 +348,48 @@
                 );
                 //发布邀约
                 $(".publish").click(function () {
-                    ReleInvite.publishInvit()
+                    ReleInvite.publishInvit();
                 });
                 //添加图片
                 $(".addPic").click(function () {
-                    // ReleInvite.addPic();
+                    // if ($(".msgWrap").length == 0) {
+                    //     $('body').append($('<div class="msgWrap"></div>'))
+                    // }
+                    // $('.avatarOperating').show()
 
-                    window.Android.gotoJavaCamera(Edit._type);
+                    if ($("img.showPic").length >= 3) {
+                        Global.messageWin("最多上传3张图片");
+                        return;
+                    }
+
+                    window.Android.gotoJavaCamera(1);
                 });
+                // //点击avatarOperating的添加图片
+                // $('.goAddPic').click(function () {
+                //     if ($("img.showPic").length >= 3) {
+                //         Global.messageWin("最多上传3张图片");
+                //         return;
+                //     }
+                //     window.Android.gotoJavaCamera(1);
+
+                //     $('.home-cancel')[0].click();
+                // });
+                // //点击avatarOperating的添加视频
+                // $('.goAddVideo').click(function () {
+                //     if ($("video.showPic").length >= 1) {
+                //         Global.messageWin("最多上传1个视频");
+                //         return;
+                //     }
+                //     window.Android.gotoJavaCamera(3);
+
+                //     $('.home-cancel')[0].click();
+                // });
+                // //点击avatarOperating的取消
+                // $('.home-cancel').click(function () {
+                //     $('.msgWrap').remove()
+                //     $('.avatarOperating').hide()
+                // });
+
                 //点击图片显示大图
                 $(".showPicUl").delegate(".showPic", "click", function () {
                     console.log($(this).attr("src"))

@@ -617,7 +617,8 @@ a.close {
     border-top: 1px solid #d8d8d8;
     background-color: #fff;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
+    padding-top: 0.05rem;
 }
 
 .comments-item:last-of-type {
@@ -651,6 +652,16 @@ a.close {
 .attention-tab .comments-text,
 .comments-item .comments-text {
     flex: 1 0 0;
+    max-width: calc(100% - 0.9rem);
+}
+
+.fans-tab .comments-text .signature,
+.attention-tab .comments-text .signature,
+.comments-item .comments-text .signature {
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .comments-item .comments-text .listName {

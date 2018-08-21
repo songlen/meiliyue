@@ -1,3 +1,9 @@
+/* 禁用元素点击事件 */
+
+.eventsDisabled {
+  pointer-events: none;
+}
+
 body {
   background-color: #f1f1f1;
 }
@@ -590,6 +596,10 @@ footer li a {
 
 .invitation .theme .choose span:last-child {
   border: none;
+}
+
+.invitation .theme .choose span {
+  color: #bebebe;
 }
 
 .invitation .theme .choose span.active {
@@ -1206,7 +1216,7 @@ header .search {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%;
+  right: 0;
   border: none;
   background: url(../images/icon/price.png) no-repeat 35% center;
   background-size: 0.23rem;
@@ -1214,6 +1224,7 @@ header .search {
   height: 0.43rem;
   line-height: 0.43rem;
   padding-left: 0.23rem;
+  z-index: 4;
 }
 
 ._share {
@@ -1798,4 +1809,87 @@ li.edit-pic-item {
 .is_jiesong,
 .with_confidante {
   margin-right: 0.05rem;
+}
+
+/* 头像列表 */
+
+.comments-item {
+  height: 0.6rem;
+  border-top: 1px solid #d8d8d8;
+  background-color: #fff;
+  display: flex;
+  /* align-items: center; */
+  padding-top: 0.05rem;
+}
+
+.comments-item:last-of-type {
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.comments-item .comments-avatar {
+  font-size: 0;
+  margin: 0 0.1rem;
+  position: relative;
+}
+
+.comments-item .comments-avatar .comments-avatar-wrap {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.fans-tab .comments-text,
+.attention-tab .comments-text,
+.comments-item .comments-text {
+  flex: 1 0 0;
+  max-width: calc(100% - 0.9rem);
+}
+
+/* 我感兴趣 */
+
+.invitation-enrollWrap {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  overflow-y: auto;
+  background-color: #f1f4fd;
+}
+
+.enrollTips,
+.enrollTitle {
+  padding-left: 0.1rem;
+  line-height: 0.4rem;
+}
+
+.enrollTitle {
+  color: #000;
+}
+
+.enroll-list {
+  background-color: #fff;
+}
+
+.enrollUl {
+  padding-bottom: 0.05rem;
+}
+
+.invitation-enrollWrap .videoStatus {
+  width: 0.18rem;
+  height: 0.18rem;
+  right: -0.02rem;
+  bottom: 0.09rem;
+}
+
+.invitation-enrollWrap .comments-item:last-of-type,
+.invitation-enrollWrap .comments-item {
+  border: none;
+}
+
+.invitation-enrollWrap .comments-text {
+  border-bottom: 1px solid #d8d8d8;
 }

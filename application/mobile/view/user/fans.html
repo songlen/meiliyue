@@ -13,10 +13,10 @@
 </head>
 
 <body class="friends-page">
-    <header>
+    <!-- <header>
         <a href="javascript:void(0)" class="back"></a>
         <div class="title">我的粉丝</div>
-    </header>
+    </header> -->
 
     <div class="friends-content">
         <!-- tabs -->
@@ -255,10 +255,6 @@
                 //
             },
             eventsBind: function () {
-                //back
-                $(".back").click(function () {
-                    window.history.back(-1);
-                });
                 //点击 头像 进入他人的个人主页
                 $(".fansUl").delegate(".friendItem", "click", function () {
                     //savePageData()

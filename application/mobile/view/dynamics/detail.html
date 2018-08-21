@@ -300,7 +300,7 @@
                             }
                             $.ajax({
                                 type: "POST",
-                                url: GlobalHost + "/index.php/Api/Dynamics/getComment",
+                                url: this.GlobalHost + "/index.php/Api/Dynamics/getComment",
                                 data: postData,
                                 dataType: "json",
                                 success: function (result) {
@@ -387,7 +387,7 @@
 
                             $.ajax({
                                 type: "POST",
-                                url: GlobalHost + "/index.php/Api/dynamics/addComment",
+                                url: this.GlobalHost + "/index.php/Api/dynamics/addComment",
                                 data: postData,
                                 dataType: "json",
                                 success: function (result) {
@@ -424,9 +424,9 @@
                             let toUserId = item.user_id;
                             let url = "";
                             if (user_id === toUserId) {
-                                url = GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                                url = this.GlobalHost + "/index.php/mobile/user/myHomePage.html";
                             } else {
-                                url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                                url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
                             }
                             window.location.href = url;
                         },
@@ -454,7 +454,6 @@
             eventsBind: function () {
                 //点击送花
                 $(".giveFlower").click(function () {
-                    console.log("送花")
                     Details.giveFlower()
                 })
                 //点击头像打开个人主页
@@ -496,9 +495,9 @@
                     let toUserId = Details.dynamic_origin_id;
                     let url = "";
                     if (user_id === toUserId) {
-                        url = GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                        url = this.GlobalHost + "/index.php/mobile/user/myHomePage.html";
                     } else {
-                        url = GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                        url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
                     }
                     window.location.href = url;
                 });
@@ -507,9 +506,9 @@
                 //获取页面基本信息
                 Details.getPageInfo();
 
-                Details.initVue()
+                Details.initVue();
 
-                Details.eventsBind()
+                Details.eventsBind();
             }
         }
         $(function () {
