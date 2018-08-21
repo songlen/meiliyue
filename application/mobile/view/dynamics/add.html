@@ -234,76 +234,6 @@
                 // swiper.open(index);
                 swiper.open();
             },
-            //添加视频
-            addVideo: function () {
-                console.log("添加video")
-                if ($("video.showPic").length >= 1) {
-                    Global.messageWin("视频最多上传一个");
-                    return;
-                }
-                var $liTemp = $(
-                    `
-                        <li class="edit-pic-item">
-                            <input class="albumInput" name="video" style="display: none" type="file" accept="video/*" capture="camcorder">
-                            <video class="showPic" src="" style="" preload="auto"></video>
-                            <a href="javascript:void(0)" class="edit-closePic"></a>
-                        </li>
-                    `
-                );
-
-                //取消视频
-                $liTemp.find("a.edit-closePic").click(function (event) {
-
-                })
-
-
-                $liTemp.find(".albumInput").change(function () {
-                    readURL(this);
-                })
-                //触发点击input file
-                $liTemp.find(".albumInput")[0].click()
-
-                function readURL(input) {
-                    if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            $liTemp.find('video').attr('src', e.target.result);
-
-                            //添加视频成功 后
-                            $(".showPicUl").prepend($liTemp)
-
-                            //预览全屏视频
-                            $liTemp.find('video').click(function () {
-                                let $fullScreen = $(
-                                    `
-                                    <div class="fullScreen">
-                                        <div class="videoHeader">
-                                            <div class="closeFullScreen"></div>
-                                        </div>
-
-                                        <div class="fullScreenScroll">
-                                            <div class="fullScreenWrap">
-                                                <video id="video1" width="100%" height="100%" src=${$(this).attr("src")} autoplay loop></video>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `
-                                );
-
-                                //点击关闭事件
-                                $fullScreen.find(".closeFullScreen").click(function () {
-                                    $fullScreen.remove();
-                                });
-
-                                $("body").append($fullScreen);
-                            });
-
-
-                        }
-                        reader.readAsDataURL(input.files[0]);
-                    }
-                }
-            },
             //限制字数
             bindLimitCount: function () {
                 var textarea = document.getElementById('edit-text')
@@ -393,7 +323,7 @@
                         }
                     }
 
-                    jumpIOS(3);
+                    jumpIOS(Edit._type);
 
                     // if(Global.isIOS()){
                     //     jumpIOS(3);
