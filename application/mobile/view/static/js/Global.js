@@ -175,7 +175,11 @@ let Global = (function () {
         $("body").append($fullScreen);
     }
 
-    //暴露的接口------------------------
+    function fullScreenAuth() {
+        
+    }
+
+    //Global暴露的接口------------------------
     return {
         //值
         host: "http://meiliyue.caapa.org",
@@ -191,12 +195,14 @@ let Global = (function () {
         gotoApp,
         eleCantClick, //让元素无法点击 ele:元素
         eleCanClick, //ele:元素
-        fullScreen // 预览全屏视频 ele:video元素
+        fullScreen, // 预览全屏视频 ele:video元素
+        fullScreenAuth //预览全屏认证小视频
     }
 })();
 
 // ---------------------------------------------------
 
+//上传文件的回调 args 文件路径
 function getJavaFiles(args) { // 路径/plulic/../..
     console.log(args)
     alert(args)
