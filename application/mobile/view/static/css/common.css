@@ -1216,7 +1216,7 @@ header .search {
   position: fixed;
   bottom: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   border: none;
   background: url(../images/icon/price.png) no-repeat 35% center;
   background-size: 0.23rem;

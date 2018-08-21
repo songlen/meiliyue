@@ -393,9 +393,13 @@
                         }
                     }
 
-                    window.Android.gotoJavaCamera(Edit._type); //type为3是拍视频，不为3是拍照
-                    // getJavaFiles(""); //测试用
-                })
+                    if(Global.isIOS()){
+                        jumpIOS(3);
+                    }else{
+                        window.Android.gotoJavaCamera(Edit._type); //type为3是拍视频，不为3是拍照
+                        // getJavaFiles(""); //测试用
+                    }
+                });
                 //点击图片显示大图
                 $(".showPicUl").delegate("img.showPic", "click", function () {
                     console.log($(this).attr("src"))

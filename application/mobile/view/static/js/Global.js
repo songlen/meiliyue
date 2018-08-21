@@ -123,16 +123,22 @@ let Global = (function () {
         }
     }
 
-    function gotoApp(funcStr) {
+    function isIOS() {
         let u = navigator.userAgent;
-        let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-        console.log(isAndroid, isiOS)
-        if (isAndroid) {
-            window.Android[funcStr]();
-        } else if (isiOS) {
+        let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        return isIOS;
+    }
+
+    function gotoApp(funcStr) { //调原生方法
+        // let u = navigator.userAgent;
+        // let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+
+
+        let isIOS = isIOS();
+        if (isIOS) {
             //
-            console.log(3)
+        } else { //安卓
+            window.Android[funcStr]();
         }
     }
 
@@ -142,6 +148,10 @@ let Global = (function () {
 
     function eleCanClick(ele) {
         $(ele).removeClass("eventsDisabled");
+    }
+
+    function fullScreen(ele) {
+
     }
 
     //暴露的接口------------------------
@@ -156,9 +166,11 @@ let Global = (function () {
         bindLimitCount, //element:textarea元素;textCount:限制的字数;showElement:实时显示字数的元素  注:没有表情插件的
         stampToDate, //stamp  注:10位或13位都可以
         stampToStr, //stamp:10位时间戳
+        isIOS, //判断是不是ios系统
         gotoApp,
         eleCantClick, //让元素无法点击 ele:元素
-        eleCanClick //ele:元素
+        eleCanClick, //ele:元素
+        fullScreen // 全屏视频 ele:元素
     }
 })();
 
