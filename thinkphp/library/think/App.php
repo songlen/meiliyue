@@ -597,7 +597,7 @@ class App
 		//echo $instance.$actionName ;
         if ($actionName == 'pre_sell_list') {
 			header("Content-type: text/html; charset=utf-8");
-			exit('要使用预售功能请联系TPshop官网客服,官网地址 www.tp-shop.cn');
+			exit();
         }
 			
             // 操作不存在

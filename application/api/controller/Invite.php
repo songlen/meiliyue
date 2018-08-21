@@ -132,4 +132,36 @@ class Invite extends Base {
 
         response_success($info);
     }
+
+    // 邀约感兴趣
+    public function enroll(){
+        $user_id = I('user_id');
+        $invite_id = I('invite_id');
+
+        $count = Db::name('invite_enroll')->where(array('user_id'=>$user_id, 'invite_id'=>$invite_id))->count();
+        if($count) response_success('', '您已感兴趣此邀约');
+
+        $data = array(
+            'user_id' => $user_id, 
+            'invite_id'=> $invite_id,
+            'add_time' => time(),
+        );
+        if(Db::name('invite_enroll')->insert($data)){
+            response_success('', '操作成功');
+        } else {
+            response_error('', '操作失败');
+        }
+    }
+
+    public function getEnroll(){
+        $invite_id = I('invite_id');
+
+        $list = Db::name('invite_enroll')->alias('ie')
+            ->join('users u', 'u.user_id=ie.user_id', 'left')
+            ->where('ie.invite_id',  $invite_id)
+            ->field('u.user_id, u.nickname, u.head_pic, u.sex, u.age, u.auth_video_status')
+            ->select();
+
+        response_success($list);
+    }
 }
