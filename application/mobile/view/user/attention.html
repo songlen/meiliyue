@@ -244,19 +244,22 @@
                     localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
+                    alert(JSON.stringify(mUserInfo))
                     Attend.user_id = Number(mUserInfo.user_id);
                 } else {
+                    alert("无local")
                     Attend.user_id = 1; //测试用
                 }
 
                 Attend.initPullToRefresh();
 
                 //从session获取之前的页面数据
-                if (sessionStorage.getItem("myAttentionPage") && sessionStorage.getItem("myAttentionPage") !==
-                    null &&
+                if (sessionStorage.getItem("myAttentionPage") && sessionStorage.getItem("myAttentionPage") !== null &&
                     sessionStorage.getItem("myAttentionPage") !== "null") {
+                    alert("有session")
                     Attend.seesionToDom();
                 } else {
+                    alert("无session")
                     Attend.getAttendList();
                 }
 
