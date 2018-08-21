@@ -1251,6 +1251,18 @@ a.operate {
     height: .26rem;
 }
 
+.emoji_content {
+    height: auto;
+}
+
 .emoji_container .emoji_icons ul li {
     flex: 0 0 7.69230%;
+}
+
+.emoji_content ul li {
+    height: 45px;
+}
+
+.emoji_content ul li a {
+    line-height: 45px;
 }
