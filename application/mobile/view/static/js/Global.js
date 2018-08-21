@@ -151,7 +151,28 @@ let Global = (function () {
     }
 
     function fullScreen(ele) {
+        let $fullScreen = $(
+            `
+            <div class="fullScreen">
+                <div class="videoHeader">
+                    <div class="closeFullScreen"></div>
+                </div>
 
+                <div class="fullScreenScroll">
+                    <div class="fullScreenWrap">
+                        <video id="video1" width="100%" height="100%" src=${$(ele).attr("src")} autoplay loop></video>
+                    </div>
+                </div>
+            </div>
+            `
+        );
+
+        //点击关闭事件
+        $fullScreen.find(".closeFullScreen").click(function () {
+            $fullScreen.remove();
+        });
+
+        $("body").append($fullScreen);
     }
 
     //暴露的接口------------------------
@@ -170,9 +191,11 @@ let Global = (function () {
         gotoApp,
         eleCantClick, //让元素无法点击 ele:元素
         eleCanClick, //ele:元素
-        fullScreen // 全屏视频 ele:元素
+        fullScreen // 预览全屏视频 ele:video元素
     }
 })();
+
+// ---------------------------------------------------
 
 function getJavaFiles(args) { // 路径/plulic/../..
     console.log(args)
@@ -205,7 +228,7 @@ function getJavaFiles(args) { // 路径/plulic/../..
         $(".showPicUl").prepend($liTemp);
     }
     //是视频
-    else if (url.indexOf(".mp4") > -1 || url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1) {
+    else if (url.indexOf(".mp4") > -1 || url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1 || url.indexOf(".mov") > -1) {
         let $liTemp = $(`
             <li class="edit-pic-item">
                 <video class="showPic" src="${src}" style="" preload="auto"></video>

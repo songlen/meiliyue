@@ -362,7 +362,13 @@
                         return;
                     }
 
-                    window.Android.gotoJavaCamera(1);
+                    alert(Global.isIOS())
+
+                    if(Global.isIOS()){
+                        jumpIOS(1);
+                    }else{
+                        window.Android.gotoJavaCamera(1);
+                    }
                 });
                 // //点击avatarOperating的添加图片
                 // $('.goAddPic').click(function () {
@@ -391,9 +397,13 @@
                 // });
 
                 //点击图片显示大图
-                $(".showPicUl").delegate(".showPic", "click", function () {
+                $(".showPicUl").delegate("img.showPic", "click", function () {
                     console.log($(this).attr("src"))
                     ReleInvite.showFullPic(this);
+                });
+                //点击video显示全屏预览
+                $(".showPicUl").delegate("video.showPic", "click", function () {
+                    Global.fullScreen(this);
                 });
             },
             init: function () {

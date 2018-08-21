@@ -143,8 +143,8 @@
                     console.log(mUserInfo)
                     Interested.originUserId = Number(mUserInfo.user_id);
                 } else {
-                    // Interested.originUserId = 21; //测试用
-                    Interested.originUserId = 1; //测试用 自己看自己
+                    Interested.originUserId = 21; //测试用
+                    // Interested.originUserId = 1; //测试用 自己看自己
                 }
 
                 //detailId
@@ -222,7 +222,8 @@
 
                 //不是自己的邀约
                 if (Interested.originUserId !== Interested.toUserId) {
-                    $(".interest").show();
+                    $(".interest").show(); //btn
+                    $(".invitation-enrollWrap").css("bottom","0.43rem"); //有btn挡着
                 }
                 //是自己的邀约
                 else {

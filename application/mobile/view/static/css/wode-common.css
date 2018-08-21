@@ -2036,11 +2036,17 @@ ul.signatureList li.actived {
 }
 
 .addfriends-page .videoStatus,
-.comments-page .videoStatus,
 .visitors-page .videoStatus {
     width: 0.18rem;
     height: 0.18rem;
     bottom: 0;
+    right: -0.03rem;
+}
+
+.comments-page .videoStatus {
+    width: 0.18rem;
+    height: 0.18rem;
+    bottom: 0.18rem;
     right: -0.03rem;
 }
 
