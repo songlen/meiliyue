@@ -62,7 +62,7 @@ class Index extends Base {
             $where['province'] = $province;
             $where['city'] = $city;
         }
-        if($auth_video_status) $where['auth_video_status'] = $auth_video_status;
+        if($auth_video_status) $where['auth_video_status'] = '2';;
         if($age_l && $age_r) $where['age'] = array(array('>=', $age_l), array('<', $age_r));
         if($height_l && $height_r) $where['height'] = array(array('>=', $height_l), array('<', $height_r));
         
