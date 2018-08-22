@@ -1,8 +1,8 @@
 let Global = (function () {
 
     function openLoading(msg = "处理中") {
-        if ($(".msgWrap").length == 0) {
-            $("body").append($('<div class="msgWrap"></div>'));
+        if ($(".mLoadingMask").length == 0) {
+            $("body").append($('<div class="mLoadingMask"></div>'));
         }
         if ($(".mLoading").length == 0) {
             $("body").append($(`<div class="mLoading">${msg}</div>`));
@@ -176,7 +176,7 @@ let Global = (function () {
     }
 
     function fullScreenAuth() {
-        
+
     }
 
     //Global暴露的接口------------------------

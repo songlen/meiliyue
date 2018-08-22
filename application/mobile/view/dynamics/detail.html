@@ -76,7 +76,9 @@
                     <if condition="is_array($viewers) && !empty($viewers)">
                         <foreach name="$viewers" item="viewer">
                             <li>
-                                <img src="{$viewer.head_pic}" alt="">
+                                <div class="audience-box">
+                                    <img src="{$viewer.head_pic}">
+                                </div>
                             </li>
                         </foreach>
                     </if>
@@ -186,7 +188,7 @@
     <script src="__STATIC__/js-dist/dynamics-detail.min.js"></script>
     <script src="__STATIC__/js/Global.js"></script>
     <script>
-        var dynamic_origin_id='{$info["user_id"]}';
+        var dynamic_origin_id = '{$info["user_id"]}';
         var Details = {
             user_id: "",
             dynamic_id: "",
@@ -209,10 +211,10 @@
                 }
                 //dynamic_id
                 var ulrStr = window.location.href;
-                if(!(ulrStr.indexOf(".html")>-1)){ //后面不带.html
-                    ulrStr=ulrStr+".html";
+                if (!(ulrStr.indexOf(".html") > -1)) { //后面不带.html
+                    ulrStr = ulrStr + ".html";
                 }
-                if(ulrStr.indexOf("file://") > -1){
+                if (ulrStr.indexOf("file://") > -1) {
                     ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/155.html" //测试用
                 }
                 var strTemp = ulrStr.split("/detail/id/")[1];
@@ -222,7 +224,7 @@
                 //这条动态的发布者的id
                 Details.dynamic_origin_id = Number(dynamic_origin_id);
                 // Details.dynamic_origin_id = 1; //测试用
-                console.log("动态发布者："+Details.dynamic_origin_id)
+                console.log("动态发布者：" + Details.dynamic_origin_id)
             },
             //送花
             giveFlower: function () {
@@ -426,7 +428,8 @@
                             if (user_id === toUserId) {
                                 url = this.GlobalHost + "/index.php/mobile/user/myHomePage.html";
                             } else {
-                                url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                                url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
+                                    user_id + "/toUserId/" + toUserId + ".html";
                             }
                             window.location.href = url;
                         },
@@ -489,7 +492,7 @@
                     $('body').css('overflow', 'auto')
                 });
                 //点击这条动态的头像去个人主页
-                $(".details-headImgWrap").click(function(event){
+                $(".details-headImgWrap").click(function (event) {
                     event.stopPropagation();
                     let user_id = Details.user_id;
                     let toUserId = Details.dynamic_origin_id;
@@ -497,7 +500,8 @@
                     if (user_id === toUserId) {
                         url = this.GlobalHost + "/index.php/mobile/user/myHomePage.html";
                     } else {
-                        url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                        url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id +
+                            "/toUserId/" + toUserId + ".html";
                     }
                     window.location.href = url;
                 });

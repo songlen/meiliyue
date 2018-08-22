@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>别人的个人主页</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css-dist/user-homePage.min.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
@@ -39,7 +39,7 @@
                         <i class="sex"></i>
                         <span class="age"></span>
                     </span>
-                    <span class="edit-personal-constellation">摩羯座</span>
+                    <!-- <span class="edit-personal-constellation">摩羯座</span> -->
                     <span class="haveAttend">
                         <span class="attend" style="display:none;">加关注</span>
                         <span class="attended" style="display:none;">已关注</span>
@@ -56,46 +56,35 @@
             <div class="publicPic">
                 <div class="publicPic-title">
                     <p>个人相册</p>
-                    <p class="picCount">2</p>
+                    <p class="picCount"></p>
                 </div>
                 <ul class="myPhotos">
-                    <!-- <li class="edit-pic-item">
-                        <img src="__STATIC__/images/icon/tx.png">
-                    </li> -->
                 </ul>
-
             </div>
 
             <div class="myInvite">
                 <div class="myInvite-title">
                     <p class="myInviteText">TA的邀约</p>
-                    <p class="myInviteCount">0</p>
+                    <p class="myInviteCount"></p>
                 </div>
 
                 <div class="myInvite-content">
                     <div class="myInvite-tip">
                         <p class="noInvite" style="display: none;">未发布任何邀约</p>
-                        <!-- <p data-id="2">聊聊理想</p> -->
                     </div>
                     <div class="inviteToMine" style="display: none;">
                         邀请他参加我的邀约
-                    </div>
-                    <div class="releaseInvite" style="display: none;">
-                        发布邀约
                     </div>
                 </div>
             </div>
 
             <div class="myTalk">
                 <div class="myTalk-title">
-                    <p class="myTalkText">动态</p>
-                    <p class="myTalkCount">0</p>
+                    <p class="myTalkText">TA的动态</p>
+                    <p class="myTalkCount"></p>
                 </div>
 
                 <ul class="myTalkList">
-                    <!-- <li class="myTalk-item">
-                        <img src="__STATIC__/images/icon/tx.png">
-                    </li> -->
                 </ul>
 
                 <a href="javascript:void(0)" class="more">
@@ -113,21 +102,21 @@
                         <div class="myApprove-pic">
                             <img src="__STATIC__/images/icon/tx.png">
                         </div>
-                        <p class="myApprove-phone">手机号未认证</p>
+                        <p class="myApprove-phone"></p>
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
                     </li>
                     <li class="myApprove-item">
                         <div class="myApprove-pic">
                             <img src="__STATIC__/images/icon/tx.png">
                         </div>
-                        <p class="myApprove-video">形象视频未认证</p>
+                        <p class="myApprove-video"></p>
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
                     </li>
                     <li class="myApprove-item">
                         <div class="myApprove-pic">
                             <img src="__STATIC__/images/icon/tx.png">
                         </div>
-                        <p class="myApprove-identity">身份未认证</p>
+                        <p class="myApprove-identity"></p>
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
                     </li>
                     <!-- <li class="myApprove-item">
@@ -276,10 +265,10 @@
             <span class="letsChat">打开聊天</span>
         </div>
 
-        <footer style="display: none;">
+        <!-- <footer>
             <img src="__STATIC__/images/icon/消息.png" alt="">
             <span class="sayHi">打个招呼</span>
-        </footer>
+        </footer> -->
     </div>
 
     <!-- 模糊之外 -->
@@ -294,351 +283,359 @@
         <span class="closeChatFisrt"></span>
     </div>
 
-</body>
-<script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
-<script src="__STATIC__/js/Global.js"></script>
-<script>
-    var Homepage = {
-        _mTimer: null,
-        user_id: "",
-        toUserId: "",
-        head_pic: "",
-        attentionStatus: 0, //userid对touserid的关注状态
+    <!-- ----------------------------------------------- -->
 
-        mUserInfo:{}, //我的信息
-        baseinfo:{}, //该个人主页用户的信息
+    <script src="__STATIC__/js-dist/user-homePage.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
+    <script>
+        var Homepage = {
+            _mTimer: null,
+            user_id: "",
+            toUserId: "",
+            head_pic: "",
+            attentionStatus: 0, //userid对touserid的关注状态
+
+            mUserInfo: {}, //我的信息
+            baseinfo: {}, //该个人主页用户的信息
 
 
-        getUserId: function () {
-            //得到user_id
-            if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null && localStorage
-                .getItem("mUserInfo") !== "null") {
-                let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
-                console.log(mUserInfo)
-                Homepage.mUserInfo=mUserInfo;
-                Homepage.user_id = Number(mUserInfo.user_id);
-            } else {
-                Homepage.user_id = 1; //测试用
-                Homepage.mUserInfo.level=0; //测试用
-            }
-            var ulrStr = window.location.href;
-            if(!(ulrStr.indexOf(".html")>-1)){ //点击在线头像的时候，后面不带.html
-                ulrStr=ulrStr+".html";
-            }
-            // alert(ulrStr)
-            if (ulrStr.indexOf("file://") > -1) {
-                ulrStr = "http://meiliyue.caapa.org/index.php/mobile/user/homePage/user_id/1/toUserId/21.html" //测试用 如果是1去1 就有问题了
-            }
-            var strTemp = ulrStr.split("/toUserId/")[1];
-            // alert(strTemp)
-            console.log(strTemp)
-            // alert(strTemp.substr(0, strTemp.length - 5))
-
-            Homepage.toUserId = Number(strTemp.substr(0, strTemp.length - 5));
-            console.log(Homepage.user_id, Homepage.toUserId)
-            //测试用
-            // if (Homepage.user_id == Homepage.toUserId) {
-            //     Homepage.user_id = Homepage.user_id + 1;
-            // }
-        },
-        updateDom: function (data) {
-
-            var sexClass = data.baseinfo.sex == "1" ? "male" : "female"
-            var dynamicsArr = []
-            var approveBtnText = ""
-
-            Homepage.attentionStatus = data.baseinfo.attention
-
-            $(".homepage>.allWrap>header .title").html(data.baseinfo.nickname)
-            if (data.baseinfo.head_pic && data.baseinfo.head_pic !== "") {
-                $(".avatar-pic img").attr("src", Global.host + data.baseinfo.head_pic);
-                Homepage.head_pic = data.baseinfo.head_pic;
-            }
-            if (data.baseinfo.auth_video_status === 2) {
-                $(".edit-personal-avatar .videoStatus").show();
-            }
-            // $(".edit-personal-avatar .videoStatus").show();//测试用
-            $(".avatar-content .sexAge").addClass(sexClass)
-            $(".avatar-content .sexAge .age").html(data.baseinfo.age)
-            // $(".edit-personal-constellation").html()//星座
-            switch (data.baseinfo.attention) {
-                case 0: //未关注
-                    $(".haveAttend").find(".attend").show()
-                    break;
-                case 1: //已关注
-                    $(".haveAttend").find(".attended").show()
-                    break;
-                case 2: //已被关注
-                    $(".haveAttend").find(".attend").show()
-                    break;
-                case 3: //相互关注
-                    $(".haveAttend").find(".attendAll").show()
-                    break;
-                default:
-                    break;
-            }
-            // $(".inviteToMine").show()
-            approveBtnText = "邀请认证"
-            if (data.baseinfo.emotion_status && data.baseinfo.emotion_status !== "") {
-                $(".emotion_status").html(data.baseinfo.emotion_status)
-            } else {
-                $(".emotion_status").html("填写")
-            }
-            $(".edit-personal-area").html(data.baseinfo.city)
-            if (data.photos) {
-                $(".picCount").html(data.photos.length)
-                //个人相册
-                // data.photos.forEach(function(item,index){
-
-                // })
-            }
-            //TA的邀约
-            $(".myInviteCount").html(data.invite.length)
-            if (data.invite.length == 0) {
-                $(".noInvite").show()
-            } else {
-                data.invite.forEach(function (value, index) {
-                    $(".myInvite-tip").append($('<p class="inviDetail" data-id="' + value.id + '">' +
-                        value.title + '</p>'))
-                })
-            }
-            //TA的动态
-            if (data.dynamics && data.dynamics !== "") {
-                if (Object.prototype.toString.call(data.dynamics) === '[object Array]') {
-                    dynamicsArr = data.dynamics
+            getUserId: function () {
+                //得到user_id
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
+                    localStorage
+                    .getItem("mUserInfo") !== "null") {
+                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                    console.log(mUserInfo)
+                    Homepage.mUserInfo = mUserInfo;
+                    Homepage.user_id = Number(mUserInfo.user_id);
                 } else {
-                    dynamicsArr.push(data.dynamics)
+                    Homepage.user_id = 21; //测试用
+                    Homepage.mUserInfo.level = 0; //测试用
                 }
-                $(".myTalkCount").html(dynamicsArr.length)
-                dynamicsArr.forEach(function (value, index) {
-                    $(".myTalkList").append($(
-                        `
-                        <li class="myTalk-item" data-id=${value.id}>
-                            ${value.title}
-                        </li>
-                        `
-                    ))
-                })
-            }
-            //认证
-            $(".approveBtn").each(function () {
-                $(this).html(approveBtnText)
-            })
-            //手机号
-            if (data.baseinfo.mobile_validated == 0) {
-                $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/微信@2x.png")
-                $(".myApprove-phone").html("手机号未认证")
-                $(".myApprove-phone+.approveBtn").show()
-            } else {
-                $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/微信@2x.png")
-                $(".myApprove-phone").html("手机号已认证")
-                $(".myApprove-phone+.approveBtn").hide();
-                $(".myApprove-phone").click(function(){
-                    // if(Homepage.mUserInfo.level==0){
-                    //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
-                    //         //去vip申请页面
-                    //     });
-                    //     return;
-                    // }else{
-                    //     if(Homepage.baseinfo.phoneOwechat&&Homepage.baseinfo.phoneOwechat!==""){
-                    //         Global.messageWin(`微信/手机号：${Homepage.baseinfo.phoneOwechat}`);
-                    //     }
-                    // }
-                    if(Homepage.baseinfo.phoneOwechat&&Homepage.baseinfo.phoneOwechat!==""){
-                        Global.messageWin(`微信/手机号：${Homepage.baseinfo.phoneOwechat}`);
-                    }
-                });
-            }
-            if (data.baseinfo.auth_video_status == 0) {
-                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/视频未认证@2x.png")
-                $(".myApprove-video").html("形象视频未认证")
-                $(".myApprove-video+.approveBtn").show()
-            } else {
-                $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/小视频@2x.png")
-                $(".myApprove-video").html("形象视频已认证")
-                $(".myApprove-video+.approveBtn").hide()
-            }
+                var ulrStr = window.location.href;
+                if (!(ulrStr.indexOf(".html") > -1)) { //点击在线头像的时候，后面不带.html
+                    ulrStr = ulrStr + ".html";
+                }
+                if (ulrStr.indexOf("file://") > -1) {
+                    ulrStr =
+                        "http://meiliyue.caapa.org/index.php/mobile/user/homePage/user_id/21/toUserId/1.html" //测试用 如果是1去1 就有问题了
+                }
+                var strTemp = ulrStr.split("/toUserId/")[1];
+                console.log(strTemp)
 
-            if (data.baseinfo.auth_identity_status == 0) {
-                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/身份未认真@2x.png")
-                $(".myApprove-identity").html("身份未认证")
-                $(".myApprove-identity+.approveBtn").show()
-            } else {
-                $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
-                    "__STATIC__/images/icon/身份未认真@2x.png")
-                $(".myApprove-identity").html("身份已认证")
-                $(".myApprove-identity+.approveBtn").hide()
-            }
+                Homepage.toUserId = Number(strTemp.substr(0, strTemp.length - 5));
+                console.log(Homepage.user_id, Homepage.toUserId)
+            },
+            updateDom: function (data) {
+                var dynamicsArr = []
 
-            // about me----------------------------------
-            $(".yuewanID").html(data.baseinfo.uuid)
-            //星座
-            // $(".constellation").html()
-            //感情状态
-            if (data.baseinfo.emotion_status && data.baseinfo.emotion_status !== "") {
-                $(".emotion_status").html(data.baseinfo.emotion_status)
-            } else {
-                $(".emotion_status").html("未填")
-            }
-            //职业
-            if (data.baseinfo.profession && data.baseinfo.profession !== "") {
-                $(".profession").html(data.baseinfo.profession)
-            } else {
-                $(".profession").html("未填")
-            }
-            //收入
-            if (data.baseinfo.income && data.baseinfo.income !== "") {
-                switch (data.baseinfo.income) {
-                    case 1:
-                        $(".income").html("3000元以上/月")
+                Homepage.attentionStatus = data.baseinfo.attention;
+
+                //昵称
+                $(".homepage>.allWrap>header .title").html(data.baseinfo.nickname)
+                //头像
+                if (data.baseinfo.head_pic && data.baseinfo.head_pic !== "") {
+                    $(".avatar-pic img").attr("src", Global.host + data.baseinfo.head_pic);
+                    Homepage.head_pic = data.baseinfo.head_pic;
+                }
+                //视频认证
+                if (data.baseinfo.auth_video_status === 2) {
+                    $(".edit-personal-avatar .videoStatus").show();
+                }
+                //sex
+                let sexClass = data.baseinfo.sex == "1" ? "male" : "female";
+                $(".avatar-content .sexAge").addClass(sexClass);
+                //age
+                $(".avatar-content .sexAge .age").html(data.baseinfo.age)
+                //星座
+                // $(".edit-personal-constellation").html()
+                //关注状态
+                switch (data.baseinfo.attention) {
+                    case 0: //未关注
+                        $(".haveAttend").find(".attend").show()
                         break;
-                    case 2:
-                        $(".income").html("5000元以上/月")
+                    case 1: //已关注
+                        $(".haveAttend").find(".attended").show()
                         break;
-                    case 3:
-                        $(".income").html("10000元以上/月")
+                    case 2: //已被关注
+                        $(".haveAttend").find(".attend").show()
                         break;
-                    case 4:
-                        $(".income").html("20000元以上/月")
-                        break;
-                    case 5:
-                        $(".income").html("50万元以上/年")
-                        break;
-                    case 6:
-                        $(".income").html("100万元以上/年")
-                        break;
-                    case 7:
-                        $(".income").html("保密")
+                    case 3: //相互关注
+                        $(".haveAttend").find(".attendAll").show()
                         break;
                     default:
                         break;
                 }
-            } else {
-                $(".income").html("未填")
-            }
-            //身高
-            if (data.baseinfo.height && data.baseinfo.height !== "") {
-                $(".height").html(data.baseinfo.height + "cm")
-            } else {
-                $(".height").html("未填")
-            }
-            //体重
-            if (data.baseinfo.weight && data.baseinfo.weight !== "") {
-                $(".weight").html(data.baseinfo.weight + "kg")
-            } else {
-                $(".weight").html("未填")
-            }
-            //个性签名
-            if (data.baseinfo.signature && data.baseinfo.signature !== "") {
-                $(".signature").html(data.baseinfo.signature)
-                $(".signature").click(function(){
-                    Global.messageWin(data.baseinfo.signature);
-                });
-            } else {
-                $(".signature").html("未填");
-            }
+                //地区??
+                $(".edit-personal-area").html(data.baseinfo.city)
+                //个人相册
+                if (data.photos && data.photos !== "" && data.photos.length !== 0) {
+                    $(".picCount").html(data.photos.length);
+                    let showArr = data.photos.length >= 3 ? data.photos.slice(0, 3) : data.photos;
+                    //图片升序排列
+                    showArr.sort(function (a, b) {
+                        return a.id - b.id;
+                    });
+                    showArr.forEach(function (item) {
+                        let $liTemp = $(
+                            `
+                                <li class="edit-pic-item flex4">
+                                    <img class="showPic" src=${Global.host+item.url}>
+                                </li>
+                            `
+                        );
+                        $(".myPhotos").prepend($liTemp);
+                    });
+                }
+                //TA的邀约
+                $(".myInviteCount").html(data.invite.length)
+                if (data.invite.length == 0) {
+                    $(".noInvite").show()
+                } else {
+                    data.invite.forEach(function (value, index) {
+                        $(".myInvite-tip").append($('<p class="inviDetail" data-id="' + value.id + '">' +
+                            value.title + '</p>'))
+                    })
+                }
+                //TA的动态
+                if (data.dynamics && data.dynamics !== "") {
+                    if (Object.prototype.toString.call(data.dynamics) === '[object Array]') {
+                        dynamicsArr = data.dynamics
+                    } else {
+                        dynamicsArr.push(data.dynamics)
+                    }
+                    $(".myTalkCount").html(dynamicsArr.length)
+                    dynamicsArr.forEach(function (value, index) {
+                        $(".myTalkList").append($(
+                            `
+                        <li class="myTalk-item" data-id=${value.id}>
+                            ${value.title}
+                        </li>
+                        `
+                        ))
+                    })
+                }
+                //手机号
+                if (data.baseinfo.mobile_validated == 0) {
+                    $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
+                        "__STATIC__/images/icon/微信@2x.png")
+                    $(".myApprove-phone").html("手机号未认证")
+                    $(".myApprove-phone+.approveBtn").show()
+                } else {
+                    $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
+                        "__STATIC__/images/icon/微信@2x.png")
+                    $(".myApprove-phone").html("手机号已认证")
+                    $(".myApprove-phone+.approveBtn").hide();
+                    $(".myApprove-phone").click(function () {
+                        // if(Homepage.mUserInfo.level==0){
+                        //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
+                        //         //去vip申请页面
+                        //     });
+                        //     return;
+                        // }else{
+                        //     if(Homepage.baseinfo.phoneOwechat&&Homepage.baseinfo.phoneOwechat!==""){
+                        //         Global.messageWin(`微信/手机号：${Homepage.baseinfo.phoneOwechat}`);
+                        //     }
+                        // }
+                        if (Homepage.baseinfo.phoneOwechat && Homepage.baseinfo.phoneOwechat !== "") {
+                            Global.messageWin(`微信/手机号：${Homepage.baseinfo.phoneOwechat}`);
+                        }
+                    });
+                }
+                if (data.baseinfo.auth_video_status == 0) {
+                    $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
+                        "__STATIC__/images/icon/视频未认证@2x.png")
+                    $(".myApprove-video").html("形象视频未认证")
+                    $(".myApprove-video+.approveBtn").show()
+                } else {
+                    $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
+                        "__STATIC__/images/icon/小视频@2x.png")
+                    $(".myApprove-video").html("形象视频已认证")
+                    $(".myApprove-video+.approveBtn").hide()
+                }
 
-            //对另一半的要求？
+                if (data.baseinfo.auth_identity_status == 0) {
+                    $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
+                        "__STATIC__/images/icon/身份未认真@2x.png")
+                    $(".myApprove-identity").html("身份未认证")
+                    $(".myApprove-identity+.approveBtn").show()
+                } else {
+                    $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
+                        "__STATIC__/images/icon/身份未认真@2x.png")
+                    $(".myApprove-identity").html("身份已认证")
+                    $(".myApprove-identity+.approveBtn").hide()
+                }
+
+                // about me----------------------------------
+                $(".yuewanID").html(data.baseinfo.uuid)
+                //星座
+                // $(".constellation").html()
+                //感情状态
+                if (data.baseinfo.emotion_status && data.baseinfo.emotion_status !== "") {
+                    $(".emotion_status").html(data.baseinfo.emotion_status)
+                } else {
+                    $(".emotion_status").html("未填")
+                }
+                //情感状态
+                if (data.baseinfo.emotion_status && data.baseinfo.emotion_status !== "") {
+                    $(".emotion_status").html(data.baseinfo.emotion_status)
+                } else {
+                    $(".emotion_status").html("填写")
+                }
+                //职业
+                if (data.baseinfo.profession && data.baseinfo.profession !== "") {
+                    $(".profession").html(data.baseinfo.profession)
+                } else {
+                    $(".profession").html("未填")
+                }
+                //收入
+                if (data.baseinfo.income && data.baseinfo.income !== "") {
+                    switch (data.baseinfo.income) {
+                        case 1:
+                            $(".income").html("3000元以上/月")
+                            break;
+                        case 2:
+                            $(".income").html("5000元以上/月")
+                            break;
+                        case 3:
+                            $(".income").html("10000元以上/月")
+                            break;
+                        case 4:
+                            $(".income").html("20000元以上/月")
+                            break;
+                        case 5:
+                            $(".income").html("50万元以上/年")
+                            break;
+                        case 6:
+                            $(".income").html("100万元以上/年")
+                            break;
+                        case 7:
+                            $(".income").html("保密")
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    $(".income").html("未填")
+                }
+                //身高
+                if (data.baseinfo.height && data.baseinfo.height !== "") {
+                    $(".height").html(data.baseinfo.height + "cm")
+                } else {
+                    $(".height").html("未填")
+                }
+                //体重
+                if (data.baseinfo.weight && data.baseinfo.weight !== "") {
+                    $(".weight").html(data.baseinfo.weight + "kg")
+                } else {
+                    $(".weight").html("未填")
+                }
+                //个性签名
+                if (data.baseinfo.signature && data.baseinfo.signature !== "") {
+                    $(".signature").html(data.baseinfo.signature)
+                    $(".signature").click(function () {
+                        Global.messageWin(data.baseinfo.signature);
+                    });
+                } else {
+                    $(".signature").html("未填");
+                }
+
+                //对另一半的要求？
 
 
-            //最满意部位
-            if (data.baseinfo.satisfactory_parts && data.baseinfo.satisfactory_parts !== "") {
-                $(".satisfactory_parts").append($('<ul class="clearfix"></ul>'))
-                var partsArr = data.baseinfo.satisfactory_parts.split(",")
-                partsArr.forEach(function (value) {
-                    $(".satisfactory_parts ul").append($('<li>' + value + '</li>'))
+                //最满意部位
+                if (data.baseinfo.satisfactory_parts && data.baseinfo.satisfactory_parts !== "") {
+                    $(".satisfactory_parts").append($('<ul class="clearfix"></ul>'))
+                    var partsArr = data.baseinfo.satisfactory_parts.split(",")
+                    partsArr.forEach(function (value) {
+                        $(".satisfactory_parts ul").append($('<li>' + value + '</li>'))
+                    })
+                } else {
+                    $(".satisfactory_parts").html("未填")
+                }
+
+                //update dom 后
+                Homepage.setProps();
+                Homepage.eventsBind();
+            },
+            getDataUpdateDom: function () {
+                var postData = {
+                    user_id: Homepage.user_id,
+                    toUserId: Homepage.toUserId
+                }
+                var url = Global.host + "/index.php/Api/User/homePage"
+                console.log(postData)
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: postData,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result.data)
+
+                        Homepage.baseinfo = result.data.baseinfo;
+
+                        Homepage.updateDom(result.data);
+                    }
                 })
-            } else {
-                $(".satisfactory_parts").html("未填")
-            }
-
-            //
-            Homepage.eventsBind()
-        },
-        getDataUpdateDom: function () {
-            var postData = {
-                user_id: Homepage.user_id,
-                toUserId: Homepage.toUserId
-            }
-            var url = Global.host + "/index.php/Api/User/homePage"
-            console.log(postData)
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: postData,
-                dataType: "json",
-                success: function (result) {
-                    console.log(result.data)
-
-                    Homepage.baseinfo=result.data.baseinfo;
-                    
-                    Homepage.updateDom(result.data)
+            },
+            addAttention: function (callback) {
+                var postData = {
+                    user_id: Homepage.user_id,
+                    friend_id: Homepage.toUserId
                 }
-            })
-        },
-        addAttention: function (callback) {
-            var postData = {
-                user_id: Homepage.user_id,
-                friend_id: Homepage.toUserId
-            }
-            console.log(postData)
-            $.ajax({
-                type: "POST",
-                url: Global.host + "/index.php/Api/User/attention",
-                data: postData,
-                dataType: "json",
-                success: function (result) {
-                    console.log(result.data)
-                    callback()
+                console.log(postData)
+                $.ajax({
+                    type: "POST",
+                    url: Global.host + "/index.php/Api/User/attention",
+                    data: postData,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result.data)
+                        callback()
+                    }
+                })
+            },
+            cancelAttention: function (callback) {
+                var postData = {
+                    user_id: Homepage.user_id,
+                    friend_id: Homepage.toUserId
                 }
-            })
-        },
-        cancelAttention: function (callback) {
-            var postData = {
-                user_id: Homepage.user_id,
-                friend_id: Homepage.toUserId
-            }
-            console.log(postData)
-            $.ajax({
-                type: "POST",
-                url: Global.host + "/index.php/Api/User/cancelAttention",
-                data: postData,
-                dataType: "json",
-                success: function (result) {
-                    console.log(result.data)
-                    callback()
-                }
-            })
-        },
-        savePageSession: function () {
-            //
-        },
-        showSignature: function () {
-            console.log($(".signature").html())
-            $(".signatureDialogContent").html($(".signature").html())
+                console.log(postData)
+                $.ajax({
+                    type: "POST",
+                    url: Global.host + "/index.php/Api/User/cancelAttention",
+                    data: postData,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result.data)
+                        callback()
+                    }
+                })
+            },
+            savePageSession: function () {
+                //
+            },
+            showSignature: function () {
+                console.log($(".signature").html())
+                $(".signatureDialogContent").html($(".signature").html())
 
-            $(".m_shade").show()
-            $(".signatureDialog").show()
+                $(".m_shade").show()
+                $(".signatureDialog").show()
 
-            $(".signatureDialogBtn").click(function () {
-                $(".m_shade").hide()
-                $(".signatureDialog").hide()
-            })
-        },
-        showVideo: function ({
-            user_id,
-            head_pic,
-            src
-        }) {
-            console.log(user_id, head_pic, src)
-            let $fullScreen = $(
-                `
+                $(".signatureDialogBtn").click(function () {
+                    $(".m_shade").hide()
+                    $(".signatureDialog").hide()
+                })
+            },
+            showVideo: function ({
+                user_id,
+                head_pic,
+                src
+            }) {
+                console.log(user_id, head_pic, src)
+                let $fullScreen = $(
+                    `
                 <div class="fullScreen">
                     <div class="videoHeader">
                         <div class="closeFullScreen"></div>
@@ -670,193 +667,202 @@
                     </div>
                 </div>
             `
-            );
+                );
 
-            //点击关闭事件
-            $fullScreen.find(".closeFullScreen").click(function () {
-                $fullScreen.remove();
-            });
+                //点击关闭事件
+                $fullScreen.find(".closeFullScreen").click(function () {
+                    $fullScreen.remove();
+                });
 
-            $("body").append($fullScreen);
-        },
-        //user_id
-        getVideoUrl: function (user_id, callback) {
-            $.ajax({
-                type: "POST",
-                url: Global.host + "/index.php/Api/user/getAuthVideoUrl",
-                data: {
-                    user_id: user_id
-                },
-                dataType: "json",
-                success: function (result) {
-                    console.log(result)
-                    if (result.code == 200) {
-                        let url = Global.host + result.data.video_url;
-                        callback(url);
+                $("body").append($fullScreen);
+            },
+            //user_id
+            getVideoUrl: function (user_id, callback) {
+                $.ajax({
+                    type: "POST",
+                    url: Global.host + "/index.php/Api/user/getAuthVideoUrl",
+                    data: {
+                        user_id: user_id
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+                        if (result.code == 200) {
+                            let url = Global.host + result.data.video_url;
+                            callback(url);
+                        }
                     }
-                }
-            });
-        },
-        eventsBind: function () {
-            $('.operate').click(function () {
-                if ($(".mask").length == 0) {
-                    $('body').append($('<div class="mask"></div>'))
-                }
-                $('.avatarOperating').show()
-                // $('.avatarOperating').show().animate({'bottom':'0'},300)
-                // $('body').css('overflow', 'hidden')
-            })
-            //点击弹出的 取消
-            $('.home-cancel').click(function () {
-                $('.mask').remove()
-                // $('.avatarOperating').animate({'bottom':'-2rem'},300,function(){
-                $('.avatarOperating').hide()
-                $('.gotoEditHome').hide()
-                // })
-                // $('body').css('overflow', 'auto')
-            })
-
-            $('.sayHi').click(function () {
-                if ($(".mask").length == 0) {
-                    $('body').append($('<div class="mask"></div>'))
-                }
-                $('.greet').show()
-                // $('body').css('overflow', 'hidden')
-            })
-
-            $('.tryChat').click(function () {
-                // $('body').append($('<div class="mask"></div>'))
-                $('.greet').hide()
-                $('.chatFirst').show()
-                $('.allWrap').addClass('blur')
-                // $('body').css('overflow', 'hidden')
-            })
-
-            $('.closeChatFisrt').click(function () {
-                $('.mask').remove()
-                $('.chatFirst').hide()
-                $('.allWrap').removeClass('blur')
-                // $('body').css('overflow', 'auto')
-            })
-
-            //返回
-            $(".homepageBack").click(function () {
-                window.history.back(-1)
-            })
-            //点击 “关注” 系列
-            //点击 加关注
-            $(".attend").click(function () {
-                Homepage.addAttention(function () {
-                    $('.attendSuccess').show().addClass('mfadeout')
-                    clearTimeout(Homepage._mTimer)
-                    Homepage._mTimer = setTimeout(function () {
-                        $('.attendSuccess').hide()
-                    }, 3000)
-
-                    $(".attend").hide()
-                    if (Homepage.attentionStatus == 2) { //本来就是已被关注了
-                        $(".attendAll").show()
-
-                        Homepage.attentionStatus = 3
-                    } else {
-                        $(".attended").show()
-
-                        Homepage.attentionStatus = 1
+                });
+            },
+            showFullPic: function (ele) {
+                let srcArr = [];
+                let $curUl = $(ele).closest(".myPhotos");
+                $curUl.find("img.showPic").each(function () {
+                    // srcArr.unshift($(this).attr("src"));
+                    srcArr.push($(this).attr("src"));
+                });
+                console.log(srcArr)
+                let swiper = $.photoBrowser({
+                    items: srcArr
+                });
+                // swiper.open(index);
+                swiper.open();
+            },
+            //设置一些元素的属性 宽 高
+            setProps: function () {
+                $(".flex4").each(function () {
+                    let width = $(this).width();
+                    $(this).height(width);
+                });
+            },
+            eventsBind: function () {
+                $('.operate').click(function () {
+                    if ($(".mask").length == 0) {
+                        $('body').append($('<div class="mask"></div>'))
                     }
+                    $('.avatarOperating').show()
                 })
-            })
-            //点击 已关注
-            $(".attended").click(function () {
-                Homepage.cancelAttention(function () {
-                    $(".attended").hide()
-                    $(".attend").show()
+                //点击弹出的 取消
+                $('.home-cancel').click(function () {
+                    $('.mask').remove()
+                    $('.avatarOperating').hide()
+                    $('.gotoEditHome').hide()
+                })
 
-                    Homepage.attentionStatus = 0
+                $('.sayHi').click(function () {
+                    if ($(".mask").length == 0) {
+                        $('body').append($('<div class="mask"></div>'))
+                    }
+                    $('.greet').show()
                 })
-            })
-            //点击 相互关注
-            $(".attendAll").click(function () {
-                Homepage.cancelAttention(function () {
-                    $(".attendAll").hide()
-                    $(".attend").show()
 
-                    Homepage.attentionStatus = 2
+                $('.tryChat').click(function () {
+                    $('.greet').hide()
+                    $('.chatFirst').show()
+                    $('.allWrap').addClass('blur')
                 })
-            })
-            //点击 “关注” 系列 end
-            //点击视频认证
-            $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
-                // if(Homepage.mUserInfo.level<2){
-                //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
-                //         //去vip申请页面
-                //     });
-                //     return;
-                // }else{
-                //     Homepage.getVideoUrl(Homepage.toUserId, function (url) {
-                //         // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
-                //         Homepage.showVideo({
-                //             user_id: Homepage.toUserId,
-                //             head_pic: Global.host + Homepage.head_pic,
-                //             src: url
-                //         });
-                //     });
-                // }
-                Homepage.getVideoUrl(Homepage.toUserId, function (url) {
-                    // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
-                    Homepage.showVideo({
-                        user_id: Homepage.toUserId,
-                        head_pic: Global.host + Homepage.head_pic,
-                        src: url
+
+                $('.closeChatFisrt').click(function () {
+                    $('.mask').remove()
+                    $('.chatFirst').hide()
+                    $('.allWrap').removeClass('blur')
+                })
+
+                //返回
+                $(".homepageBack").click(function () {
+                    window.history.back(-1)
+                })
+                //点击 “关注” 系列
+                //点击 加关注
+                $(".attend").click(function () {
+                    Homepage.addAttention(function () {
+                        $('.attendSuccess').show().addClass('mfadeout')
+                        clearTimeout(Homepage._mTimer)
+                        Homepage._mTimer = setTimeout(function () {
+                            $('.attendSuccess').hide()
+                        }, 3000)
+
+                        $(".attend").hide()
+                        if (Homepage.attentionStatus == 2) { //本来就是已被关注了
+                            $(".attendAll").show()
+
+                            Homepage.attentionStatus = 3
+                        } else {
+                            $(".attended").show()
+
+                            Homepage.attentionStatus = 1
+                        }
+                    })
+                })
+                //点击 已关注
+                $(".attended").click(function () {
+                    Homepage.cancelAttention(function () {
+                        $(".attended").hide()
+                        $(".attend").show()
+
+                        Homepage.attentionStatus = 0
+                    })
+                })
+                //点击 相互关注
+                $(".attendAll").click(function () {
+                    Homepage.cancelAttention(function () {
+                        $(".attendAll").hide()
+                        $(".attend").show()
+
+                        Homepage.attentionStatus = 2
+                    })
+                })
+                //点击 “关注” 系列 end
+                //点击视频认证
+                $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
+                    // if(Homepage.mUserInfo.level<2){
+                    //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
+                    //         //去vip申请页面
+                    //     });
+                    //     return;
+                    // }else{
+                    //     Homepage.getVideoUrl(Homepage.toUserId, function (url) {
+                    //         // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
+                    //         Homepage.showVideo({
+                    //             user_id: Homepage.toUserId,
+                    //             head_pic: Global.host + Homepage.head_pic,
+                    //             src: url
+                    //         });
+                    //     });
+                    // }
+                    Homepage.getVideoUrl(Homepage.toUserId, function (url) {
+                        // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
+                        Homepage.showVideo({
+                            user_id: Homepage.toUserId,
+                            head_pic: Global.host + Homepage.head_pic,
+                            src: url
+                        });
                     });
                 });
-            });
-            //点击我的邀约，跳邀约详情
-            $(".myInvite-tip").delegate("p.inviDetail", "click", function () {
-                let options = {
-                    originUserId: Homepage.user_id, //从谁那 去的邀约详情
-                    toUserId: Homepage.toUserId, //去 谁的 邀约详情
-                    detailId: Number($(this).attr("data-id")),
-                };
+                //点击我的邀约，跳邀约详情
+                $(".myInvite-tip").delegate("p.inviDetail", "click", function () {
+                    let detailId = $(this).attr("data-id");
+                    let url = Global.host + "/index.php/mobile/invite/detail/id/" + detailId + ".html";
+                    window.location.href = url;
+                });
+                //点击我的动态，跳动态详情
+                $(".myTalkList").delegate(".myTalk-item", "click", function () {
+                    let detailId = $(this).attr("data-id");
+                    window.location.href = Global.host + '/index.php/mobile/dynamics/detail/id/' +
+                        detailId +
+                        '.html';
+                });
+                //点击查看最近活跃时间
+                $(".active_time").click(function () {
+                    // if(Homepage.mUserInfo.level<3){
+                    //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
+                    //         //去vip申请页面
+                    //     });
+                    //     return;
+                    // }else{
+                    //     let timeStr = Global.stampToStr(Homepage.baseinfo.active_time);
+                    //     Global.messageWin(`最近活跃时间：${timeStr}`);
+                    // }
+                    let timeStr = Global.stampToStr(Homepage.baseinfo.active_time);
+                    Global.messageWin(`最近活跃时间：${timeStr}`);
+                });
+                //点击图片显示大图 -- 精华图片
+                $(".myPhotos").delegate("img.showPic", "click", function () {
+                    Homepage.showFullPic(this);
+                });
+            },
+            init: function () {
+                //获取user_id
+                Homepage.getUserId();
 
-                let toUrl = Global.host + "/index.php/mobile/invite/detail.html?options=" + JSON
-                    .stringify(options);
-                //toUrl = "detail.html?options=" + JSON.stringify(options); //测试用
-                console.log(toUrl)
-
-                window.location.href = toUrl;
-            });
-            //点击我的动态，跳动态详情
-            $(".myTalkList").delegate(".myTalk-item", "click", function () {
-                let detailId = $(this).attr("data-id");
-                window.location.href = Global.host + '/index.php/mobile/dynamics/detail/id/' + detailId +
-                    '.html';
-            });
-            //点击查看最近活跃时间
-            $(".active_time").click(function(){
-                // if(Homepage.mUserInfo.level<3){
-                //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
-                //         //去vip申请页面
-                //     });
-                //     return;
-                // }else{
-                //     let timeStr = Global.stampToStr(Homepage.baseinfo.active_time);
-                //     Global.messageWin(`最近活跃时间：${timeStr}`);
-                // }
-                let timeStr = Global.stampToStr(Homepage.baseinfo.active_time);
-                Global.messageWin(`最近活跃时间：${timeStr}`);
-            });
-        },
-        init: function () {
-            //获取user_id
-            Homepage.getUserId();
-
-            //获取用户信息
-            Homepage.getDataUpdateDom()
+                //获取用户信息
+                Homepage.getDataUpdateDom();
+            }
         }
-    }
-    $(function () {
-        Homepage.init()
-    });
-</script>
+        $(function () {
+            Homepage.init()
+        });
+    </script>
+</body>
 
 </html>

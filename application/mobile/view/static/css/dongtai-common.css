@@ -732,10 +732,16 @@ a.operate {
     margin: 0.04rem 0;
 }
 
-.details .audience ul li img {
+.details .audience ul li .audience-box {
     width: 0.28rem;
     height: 0.28rem;
+    border-radius: 0.14rem;
+    overflow: hidden;
     vertical-align: middle;
+}
+
+.details .audience ul li .audience-box img {
+    width: 100%;
 }
 
 .details-comments {

@@ -106,9 +106,8 @@ button {
     background-size: 100%;
 }
 
-/*Õº∆¨—πÀı*/
+/* Ÿ°÷€2018.8.22 */
 
-[class^="icon-"] {
-    background: url(../images/sprites.png) no-repeat;
-    background-size: 200px 200px;
+.flex4 {
+    flex: 0 0 25%;
 }
