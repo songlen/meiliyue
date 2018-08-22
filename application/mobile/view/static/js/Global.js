@@ -160,7 +160,7 @@ let Global = (function () {
 
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
-                        <video id="video1" width="100%" height="100%" src=${$(ele).attr("src")} autoplay loop></video>
+                        <video id="video1" width="100%" height="100%" src=${$(ele).attr("src")} controls="controls" autoplay loop></video>
                     </div>
                 </div>
             </div>
@@ -230,7 +230,6 @@ function getJavaFiles(args) { // 路径/plulic/../..
             });
         })
 
-        //添加图片成功 后
         $(".showPicUl").prepend($liTemp);
     }
     //是视频
@@ -242,7 +241,7 @@ function getJavaFiles(args) { // 路径/plulic/../..
             </li>
         `);
 
-        //取消图片
+        //取消视频
         $liTemp.find("a.edit-closePic").click(function (event) {
             event.stopPropagation();
             let self = this;
@@ -251,7 +250,6 @@ function getJavaFiles(args) { // 路径/plulic/../..
             });
         })
 
-        //添加图片成功 后
         $(".showPicUl").prepend($liTemp);
     }
 }
