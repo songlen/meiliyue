@@ -149,7 +149,6 @@ class Auth extends Base {
         $nickname = I('nickname');
         $head_pic = I('head_pic');
         $sex = I('sex/d');
-
         $birthday = I('birthday');
         $country = I('country');
         $province = I('province');
@@ -177,11 +176,12 @@ class Auth extends Base {
             $uuid = generateUuid();
             $userData = array(
                 'uuid' => $uuid,
-                'nickname' => $mobile,
+                'nickname' => $nickname,
                 'reg_time' => time(),
                 'last_login' => time(),
                 'token' => md5(time().mt_rand(1,999999999)),
                 'sex' => $sex,
+                'head_pic' => $head_pic,
                 'birthday' => $birthday,
                 'country' => $country,
                 'province' => $province,
@@ -191,7 +191,6 @@ class Auth extends Base {
                 'latitude' => $latitude,
                 'active_time' => time(),
                 'is_line' => '1',
-                'phoneOrwechat' => $mobile,
             );
 
             $user_id = Db::name('users')->insertGetId($userData);
