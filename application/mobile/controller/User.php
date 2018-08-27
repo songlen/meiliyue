@@ -68,4 +68,9 @@ file_put_contents('runtime/log/request.log', "\r\n homepage-$user_id-$toUserId",
 file_put_contents('runtime/log/request.log', "\r\n myhomepage", FILE_APPEND);
         return $this->fetch();
     }
+
+    public function editHomePage(){
+
+        return $this->fetch();
+    }
 }
