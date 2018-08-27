@@ -2,6 +2,7 @@
 
 namespace app\api\controller;
 use think\Db;
+use think\Config;
 use app\api\Logic\AlipayLogic;
 
 class Vip extends Base {
@@ -27,7 +28,8 @@ class Vip extends Base {
 
 
 	// 下单
-	public function placeOrder(){
+	public function placeOrder(){		
+
 		$user_id = I('user_id');
 		$level = I('level');
 
@@ -85,7 +87,38 @@ class Vip extends Base {
 	// 购买vip后的支付回调接口
 	public function Callback(){
 		$paymentMethod = I('paymentMethod');
-		if($paymentMethod == 'alipay'){}
+		if($paymentMethod == 'alipay'){
+			$AlipayLogic = new AlipayLogic();
+			$checkSign = $AlipayLogic->checkSign($order_no, $order);
+		}
+
+		if( ! $checkSign ) goto finish; //验签失败
+
+		$order_no = input('post.out_trade_no');
+		$order = Db::name('vip_order')->where('order_no', $order_no)->find();
+		if(empty($order)) goto finish;
+		if($order['paystatus'] == 1) goto finish;
+		// 回调后的业务流程
+		$this->changeVip($order);
+
+
+		finish:
+		echo 'success';
+	}
+
+	private function changeVip($order_no, $user_id, $level){
+
+		Db::name('vip_order')->where('order_no', $order_no)->update(array('paystatus'=>'1', 'paytime'=>time()));
+		// 计算到期日期
+		$user = Db::name('users')->where('user_id', $user_id)->field('vip_expire_date')->find();
+		$old_date = $user['vip_expire_date'] ? $user['vip_expire_date'] : date('Y-m-d');
+		$enum = Config::load(APP_PATH.'enum.php', ture);
+		$vip_config = $enum['vip'];
+		$num = $vip_config[$level]['num'];
+		$unit = $vip_config[$level]['unit'];
+		$expire_date = date('Y-m-d', strtotime('+'.$num.$unit, strtotime($old_date)));
+
+		Db::name('users')->where('user_id', $user_id)->udpate(array('level'=>$level, 'vip_expire_date'=>$expire_date));
 	}
 
 	private function generateOrderno(){
