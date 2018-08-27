@@ -424,18 +424,19 @@
                         auth_video = null,
                         page = 1,
                     } = {}, isScroll) {
-                        let _self = this
-                        if (_self.order_type == 3) {
-                            if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !==
-                                null && localStorage.getItem("mUserInfo") !== "null") {
-                                let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem(
-                                    "mUserInfo")));
-                                console.log(mUserInfo)
+                        let _self = this;
+                        //任何情况都需要经纬度
+                        if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !==
+                            null && localStorage.getItem("mUserInfo") !== "null") {
+                            let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem(
+                                "mUserInfo")));
+                            console.log(mUserInfo)
 
-                                longitude = mUserInfo.longitude;
-                                latitude = mUserInfo.latitude;
-                            }
+                            longitude = mUserInfo.longitude;
+                            latitude = mUserInfo.latitude;
                         }
+                        // longitude = "117.2100770"; //测试用
+                        // latitude ="36.7006690"; //测试用
 
                         let postDataTemp = {
                             order_type: _self.order_type,
@@ -456,6 +457,11 @@
                             dataType: "json",
                             success: function (result) {
                                 console.log(result.data)
+                                //测试用 查看distance
+                                let distanceArr=result.data.map(function(item){
+                                    return item.distince;
+                                });
+                                console.log(distanceArr)
                                 if (isScroll) { //是滚动
                                     _self.inviteList = _self.inviteList.concat(result.data)
 

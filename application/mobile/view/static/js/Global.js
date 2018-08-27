@@ -69,15 +69,16 @@ let Global = (function () {
         element.onchange = function () {
             limitCount(this)
         }
-        element.onkeydown = function () {
-            limitCount(this)
-        }
-        element.onkeyup = function () {
-            limitCount(this)
-        }
+        // element.onkeydown = function () {
+        //     limitCount(this)
+        // }
+        // element.onkeyup = function () {
+        //     limitCount(this)
+        // }
 
         function limitCount(el) {
-            el.value = el.value.substring(0, textCount)
+            // el.value = el.value.substring(0, textCount)
+            el.value = el.value.substr(0, textCount);
             let count = el.value.length
             if (showElement) {
                 showElement.innerHTML = count

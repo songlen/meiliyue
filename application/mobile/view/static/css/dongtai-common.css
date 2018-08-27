@@ -430,7 +430,7 @@ footer li a {
     width: 1.6rem;
     height: 2.37rem;
     border-radius: 5px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     background-color: #000;
 }
 
