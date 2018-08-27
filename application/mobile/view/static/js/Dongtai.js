@@ -74,8 +74,10 @@ $(function () {
             this.getListData("areaDataList", false, {
                 user_id: this.user_id,
                 range: 1
-            })
+            });
 
+            //获取video的第一帧
+            this.getFirstCanvas();
         },
         filters: {
             //时间戳 转 文字
@@ -465,6 +467,23 @@ $(function () {
                     }
                 }
             },
+            //获取video第一帧
+            getFirstCanvas(){
+                let $videos=$(".shortVideo-page .mVideo video");
+                $videos.each(function(){
+                    let video=this;
+                    console.log(video)
+                    video.addEventListener("loadeddata", function () {
+                        let canvas = document.createElement("canvas");
+                        canvas.width = video.videoWidth * 0.8;
+                        canvas.height = video.videoHeight * 0.8;
+                        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                        console.log(666)
+                        video.setAttribute("poster", canvas.toDataURL("image/png"));
+                    })
+                });
+
+            }
         }
     });
 

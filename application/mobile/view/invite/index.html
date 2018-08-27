@@ -456,6 +456,11 @@
                             dataType: "json",
                             success: function (result) {
                                 console.log(result.data)
+                                //测试用 查看distance
+                                let distanceArr=result.data.map(function(item){
+                                    return item.distince;
+                                });
+                                console.log(distanceArr)
                                 if (isScroll) { //是滚动
                                     _self.inviteList = _self.inviteList.concat(result.data)
 
