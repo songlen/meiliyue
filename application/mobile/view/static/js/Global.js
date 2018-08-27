@@ -179,6 +179,42 @@ let Global = (function () {
 
     }
 
+    function fullScreenImg(src) {
+        //获取 宽高
+        let img = new Image();
+        img.src = src;
+        let width, height;
+        if (img.complete) {
+            width = img.width;
+            height = img.height;
+        } else {
+            img.onload = function () {
+                width = img.width;
+                height = img.height;
+            }
+        }
+        console.log(width, height)
+        // //根据宽高设定background-size
+        // let bgSize;
+        // if(width>height){
+        //     bgSize="100% auto";
+        // }else{
+        //     // bgSize="auto 100%";
+        //     bgSize="100% auto";
+        // }
+        //生成div
+        let $div=$(`
+            <div style="position:fixed;top:0;bottom:0;left:0;right:0;z-index:6;background:#000 url(${src}) center center no-repeat;background-size:100% auto;">
+            </div>
+        `);
+        //关闭事件
+        $div.click(function(){
+            $(this).remove();
+        });
+
+        $("body").append($div);
+    }
+
     //Global暴露的接口------------------------
     return {
         //值
@@ -196,7 +232,8 @@ let Global = (function () {
         eleCantClick, //让元素无法点击 ele:元素
         eleCanClick, //ele:元素
         fullScreen, // 预览全屏视频 ele:video元素
-        fullScreenAuth //预览全屏认证小视频
+        fullScreenAuth, //预览全屏认证小视频
+        fullScreenImg //全屏显示图片 src
     }
 })();
 

@@ -13,6 +13,15 @@
 </head>
 
 <body class="homepage myHomepage">
+    <!-- 修改头像 隐藏域 -->
+    <form id="editHeapicForm" action="http://meiliyue.caapa.org/index.php/Api/user/uploadFile" method="post" enctype="multipart/form-data"
+        style="display:none;">
+        <input type="text" name="user_id" style="display:none;">
+        <input id="editHeadpic" type="file" name="file" accept="image/*" style="display: none;">
+        <input type="text" name="type" value="head_pic" style="display:none;">
+        <input type="text" name="action" value="edit" style="display:none;">
+    </form>
+    <!-- 修改头像 隐藏域 end -->
     <div class="allWrap">
         <header>
             <a class="back homepageBack" href="javascript:void(0)"></a>
@@ -149,7 +158,7 @@
                 <div class="aboutMe-contentWrap">
                     <ul class="aboutMe-list1">
                         <li class="aboutMe-item">
-                            <label>约玩ID</label>
+                            <label>遇见好时光ID</label>
                             <div class="aboutMe-item-content">
                                 <span class="yuewanID"></span>
                             </div>
@@ -232,6 +241,14 @@
                     <li class="home-cancel">取消</li>
                 </ul>
             </div>
+            <!-- 修改头像 -->
+            <div class="changeHeadpic" style="display: none;">
+                <ul>
+                    <li class="lookFullScreenImg">查看大图</li>
+                    <li class="editHeadpic">修改头像</li>
+                    <li class="home-cancel">取消</li>
+                </ul>
+            </div>
 
             <!-- 发布邀约 -->
 
@@ -280,6 +297,8 @@
     <!-- ------------------------------------- -->
 
     <script src="__STATIC__/js-dist/user-myHomePage.min.js"></script>
+    <!-- jquery.form-js -->
+    <script src="__STATIC__/js/js-plugins/jquery.form.js"></script>
     <script src="__STATIC__/js/Global.js"></script>
     <script>
         var Homepage = {
@@ -383,7 +402,7 @@
                 //认证
                 if (data.baseinfo.mobile_validated == 0) {
                     $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                        "__STATIC__/images/icon/微信好友@2x.png")
+                        "__STATIC__/images/icon/微信@2xm未认证.png")
                     $(".myApprove-phone").html("手机号未认证")
                 } else {
                     $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
@@ -1160,6 +1179,35 @@
                     $(this).height(width);
                 });
             },
+            //点击头像input file选择图片了，修改头像
+            editHeadpic: function (input) { //input file
+                let file = $(input).val();
+                console.log(file)
+                if (file.length > 0) {
+                    //修改头像
+                    //jquery.form.js方法
+                    $(":input[name='user_id']").val(Homepage.user_id);
+
+                    // console.log({
+                    //     user_id: $(":input[name='user_id']").val(),
+                    //     file: $("#editHeadpic")[0],
+                    //     type: $(":input[name='type']").val(),
+                    //     action: $(":input[name='action']").val()
+                    // })
+
+                    Global.openLoading();
+
+                    $("#editHeapicForm").ajaxSubmit(function (result) {  
+                        console.log(result)                  
+                        if (result.code==200&&result.data&&result.data!=="") {
+                            Global.closeLoading("修改成功", function () {
+                                //更新页面的头像
+                                $(".avatar-pic").find("img").attr("src",Global.host+result.data.head_pic);
+                            });
+                        }  
+                    });
+                }
+            },
             eventsBind: function () {
                 //返回
                 $(".homepageBack").click(function () {
@@ -1194,7 +1242,9 @@
                 //点击弹出的 取消
                 $('.home-cancel').click(function () {
                     $('.mask').remove()
-                    $('.gotoEditHome').hide()
+
+                    $('.gotoEditHome').hide();
+                    $(".changeHeadpic").hide();
                 })
                 //点击编辑资料
                 $(".gotoEditHomePage").click(function () {
@@ -1231,6 +1281,30 @@
                 //点击图片显示大图 -- 精华图片
                 $(".quintessencePhotos").delegate("img.showPic", "click", function () {
                     Homepage.showFullPic(this);
+                });
+                //点击头像 修改头像弹窗
+                $(".avatar-pic").click(function () {
+                    if ($(".mask").length == 0) {
+                        $('body').append($('<div class="mask"></div>'))
+                    }
+                    $(".changeHeadpic").show();
+                });
+                //头像 查看大图
+                $(".lookFullScreenImg").click(function () {
+                    $('.home-cancel')[0].click(); //关闭弹窗
+
+                    let src = $(".avatar-pic").find("img").attr("src");
+                    Global.fullScreenImg(src);
+                });
+                //头像 修改头像 隐藏域 input
+                $("#editHeadpic").change(function () {
+                    Homepage.editHeadpic(this);
+                });
+                //头像 修改头像
+                $(".editHeadpic").click(function () {
+                    $('.home-cancel')[0].click(); //关闭弹窗
+
+                    $("#editHeadpic")[0].click();
                 });
             },
             init: function () {
