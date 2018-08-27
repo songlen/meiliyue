@@ -27,6 +27,7 @@ class Invite extends Base {
         $province = I('province');
         $city = I('city');
         $auth_video = I('auth_video');
+        $page = I('page', 1);
         /************************ 要查询的字段 ***************************/
         $field = 'u.user_id, head_pic, auth_video_status, nickname, u.sex, u.age, i.id, i.title, i.description, i.time, i.place, image';
         /************************ 排序 ***************************/
@@ -57,11 +58,13 @@ class Invite extends Base {
         if($auth_video) $where['u.auth_video_status'] = 1;
 
         $where['i.status'] = '2';
+        $limit_start = ($page-1)*10;
         $lists = Db::name('invite')->alias('i')
             ->join('users u', 'i.user_id=u.user_id', 'left')
             ->where($where)
             ->field($field)
             ->order($order)
+            ->limit($limit_start, 10)
             ->select();
 
         if(!empty($lists)){

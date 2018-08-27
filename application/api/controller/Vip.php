@@ -24,7 +24,7 @@ class Vip extends Base {
 	// 		response_error('', '修改失败');
 	// 	}
 	// }
-	
+
 
 	// 下单
 	public function placeOrder(){
@@ -84,7 +84,8 @@ class Vip extends Base {
 
 	// 购买vip后的支付回调接口
 	public function Callback(){
-		$peymentMethod = I('paymentMethod');
+		$paymentMethod = I('paymentMethod');
+		if($paymentMethod == 'alipay'){}
 	}
 
 	private function generateOrderno(){
