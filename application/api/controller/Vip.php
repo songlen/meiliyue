@@ -86,21 +86,24 @@ class Vip extends Base {
 
 	// 购买vip后的支付回调接口
 	public function Callback(){
-		$paymentMethod = I('paymentMethod');
+		$paymentMethod = input('post.paymentMethod');
+		$order_no = input('post.out_trade_no');
+		$trade_status = input('post.trade_status');
+
 		if($paymentMethod == 'alipay'){
 			$AlipayLogic = new AlipayLogic();
 			$checkSign = $AlipayLogic->checkSign($order_no, $order);
 		}
 
 		if( ! $checkSign ) goto finish; //验签失败
-
-		$order_no = input('post.out_trade_no');
+		
 		$order = Db::name('vip_order')->where('order_no', $order_no)->find();
 		if(empty($order)) goto finish;
 		if($order['paystatus'] == 1) goto finish;
 		// 回调后的业务流程
-		$this->changeVip($order);
-
+		if($trade_status == 'SUCCESS'){
+			$this->changeVip($order);
+		}
 
 		finish:
 		echo 'success';
