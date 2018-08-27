@@ -157,6 +157,21 @@ a.close {
     /* height: 100%; */
 }
 
+/* 编辑资料里的小头像 */
+.editHome-content .avatar-pic {
+    margin-left: auto;
+    margin-right: 0;
+    width: 0.30rem;
+    height: 0.30rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.editHome-content .avatar-pic img {
+    width: 100%;
+    /* height: 100%; */
+}
+
 .edit-personal-avatar .avatar-content {
     margin-top: 0.1rem;
 }
@@ -434,7 +449,7 @@ a.close {
 .aboutMe-content-tip {
     color: #cacacd;
 }
-
+.changeHeadpic,
 .gotoEditHome,
 .avatarOperating {
     position: fixed;
@@ -444,7 +459,7 @@ a.close {
     bottom: 0;
     z-index: 3;
 }
-
+.changeHeadpic li,
 .gotoEditHome li,
 .avatarOperating li {
     height: 0.48rem;
@@ -455,7 +470,7 @@ a.close {
     text-align: center;
     color: #000;
 }
-
+.changeHeadpic li:last-of-type,
 .gotoEditHome li:last-of-type,
 .avatarOperating li:last-of-type {
     border-top: 0.05rem solid #eae9ef;

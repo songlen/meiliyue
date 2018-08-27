@@ -14,6 +14,16 @@
 
 <body class="editHome-page">
 
+    <!-- 修改头像 隐藏域 -->
+    <form id="editHeapicForm" action="http://meiliyue.caapa.org/index.php/Api/user/uploadFile" method="post" enctype="multipart/form-data"
+        style="display:none;">
+        <input type="text" name="user_id" style="display:none;">
+        <input id="editHeadpic" type="file" name="file" accept="image/*" style="display: none;">
+        <input type="text" name="type" value="head_pic" style="display:none;">
+        <input type="text" name="action" value="edit" style="display:none;">
+    </form>
+    <!-- 修改头像 隐藏域 end -->
+
     <header>
         <a href="javascript:void(0)" class="back fl back-editHome"></a>
         <div class="title">编辑资料</div>
@@ -34,6 +44,18 @@
                 <span class="sumCount">5</span>
             </p>
             <ul>
+                <li class="editItem">
+                    <div>
+                        <label class="editItemTitle">头像</label>
+                        <div class="editItemContent changeHeadpicEnter">
+                            <span class="avatar-pic-wrap">
+                                <div class="avatar-pic">
+                                    <img src="__STATIC__/images/icon/tx.png">
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </li>
                 <li class="editItem">
                     <div>
                         <label class="editItemTitle">昵称</label>
@@ -207,8 +229,20 @@
     <!-- 弹出框 -->
     <div class="modifyDataWrap" style="display: none;"></div>
 
+    <!-- 模态框 -->
+    <!-- 修改头像 -->
+    <div class="changeHeadpic" style="display: none;">
+        <ul>
+            <li class="lookFullScreenImg">查看大图</li>
+            <li class="editHeadpic">修改头像</li>
+            <li class="home-cancel">取消</li>
+        </ul>
+    </div>
+
 
     <script src="__STATIC__/js-dist/user-editHomePage.min.js"></script>
+    <!-- jquery.form-js -->
+    <script src="__STATIC__/js/js-plugins/jquery.form.js"></script>
     <script src="__STATIC__/js/Global.js"></script>
     <script>
         var EditHome = {
@@ -218,6 +252,11 @@
 
             //将数据加到dom上
             updateDom: function (data) {
+                console.log(data)
+                //头像
+                if(data.baseinfo.head_pic&&data.baseinfo.head_pic!==""){
+                    $(".avatar-pic").find("img").attr("src",Global.host+data.baseinfo.head_pic);
+                }
                 $(".nickname").html(data.baseinfo.nickname)
                 if (data.baseinfo.age && data.baseinfo.age !== "") {
                     $(".age").html(data.baseinfo.age)
@@ -1065,13 +1104,74 @@
                     sumCountPerson + sumCountFriends + sumCountView + sumCountHobbys)) * 100 + "%";
                 $(".bloodGroove .blood").css("width", percent)
             },
+            //点击头像input file选择图片了，修改头像
+            editHeadpic: function (input) { //input file
+                let file = $(input).val();
+                console.log(file)
+                if (file.length > 0) {
+                    //修改头像
+                    //jquery.form.js方法
+                    $(":input[name='user_id']").val(EditHome.user_id);
+
+                    // console.log({
+                    //     user_id: $(":input[name='user_id']").val(),
+                    //     file: $("#editHeadpic")[0],
+                    //     type: $(":input[name='type']").val(),
+                    //     action: $(":input[name='action']").val()
+                    // })
+
+                    Global.openLoading();
+
+                    $("#editHeapicForm").ajaxSubmit(function (result) {  
+                        console.log(result)                  
+                        if (result.code==200&&result.data&&result.data!=="") {
+                            Global.closeLoading("修改成功", function () {
+                                //更新页面的头像
+                                $(".avatar-pic").find("img").attr("src",Global.host+result.data.head_pic);
+                            });
+                        }  
+                    });
+                }
+            },
             eventsBind: function () {
                 //点击back
                 $(".back-editHome").click(function () {
                     window.history.back(-1)
                 })
                 //修改各项资料
-                EditHome.modifyDataBind()
+                EditHome.modifyDataBind();
+
+                //点击头像 修改头像弹窗
+                $(".changeHeadpicEnter").click(function () {
+                    if ($(".mask").length == 0) {
+                        $('body').append($('<div class="mask"></div>'))
+                    }
+                    $(".changeHeadpic").show();
+                });
+                 //点击弹出的 取消
+                 $('.home-cancel').click(function () {
+                    $('.mask').remove()
+
+                    // $('.gotoEditHome').hide();
+                    $(".changeHeadpic").hide();
+                })
+                //头像 查看大图
+                $(".lookFullScreenImg").click(function () {
+                    $('.home-cancel')[0].click(); //关闭弹窗
+
+                    let src = $(".avatar-pic").find("img").attr("src");
+                    Global.fullScreenImg(src);
+                });
+                //头像 修改头像 隐藏域 input
+                $("#editHeadpic").change(function () {
+                    EditHome.editHeadpic(this);
+                });
+                //头像 修改头像
+                $(".editHeadpic").click(function () {
+                    $('.home-cancel')[0].click(); //关闭弹窗
+
+                    $("#editHeadpic")[0].click();
+                });
             },
             init: function () {
                 //得到user_id

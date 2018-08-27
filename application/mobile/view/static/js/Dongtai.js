@@ -294,7 +294,9 @@ $(function () {
             },
             //关闭全屏小视频
             closeFullScreen() {
-                $(".fullScreen").hide()
+                let video1=document.getElementById("video1");
+                $(video1).attr("src","");
+                $(".fullScreen").hide();
             },
             gotoDongtaiDetail(item) {
                 this.savePageToSession();
@@ -397,7 +399,7 @@ $(function () {
                         <div class="fullScreenScroll">
                             <div class="fullScreenWrap">
                                 <span class="progressBar"></span>
-                                <video id="video1" width="100%" height="100%" src=${src} autoplay loop></video>
+                                <video id="video2" width="100%" height="100%" src=${src} autoplay loop></video>
                                 <div class="videoFooter">
                                     <div class="videoCommentBtn"></div>
                                     <span class="littleTri"></span>

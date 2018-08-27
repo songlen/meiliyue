@@ -103,7 +103,8 @@
                             <div class="top">
                                 <div style="position: relative;">
                                     <div class="img-box" @click.stop="gotoHomePage(item)">
-                                        <img :src="GlobalHost+item.head_pic" @error="defaultImg">
+                                        <img v-if="item.head_pic&&item.head_pic!==''" :src="GlobalHost+item.head_pic">
+                                        <img v-else src="__STATIC__/images/icon/tx.png">
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click="showVideo(item)"></span>
                                     <!-- 测试用 -->
@@ -298,9 +299,9 @@
                     nowPageIndex: 1, //当前页码
                     isPlusing: false,
 
-                    selectedText: "",
+                    selectedText: "全国",
                     defaultArea: {
-                        text: "",
+                        text: "全国",
                         code: "",
                     },
 
@@ -339,7 +340,8 @@
                         this.user_id = Number(mUserInfo.user_id);
                         //默认省
                         if (mUserInfo.province.toString().length !== 6) { //获取的省编码有问题
-                            proCode = "370000"; //山东 测试用
+                            // proCode = "370000"; //山东 测试用
+                            proCode=""; //测试用
                         } else {
                             proCode = mUserInfo.province.toString();
                         }
@@ -347,17 +349,25 @@
                         // alert("无localStorage")
                         console.log("无session/local")
                         this.user_id = 1; //测试用
-                        proCode = "370000"; //山东 测试用
+                        // proCode = "370000"; //山东 测试用
+                        proCode=""; //测试用
                     }
 
                     //默认省
-                    let proObj = codeToAreaObj(proCode);
-                    _self.defaultArea.text = proObj.name; 
-                    _self.defaultArea.code = proObj.code; 
-                    // _self.defaultArea.text = "";
-                    // _self.defaultArea.code = "";
-                    _self.selectedText = proObj.name;
-                    // _self.nowProvince = proObj.code; //人太少测试用 先用全国
+                    if(proCode!==""){
+                        let proObj = codeToAreaObj(proCode);
+                        _self.defaultArea.text = proObj.name; 
+                        _self.defaultArea.code = proObj.code; 
+                        // _self.defaultArea.text = "";
+                        // _self.defaultArea.code = "";
+                        _self.selectedText = proObj.name;
+                        console.log(_self.selectedText)
+                        // _self.nowProvince = proObj.code; //人太少测试用 先用全国
+                    }else{
+                        // _self.selectedText = "全国";
+                        // _self.nowProvince = proObj.code; //人太少测试用 先用全国
+                    }
+                 
 
 
 
@@ -404,12 +414,12 @@
                     //获取邀约列表
                     getInviteList({
                         // order_type = 1,
-                        longitude = "",
-                        latitude = "",
+                        longitude = null,
+                        latitude = null,
                         type = null,
                         sex = null,
-                        province = this.nowProvince, //正式的
-                        // province = null, //测试用
+                        // province = this.nowProvince, //正式的
+                        province = null, //测试用
                         city = null,
                         auth_video = null,
                         page = 1,
@@ -527,7 +537,7 @@
                         }
                         //滚动加载
                         console.log(scrollTemp + wrapHeight - ulHeight)
-                        if (scrollTemp > 0 && scrollTemp + wrapHeight - ulHeight >= 85) {
+                        if (scrollTemp > 0 && scrollTemp + wrapHeight - ulHeight >= 50) { //原来是85？
                             if (!this.isLoading) {
                                 this.isLoading = true;
                                 console.log("滑动加载")
@@ -551,7 +561,7 @@
                                     sex: sex,
                                     province: this.nowProvince,
                                     city: this.nowCity,
-                                    auth_video: this.onlyVideo ? "1" : "0",
+                                    auth_video: this.onlyVideo ? 1 : 0,
                                     page: this.nowPageIndex + 1
                                 }, true)
                             }
@@ -642,7 +652,7 @@
                                 sex: sex,
                                 province: _self.nowProvince,
                                 city: _self.nowCity,
-                                auth_video: _self.onlyVideo ? "1" : "0"
+                                auth_video: _self.onlyVideo ? 1 : 0
                             })
                         })
                         // 滑动加载
@@ -669,7 +679,7 @@
                         //         sex: sex,
                         //         province: _self.nowProvince,
                         //         city: _self.nowCity,
-                        //         auth_video: _self.onlyVideo ? "1" : "0",
+                        //         auth_video: _self.onlyVideo ? 1 : 0,
                         //         page: _self.nowPageIndex + 1
                         //     }, true)
                         // });
@@ -845,7 +855,7 @@
                             sex: sex,
                             province: provinceCode,
                             city: cityCode,
-                            auth_video: onlyVideo ? "1" : "0"
+                            auth_video: onlyVideo ? 1 : 0
                         })
 
                     }
