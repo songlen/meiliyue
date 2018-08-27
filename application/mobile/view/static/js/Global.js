@@ -77,7 +77,8 @@ let Global = (function () {
         }
 
         function limitCount(el) {
-            el.value = el.value.substring(0, textCount)
+            // el.value = el.value.substring(0, textCount)
+            el.value = el.value.substr(0, textCount);
             let count = el.value.length
             if (showElement) {
                 showElement.innerHTML = count
