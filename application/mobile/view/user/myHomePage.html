@@ -328,6 +328,8 @@
                 //星座
                 // $(".edit-personal-constellation").html() 
                 //地区
+                console.log(codeToAreaObj(data.baseinfo.province.toString()).name)
+                console.log(codeToAreaObj(data.baseinfo.city.toString()).name)
                 $(".province").html(codeToAreaObj(data.baseinfo.province.toString()).name);
                 $(".province-city").html(codeToAreaObj(data.baseinfo.city.toString()).name);
                 //个人相册
