@@ -91,12 +91,12 @@ class Order extends Base {
     //虚拟订单
     public function virtual_list(){
     header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");
+exit();
     }
     // 虚拟订单
     public function virtual_info(){
     header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");
+exit();
     }
 
     public function virtual_cancel(){
@@ -277,7 +277,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
                 //取消订单支付原路退回
                 if($order['pay_code'] == 'weixin' || $order['pay_code'] == 'alipay' || $order['pay_code'] == 'alipayMobile'){
 		header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");
+exit();
                 }else{
                     $this->error('该订单支付方式不支持在线退回');
                 }
@@ -700,7 +700,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
     */
     public function delivery_batch(){
 		header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");
+exit();
     }
 
     /*
@@ -708,7 +708,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
     */
     public function delivery_batch_handle(){
 		header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");
+exit();
     }
 
     /**

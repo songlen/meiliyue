@@ -30,7 +30,7 @@ class Team extends Base
 	public function index()
 	{
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 
 	/**
@@ -40,7 +40,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
 	public function info()
 	{
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 
 	/**
@@ -49,7 +49,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
 	 */
 	public function save(){
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 
 	/**
@@ -57,7 +57,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
 	 */
 	public function delete(){
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 
 	/**
@@ -66,7 +66,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
 	 */
 	public function confirmFound(){
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 
 	/**
@@ -74,7 +74,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
 	 */
 	public function refundFound(){
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 
 	/**
@@ -82,7 +82,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
 	 */
 	public function lottery(){
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 
 	/**
@@ -91,7 +91,7 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
 	public function team_list()
 	{
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 
 	/**
@@ -101,13 +101,13 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
 	public function team_info()
 	{
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 
 	//拼团订单
 	public function order_list(){
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 
 	/**
@@ -115,11 +115,11 @@ exit("请联系TPshop官网客服购买高级版支持此功能");
 	 */
 	public function bonus(){
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 
 	public function doBonus(){
 	header("Content-type: text/html; charset=utf-8");
-exit("请联系TPshop官网客服购买高级版支持此功能");	
+exit();	
 	}
 }

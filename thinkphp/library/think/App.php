@@ -576,7 +576,7 @@ class App
         } catch (ClassNotFoundException $e) {
                       if (is_null($instance) && $controller == 'Distribut') {
 			header("Content-type: text/html; charset=utf-8");
-			exit('要使用分销模块请联系TPshop官网客服,官网地址 www.tp-shop.cn');
+			exit();
                        }   
             throw new HttpException(404, 'controller not exists:' . $e->getClass());
         }
