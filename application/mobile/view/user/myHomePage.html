@@ -205,12 +205,12 @@
                                 <span class="modifyData signature"></span>
                             </div>
                         </li>
-                        <li class="aboutMe-item">
+                        <!-- <li class="aboutMe-item">
                             <label>对另一半的要求</label>
                             <div class="aboutMe-item-content">
                                 <span class="modifyData canChoose"></span>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="aboutMe-item">
                             <label>最近活跃时间</label>
                             <div class="aboutMe-item-content">
@@ -403,11 +403,11 @@
                 //认证
                 if (data.baseinfo.mobile_validated == 0) {
                     $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                        "__STATIC__/images/icon/微信@2xm未认证.png")
+                        "__STATIC__/images/icon/手机号未认证.png")
                     $(".myApprove-phone").html("手机号未认证")
                 } else {
                     $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                        "__STATIC__/images/icon/微信@2x.png")
+                        "__STATIC__/images/icon/手机号认证.png")
                     $(".myApprove-phone").html("手机号已认证")
                 }
 
