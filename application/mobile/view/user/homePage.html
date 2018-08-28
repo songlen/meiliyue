@@ -47,7 +47,10 @@
                     </span>
                     <p class="distanceWrap" style="display:none;">
                         <img class="areaPic" src="__STATIC__/images/icon/定位-2.png">
-                        <span class="edit-personal-area"></span>&nbsp;
+                        <span class="edit-personal-area" style="display:none;">
+                            <span class="province"></span>
+                            <span class="province-city"></span>
+                        </span>&nbsp;
                         <span class="distance"></span>
                     </p>
                 </div>
@@ -372,8 +375,15 @@
                     default:
                         break;
                 }
-                //地区??
-                $(".edit-personal-area").html(data.baseinfo.city);
+                //地区
+                let provinceName=codeToAreaObj(data.baseinfo.province.toString()).name;
+                let cityName=codeToAreaObj(data.baseinfo.city.toString()).name;
+                console.log(provinceName,cityName)
+                if(provinceName||cityName){
+                    $(".province").html(codeToAreaObj(data.baseinfo.province.toString()).name);
+                    $(".province-city").html(codeToAreaObj(data.baseinfo.city.toString()).name);
+                    $(".edit-personal-area").show();
+                }
                 //个人相册
                 if (data.photos && data.photos !== "" && data.photos.length !== 0) {
                     $(".picCount").html(data.photos.length);
