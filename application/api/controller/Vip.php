@@ -3,7 +3,7 @@
 namespace app\api\controller;
 use think\Db;
 use think\Config;
-use app\api\Logic\AlipayLogic;
+use app\api\logic\AlipayLogic;
 
 class Vip extends Base {
 
