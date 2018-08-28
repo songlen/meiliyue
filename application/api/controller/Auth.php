@@ -107,11 +107,8 @@ class Auth extends Base {
     	$map = array(
     		'account_mobile' => $mobile,
     		'nickname' => $nickname,
-    		'account_mobile' => $mobile,
-    		'account_mobile' => $mobile,
     		'password' => encrypt($password),
     		'uuid' => $uuid,
-    		'nickname' => $mobile,
     		'reg_time' => time(),
     		'last_login' => time(),
     		'token' => md5(time().mt_rand(1,999999999)),
