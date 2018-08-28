@@ -96,9 +96,9 @@ class Vip extends Base {
 		}
 		
 		//验签失败
-		// if( ! $checkSign ){
-		// 	die('error');
-		// }
+		if( ! $checkSign ){
+			die('error');
+		}
 		
 		$order = Db::name('vip_order')->where('order_no', $order_no)->find();
 		if(empty($order)) goto finish;
