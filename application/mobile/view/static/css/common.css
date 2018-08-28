@@ -117,7 +117,7 @@ footer li a {
   position: fixed;
   bottom: 0.7rem;
   right: 0.28rem;
-  z-index: 6;
+  z-index: 7;
   transition: all 0.2s;
   box-shadow: 0 0 5px #000;
 }
@@ -1366,7 +1366,7 @@ body.yaoyueIndex {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 5;
+  z-index: 6;
   background-color: rgba(0, 0, 0, .3);
   /* display: none; */
 }

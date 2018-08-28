@@ -167,49 +167,50 @@
             </div>
             <!-- 模糊end-->
     
-            <!-- 模糊之外 -->
-    
-            <!-- 模态框及其他 -->
-    
-            <div class="plus" :class="{actived:isPlusing}" @click.stop="isPlusing=!isPlusing"></div>
-    
-            <div class="m_shade" v-cloak v-if="isPlusing"></div>
-    
-            <div class="mask release-start" v-cloak v-show="isPlusing">
-                <div class="title">发起邀约</div>
-                <div class="box-top">
-                    <ul>
-                        <li>
-                            <a href="javascript:void(0)" @click="openReleaseInvite(1)">
-                                <span class="travel"></span>旅行</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" @click="openReleaseInvite(2)">
-                                <span class="food"></span>吃饭</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" @click="openReleaseInvite(3)">
-                                <span class="movie"></span>电影</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" @click="openReleaseInvite(4)">
-                                <span class="sing"></span>唱歌</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" @click="openReleaseInvite(5)">
-                                <span class="sport"></span>运动</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" @click="openReleaseInvite(6)">
-                                <span class="other"></span>其他</a>
-                        </li>
-                    </ul>
-                </div>
-    
-                <span class="maskTrgle"></span>
-            </div>
-    
         </div>
+
+    
+        <!-- 模态框及其他 -->
+
+        <div class="plus" :class="{actived:isPlusing}" @click.stop="isPlusing=!isPlusing"></div>
+
+        <div class="m_shade" v-cloak v-if="isPlusing"></div>
+
+        <div class="mask release-start" v-cloak v-show="isPlusing">
+            <div class="title">发起邀约</div>
+            <div class="box-top">
+                <ul>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(1)">
+                            <span class="travel"></span>旅行</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(2)">
+                            <span class="food"></span>吃饭</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(3)">
+                            <span class="movie"></span>电影</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(4)">
+                            <span class="sing"></span>唱歌</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(5)">
+                            <span class="sport"></span>运动</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" @click="openReleaseInvite(6)">
+                            <span class="other"></span>其他</a>
+                    </li>
+                </ul>
+            </div>
+
+            <span class="maskTrgle"></span>
+        </div>
+
+        <!-- 模态框及其他 end -->
         
         
         <!-- 筛选弹窗 页面 -->
