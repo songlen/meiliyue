@@ -549,10 +549,11 @@
                         //控制top的位置
                         if (scrollTemp >= 150) {
                             // $(".inviteTopWrap").css("margin-top", "-206px");
-                            $(".indexPage").css("top", "-156px");
-
+                            $(".inviteTopWrap").css("transform", "translate3d(0,-206px,0)");
+                            $(".dropRefresh").css("margin-top", "-206px");
                         } else {
-                            $(".indexPage").css("top", "50px");
+                            $(".inviteTopWrap").css("transform", "translate3d(0,0,0)");
+                            $(".dropRefresh").css("margin-top", "-50px");
                         }
                         //滚动加载
                         console.log(scrollTemp + wrapHeight - ulHeight)
