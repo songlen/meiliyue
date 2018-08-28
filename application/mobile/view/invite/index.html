@@ -549,11 +549,19 @@
                         //控制top的位置
                         if (scrollTemp >= 150) {
                             // $(".inviteTopWrap").css("margin-top", "-206px");
-                            $(".inviteTopWrap").css("transform", "translate3d(0,-206px,0)");
-                            $(".dropRefresh").css("margin-top", "-206px");
+                            // $(".inviteTopWrap").css("transform", "translate3d(0,-206px,0)");
+                            // $(".dropRefresh").css("margin-top", "-206px");
+                            $(".indexPage").css({
+                                "transform":"translate3d(0,-206px,0)",
+                                "bottom":"-206px"
+                            });
                         } else {
-                            $(".inviteTopWrap").css("transform", "translate3d(0,0,0)");
-                            $(".dropRefresh").css("margin-top", "-50px");
+                            // $(".inviteTopWrap").css("transform", "translate3d(0,0,0)");
+                            // $(".dropRefresh").css("margin-top", "-50px");
+                            $(".indexPage").css({
+                                "transform":"translate3d(0,0,0)",
+                                "bottom":"0"
+                            });
                         }
                         //滚动加载
                         console.log(scrollTemp + wrapHeight - ulHeight)
