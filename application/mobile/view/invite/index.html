@@ -17,196 +17,201 @@
         <span class="title">邀约</span>
     </header>
 
-    <div class="main-content invitation indexPage" id="indexPageApp" @click="closeReleasing">
+    <div id="indexPageApp">
 
-        <div class="blurDiv" :class="{blur:isPlusing}">
+        <div class="main-content invitation indexPage" @click="closeReleasing">
 
-            <div class="inviteTopWrap">
-                <div class="view">
-                    <a href="javascript:void(0)">
-                        <img src="__STATIC__/images/pic/pic2.png">
-                    </a>
-                </div>
-                <div class="classify">
-                    <div class="optionsWrap">
-                        <div class="options clearfix">
-                            <ul class="fl">
-                                <li>
-                                    <a href="javascript:void(0)" class="optionsBtn allBtn" @click="handleOption('allBtn')">
-                                        <span :class="{actived:nowOptionBtn=='allBtn'}">全部</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)" class="optionsBtn travelBtn" @click="handleOption('travelBtn')">
-                                        <span :class="{actived:nowOptionBtn=='travelBtn'}">旅行</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)" class="optionsBtn foodBtn" @click="handleOption('foodBtn')">
-                                        <span :class="{actived:nowOptionBtn=='foodBtn'}">吃饭</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)" class="optionsBtn movieBtn" @click="handleOption('movieBtn')">
-                                        <span :class="{actived:nowOptionBtn=='movieBtn'}">电影</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)" class="optionsBtn singBtn" @click="handleOption('singBtn')">
-                                        <span :class="{actived:nowOptionBtn=='singBtn'}">唱歌</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)" class="optionsBtn sportBtn" @click="handleOption('sportBtn')">
-                                        <span :class="{actived:nowOptionBtn=='sportBtn'}">运动</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)" class="optionsBtn otherBtn" @click="handleOption('otherBtn')">
-                                        <span :class="{actived:nowOptionBtn=='otherBtn'}">其他</span>
-                                    </a>
-                                </li>
-                            </ul>
+            <div class="blurDiv" :class="{blur:isPlusing}">
+    
+                <div class="inviteTopWrap">
+                    <div class="view">
+                        <a href="javascript:void(0)">
+                            <img src="__STATIC__/images/pic/pic2.png">
+                        </a>
+                    </div>
+                    <div class="classify">
+                        <div class="optionsWrap">
+                            <div class="options clearfix">
+                                <ul class="fl">
+                                    <li>
+                                        <a href="javascript:void(0)" class="optionsBtn allBtn" @click="handleOption('allBtn')">
+                                            <span :class="{actived:nowOptionBtn=='allBtn'}">全部</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" class="optionsBtn travelBtn" @click="handleOption('travelBtn')">
+                                            <span :class="{actived:nowOptionBtn=='travelBtn'}">旅行</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" class="optionsBtn foodBtn" @click="handleOption('foodBtn')">
+                                            <span :class="{actived:nowOptionBtn=='foodBtn'}">吃饭</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" class="optionsBtn movieBtn" @click="handleOption('movieBtn')">
+                                            <span :class="{actived:nowOptionBtn=='movieBtn'}">电影</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" class="optionsBtn singBtn" @click="handleOption('singBtn')">
+                                            <span :class="{actived:nowOptionBtn=='singBtn'}">唱歌</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" class="optionsBtn sportBtn" @click="handleOption('sportBtn')">
+                                            <span :class="{actived:nowOptionBtn=='sportBtn'}">运动</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" class="optionsBtn otherBtn" @click="handleOption('otherBtn')">
+                                            <span :class="{actived:nowOptionBtn=='otherBtn'}">其他</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+    
+                        <div class="addressWrap">
+                            <div class="address clearfix" @click="opentSelect">
+                                <span class="fl" v-cloak @click.stop="cancelSelectList">{{selectedText}}
+                                    <span class="cancelSelected" v-cloak v-if="selectedText!==defaultArea.text"></span>
+                                </span>
+                                <span class="select fr">筛选</span>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="addressWrap">
-                        <div class="address clearfix" @click="opentSelect">
-                            <span class="fl" v-cloak @click.stop="cancelSelectList">{{selectedText}}
-                                <span class="cancelSelected" v-cloak v-if="selectedText!==defaultArea.text"></span>
-                            </span>
-                            <span class="select fr">筛选</span>
+                </div>
+    
+                <!-- 列表--------------------- -->
+    
+                <div class="dropRefresh">
+                    <!-- 滚动容器 -->
+                    <div class="weui-pull-to-refresh__layer">
+                        <div class='weui-pull-to-refresh__arrow'></div>
+                        <div class='weui-pull-to-refresh__preloader'></div>
+                        <div class="down">下拉刷新</div>
+                        <div class="up">释放刷新</div>
+                        <div class="refresh">正在刷新</div>
+                    </div>
+    
+    
+                    <div class="items mInviteList">
+                        <ul>
+                            <li class="mInviteList-item" v-cloak v-for="(item,index) in inviteList" :key="index">
+                                <span class="active ding" style="display: none;">
+                                    <span class="dingText">顶</span>
+                                </span>
+                                <div class="top">
+                                    <div style="position: relative;">
+                                        <div class="img-box" @click.stop="gotoHomePage(item)">
+                                            <img v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg">
+                                            <img v-else src="/application/mobile/view/static/images/icon/tx.png">
+                                        </div>
+                                        <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click="showVideo(item)"></span>
+                                        <!-- 测试用 -->
+                                        <!-- <span class="videoStatus" @click.stop="openVideoScreen(item)"></span> -->
+                                    </div>
+    
+                                    <div class="details">
+                                        <div class="person">
+                                            <span class="name">{{item.nickname}}</span>
+                                            <span class="sexAge" :class="{female:item.sex=='2',male:item.sex=='1'}">
+                                                <i class="sex"></i>
+                                                <span class="age">23</span>
+                                            </span>
+                                            <span class="img">
+                                                <img v-cloak v-if="item.auth_video_status==2" src="__STATIC__/images/icon/camera.png">
+                                            </span>
+                                            <span class="job" style="display: none;">职业经理人</span>
+                                        </div>
+                                        <div class="distance">{{item.distince}}km</div>
+                                    </div>
+                                </div>
+                                <div class="bottom clearfix">
+                                    <p class="title">
+                                        <span class="bigDot"></span>{{item.title}}</p>
+                                    <div class="more" @click="openInviteDetail(item)">
+                                        <ul>
+                                            <li v-cloak v-if="item.description&&item.description!==''">
+                                                <span class="smallDot"></span>{{item.description}}</li>
+                                            <li v-cloak v-if="item.time&&item.time!==''">
+                                                <span class="smallDot"></span>{{item.time}}</li>
+                                            <li v-cloak v-if="item.place&&item.place!==''">
+                                                <span class="smallDot"></span>{{item.place}}</li>
+                                        </ul>
+                                        <!-- 图片 -->
+                                        <div v-cloak v-if="item.image&&item.image!==''">
+                                            <img :src="GlobalHost+item.image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+    
+    
+                        <div class="noComments" style="display: none;">
+                            <img src="__STATIC__/images/icon/暂无要找内容.png">
+                            <p>暂时没有你要找的内容</p>
                         </div>
                     </div>
+    
+    
+                    <!-- <div class="weui-loadmore" v-cloak v-show="isLoading"> -->
+                    <div class="weui-loadmore">
+                        <i class="weui-loading"></i>
+                        <span class="weui-loadmore__tips">正在加载</span>
+                    </div>
                 </div>
+    
             </div>
-
-            <!-- 列表--------------------- -->
-
-            <div class="dropRefresh">
-                <!-- 滚动容器 -->
-                <div class="weui-pull-to-refresh__layer">
-                    <div class='weui-pull-to-refresh__arrow'></div>
-                    <div class='weui-pull-to-refresh__preloader'></div>
-                    <div class="down">下拉刷新</div>
-                    <div class="up">释放刷新</div>
-                    <div class="refresh">正在刷新</div>
-                </div>
-
-
-                <div class="items mInviteList">
+            <!-- 模糊end-->
+    
+            <!-- 模糊之外 -->
+    
+            <!-- 模态框及其他 -->
+    
+            <div class="plus" :class="{actived:isPlusing}" @click.stop="isPlusing=!isPlusing"></div>
+    
+            <div class="m_shade" v-cloak v-if="isPlusing"></div>
+    
+            <div class="mask release-start" v-cloak v-show="isPlusing">
+                <div class="title">发起邀约</div>
+                <div class="box-top">
                     <ul>
-                        <li class="mInviteList-item" v-cloak v-for="(item,index) in inviteList" :key="index">
-                            <span class="active ding" style="display: none;">
-                                <span class="dingText">顶</span>
-                            </span>
-                            <div class="top">
-                                <div style="position: relative;">
-                                    <div class="img-box" @click.stop="gotoHomePage(item)">
-                                        <img v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg">
-                                        <img v-else src="/application/mobile/view/static/images/icon/tx.png">
-                                    </div>
-                                    <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click="showVideo(item)"></span>
-                                    <!-- 测试用 -->
-                                    <!-- <span class="videoStatus" @click.stop="openVideoScreen(item)"></span> -->
-                                </div>
-
-                                <div class="details">
-                                    <div class="person">
-                                        <span class="name">{{item.nickname}}</span>
-                                        <span class="sexAge" :class="{female:item.sex=='2',male:item.sex=='1'}">
-                                            <i class="sex"></i>
-                                            <span class="age">23</span>
-                                        </span>
-                                        <span class="img">
-                                            <img v-cloak v-if="item.auth_video_status==2" src="__STATIC__/images/icon/camera.png">
-                                        </span>
-                                        <span class="job" style="display: none;">职业经理人</span>
-                                    </div>
-                                    <div class="distance">{{item.distince}}km</div>
-                                </div>
-                            </div>
-                            <div class="bottom clearfix">
-                                <p class="title">
-                                    <span class="bigDot"></span>{{item.title}}</p>
-                                <div class="more" @click="openInviteDetail(item)">
-                                    <ul>
-                                        <li v-cloak v-if="item.description&&item.description!==''">
-                                            <span class="smallDot"></span>{{item.description}}</li>
-                                        <li v-cloak v-if="item.time&&item.time!==''">
-                                            <span class="smallDot"></span>{{item.time}}</li>
-                                        <li v-cloak v-if="item.place&&item.place!==''">
-                                            <span class="smallDot"></span>{{item.place}}</li>
-                                    </ul>
-                                    <!-- 图片 -->
-                                    <div v-cloak v-if="item.image&&item.image!==''">
-                                        <img :src="GlobalHost+item.image">
-                                    </div>
-                                </div>
-                            </div>
+                        <li>
+                            <a href="javascript:void(0)" @click="openReleaseInvite(1)">
+                                <span class="travel"></span>旅行</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" @click="openReleaseInvite(2)">
+                                <span class="food"></span>吃饭</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" @click="openReleaseInvite(3)">
+                                <span class="movie"></span>电影</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" @click="openReleaseInvite(4)">
+                                <span class="sing"></span>唱歌</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" @click="openReleaseInvite(5)">
+                                <span class="sport"></span>运动</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" @click="openReleaseInvite(6)">
+                                <span class="other"></span>其他</a>
                         </li>
                     </ul>
-
-
-                    <div class="noComments" style="display: none;">
-                        <img src="__STATIC__/images/icon/暂无要找内容.png">
-                        <p>暂时没有你要找的内容</p>
-                    </div>
                 </div>
-
-
-                <!-- <div class="weui-loadmore" v-cloak v-show="isLoading"> -->
-                <div class="weui-loadmore">
-                    <i class="weui-loading"></i>
-                    <span class="weui-loadmore__tips">正在加载</span>
-                </div>
+    
+                <span class="maskTrgle"></span>
             </div>
-
+    
         </div>
-        <!-- 模糊end-->
-
-        <!-- 模糊之外 -->
-
-        <!-- 模态框及其他 -->
-
-        <div class="plus" :class="{actived:isPlusing}" @click.stop="isPlusing=!isPlusing"></div>
-
-        <div class="m_shade" v-cloak v-if="isPlusing"></div>
-
-        <div class="mask release-start" v-cloak v-show="isPlusing">
-            <div class="title">发起邀约</div>
-            <div class="box-top">
-                <ul>
-                    <li>
-                        <a href="javascript:void(0)" @click="openReleaseInvite(1)">
-                            <span class="travel"></span>旅行</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" @click="openReleaseInvite(2)">
-                            <span class="food"></span>吃饭</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" @click="openReleaseInvite(3)">
-                            <span class="movie"></span>电影</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" @click="openReleaseInvite(4)">
-                            <span class="sing"></span>唱歌</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" @click="openReleaseInvite(5)">
-                            <span class="sport"></span>运动</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" @click="openReleaseInvite(6)">
-                            <span class="other"></span>其他</a>
-                    </li>
-                </ul>
-            </div>
-
-            <span class="maskTrgle"></span>
-        </div>
-
+        
+        
         <!-- 筛选弹窗 页面 -->
         <div class="select-page" :class="{actived:showSelect}">
             <header>
@@ -222,9 +227,9 @@
                             <a href="javascript:void(0)">{{item}}</a>
                         </li>
                     </ul>
-
+    
                     <p class="title">约会</p>
-
+    
                     <!-- 筛选列表 -->
                     <div class="tab-content items view-list" id="tab-detail1">
                         <ul class="opened">
@@ -271,7 +276,8 @@
             </div>
         </div>
 
-    </div>
+    </div><!-- vueapp -->
+    
 
     <script src="__STATIC__/js-dist/invite-index.min.js"></script>
     <script src="__STATIC__/js/Global.js"></script>
