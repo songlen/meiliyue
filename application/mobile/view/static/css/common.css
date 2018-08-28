@@ -133,9 +133,15 @@ footer li a {
   right: 0;
   bottom: 0;
   /* overflow-y: auto; */
-  transition: top 0.4s;
+
+
+  /* transition: top 0.4s;
   opacity: 1;
-  -webkit-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; */
+  
+  z-index: 6;
+  transition: transform 0.4s;
+  transform: translate3d(0,0,0);
 }
 
 .invitation .view {
@@ -155,10 +161,12 @@ footer li a {
 .invitation .inviteTopWrap {
   height: 248px;
   margin-top: 0;
-  /* transition: margin 0.4s; */
+  /* transition: transform 0.4s; */
   /* 覆盖下拉刷新 */
   position: relative;
   z-index: 3;
+
+  /* transform: translate3d(0,0,0); */
 
   /* position: absolute;
   left: 0;
@@ -1028,14 +1036,15 @@ footer li a {
   height: 100vh;
   width: 100vw;
   position: fixed;
-  top: 110vh;
+  /* top: 110vh; */
+  top:130vh;
   background-color: #efefef;
   z-index: 10;
   transition: top 0.3s;
 }
 
 .select-page.actived {
-  top: 0;
+  top: -50px;
 }
 
 .yaoyueIndex .select-page header {
@@ -1267,6 +1276,8 @@ header .search {
 
 body.yaoyueIndex {
   height: 100vh;
+
+  overflow: hidden;
 }
 
 .yaoyueIndex header {
@@ -1323,6 +1334,7 @@ body.yaoyueIndex {
   flex: 1 0 0;
   overflow-y: auto;
   /* margin-top: 10px; */
+  /* transition: all .4s; */
 
 
   /* position: absolute;
