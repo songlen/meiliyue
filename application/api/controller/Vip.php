@@ -55,7 +55,7 @@ class Vip extends Base {
 
 		/********* 判断订单信息 **************/
 		$order = Db::name('vip_order')->where('order_no', $order_no)->find();
-		if(empty($order)) response_error('', '该订单不纯在');
+		if(empty($order)) response_error('', '该订单不存在');
 		if($order['paystatus'] == 1) response_error('', '该订单已支付');
 
 		switch ($order['level']) {
@@ -79,7 +79,7 @@ class Vip extends Base {
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
 			$AlipayLogic = new AlipayLogic();
-			$orderStr = $AlipayLogic->generateOrderStr($order_no, $order);
+			$orderStr = $AlipayLogic->generateOrderStr($order_no, $order['total_amount']);
 			return $orderStr;
 		}
 	}
