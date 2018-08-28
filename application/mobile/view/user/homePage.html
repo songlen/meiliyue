@@ -851,6 +851,11 @@
                 $(".myPhotos").delegate("img.showPic", "click", function () {
                     Homepage.showFullPic(this);
                 });
+                //头像 查看大图
+                $(".avatar-pic").click(function () {
+                    let src = $(".avatar-pic").find("img").attr("src");
+                    Global.fullScreenImg(src);
+                });
             },
             init: function () {
                 //获取user_id
