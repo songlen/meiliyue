@@ -92,13 +92,11 @@ class Vip extends Base {
 
 		if($paymentMethod == 'alipay'){
 			$AlipayLogic = new AlipayLogic();
-			$checkSign = $AlipayLogic->checkSign($order_no, $order);
+			//验签失败
+			if( ! $AlipayLogic->checkSign() ) die('error');
 		}
 		
-		//验签失败
-		if( ! $checkSign ){
-			die('error');
-		}
+		
 		
 		$order = Db::name('vip_order')->where('order_no', $order_no)->find();
 		if(empty($order)) goto finish;

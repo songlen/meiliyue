@@ -53,6 +53,8 @@ class AlipayLogic {
 		$aop = new \AopClient;
 		$aop->alipayrsaPublicKey = $this->alipayrsaPublicKey;
 		$signType = $this->signType;
+
 		return $aop->rsaCheckV1($_POST, NULL, $signType);
+
 	}
 }
