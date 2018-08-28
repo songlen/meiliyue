@@ -54,7 +54,7 @@ class AlipayLogic {
 		$aop->alipayrsaPublicKey = $this->alipayrsaPublicKey;
 		$signType = $this->signType;
 
-		return $aop->rsaCheckV1($_POST, NULL, $signType);
+		return $aop->rsaCheckV1($_POST, NULL, 'RSA');
 
 	}
 }
