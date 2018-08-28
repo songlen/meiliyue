@@ -139,6 +139,7 @@ footer li a {
   opacity: 1;
   -webkit-backface-visibility: hidden; */
   
+  z-index: 6;
   transition: transform 0.4s;
   transform: translate3d(0,0,0);
 }
@@ -1043,7 +1044,7 @@ footer li a {
 }
 
 .select-page.actived {
-  top: 0;
+  top: -50px;
 }
 
 .yaoyueIndex .select-page header {
@@ -1275,6 +1276,8 @@ header .search {
 
 body.yaoyueIndex {
   height: 100vh;
+
+  overflow: hidden;
 }
 
 .yaoyueIndex header {

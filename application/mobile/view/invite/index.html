@@ -155,7 +155,8 @@
                 </div>
 
 
-                <div class="weui-loadmore" v-cloak v-show="isLoading">
+                <!-- <div class="weui-loadmore" v-cloak v-show="isLoading"> -->
+                <div class="weui-loadmore">
                     <i class="weui-loading"></i>
                     <span class="weui-loadmore__tips">正在加载</span>
                 </div>
@@ -565,7 +566,7 @@
                         }
                         //滚动加载
                         console.log(scrollTemp + wrapHeight - ulHeight)
-                        if (scrollTemp > 0 && scrollTemp + wrapHeight - ulHeight >= 50) { //原来是85？
+                        if (scrollTemp > 0 && scrollTemp + wrapHeight - ulHeight >= 85) { //原来是85？
                             if (!this.isLoading) {
                                 this.isLoading = true;
                                 console.log("滑动加载")
