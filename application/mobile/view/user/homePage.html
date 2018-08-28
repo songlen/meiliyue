@@ -45,9 +45,15 @@
                         <span class="attended" style="display:none;">已关注</span>
                         <span class="attendAll" style="display: none;">相互关注</span>
                     </span>
-                    <p>
-                        <img class="areaPic" src="__STATIC__/images/icon/定位-2.png">
-                        <span class="edit-personal-area"></span>&nbsp;
+                    <p class="distanceWrap" style="display:none;">
+                        <i class="edit-personal-areaWrap" style="display:none;">
+                            <img class="areaPic" src="__STATIC__/images/icon/定位-2.png">
+                            <span class="edit-personal-area">
+                                <span class="province"></span>
+                                <span class="province-city"></span>
+                            </span>
+                        </i>
+                        
                         <span class="distance"></span>
                     </p>
                 </div>
@@ -286,6 +292,7 @@
     <!-- ----------------------------------------------- -->
 
     <script src="__STATIC__/js-dist/user-homePage.min.js"></script>
+    <script src="__STATIC__/js/areaCodeArr.js"></script>
     <script src="__STATIC__/js/Global.js"></script>
     <script>
         var Homepage = {
@@ -348,6 +355,11 @@
                 $(".avatar-content .sexAge").addClass(sexClass);
                 //age
                 $(".avatar-content .sexAge .age").html(data.baseinfo.age)
+                //距离
+                if(data.baseinfo.dinstince&&data.baseinfo.dinstince!==""){
+                    $(".distance").html(data.baseinfo.dinstince+"km");
+                    $(".distanceWrap").show();
+                }
                 //星座
                 // $(".edit-personal-constellation").html()
                 //关注状态
@@ -367,8 +379,15 @@
                     default:
                         break;
                 }
-                //地区??
-                $(".edit-personal-area").html(data.baseinfo.city)
+                //地区
+                let provinceName=codeToAreaObj(data.baseinfo.province.toString()).name;
+                let cityName=codeToAreaObj(data.baseinfo.city.toString()).name;
+                console.log(provinceName,cityName)
+                if(provinceName||cityName){
+                    $(".province").html(codeToAreaObj(data.baseinfo.province.toString()).name);
+                    $(".province-city").html(codeToAreaObj(data.baseinfo.city.toString()).name);
+                    $(".edit-personal-areaWrap").show();
+                }
                 //个人相册
                 if (data.photos && data.photos !== "" && data.photos.length !== 0) {
                     $(".picCount").html(data.photos.length);
@@ -419,12 +438,12 @@
                 //手机号
                 if (data.baseinfo.mobile_validated == 0) {
                     $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                        "__STATIC__/images/icon/微信@2xm未认证.png")
+                        "__STATIC__/images/icon/手机号未认证.png")
                     $(".myApprove-phone").html("手机号未认证")
                     $(".myApprove-phone+.approveBtn").show()
                 } else {
                     $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                        "__STATIC__/images/icon/微信@2x.png")
+                        "__STATIC__/images/icon/手机号认证.png")
                     $(".myApprove-phone").html("手机号已认证")
                     $(".myApprove-phone+.approveBtn").hide();
                     $(".myApprove-phone").click(function () {

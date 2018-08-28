@@ -49,7 +49,7 @@
                         <span class="age"></span>
                     </span>
                     <!-- <span class="edit-personal-constellation">摩羯座</span> -->
-                    <p>
+                    <p class="edit-personal-areaWrap" style="display:none;">
                         <img class="areaPic" src="__STATIC__/images/icon/定位-2.png">
                         <span class="edit-personal-area">
                             <span class="province"></span>
@@ -205,12 +205,12 @@
                                 <span class="modifyData signature"></span>
                             </div>
                         </li>
-                        <li class="aboutMe-item">
+                        <!-- <li class="aboutMe-item">
                             <label>对另一半的要求</label>
                             <div class="aboutMe-item-content">
                                 <span class="modifyData canChoose"></span>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="aboutMe-item">
                             <label>最近活跃时间</label>
                             <div class="aboutMe-item-content">
@@ -328,8 +328,14 @@
                 //星座
                 // $(".edit-personal-constellation").html() 
                 //地区
-                $(".province").html(codeToAreaObj(data.baseinfo.province.toString()).name);
-                $(".province-city").html(codeToAreaObj(data.baseinfo.city.toString()).name);
+                let provinceName=codeToAreaObj(data.baseinfo.province.toString()).name;
+                let cityName=codeToAreaObj(data.baseinfo.city.toString()).name;
+                console.log(provinceName,cityName)
+                if(provinceName||cityName){
+                    $(".province").html(codeToAreaObj(data.baseinfo.province.toString()).name);
+                    $(".province-city").html(codeToAreaObj(data.baseinfo.city.toString()).name);
+                    $(".edit-personal-areaWrap").show();
+                }
                 //个人相册
                 if (data.photos && data.photos !== "" && data.photos.length !== 0) {
                     $(".picCount").html(data.photos.length);
@@ -403,11 +409,11 @@
                 //认证
                 if (data.baseinfo.mobile_validated == 0) {
                     $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                        "__STATIC__/images/icon/微信@2xm未认证.png")
+                        "__STATIC__/images/icon/手机号未认证.png")
                     $(".myApprove-phone").html("手机号未认证")
                 } else {
                     $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
-                        "__STATIC__/images/icon/微信@2x.png")
+                        "__STATIC__/images/icon/手机号认证.png")
                     $(".myApprove-phone").html("手机号已认证")
                 }
 

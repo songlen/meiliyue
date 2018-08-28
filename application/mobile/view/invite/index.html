@@ -116,7 +116,7 @@
                                     <div class="details">
                                         <div class="person">
                                             <span class="name">{{item.nickname}}</span>
-                                            <span class="sexAge" :class="{female:item.sex=='2',male:item.sex=='1'}">
+                                            <span class="sexAge" :class="{female:item.sex==2,male:item.sex==1}">
                                                 <i class="sex"></i>
                                                 <span class="age">23</span>
                                             </span>
@@ -456,8 +456,8 @@
                             longitude = mUserInfo.longitude;
                             latitude = mUserInfo.latitude;
                         }
-                        longitude = "117.2100770"; //测试用
-                        latitude ="36.7006690"; //测试用
+                        // longitude = "117.2100770"; //测试用
+                        // latitude ="36.7006690"; //测试用
 
                         let postDataTemp = {
                             order_type: _self.order_type,
