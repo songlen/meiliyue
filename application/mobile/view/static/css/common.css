@@ -133,6 +133,9 @@ footer li a {
   right: 0;
   bottom: 0;
   /* overflow-y: auto; */
+  transition: top 0.4s;
+  opacity: 1;
+  -webkit-backface-visibility: hidden;
 }
 
 .invitation .view {
@@ -150,15 +153,19 @@ footer li a {
 }
 
 .invitation .inviteTopWrap {
-  height: 246px;
+  height: 248px;
   margin-top: 0;
-  transition: margin 0.4s;
+  /* transition: margin 0.4s; */
   /* 覆盖下拉刷新 */
   position: relative;
   z-index: 3;
 
+  /* position: absolute;
+  left: 0;
+  right: 0;
+
   opacity: 1;
-  -webkit-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; */
 }
 
 .invitation .view a {
@@ -1316,6 +1323,13 @@ body.yaoyueIndex {
   flex: 1 0 0;
   overflow-y: auto;
   /* margin-top: 10px; */
+
+
+  /* position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 250px; */
 }
 
 .mInviteList-item .ding {
