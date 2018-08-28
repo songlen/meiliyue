@@ -80,7 +80,7 @@ class Vip extends Base {
 		if($paymentMethod == 'alipay'){
 			$AlipayLogic = new AlipayLogic();
 			$orderStr = $AlipayLogic->generateOrderStr($order_no, $order);
-			response_success($orderStr);
+			return $orderStr;
 		}
 	}
 
