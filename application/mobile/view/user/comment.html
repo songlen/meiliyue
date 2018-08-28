@@ -88,7 +88,7 @@
                         let timeStr = Global.stampToStr(item.add_time);
                         let headUrl;
                         if(item.head_pic&&item.head_pic!==""){
-                            headUrl=Global.host+item.head_pic;
+                            headUrl=Global.filterHttpImg(item.head_pic);
                         }else{
                             headUrl="__STATIC__/images/icon/tx.png";
                         }

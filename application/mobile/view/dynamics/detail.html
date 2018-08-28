@@ -95,8 +95,8 @@
                     <li class="details-comments-item" v-cloak v-for="(item,index) in commentsList" :key="index">
                         <div style="position: relative;" v-cloak>
                             <div class="comment-headWrap" v-cloak @click="applyHomepage(item)">
-                                <img :src="GlobalHost+item.head_pic" @error="defaultImg">
-                                <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                                <img v-cloak v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg">
+                                <img v-cloak v-else src="/application/mobile/view/static/images/icon/tx.png">
                             </div>
                             <!-- <span class="videoStatus"></span> -->
                         </div>
@@ -291,6 +291,15 @@
                         //时间戳 转 文字
                         stampToStr: function (stamp) { //传来的stamp十位数
                             return Global.stampToStr(stamp);
+                        },
+                        ifHttpImg(src){
+                            console.log(src)
+                            if(src.indexOf("http:")>-1){
+                                return src;
+                            }else{
+                                console.log(Global.host)
+                                return Global.host+src;
+                            }
                         }
                     },
                     methods: {

@@ -335,8 +335,9 @@
                 $(".homepage>.allWrap>header .title").html(data.baseinfo.nickname)
                 //头像
                 if (data.baseinfo.head_pic && data.baseinfo.head_pic !== "") {
-                    $(".avatar-pic img").attr("src", Global.host + data.baseinfo.head_pic);
-                    Homepage.head_pic = data.baseinfo.head_pic;
+                    let head_pic=Global.filterHttpImg(data.baseinfo.head_pic);
+                    $(".avatar-pic img").attr("src", head_pic);
+                    Homepage.head_pic = head_pic;
                 }
                 //视频认证
                 if (data.baseinfo.auth_video_status === 2) {
@@ -636,37 +637,37 @@
                 console.log(user_id, head_pic, src)
                 let $fullScreen = $(
                     `
-                <div class="fullScreen">
-                    <div class="videoHeader">
-                        <div class="closeFullScreen"></div>
-                        <div class="videoOperate"></div>
-                        <div class="img-box">
-                            <img src=${head_pic}>
-                        </div>
-                    </div>
+                        <div class="fullScreen">
+                            <div class="videoHeader">
+                                <div class="closeFullScreen"></div>
+                                <div class="videoOperate"></div>
+                                <div class="img-box">
+                                    <img src=${head_pic}>
+                                </div>
+                            </div>
 
-                    <div class="fullScreenScroll">
-                        <div class="fullScreenWrap">
-                            <span class="progressBar"></span>
-                            <video id="video1" width="100%" height="100%" src=${src} autoplay loop></video>
-                            <div class="videoFooter">
-                                <div class="videoCommentBtn"></div>
-                                <span class="littleTri"></span>
+                            <div class="fullScreenScroll">
+                                <div class="fullScreenWrap">
+                                    <span class="progressBar"></span>
+                                    <video id="video1" width="100%" height="100%" src=${src} autoplay loop></video>
+                                    <div class="videoFooter">
+                                        <div class="videoCommentBtn"></div>
+                                        <span class="littleTri"></span>
+                                    </div>
+                                </div>
+                                <!-- 小视频评论 -->
+                                <div class="" style="height: 300px;background-color: red;;">
+
+                                </div>
+                                
+                                <!-- 小视频评论input -->
+                                <div class="videoInput">
+                                    <input type="text">
+                                    <span class="sendComment">发送</span>
+                                </div>
                             </div>
                         </div>
-                        <!-- 小视频评论 -->
-                        <div class="" style="height: 300px;background-color: red;;">
-
-                        </div>
-                        
-                        <!-- 小视频评论input -->
-                        <div class="videoInput">
-                            <input type="text">
-                            <span class="sendComment">发送</span>
-                        </div>
-                    </div>
-                </div>
-            `
+                    `
                 );
 
                 //点击关闭事件
@@ -805,7 +806,7 @@
                     //         // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
                     //         Homepage.showVideo({
                     //             user_id: Homepage.toUserId,
-                    //             head_pic: Global.host + Homepage.head_pic,
+                    //             head_pic: Homepage.head_pic,
                     //             src: url
                     //         });
                     //     });
@@ -814,7 +815,7 @@
                         // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
                         Homepage.showVideo({
                             user_id: Homepage.toUserId,
-                            head_pic: Global.host + Homepage.head_pic,
+                            head_pic: Homepage.head_pic,
                             src: url
                         });
                     });

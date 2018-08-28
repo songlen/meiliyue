@@ -313,7 +313,8 @@
                 $(".homepage>.allWrap>header .title").html(data.baseinfo.nickname)
                 //头像
                 if (data.baseinfo.head_pic && data.baseinfo.head_pic !== "") {
-                    $(".avatar-pic img").attr("src", Global.host + data.baseinfo.head_pic);
+                    let head_pic=Global.filterHttpImg(data.baseinfo.head_pic);
+                    $(".avatar-pic img").attr("src", head_pic);
                 }
                 //视频认证
                 if (data.baseinfo.auth_video_status === 2) {
@@ -1123,7 +1124,7 @@
                             <div class="closeFullScreen"></div>
                             <div class="videoOperate"></div>
                             <div class="img-box">
-                                <img src=${Global.host+head_pic}>
+                                <img src=${head_pic}>
                             </div>
                         </div>
     
@@ -1202,7 +1203,8 @@
                         if (result.code==200&&result.data&&result.data!=="") {
                             Global.closeLoading("修改成功", function () {
                                 //更新页面的头像
-                                $(".avatar-pic").find("img").attr("src",Global.host+result.data.head_pic);
+                                let head_pic=Global.filterHttpImg(result.data.head_pic);
+                                $(".avatar-pic").find("img").attr("src",head_pic);
                             });
                         }  
                     });
@@ -1254,9 +1256,10 @@
                 })
                 //点击视频认证
                 $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
+                    let head_pic="/public/upload/head_pic/20180728/938806dc024e113e09aa3b0321e2b91e.jpg";
                     let option = {
                         user_id: 1,
-                        head_pic: "/public/upload/head_pic/20180728/938806dc024e113e09aa3b0321e2b91e.jpg",
+                        head_pic: Global.filterHttpImg(head_pic),
                         src: "https://media.w3.org/2010/05/sintel/trailer.mp4",
                     };
                     Homepage.showVideo(option);

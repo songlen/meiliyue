@@ -184,7 +184,14 @@
             //根据inviteItem更新Dom
             updateDom: function (data) {
                 console.log(data)
-                $(".img-box img").attr("src", Global.host + data.head_pic)
+                //头像
+                if(data.head_pic&&data.head_pic!==""){
+                    if(data.head_pic.indexOf("http:")>-1){
+                        $(".img-box img").attr("src", data.head_pic);
+                    }else{
+                        $(".img-box img").attr("src", Global.host + data.head_pic)
+                    }
+                }
                 $(".person .name").html(data.nickname)
                 if (data.sex == 1) {
                     $(".sexAge").addClass("male");
@@ -278,9 +285,14 @@
                             inArr.forEach(function(item){
                                 let headUrl="";
                                 if(item.head_pic&&item.head_pic!==""){
-                                    headUrl=Global.host+item.head_pic;
+                                    if(item.head_pic.indexOf("http:")>-1){
+                                        headUrl=item.head_pic;
+                                    }else{
+                                        headUrl=Global.host+item.head_pic;
+                                    }
                                 }else{
-                                    headUrl="__STATIC__/images/icon/tx.png";
+                                    // headUrl="__STATIC__/images/icon/tx.png";
+                                    headUrl="/application/mobile/view/static/images/icon/tx.png";
                                 }
                                 let $liTemp=$(`
                                     <li class="comments-item" data-toUserId=${item.user_id}>

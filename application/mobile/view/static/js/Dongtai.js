@@ -103,6 +103,15 @@ $(function () {
                     return Global.stampToDate(stamp);
                 }
             },
+            ifHttpImg(src){
+                console.log(src)
+                if(src.indexOf("http:")>-1){
+                    return src;
+                }else{
+                    console.log(Global.host)
+                    return Global.host+src;
+                }
+            }
         },
         methods: {
             toHtml(value) {
