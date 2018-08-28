@@ -16,7 +16,7 @@ class AlipayLogic {
 	private $format = 'json';
 	private $charset = 'UTF-8';
 	private $signType = 'RSA2';
-	private $alipayrsaPublicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB';
+	private $alipayrsaPublicKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArOIQAl26+RNfue1KYYWGGE1TWAC6BcnxMkygw2GbWGO3SXSz8rqO7Pj+YW8mGqH5WfYektk0ZT/HjJXjh0jbQQrFoXpfVkp9yqY8qXFBUcCBhghi587OKFD/ZyD9v6lewTVWgJjqXnsmZjPj4DhalzaRKHwtQ0R9zo1SLMpRGbEtCUhJPWTLVYOGVGSL+EkGQi5D/auOvoAEmNh9qf+aOz6z00SoqP8KpsNzIWjjqkapNzj+f5CU4iIBpnGf+uMu/ovWo1VnLHOTUvHR1KxA9+x9DO20hnwJFF+PzZuN+9lm0ORh0qai8dXc0wv7sa3xFoaYMCLlcGfCnX0FDjq+JwIDAQAB';
 	private $notify_url = 'http://meiliyue.caapa.org/index.php/api/vip/callback?paymentMethod=alipay';
 
 
