@@ -49,9 +49,9 @@
                         <span class="age"></span>
                     </span>
                     <!-- <span class="edit-personal-constellation">摩羯座</span> -->
-                    <p>
+                    <p class="edit-personal-areaWrap" style="display:none;">
                         <img class="areaPic" src="__STATIC__/images/icon/定位-2.png">
-                        <span class="edit-personal-area" style="display:none;">
+                        <span class="edit-personal-area">
                             <span class="province"></span>
                             <span class="province-city"></span>
                         </span>
@@ -334,7 +334,7 @@
                 if(provinceName||cityName){
                     $(".province").html(codeToAreaObj(data.baseinfo.province.toString()).name);
                     $(".province-city").html(codeToAreaObj(data.baseinfo.city.toString()).name);
-                    $(".edit-personal-area").show();
+                    $(".edit-personal-areaWrap").show();
                 }
                 //个人相册
                 if (data.photos && data.photos !== "" && data.photos.length !== 0) {
