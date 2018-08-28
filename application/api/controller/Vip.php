@@ -79,7 +79,7 @@ class Vip extends Base {
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
 			$AlipayLogic = new AlipayLogic();
-			$orderStr = $AlipayLogic->generateOrderStr($order_no, $order['total_amount']);
+			$orderStr = $AlipayLogic->generateOrderStr($order_no, $total_amount);
 			return $orderStr;
 		}
 	}
