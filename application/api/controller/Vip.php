@@ -94,15 +94,18 @@ class Vip extends Base {
 			$AlipayLogic = new AlipayLogic();
 			$checkSign = $AlipayLogic->checkSign($order_no, $order);
 		}
-
-		if( ! $checkSign ) goto finish; //验签失败
+		
+		//验签失败
+		// if( ! $checkSign ){
+		// 	die('error');
+		// }
 		
 		$order = Db::name('vip_order')->where('order_no', $order_no)->find();
 		if(empty($order)) goto finish;
 		if($order['paystatus'] == 1) goto finish;
 		// 回调后的业务流程
-		if($trade_status == 'SUCCESS'){
-			$this->changeVip($order);
+		if($trade_status == 'TRADE_SUCCESS'){
+			$this->changeVip($order_no, $order['user_id'], $order['level']);
 		}
 
 		finish:
@@ -121,7 +124,7 @@ class Vip extends Base {
 		$unit = $vip_config[$level]['unit'];
 		$expire_date = date('Y-m-d', strtotime('+'.$num.$unit, strtotime($old_date)));
 
-		Db::name('users')->where('user_id', $user_id)->udpate(array('level'=>$level, 'vip_expire_date'=>$expire_date));
+		Db::name('users')->where('user_id', $user_id)->update(array('level'=>$level, 'vip_expire_date'=>$expire_date));
 	}
 
 	private function generateOrderno(){
