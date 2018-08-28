@@ -152,10 +152,13 @@ footer li a {
 .invitation .inviteTopWrap {
   height: 246px;
   margin-top: 0;
-  transition: margin 0.3s;
+  transition: margin 0.4s;
   /* 覆盖下拉刷新 */
   position: relative;
   z-index: 3;
+
+  opacity: 1;
+  -webkit-backface-visibility: hidden;
 }
 
 .invitation .view a {

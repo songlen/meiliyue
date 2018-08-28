@@ -255,7 +255,8 @@
                 console.log(data)
                 //头像
                 if(data.baseinfo.head_pic&&data.baseinfo.head_pic!==""){
-                    $(".avatar-pic").find("img").attr("src",Global.host+data.baseinfo.head_pic);
+                    let head_pic=Global.filterHttpImg(data.baseinfo.head_pic);
+                    $(".avatar-pic").find("img").attr("src",head_pic);
                 }
                 $(".nickname").html(data.baseinfo.nickname)
                 if (data.baseinfo.age && data.baseinfo.age !== "") {
@@ -1127,7 +1128,8 @@
                         if (result.code==200&&result.data&&result.data!=="") {
                             Global.closeLoading("修改成功", function () {
                                 //更新页面的头像
-                                $(".avatar-pic").find("img").attr("src",Global.host+result.data.head_pic);
+                                let head_pic=Global.filterHttpImg(result.data.head_pic);
+                                $(".avatar-pic").find("img").attr("src",head_pic);
                             });
                         }  
                     });

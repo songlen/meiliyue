@@ -1,5 +1,7 @@
 let Global = (function () {
 
+    let GlobalHost="http://meiliyue.caapa.org";
+
     function openLoading(msg = "处理中") {
         if ($(".mLoadingMask").length == 0) {
             $("body").append($('<div class="mLoadingMask"></div>'));
@@ -216,10 +218,21 @@ let Global = (function () {
         $("body").append($div);
     }
 
+    //过滤http头像img
+    function filterHttpImg(src){
+        let srcTemp;
+        if(src.indexOf("http:")>-1||src.indexOf("https:")>-1){
+            srcTemp=src;
+        }else{
+            srcTemp=GlobalHost+src;
+        }
+        return srcTemp;
+    }
+
     //Global暴露的接口------------------------
     return {
         //值
-        host: "http://meiliyue.caapa.org",
+        host: GlobalHost,
         //方法
         openLoading, //msg
         closeLoading, //msg:完成瞬间显示的文字;callback;delay:人工设定延迟
@@ -234,7 +247,8 @@ let Global = (function () {
         eleCanClick, //ele:元素
         fullScreen, // 预览全屏视频 ele:video元素
         fullScreenAuth, //预览全屏认证小视频
-        fullScreenImg //全屏显示图片 src
+        fullScreenImg, //全屏显示图片 src
+        filterHttpImg //过滤http头像img  src
     }
 })();
 

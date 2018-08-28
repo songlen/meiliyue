@@ -53,8 +53,8 @@
                             <div class="item-head">
                                 <div style="position: relative;">
                                     <div class="item-headWrap" @click.stop="gotoHomePage(item)">
-                                        <img :src="GlobalHost+item.head_pic" @error="defaultImg">
-                                        <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                                        <img v-cloak v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg">
+                                        <img v-cloak v-else src="/application/mobile/view/static/images/icon/tx.png">
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click.stop="openVideoScreen(item)"></span>
                                     <!-- 测试用 -->
@@ -103,8 +103,8 @@
                             <div class="item-head">
                                 <div style="position: relative;">
                                     <div class="item-headWrap" @click.stop="gotoHomePage(item)">
-                                        <img :src="GlobalHost+item.head_pic" @error="defaultImg">
-                                        <!-- <img v-cloak v-else src="__STATIC__/images/icon/tx.png"> -->
+                                        <img v-cloak v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg">
+                                        <img v-cloak v-else src="/application/mobile/view/static/images/icon/tx.png">
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click.stop="openVideoScreen(item)"></span>
                                     <!-- 测试用 -->

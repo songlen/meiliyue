@@ -103,8 +103,8 @@
                             <div class="top">
                                 <div style="position: relative;">
                                     <div class="img-box" @click.stop="gotoHomePage(item)">
-                                        <img v-if="item.head_pic&&item.head_pic!==''" :src="GlobalHost+item.head_pic">
-                                        <img v-else src="__STATIC__/images/icon/tx.png">
+                                        <img v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg">
+                                        <img v-else src="/application/mobile/view/static/images/icon/tx.png">
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click="showVideo(item)"></span>
                                     <!-- 测试用 -->
@@ -410,6 +410,17 @@
                     // alert("ajax");
                     this.getInviteList()
                 },
+                filters:{
+                    ifHttpImg(src){
+                        console.log(src)
+                        if(src.indexOf("http:")>-1){
+                            return src;
+                        }else{
+                            console.log(Global.host)
+                            return Global.host+src;
+                        }
+                    }
+                },
                 methods: {
                     //获取邀约列表
                     getInviteList({
@@ -435,8 +446,8 @@
                             longitude = mUserInfo.longitude;
                             latitude = mUserInfo.latitude;
                         }
-                        // longitude = "117.2100770"; //测试用
-                        // latitude ="36.7006690"; //测试用
+                        longitude = "117.2100770"; //测试用
+                        latitude ="36.7006690"; //测试用
 
                         let postDataTemp = {
                             order_type: _self.order_type,
@@ -707,7 +718,7 @@
                     openVideoScreen(item) {
                         let self = this;
                         let toUserId = item.user_id;
-                        let head_pic = this.GlobalHost + item.head_pic;
+                        let head_pic = Global.filterHttpImg(item.head_pic);
                         console.log(head_pic)
                         this.getVideoUrl(toUserId, function (url) {
                             // url="https://media.w3.org/2010/05/sintel/trailer.mp4";  //测试用

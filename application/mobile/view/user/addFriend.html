@@ -158,13 +158,14 @@
             updataDom(data) {
                 if (data && data !== "") { //有数据
                     $(".attentionUl").html("");
+                    let head_pic=Global.filterHttpImg(data.head_pic);
                     let $li = $(
                         `
                         <li class="friendItem" data-userId=${data.user_id} 
                                                 data-oldStatus=${data.attention}>
                             <div class="friendItem-avatar">
                                 <div class="friendHeadWrap">
-                                    <img src=${Global.host+data.head_pic}>
+                                    <img src=${head_pic}>
                                 </div>
                                 <span class="videoStatus" style="display:none;"></span>
                             </div>
