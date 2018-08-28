@@ -547,10 +547,12 @@
                         let ulHeight = document.getElementsByClassName('mInviteList')[0].clientHeight;
                         // console.log(scrollTemp)
                         //控制top的位置
-                        if (scrollTemp >= 100) {
-                            $(".inviteTopWrap").css("margin-top", "-206px");
+                        if (scrollTemp >= 150) {
+                            // $(".inviteTopWrap").css("margin-top", "-206px");
+                            $(".indexPage").css("top", "-156px");
+
                         } else {
-                            $(".inviteTopWrap").css("margin-top", "0");
+                            $(".indexPage").css("top", "50px");
                         }
                         //滚动加载
                         console.log(scrollTemp + wrapHeight - ulHeight)
