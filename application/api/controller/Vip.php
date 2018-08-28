@@ -94,10 +94,10 @@ class Vip extends Base {
 			$AlipayLogic = new AlipayLogic();
 			//验签失败
 
-			/*$param = $_POST;
+			$param = $_POST;
 			$param['fund_bill_list'] = html_entity_decode($param['fund_bill_list']);
 			$_POST = $param;
-			if( ! $AlipayLogic->checkSign()) die('error');*/
+			if( ! $AlipayLogic->checkSign()) die('error');
 		}
 		
 		
