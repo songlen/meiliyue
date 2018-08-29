@@ -9,7 +9,7 @@ class User extends Base {
 
 
     public function comment(){
-        $this->fetch();
+        return $this->fetch();
     }
    
     /**
