@@ -660,10 +660,16 @@ a.operate {
     margin-left: 0.66rem;
     margin-right: 0.15rem;
 }
-
-.details-content .details-content-text img {
+.detailImgBox{
     width: calc(33.3333% - 1px);
+    max-height: 80px;
+    overflow: hidden;
     margin-top: 5px;
+}
+.details-content .details-content-text img {
+    /* width: calc(33.3333% - 1px);
+    margin-top: 5px; */
+    width: 100%;
 }
 
 .details-content .details-content-text img.emoji_icon {

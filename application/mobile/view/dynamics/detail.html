@@ -45,7 +45,9 @@
                     </p>
                     <if condition="$info['type'] == 2 && !empty($info['image'])">
                         <foreach name="$info.image" item="image">
-                            <img src="{$image}" alt="">
+                            <div class="detailImgBox">
+                                <img src="{$image}">
+                            </div>
                         </foreach>
                     </if>
                 </div>
