@@ -75,7 +75,6 @@ class Dynamics extends Base {
                 M('dynamics_viewer')->insert(array('dynamicus_id'=>$id, 'viewer_id'=>$viewer_id));
             }
         }
-p($info);
 
         $this->assign('info', $info);
         $this->assign('viewers', $viewers);
