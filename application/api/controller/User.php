@@ -212,6 +212,35 @@ class User extends Base {
         response_success('', '操作成功');
     }
 
+    // 车辆认证
+    public function carAuth(){
+        $user_id = I('user_id');
+
+        $uploadPath =  UPLOAD_PATH.'carAuth/';
+        $FileLogic = new FileLogic();
+        $uploadResult = $FileLogic->uploadSingleFile('file', $uploadPath);
+        if($uploadResult['status'] == '1'){
+            $image = $uploadResult['fullPath'];
+        }
+
+        $data = array(
+            'user_id' => $user_id,
+            'image' => $image,
+            'add_time' => time(),
+            'status' => '1',
+        );
+
+        $count = M('car_auth')->where('user_id', $user_id)->count();
+        if($count){
+            M('car_auth')->where('user_id', $user_id)->update($data);
+            
+        } else {
+            M('car_auth')->insert($data);
+        }
+        M('users')->where('user_id', $user_id)->update(array('auth_car_status'=>1));
+        response_success('', '操作成功');
+    }
+
     // 关注
     public function attention(){
         $user_id = I('user_id');
