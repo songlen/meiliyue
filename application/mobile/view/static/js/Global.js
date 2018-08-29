@@ -227,6 +227,7 @@ let Global = (function () {
         }else{
             head_pic="/application/mobile/view/static/images/icon/tx.png";
         }
+
         let divHtml=`
             <div class="fullScreen">
                 <div class="videoHeader">
@@ -294,8 +295,9 @@ let Global = (function () {
         }, 50);
 
         //append div
-        $("body").append($div);
         video.play()
+        $("body").append($div);
+            
     }
 
     function fullScreenImg(src) {
