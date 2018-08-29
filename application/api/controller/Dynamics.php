@@ -49,13 +49,23 @@ class Dynamics extends Base {
             $where['d.user_id'] = array('in', $attention_uids);
         }
 
+        if($range || $attention){
+            $field = 'u.user_id, head_pic, nickname, u.sex, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time, d.flower_num';
+        }
+        // 叽喳小视频
+        if($jizha){
+            $where['type'] = '3';
+            $field = 'u.user_id, nickname, sex, age, d.id dynamic_id, d.type';
+        }
+
+
         /************ 获取列表数据 *************/
         $limit_start = ($page-1)*10;
         $where['d.status'] = '2';
         $lists = Db::name('dynamics')->alias('d')
             ->join('users u', 'd.user_id=u.user_id', 'left')
             ->where($where)
-            ->field('u.user_id, head_pic, nickname, u.sex, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time, d.flower_num')
+            ->field($field)
             ->order('d.id desc')
             ->limit($limit_start, 10)
             ->select();
@@ -76,9 +86,10 @@ class Dynamics extends Base {
                 }
                 // 视频
                 if($item['type'] == '3'){
-                    $dynamics_image = M('dynamics_image')->where('dynamic_id', $item['dynamic_id'])->field('image')->find();
+                    $dynamics_image = M('dynamics_image')->where('dynamic_id', $item['dynamic_id'])->field('image, video video_url')->find();
                     
                     $item['video_thumb'] = $dynamics_image['image'];
+                    $item['video_url'] = $dynamics_image['video_url'];
                 }
 
                 // 查看人数
