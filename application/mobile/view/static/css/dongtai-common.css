@@ -661,6 +661,7 @@ a.operate {
     margin-right: 0.15rem;
 }
 .detailImgBox{
+    display: inline-block;
     width: calc(33.3333% - 1px);
     max-height: 80px;
     overflow: hidden;
