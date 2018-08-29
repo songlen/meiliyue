@@ -154,26 +154,23 @@
                 <!-- 叽喳 -->
                 <div class="shortVideo-page" v-cloak v-show="nowPage=='video'">
                     <ul>
-                        <li @click="videoFullScreen">
+                        <li v-cloak v-for="(item,index) in videoDataList.list" ::key="index" @click="videoFullScreen(item)">
                             <div class="mVideo">
-                                <!-- <img style="width:100%;height:100%" src=""> -->
-                                <!-- <video style="width: 100%;height: 100%;" src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4" preload="auto" crossOrigin="anonymous"></video> -->
-                                <video style="width: 100%;height: 100%;" src="" preload="auto" crossOrigin="anonymous"></video>
+                                <img style="width: 100%;height: 100%;" :src="GlobalHost+item.video_thumb"></video>
                             </div>
-
 
                             <div>
                                 <div>
-                                    <span class="name">沫沫</span>
-                                    <span class="sexAge male">
+                                    <span class="name">{{item.nickname}}</span>
+                                    <span class="sexAge" :class="{female:item.sex==2,male:item.sex==1}">
                                         <i class="sex"></i>
-                                        <span class="age">23</span>
+                                        <span class="age">{{item.age}}</span>
                                     </span>
                                 </div>
 
-                                <p class="video-text">
-                                    你为什么这么可爱？
-                                </p>
+                                <!-- <p class="video-text">
+                                    {{item.content}}
+                                </p> -->
                             </div>
                         </li>
                     </ul>
@@ -220,38 +217,6 @@
             </div>
 
             <span class="triangle"></span>
-        </div>
-
-        <!-- 小视频全屏 -->
-        <div class="fullScreen" style="display: none">
-            <div class="videoHeader">
-                <div class="closeFullScreen" @click="closeFullScreen"></div>
-                <div class="videoOperate"></div>
-                <div class="img-box">
-                    <img src="__STATIC__/images/icon/tx.png">
-                </div>
-            </div>
-
-            <div class="fullScreenScroll">
-                <div class="fullScreenWrap">
-                    <span class="progressBar"></span>
-                    <video id="video1" width="100%" height="100%" src="" autoplay loop></video>
-                    <div class="videoFooter">
-                        <div class="videoCommentBtn"></div>
-                        <span class="littleTri"></span>
-                    </div>
-                </div>
-                <!-- 小视频评论 -->
-                <div class="" style="height: 300px;background-color: red;;">
-
-                </div>
-
-                <!-- 小视频评论input -->
-                <div class="videoInput">
-                    <input type="text">
-                    <span class="sendComment">发送</span>
-                </div>
-            </div>
         </div>
 
     </div>

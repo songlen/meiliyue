@@ -178,8 +178,127 @@ let Global = (function () {
         $("body").append($fullScreen);
     }
 
-    function fullScreenAuth() {
+    function fullScreenAuth({
 
+    }) {
+
+        // let $div=$(`
+        //     <div class="fullScreen" style="display: none">
+        //         <div class="videoHeader">
+        //             <div class="closeFullScreen" @click="closeFullScreen"></div>
+        //             <div class="videoOperate"></div>
+        //             <div class="img-box">
+        //                 <img src="../static/images/icon/tx.png">
+        //             </div>
+        //         </div>
+
+        //         <div class="fullScreenScroll">
+        //             <div class="fullScreenWrap">
+        //                 <span class="progressBar"></span>
+        //                 <video id="video1" width="100%" height="100%" src="" autoplay loop></video>
+        //                 <div class="videoFooter">
+        //                     <div class="videoCommentBtn"></div>
+        //                     <span class="littleTri"></span>
+        //                 </div>
+        //             </div>
+                  
+
+        //             <div class="" style="height: 300px;background-color: red;">
+
+        //             </div>
+
+              
+        //             <div class="videoInput">
+        //                 <input type="text">
+        //                 <span class="sendComment">发送</span>
+        //             </div>
+        //         </div>
+        //     </div>
+        // `);
+    }
+
+    function fullScreenVideo({
+        user_id,
+        head_pic,
+        src,
+        poster,
+    }){
+        if(head_pic){
+            head_pic=filterHttpImg(head_pic);
+        }else{
+            head_pic="/application/mobile/view/static/images/icon/tx.png";
+        }
+
+        let divHtml=`
+            <div class="fullScreen">
+                <div class="videoHeader">
+                    <div class="closeFullScreen"></div>
+                    
+                    <div class="img-box">
+                        <img src="${head_pic}">
+                    </div>
+                </div>
+
+                <div class="fullScreenScroll">
+                    <div class="fullScreenWrap">
+                        <span class="progressBar"></span>
+                        <video id="video1" width="100%" height="100%" src="${src}" poster="${poster}" autoplay="autoplay" loop></video>
+                        <div class="videoFooter">
+                            <div class="videoCommentBtn"></div>
+                            
+                        </div>
+                    </div>
+                    <!-- 小视频评论 -->
+                    <div class="" style="height: 300px;background-color: red;;">
+
+                    </div>
+
+                    <!-- 小视频评论input -->
+                    <div class="videoInput">
+                        <input type="text">
+                        <span class="sendComment">发送</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        //<div class="videoOperate"></div>
+        //<span class="littleTri"></span>
+        
+        let $div=$(divHtml);
+        let video=$div.find("#video1")[0];
+
+        //关闭事件
+        $div.find(".closeFullScreen").click(function(event){
+            event.stopPropagation();
+            let $fullScreen=$(this).closest(".fullScreen");
+            $fullScreen.remove();
+        });
+        //点击 控制video
+        $(video).click(function (event) {
+            event.stopPropagation()
+            console.log(this.paused)
+            if (this.paused) {
+                this.play()
+            } else {
+                this.pause()
+            }
+        });
+
+        //总是从头开始播放
+        video.currentTime = 0; 
+        //进度条
+        setInterval(function () {
+            if (video.currentTime >= video.duration) {
+                return false
+            }
+            // console.log(video.currentTime, video.duration)
+            $div.find(".progressBar")[0].style.width = (video.currentTime / video.duration) * 100 + "%"
+        }, 50);
+
+        //append div
+        video.play()
+        $("body").append($div);
+            
     }
 
     function fullScreenImg(src) {
@@ -295,6 +414,19 @@ let Global = (function () {
         }
     }
 
+    //获取img的宽高？？？？？？？？？？？？？？
+    function getImgWidth(src,callback){
+        let img = new Image();
+        img.onload=function(){
+            let obj={};
+            obj.width=this.width;
+            obj.height=this.height;
+            console.log(obj.width,obj.height)
+            callback(obj);
+        }
+        img.src=src;
+    }
+
     //Global暴露的接口------------------------
     return {
         //值
@@ -313,9 +445,11 @@ let Global = (function () {
         eleCanClick, //ele:元素
         fullScreen, // 预览全屏视频 ele:video元素
         fullScreenAuth, //预览全屏认证小视频
+        fullScreenVideo, //全屏叽喳视频（带评论）
         fullScreenImg, //全屏显示图片 src
         filterHttpImg, //过滤http头像img  src
-        compressImg //压缩图片，file callback(blob)
+        compressImg, //压缩图片，file callback(blob)
+        getImgWidth //获取图片原始宽高
     }
 })();
 
@@ -324,7 +458,7 @@ let Global = (function () {
 //上传文件的回调 args 文件路径
 function getJavaFiles(args) { // 路径/plulic/../..
     console.log(args)
-    // alert(args)
+    alert(args)
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
