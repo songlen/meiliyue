@@ -295,6 +295,7 @@ let Global = (function () {
 
         //append div
         $("body").append($div);
+        video.play()
     }
 
     function fullScreenImg(src) {
