@@ -45,7 +45,7 @@ class Dynamics extends Base {
         if($info['type'] == '2'){
             $dynamics_image = M('dynamics_image')->where('dynamic_id', $info['dynamic_id'])->field('image')->select();
             $image = array();
-            if(is_array($lists) && !empty($lists)){
+            if(is_array($dynamics_image) && !empty($dynamics_image)){
                 foreach ($dynamics_image as $v) {
                     $image[] = $v['image'];
                 }
@@ -72,7 +72,7 @@ class Dynamics extends Base {
         if($viewer_id != $info['user_id']){
             $is_exist = M('dynamics_viewer')->where(array('dynamic_id'=>$id, 'viewer_id'=>$viewer_id))->find();
             if(!$is_exist){
-                M('dynamics_viewer')->insert(array('dynamic_id'=>$id, 'viewer_id'=>$viewer_id));
+                M('dynamics_viewer')->insert(array('dynamicus_id'=>$id, 'viewer_id'=>$viewer_id));
             }
         }
 p($info);
