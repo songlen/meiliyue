@@ -118,7 +118,7 @@
                                             <span class="name">{{item.nickname}}</span>
                                             <span class="sexAge" :class="{female:item.sex==2,male:item.sex==1}">
                                                 <i class="sex"></i>
-                                                <span class="age">23</span>
+                                                <span class="age">{{item.age}}</span>
                                             </span>
                                             <span class="img">
                                                 <img v-cloak v-if="item.auth_video_status==2" src="__STATIC__/images/icon/camera.png">
