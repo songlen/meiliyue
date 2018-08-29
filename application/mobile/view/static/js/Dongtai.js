@@ -67,7 +67,7 @@ $(function () {
                 console.log(mUserInfo)
                 this.user_id = Number(mUserInfo.user_id);
             } else {
-                this.user_id = 1; //测试用
+                this.user_id = 21; //测试用
             }
 
             //
@@ -75,9 +75,6 @@ $(function () {
                 user_id: this.user_id,
                 range: 1
             });
-
-            //获取video的第一帧
-            this.getFirstCanvas();
         },
         filters: {
             //时间戳 转 文字
@@ -111,7 +108,7 @@ $(function () {
                     // console.log(Global.host)
                     return Global.host+src;
                 }
-            }
+            },
         },
         methods: {
             toHtml(value) {
@@ -270,38 +267,14 @@ $(function () {
                 sessionStorage.setItem('dongtaiPage', JSON.stringify(pageData))
             },
             //打开全屏小视频
-            videoFullScreen() {
-                var srcTemp = "http://www.w3school.com.cn/example/html5/mov_bbb.mp4"; //测试用,传来的src
-                var video = document.getElementById("video1");
-                if (!srcTemp == $(video).attr("src")) {
-                    $(video).attr("src", srcTemp);
-                }
-
-                $(".fullScreen").show()
-                video.currentTime = 0; //总是从头开始播放
-
-                //点击 控制video
-                $(".fullScreen video").click(function (event) {
-                    event.stopPropagation()
-                    console.log(this.paused)
-                    if (this.paused) {
-                        this.play()
-                    } else {
-                        this.pause()
-                    }
-                });
-
-                //进度条
-                setInterval(function () {
-                    var vid = document.getElementById("video1")
-                    if (vid.currentTime >= vid.duration) {
-                        //触发
-                        return false
-                    }
-                    console.log(vid.currentTime, vid.duration)
-                    document.getElementsByClassName("progressBar")[0].style.width = (vid.currentTime / vid.duration) * 100 + "%"
-                }, 50);
-
+            videoFullScreen(item) {
+                console.log(item)
+                let options={
+                    user_id:item.user_id,
+                    // head_pic:
+                    src:Global.filterHttpImg(item.video_url)
+                };
+                Global.fullScreenVideo(options);
             },
             //关闭全屏小视频
             closeFullScreen() {
@@ -476,23 +449,6 @@ $(function () {
                     }
                 }
             },
-            //获取video第一帧
-            getFirstCanvas(){
-                let $videos=$(".shortVideo-page .mVideo video");
-                $videos.each(function(){
-                    let video=this;
-                    console.log(video)
-                    video.addEventListener("loadeddata", function () {
-                        let canvas = document.createElement("canvas");
-                        canvas.width = video.videoWidth * 0.8;
-                        canvas.height = video.videoHeight * 0.8;
-                        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-                        console.log(666)
-                        video.setAttribute("poster", canvas.toDataURL("image/png"));
-                    })
-                });
-
-            }
         }
     });
 

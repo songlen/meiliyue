@@ -430,6 +430,7 @@ footer li a {
     width: 1.6rem;
     height: 2.37rem;
     border-radius: 5px;
+    overflow: hidden;
     /* border: 1px solid red; */
     background-color: #000;
 }
@@ -1074,7 +1075,8 @@ a.operate {
 .fullScreen .progressBar {
     display: block;
     position: absolute;
-    top: 0;
+    /* top: 0; */
+    bottom: 0;
     height: 5px;
     width: 0%;
     background-color: #fff;
