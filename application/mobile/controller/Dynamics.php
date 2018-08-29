@@ -54,9 +54,10 @@ class Dynamics extends Base {
         }
         // 视频
         if($info['type'] == '3'){
-            $dynamics_image = M('dynamics_image')->where('dynamic_id', $info['dynamic_id'])->field('image')->find();
+            $dynamics_image = M('dynamics_image')->where('dynamic_id', $info['dynamic_id'])->field('image, video')->find();
             
             $info['video_thumb'] = $dynamics_image['image'];
+            $info['video_url'] = $dynamics_image['video'];
         }
 
         /*************** 获取查看此条动态的人 ****************/
