@@ -220,7 +220,8 @@ let Global = (function () {
     function fullScreenVideo({
         user_id,
         head_pic,
-        src
+        src,
+        poster,
     }){
         if(head_pic){
             head_pic=filterHttpImg(head_pic);
@@ -241,7 +242,7 @@ let Global = (function () {
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
                         <span class="progressBar"></span>
-                        <video id="video1" width="100%" height="100%" src="${src}" autoplay="autoplay" loop></video>
+                        <video id="video1" width="100%" height="100%" src="${src}" poster="${poster}" autoplay="autoplay" loop></video>
                         <div class="videoFooter">
                             <div class="videoCommentBtn"></div>
                             
@@ -413,7 +414,7 @@ let Global = (function () {
         }
     }
 
-    //获取img的宽高
+    //获取img的宽高？？？？？？？？？？？？？？
     function getImgWidth(src,callback){
         let img = new Image();
         img.onload=function(){

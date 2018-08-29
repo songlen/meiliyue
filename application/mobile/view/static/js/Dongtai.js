@@ -272,7 +272,8 @@ $(function () {
                 let options={
                     user_id:item.user_id,
                     // head_pic:
-                    src:Global.filterHttpImg(item.video_url)
+                    src:Global.filterHttpImg(item.video_url),
+                    poster:Global.host+item.item.video_thumb
                 };
                 Global.fullScreenVideo(options);
             },
