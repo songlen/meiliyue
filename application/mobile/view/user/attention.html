@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <title>我的关注</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/css-dist/user-attention.min.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/wode-common.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css-dist/user-attention.min.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
@@ -35,7 +35,7 @@
                 </ul>
 
                 <div class="no-attention" style="display: none;">
-                    <img src="../static/images/icon/暂无要找内容.png" alt="">
+                    <img src="__STATIC__/images/icon/暂无要找内容.png" alt="">
                     <p>你现在没有关注任何人</p>
                 </div>
 
@@ -49,8 +49,8 @@
     </div>
 
 
-    <script src="../static/js-dist/user-attention.min.js"></script>
-    <script src="../static/js/Global.js"></script>
+    <script src="__STATIC__/js-dist/user-attention.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <script>
         var Attend = {
             user_id: "",
@@ -248,7 +248,7 @@
                     Attend.user_id = Number(mUserInfo.user_id);
                 } else {
                     // alert("无local")
-                    Attend.user_id = 48; //测试用
+                    Attend.user_id = 1; //测试用
                 }
 
                 Attend.initPullToRefresh();
