@@ -1210,6 +1210,7 @@
                             Global.closeLoading("修改成功", function () {
                                 //更新页面的头像
                                 let head_pic=Global.filterHttpImg(result.data.head_pic);
+                                alert(head_pic)
                                 $(".avatar-pic").find("img").attr("src",head_pic);
                             });
                         }  
