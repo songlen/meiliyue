@@ -240,7 +240,7 @@ let Global = (function () {
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
                         <span class="progressBar"></span>
-                        <video id="video1" width="100%" height="100%" src="${src}" autoplay loop></video>
+                        <video id="video1" width="100%" height="100%" src="${src}" autoplay="autoplay" loop></video>
                         <div class="videoFooter">
                             <div class="videoCommentBtn"></div>
                             
