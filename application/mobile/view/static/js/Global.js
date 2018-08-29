@@ -454,7 +454,7 @@ let Global = (function () {
 //上传文件的回调 args 文件路径
 function getJavaFiles(args) { // 路径/plulic/../..
     console.log(args)
-    // alert(args)
+    alert(args)
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
