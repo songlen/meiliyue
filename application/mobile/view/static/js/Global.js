@@ -458,7 +458,7 @@ let Global = (function () {
 //上传文件的回调 args 文件路径
 function getJavaFiles(args) { // 路径/plulic/../..
     console.log(args)
-    alert(args)
+    // alert(args)
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
@@ -487,7 +487,7 @@ function getJavaFiles(args) { // 路径/plulic/../..
     }
     //是视频
     else if (url.indexOf(".mp4") > -1 || url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1 || url.indexOf(".mov") > -1) {
-        alert(1)
+        // alert(1)
         let $liTemp = $(`
             <li class="edit-pic-item">
                 <video class="showPic" src="${src}" width="100%" height="100%" autoplay="autoplay" loop></video>
@@ -495,7 +495,7 @@ function getJavaFiles(args) { // 路径/plulic/../..
             </li>
         `);
 
-        alert(src)
+        // alert(src)
 
         //取消视频
         $liTemp.find("a.edit-closePic").click(function (event) {
@@ -506,7 +506,7 @@ function getJavaFiles(args) { // 路径/plulic/../..
             });
         })
 
-        alert(3)
+        // alert(3)
 
         $(".showPicUl").prepend($liTemp);
     }
