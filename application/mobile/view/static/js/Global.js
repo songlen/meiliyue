@@ -500,6 +500,8 @@ function getJavaFiles(args) { // 路径/plulic/../..
         })
 
         $(".showPicUl").prepend($liTemp);
+
+        alert("视频"+src)
     }
     //是视频
     else if (url.indexOf(".mp4") > -1 || url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1 || url.indexOf(".mov") > -1) {
@@ -525,5 +527,7 @@ function getJavaFiles(args) { // 路径/plulic/../..
         // alert(3)
 
         $(".showPicUl").prepend($liTemp);
+
+        alert("视频"+src)
     }
 }
