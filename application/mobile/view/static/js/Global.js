@@ -487,12 +487,15 @@ function getJavaFiles(args) { // 路径/plulic/../..
     }
     //是视频
     else if (url.indexOf(".mp4") > -1 || url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1 || url.indexOf(".mov") > -1) {
+        alert(1)
         let $liTemp = $(`
             <li class="edit-pic-item">
-                <video class="showPic" src="${src}" width="100%" height="100%" preload="auto"></video>
+                <video class="showPic" src="${src}" width="100%" height="100%" autoplay="autoplay" loop></video>
                 <a href="javascript:void(0)" class="edit-closePic"></a>
             </li>
         `);
+
+        alert(src)
 
         //取消视频
         $liTemp.find("a.edit-closePic").click(function (event) {
@@ -502,6 +505,8 @@ function getJavaFiles(args) { // 路径/plulic/../..
                 $(self).closest('.edit-pic-item').remove();
             });
         })
+
+        alert(3)
 
         $(".showPicUl").prepend($liTemp);
     }
