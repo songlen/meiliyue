@@ -153,6 +153,7 @@ let Global = (function () {
         $(ele).removeClass("eventsDisabled");
     }
 
+    //普通的全屏视频预览 动态add
     function fullScreen(ele) {
         let $fullScreen = $(
             `
@@ -163,12 +164,14 @@ let Global = (function () {
 
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
-                        <video id="video1" width="100%" height="100%" src=${$(ele).attr("src")} controls="controls" autoplay loop></video>
+                        <video id="video1" width="100%" height="100%" src=${$(ele).attr("src")} controls="controls" autoplay="autoplay" loop></video>
                     </div>
                 </div>
             </div>
             `
         );
+
+        let video1=$fullScreen.find("#video1")[0];
 
         //点击关闭事件
         $fullScreen.find(".closeFullScreen").click(function () {
@@ -176,6 +179,7 @@ let Global = (function () {
         });
 
         $("body").append($fullScreen);
+        video1.play();
     }
 
     function fullScreenAuth({
@@ -508,10 +512,12 @@ function getJavaFiles(args) { // 路径/plulic/../..
         // alert(1)
         let $liTemp = $(`
             <li class="edit-pic-item">
-                <video class="showPic" src="${src}" width="100%" height="100%" autoplay="autoplay" loop></video>
+                <video class="showPic" src="" width="100%" height="100%"></video>
                 <a href="javascript:void(0)" class="edit-closePic"></a>
             </li>
         `);
+
+        //<video class="showPic" src="${src}" width="100%" height="100%" autoplay="autoplay" loop></video>
 
         // alert(src)
 
