@@ -1807,6 +1807,7 @@ ul.signatureList li.actived {
 
 .editItemContent.signatureWrap {
     text-align: left;
+    margin-left: 0;
 }
 
 .nickname-content>p {
