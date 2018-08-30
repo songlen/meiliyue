@@ -427,6 +427,21 @@ let Global = (function () {
         img.src=src;
     }
 
+    //更新本地的userinfo
+    function updateLocalUserinfo(key,value){
+        if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
+            localStorage.getItem("mUserInfo") !== "null") {
+            let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+            console.log(mUserInfo)
+            
+            //更新key value
+            mUserInfo[key]=value;
+
+            localStorage["mUserInfo"] = JSON.stringify(JSON.stringify(mUserInfo));
+            localStorage.setItem("mUserInfo", JSON.stringify(JSON.stringify(mUserInfo)));
+        }
+    }
+
     //Global暴露的接口------------------------
     return {
         //值
@@ -449,7 +464,8 @@ let Global = (function () {
         fullScreenImg, //全屏显示图片 src
         filterHttpImg, //过滤http头像img  src
         compressImg, //压缩图片，file callback(blob)
-        getImgWidth //获取图片原始宽高
+        getImgWidth, //获取图片原始宽高
+        updateLocalUserinfo //更新本地的userinfo key,value
     }
 })();
 

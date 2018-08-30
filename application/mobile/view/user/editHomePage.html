@@ -1026,6 +1026,7 @@
                     dataType: "json",
                     success: function (result) {
                         console.log(result)
+                        Global.updateLocalUserinfo(key,value);
                         callback()
                     }
                 })
