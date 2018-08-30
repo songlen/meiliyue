@@ -164,7 +164,7 @@ let Global = (function () {
 
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
-                        <video id="video1" width="100%" height="100%" src=${$(ele).attr("src")} controls="controls" autoplay="autoplay" loop></video>
+                        <video id="video1" width="100%" height="100%" src=${$(ele).attr("data-src")} controls="controls" autoplay="autoplay" loop></video>
                     </div>
                 </div>
             </div>
@@ -512,7 +512,7 @@ function getJavaFiles(args) { // 路径/plulic/../..
         // alert(1)
         let $liTemp = $(`
             <li class="edit-pic-item">
-                <video class="showPic" src="" width="100%" height="100%"></video>
+                <video class="showPic" src="" data-src=${src} width="100%" height="100%"></video>
                 <a href="javascript:void(0)" class="edit-closePic"></a>
             </li>
         `);
