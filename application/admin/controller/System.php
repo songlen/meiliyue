@@ -39,6 +39,7 @@ class System extends Base
 		$inc_type =  I('get.inc_type','shop_info');
 		$this->assign('inc_type',$inc_type);
 		$config = tpCache($inc_type);
+        // p($config);
 		if($inc_type == 'shop_info'){
 			// $province = M('region')->where(array('parent_id'=>0))->select();
 			// $city =  M('region')->where(array('parent_id'=>$config['province']))->select();
@@ -61,16 +62,8 @@ class System extends Base
 		$inc_type = $param['inc_type'];
 		//unset($param['__hash__']);
 		unset($param['inc_type']);
-		tpCache($inc_type,$param);                
-                
-                // 设置短信商接口
-                if($param['sms_platform'] == 2 &&  !empty($param['sms_appkey'])  && !empty($param['sms_secretKey']))
-                {                     
-                    $sms_appkey = trim($param['sms_appkey']);
-                    $sms_secretKey = trim($param['sms_secretKey']);
-                    $url = 'http://open.1cloudsp.com:8090/api/admin/setParentId?parentId=14257&accesskey='.urlencode($sms_appkey).'&secret='.urlencode($sms_secretKey);
-                    httpRequest($url);                    
-                }                                
+		tpCache($inc_type, $param);                
+                                              
 		$this->success("操作成功",U('System/index',array('inc_type'=>$inc_type)));
 	}        
         

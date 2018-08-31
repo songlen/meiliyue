@@ -114,7 +114,8 @@ class Dynamics extends Base {
         // $data['location'] = I('location');
         // $data['visible'] = I('visible');
 
-        $data['status'] = '2';
+        $shopinfo_config = tpCache('shop_info');
+        $data['status'] = ($shopinfo_config['examine_invite'] == '1' ? 1 : 2);
         $data['add_time'] = time();
 
         /********************** 上传图片 *********************/

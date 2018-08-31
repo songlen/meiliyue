@@ -104,6 +104,8 @@ class Invite extends Base {
         $data['with_confidante'] = I('with_confidante');
 
         $data['add_time'] = time();
+        $shopinfo_config = tpCache('shop_info');
+        $data['status'] = ($shopinfo_config['examine_invite'] == '1' ? 1 : 2);
 
         if($_FILES['file']){
             $FileLogic = new FileLogic();

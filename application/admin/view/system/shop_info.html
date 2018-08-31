@@ -31,15 +31,7 @@
     <form method="post" id="handlepost" action="{:U('System/handle')}" enctype="multipart/form-data" name="form1">
         <input type="hidden" name="form_submit" value="ok" />
         <div class="ncap-form-default">
-            <dl class="row">
-                <dt class="tit">
-                    <label for="record_no">网站备案号</label>
-                </dt>
-                <dd class="opt">
-                    <input id="record_no" name="record_no" value="{$config.record_no}" class="input-txt" type="text" />
-                    <p class="notic">网站备案号，将显示在前台底部欢迎信息等位置</p>
-                </dd>
-            </dl>
+
             <dl class="row">
                 <dt class="tit">
                     <label for="store_name">网站名称</label>
@@ -49,8 +41,26 @@
                     <p class="notic"></p>
                 </dd>
             </dl>
-
             <dl class="row">
+                <dt class="tit">
+                    <label for="examine_invite">邀约审核</label>
+                </dt>
+                <dd class="opt">
+                    <input name="examine_invite" type="radio" value="1" <if condition="$config.examine_invite eq 1"> checked="checked" </if> /> 是
+                    <input name="examine_invite" type="radio" value="0" <if condition="$config.examine_invite eq 0"> checked="checked" </if> /> 否
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="examine_dynamic">动态审核</label>
+                </dt>
+                <dd class="opt">
+                    <input name="examine_dynamic" type="radio" value="1" <if condition="$config.examine_dynamic eq 1"> checked="checked" </if> /> 是
+                    <input name="examine_dynamic" type="radio" value="0" <if condition="$config.examine_dynamic eq 0"> checked="checked" </if> /> 否
+                </dd>
+            </dl>
+
+            <!-- <dl class="row">
                 <dt class="tit">
                     <label for="store_logo">网站Logo</label>
                 </dt>
@@ -61,69 +71,18 @@
                                 <i id="store_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.store_logo|default=\'/public/static/images/logo/pc_home_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
                             </a>
                         </span>
-           	            <span class="type-file-box">
+                                       <span class="type-file-box">
                             <input type="text" id="store_logo" name="store_logo" value="{$config.store_logo|default='/public/static/images/logo/pc_home_logo_default.png'}" class="type-file-text">
                             <input type="button" name="button" id="button1" value="选择上传..." class="type-file-button">
                             <input class="type-file-file" onClick="GetUploadify(1,'store_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
                         </span>
                     </div>
-                    <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/pc_home_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=/public/static/images/logo/pc_home_logo_pos.png>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
-                    </div>
                     <span class="err"></span>
-                    <p class="notic">默认网站首页LOGO,通用头部显示，最佳显示尺寸为230*58像素</p>
+                    <p class="notic"></p>
                 </dd>
-            </dl>
-            <dl class="row">
-                <dt class="tit">
-                    <label for="store_user_logo">网站用户中心Logo</label>
-                </dt>
-                <dd class="opt">
-                    <div class="input-file-show">
-                        <span class="show">
-                            <a id="store_user_logo_a" class="nyroModal" rel="gal" href="{$config.store_user_logo|default='/public/static/images/logo/pc_home_user_logo_default.png'}">
-                                <i id="store_user_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.store_user_logo|default=\'/public/static/images/logo/pc_home_user_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
-                            </a>
-                        </span>
-           	            <span class="type-file-box">
-                            <input type="text" id="store_user_logo" name="store_user_logo" value="{$config.store_user_logo|default='/public/static/images/logo/pc_home_user_logo_default.png'}" class="type-file-text">
-                            <input type="button" name="button" value="选择上传..." class="type-file-button">
-                            <input class="type-file-file" onClick="GetUploadify(1,'store_user_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
-                        </span>
-                    </div>
-                    <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/pc_home_user_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=/public/static/images/logo/pc_home_user_logo_pos.png>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();">
-                            <i class="fa fa-picture-o"></i>
-                        </a>
-                    </div>
-                    <span class="err"></span>
-                    <p class="notic">默认用户中心网站LOGO,用户中心通用头部显示，最佳显示尺寸为230*58像素</p>
-                </dd>
-            </dl>
-            <dl class="row">
-                <dt class="tit">
-                    <label for="store_logo">网站标题图标</label>
-                </dt>
-                <dd class="opt">
-                    <div class="input-file-show">
-                        <span class="show">
-                            <a id="storeico_a" target="_blank" class="nyroModal" rel="gal" href="{$config.store_ico}">
-                                <i id="storeico_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.store_ico}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
-                            </a>
-                        </span>
-           	            <span class="type-file-box">
-                            <input type="text" id="store_ico" name="store_ico" value="{$config.store_ico}" class="type-file-text">
-                            <input type="button" name="button" id="button_ico" value="选择上传..." class="type-file-button">
-                            <input class="type-file-file" onClick="GetUploadify(1,'store_ico','logo','store_ico_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
-                        </span>
-                    </div>
-                    <div class="system_img_location"><a title="图片所在位置" href="/public/static/images/logo/storeico_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=/public/static/images/logo/storeico_pos.png>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
-                    </div>
-                    <span class="err"></span>
-                    <p class="notic">网站标题图标LOGO,最佳显示尺寸为48*48像素</p>
-                </dd>
-            </dl>
-            <dl class="row">
+            </dl> -->
+
+            <!-- <dl class="row">
                 <dt class="tit">
                     <label for="store_title">网站标题</label>
                 </dt>
@@ -149,135 +108,7 @@
                     <input id="store_keyword" name="store_keyword" value="{$config.store_keyword}" class="input-txt" type="text" />
                     <p class="notic">网站关键字，便于SEO</p>
                 </dd>
-            </dl>
-            <dl class="row">
-                <dt class="tit">
-                    <label for="admin_login_logo">平台管理员登录页Logo</label>
-                </dt>
-                <dd class="opt">
-                    <div class="input-file-show">
-                        <span class="show">
-                            <a id="admin_login_logo_a" class="nyroModal" rel="gal" href="{$config.admin_login_logo|default='/public/static/images/logo/admin_login_logo_default.png'}">
-                                <i id="admin_login_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.admin_login_logo|default=\'/public/static/images/logo/admin_login_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
-                            </a>
-                        </span>
-           	            <span class="type-file-box">
-                            <input type="text" id="admin_login_logo" name="admin_login_logo" value="{$config.admin_login_logo|default='/public/static/images/logo/admin_login_logo_default.png'}" class="type-file-text">
-                            <input type="button" name="button" value="选择上传..." class="type-file-button">
-                            <input class="type-file-file" onClick="GetUploadify(1,'admin_login_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
-                        </span>
-                    </div>
-                    <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/admin_login_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=/public/static/images/logo/admin_login_logo_pos.png>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
-                    </div>
-                    <span class="err"></span>
-                    <p class="notic"></p>
-                </dd>
-
-            </dl>
-            <dl class="row">
-                <dt class="tit">
-                    <label for="admin_home_logo">平台后台顶部Logo</label>
-                </dt>
-                <dd class="opt">
-                    <div class="input-file-show">
-                        <span class="show">
-                            <a id="admin_home_logo_a" class="nyroModal" rel="gal" href="{$config.admin_home_logo|default='/public/static/images/logo/admin_home_logo_default.png'}">
-                                <i id="admin_home_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.admin_login_logo|default=\'/public/static/images/logo/admin_home_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
-                            </a>
-                        </span>
-           	            <span class="type-file-box">
-                            <input type="text" id="admin_home_logo" name="admin_home_logo" value="{$config.admin_home_logo|default='/public/static/images/logo/admin_home_logo_default.png'}" class="type-file-text">
-                            <input type="button" name="button" value="选择上传..." class="type-file-button">
-                            <input class="type-file-file" onClick="GetUploadify(1,'admin_home_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
-                        </span>
-                    </div>
-                    <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/admin_home_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=/public/static/images/logo/admin_home_logo_pos.png>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
-                    </div>
-                    <span class="err"></span>
-                    <p class="notic"></p>
-                </dd>
-
-            </dl>
-            <dl class="row">
-                <dt class="tit">
-                    <label for="wap_home_logo">手机端首页Logo</label>
-                </dt>
-                <dd class="opt">
-                    <div class="input-file-show">
-                        <span class="show">
-                            <a id="wap_home_logo_a" class="nyroModal" rel="gal" href="{$config.wap_home_logo|default='/public/static/images/logo/wap_home_logo_default.png'}">
-                                <i id="wap_home_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.wap_home_logo|default=\'/public/static/images/logo/wap_home_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
-                            </a>
-                        </span>
-           	            <span class="type-file-box">
-                            <input type="text" id="wap_home_logo" name="wap_home_logo" value="{$config.wap_home_logo|default='/public/static/images/logo/wap_home_logo_default.png'}" class="type-file-text">
-                            <input type="button" name="button" value="选择上传..." class="type-file-button">
-                            <input class="type-file-file" onClick="GetUploadify(1,'wap_home_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
-                        </span>
-                    </div>
-                    <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/wap_home_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=/public/static/images/logo/wap_home_logo_pos.png>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
-                    </div>
-                    <span class="err"></span>
-                    <p class="notic"></p>
-                </dd>
-            </dl>
-            <dl class="row">
-                <dt class="tit">
-                    <label for="wap_login_logo">手机端登录页Logo</label>
-                </dt>
-                <dd class="opt">
-                    <div class="input-file-show">
-                        <span class="show">
-                            <a id="wap_login_logo_a" class="nyroModal" rel="gal" href="{$config.wap_login_logo|default='/public/static/images/logo/wap_logo_default.png'}">
-                                <i id="wap_login_logo_i" class="fa fa-picture-o" onmouseover="layer.tips('<img src={$config.wap_login_logo|default=\'/public/static/images/logo/wap_logo_default.png\'}>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"></i>
-                            </a>
-                        </span>
-           	            <span class="type-file-box">
-                            <input type="text" id="wap_login_logo" name="wap_login_logo" value="{$config.wap_login_logo|default='/public/static/images/logo/wap_logo_default.png'}" class="type-file-text">
-                            <input type="button" name="button" value="选择上传..." class="type-file-button">
-                            <input class="type-file-file" onClick="GetUploadify(1,'wap_login_logo','logo','img_call_back')" size="30" hidefocus="true" nc_type="change_site_logo" title="点击前方预览图可查看大图，点击按钮选择文件并提交表单后上传生效">
-                        </span>
-                    </div>
-                    <div class="system_img_location">
-                        <a title="图片所在位置" href="/public/static/images/logo/wap_login_logo_pos.png" class="pic-thumb-tip" onmouseover="layer.tips('<img src=/public/static/images/logo/wap_login_logo_pos.png>',this,{tips: [1, '#fff']});" onmouseout="layer.closeAll();"><i class="fa fa-picture-o"></i></a>
-                    </div>
-                    <span class="err"></span>
-                    <p class="notic"></p>
-                </dd>
-
-            </dl>
-
-
-            <dl class="row">
-                <dt class="tit">
-                    <label for="contact">联系人</label>
-                </dt>
-                <dd class="opt">
-                    <input id="contact" name="contact" value="{$config.contact}" class="input-txt" type="text" />
-                    <p class="notic">联系人</p>
-                </dd>
-            </dl>
-            <dl class="row">
-                <dt class="tit">
-                    <label for="phone">联系电话</label>
-                </dt>
-                <dd class="opt">
-                    <input id="phone" name="phone" value="{$config.phone}" class="input-txt" type="text" />
-                    <p class="notic"></p>
-                </dd>
-            </dl>
-            <dl class="row">
-                <dt class="tit">
-                    <label for="phone">联系手机</label>
-                </dt>
-                <dd class="opt">
-                    <input name="mobile" value="{$config.mobile}" class="input-txt" type="text" />
-
-                </dd>
-            </dl>
+            </dl> -->
             <div class="bot">
                 <input type="hidden" name="inc_type" value="{$inc_type}">
                 <a href="JavaScript:void(0);" class="ncap-btn-big ncap-btn-green" onclick="document.form1.submit()">确认提交</a>
