@@ -29,7 +29,7 @@ class Invite extends Base {
         $auth_video = I('auth_video');
         $page = I('page', 1);
         /************************ 要查询的字段 ***************************/
-        $field = 'u.user_id, head_pic, auth_video_status, nickname, u.sex, u.age, i.id, i.title, i.description, i.time, i.place, image';
+        $field = 'u.user_id, head_pic, auth_video_status, nickname, u.sex, u.birthday, u.age, i.id, i.title, i.description, i.time, i.place, image';
         /************************ 排序 ***************************/
         $order_type = I('order_type', 1);
         if($order_type == 1) $order = 'add_time desc';
@@ -76,6 +76,9 @@ class Invite extends Base {
 
                 // 计算用户和发布者之间的距离，sql计算出来的是米 这里转换成 km
                 $item['distince'] = round($item['distince']/1000, 2); 
+
+                // 计算年龄
+                $item['age'] = getAge($item['birthday']);
             }
         }
         response_success($lists);   

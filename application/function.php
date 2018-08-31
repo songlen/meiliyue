@@ -1039,3 +1039,28 @@ function timeFormat($time)
     }
     return $result;
 }
+
+/**
+ * [calcAge description]
+ * @param  [type] $birthday [生日 格式：2018-08-08]
+ * @return [type]           [description]
+ */
+function getAge($birthday) {
+        $age = 0;
+        if(!empty($birthday)){
+            $age = strtotime($birthday);
+            if($age === false){
+                return 0;
+            }
+            
+            list($y1,$m1,$d1) = explode("-",date("Y-m-d", $age));
+            
+            list($y2,$m2,$d2) = explode("-",date("Y-m-d"), time());
+            
+            $age = $y2 - $y1;
+            if((int)($m2.$d2) < (int)($m1.$d1)){
+                $age -= 1;
+            }
+        }
+        return $age;
+    }
