@@ -44,9 +44,9 @@ class Invite extends Base {
         $where['u.longitude'] = array('BETWEEN', array($around['minLongitude'], $around['maxLongitude']));
         $where['u.latitude'] = array('BETWEEN', array($around['minLatitude'], $around['maxLatitude']));
         // sql 计算距离 并按距离排序
-        $field .= ", ROUND(6378.138*2*ASIN(SQRT(POW(SIN(($user_latitude*PI()/180-u.latitude*PI()/180)/2),2)+COS($user_latitude*PI()/180)*COS(u.latitude*PI()/180)*POW(SIN(($user_longitude*PI()/180-u.longitude*PI()/180)/2),2)))*1000) AS distince";
+        $field .= ", ROUND(6378.138*2*ASIN(SQRT(POW(SIN(($user_latitude*PI()/180-u.latitude*PI()/180)/2),2)+COS($user_latitude*PI()/180)*COS(u.latitude*PI()/180)*POW(SIN(($user_longitude*PI()/180-u.longitude*PI()/180)/2),2)))*1000) AS distance";
         if($order_type == 3) {
-            $order = 'distince asc';
+            $order = 'distance asc';
         }
 
         /************************ 筛选条件 ***************************/
@@ -74,7 +74,7 @@ class Invite extends Base {
                 $item['image'] = $image ? $image[0] : '';
 
                 // 计算用户和发布者之间的距离，sql计算出来的是米 这里转换成 km
-                $item['distince'] = round($item['distince']/1000, 2); 
+                $item['distance'] = round($item['distance']/1000, 2); 
 
                 // 计算年龄
                 $item['age'] = getAge($item['birthday']);
