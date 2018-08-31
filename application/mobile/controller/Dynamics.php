@@ -34,10 +34,11 @@ class Dynamics extends Base {
         $info = Db::name('dynamics')->alias('d')
             ->join('users u', 'd.user_id=u.user_id', 'left')
             ->where($where)
-            ->field('u.user_id, head_pic, nickname, u.sex, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time, d.flower_num')
+            ->field('u.user_id, head_pic, nickname, u.sex, u.birthday, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time, d.flower_num')
             ->find();
 
         if($info) {
+            $info['age'] = getAge($info['birthday']);
             $info['content'] = html_entity_decode($info['content']);
         }
 

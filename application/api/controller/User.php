@@ -58,6 +58,8 @@ class User extends Base {
                     'origin' => 2,
                     'add_time' => time(),
                 );
+                $shopinfo_config = tpCache('shop_info');
+                $data['status'] = ($shopinfo_config['examine_invite'] == '1' ? 1 : 2);
                 D('dynamics')->add($dynamics_data);
 
                 response_success(array('head_pic'=>$fullPath));
@@ -434,6 +436,8 @@ class User extends Base {
         $data['city'] = I('city');
         $data['longitude'] = I('longitude');
         $data['latitude'] = I('latitude');
+
+        if($user_id == 1) response_success('', '操作成功');
 
         if(M('users')->where('user_id', $user_id)->update($data) !== false){
             response_success('', '操作成功');
