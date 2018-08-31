@@ -125,7 +125,7 @@
                                             </span>
                                             <span class="job" style="display: none;">职业经理人</span>
                                         </div>
-                                        <div class="distance">{{item.distince}}km</div>
+                                        <div class="distance">{{item.distance}}km</div>
                                     </div>
                                 </div>
                                 <div class="bottom clearfix">
@@ -480,7 +480,7 @@
                                 console.log(result.data)
                                 //测试用 查看distance
                                 let distanceArr=result.data.map(function(item){
-                                    return item.distince;
+                                    return item.distance;
                                 });
                                 console.log(distanceArr)
                                 if (isScroll) { //是滚动
