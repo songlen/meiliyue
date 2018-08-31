@@ -544,9 +544,9 @@
                     Details.showFullPic(this);
                 });
                 //点击视频显示全屏视频
-                $(".details-content-text").delegate("img.detailImgVideoWrap", "click", function () {
-                    let src=$(this).attr("data-src");
-                    let posterSrc=$(this).attr("src");
+                $(".detailImgVideoWrap").click(function () {
+                    let src=$(this).find("img").attr("data-src");
+                    let posterSrc=$(this).find("img").attr("src");
                     Global.fullScreen(src,posterSrc);
                 });
             },
