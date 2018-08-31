@@ -204,7 +204,8 @@
                     console.log(imageJson)
                     $(":input[name='image']").val(imageJson);
                 } else if (Edit._type == 3) { //视频
-                    let videoStr = "/public/" + $("video.showPic").attr("src").split("/public/")[1];
+                    let videoStr = "/public/" + $("video.showPic").attr("data-src").split("/public/")[1];
+                    // alert(videoStr)
                     $(":input[name='video']").val(videoStr);
                 }
 
@@ -339,7 +340,8 @@
                 });
                 //点击video显示全屏预览
                 $(".showPicUl").delegate("video.showPic", "click", function () {
-                    Global.fullScreen(this);
+                    let src=$(this).attr("data-src");
+                    Global.fullScreen(src);
                 });
             },
             init: function () {

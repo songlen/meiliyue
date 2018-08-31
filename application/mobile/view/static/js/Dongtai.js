@@ -314,18 +314,21 @@ $(function () {
                                 user_id: _self.user_id,
                                 range: _self.nowArea == "同城" ? 1 : 2
                             }
+                            _self.areaDataList.page=1;
                             break;
                         case "attendedDataList":
                             postData = {
                                 user_id: _self.user_id,
                                 attention: 1
                             }
+                            _self.attendedDataList.page=1;
                             break;
                         case "videoDataList":
                             postData = {
                                 user_id: _self.user_id,
                                 jizha: 1
                             }
+                            _self.videoDataList.page=1;
                             break;
                         default:
                             break;

@@ -51,6 +51,11 @@
                             </div>
                         </foreach>
                     </if>
+                    <if condition="$info['video_url'] && !empty($info['video_url'])">
+                        <div class="detailImgBox detailImgVideoWrap">
+                            <img class="detailImgVideo" src="{$info['video_thumb']}" data-src="{$info['video_url']}">
+                        </div>
+                    </if>
                 </div>
                 <div class="details-flower">
                     <div class="giveFlower">
@@ -220,7 +225,7 @@
                     ulrStr = ulrStr + ".html";
                 }
                 if (ulrStr.indexOf("file://") > -1) {
-                    ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/155.html" //测试用
+                    ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/69.html" //测试用
                 }
                 var strTemp = ulrStr.split("/detail/id/")[1];
                 Details.dynamic_id = Number(strTemp.substr(0, strTemp.length - 5));
@@ -537,6 +542,12 @@
                 $(".details-content-text").delegate("img.detailImg", "click", function () {
                     console.log($(this).attr("src"))
                     Details.showFullPic(this);
+                });
+                //点击视频显示全屏视频
+                $(".detailImgVideoWrap").click(function () {
+                    let src=$(this).find("img").attr("data-src");
+                    let posterSrc=$(this).find("img").attr("src");
+                    Global.fullScreen(src,posterSrc);
                 });
             },
             init: function () {
