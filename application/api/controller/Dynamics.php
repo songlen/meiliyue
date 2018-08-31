@@ -46,7 +46,6 @@ class Dynamics extends Base {
                     $attention_uids[] = $a_user['friend_id'];
                 }
             }
-            $attention_uids[] =$user_id;
             $where['d.user_id'] = array('in', $attention_uids);
         }
 
