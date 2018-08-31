@@ -340,7 +340,8 @@
                 });
                 //点击video显示全屏预览
                 $(".showPicUl").delegate("video.showPic", "click", function () {
-                    Global.fullScreen(this);
+                    let src=$(this).attr("data-src");
+                    Global.fullScreen(src);
                 });
             },
             init: function () {
