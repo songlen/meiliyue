@@ -154,7 +154,8 @@ let Global = (function () {
     }
 
     //普通的全屏视频预览 动态add
-    function fullScreen(src) {
+    function fullScreen(src,posterSrc) {
+        posterSrc=posterSrc?posterSrc:"";
         let $fullScreen = $(
             `
             <div class="fullScreen">
@@ -164,7 +165,7 @@ let Global = (function () {
 
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
-                        <video id="video1" width="100%" height="100%" src=${src} controls="controls" autoplay="autoplay" loop></video>
+                        <video id="video1" width="100%" height="100%" src=${src} controls="controls" autoplay="autoplay" loop poster=${posterSrc}></video>
                     </div>
                 </div>
             </div>
