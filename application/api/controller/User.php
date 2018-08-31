@@ -123,7 +123,9 @@ class User extends Base {
     	$userInfo = M('users')->where("user_id", $user_id)->find();
         unset($userInfo['password']);
        
-       response_success($userInfo);
+       // 计算年龄
+        $userInfo['age'] = getAge($userInfo['birthday']);
+        response_success($userInfo);
     }
 
     public function message(){

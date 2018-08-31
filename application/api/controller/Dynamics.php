@@ -50,7 +50,7 @@ class Dynamics extends Base {
         }
 
         if($range || $attention){
-            $field = 'u.user_id, head_pic, nickname, u.sex, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time, d.flower_num';
+            $field = 'u.user_id, head_pic, nickname, u.sex, u.birthday, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time, d.flower_num';
         }
         // 叽喳小视频
         if($jizha){
@@ -73,6 +73,7 @@ class Dynamics extends Base {
         if(is_array($lists) && !empty($lists)){
             
             foreach ($lists as $k => &$item) {
+                $item['age'] = getAge($item['birthday']);
                 // 图片类型，取出图片
                 if($item['type'] == '2'){
                     $dynamics_image = M('dynamics_image')->where('dynamic_id', $item['dynamic_id'])->field('image')->select();
