@@ -51,7 +51,7 @@ class Index extends Base {
             // sql 计算距离 并按距离排序
             // $field .= ", ROUND(6378.138*2*ASIN(SQRT(POW(SIN(($user_latitude*PI()/180-latitude*PI()/180)/2),2)+COS($user_latitude*PI()/180)*COS(latitude*PI()/180)*POW(SIN(($user_longitude*PI()/180-longitude*PI()/180)/2),2))), 2) AS distance";
             $field .= ", ROUND(6378.138*2*ASIN(SQRT(POW(SIN(($user_latitude*PI()/180-latitude*PI()/180)/2),2)+COS($user_latitude*PI()/180)*COS(latitude*PI()/180)*POW(SIN(($user_longitude*PI()/180-longitude*PI()/180)/2),2)))*1000) AS distince";
-            $order = 'distance asc';
+            $order = 'distince asc';
         }
         // 条件
         $where = array(
