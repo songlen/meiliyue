@@ -168,7 +168,7 @@ class User extends Base {
             ->join('dynamics d', 'd.id=dc.dynamic_id', 'left')
             ->join('users u', 'u.user_id=dc.commentator_id', 'left')
             ->where('dc.reply_user_id', $user_id)
-            ->field('d.type, d.description, d.content,u.user_id, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.age, dc.dynamic_id, dc.content, dc.parent_id, dc.add_time')
+            ->field('d.type, d.description, d.content,u.user_id, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.birthday, u.age, dc.dynamic_id, dc.content, dc.parent_id, dc.add_time')
             ->limit($start_limit, 20)
             ->select();
 
@@ -179,6 +179,7 @@ class User extends Base {
                     $item['image'] = $image['image'] ?  $image['image'] : '';
                     $item['video'] = $image['video'] ?  $image['video'] : '';
                 }
+                $item['age'] = getAge($item['birthday']);
             }
         }
 
@@ -294,6 +295,7 @@ class User extends Base {
         $toUserInfo = M('users')->where('user_id', $toUserId)->find();
         unset($toUserInfo['password']);
 
+        $toUserInfo['age'] = getAge($toUserInfo['birthday']);
         $data['baseinfo'] = $toUserInfo;
         $data['baseinfo']['province'] = $toUserInfo['province'] ? getRegionNameByCode($toUserInfo['province']) : '';
         $data['baseinfo']['city'] = $toUserInfo['city'] ? getRegionNameByCode($toUserInfo['city']) : '';
@@ -340,6 +342,7 @@ class User extends Base {
         $user = M('users')->where('user_id', $user_id)->find();
         unset($user['password']);
 
+        $user['age'] = getAge($user['birthday']);
         $data['baseinfo'] = $user;
 
         /************** 我的的邀约 *********/
@@ -472,7 +475,7 @@ class User extends Base {
         } else {
             $join_on = 'uv.to_user_id = u.user_id';
             $where['uv.user_id'] = $user_id;
-            $field = 'to_user_id user_id, head_pic, nickname, age, sex, uv.add_time, signature';
+            $field = 'to_user_id user_id, head_pic, nickname, birthday, age, sex, uv.add_time, signature';
         }
 
         $limit_start = ($page-1)*10;
@@ -484,6 +487,11 @@ class User extends Base {
             ->limit($limit_start, 10)
             ->select();
 
+        if(is_array($lists) && !empty($lists)){
+            foreach ($lists as &$item) {
+                $item['age'] = getAge($item['birthday']);
+            }
+        }
 
         response_success($lists);
     }
@@ -546,11 +554,11 @@ class User extends Base {
         if($type == '1'){
             $join_on = 'f.friend_id = u.user_id';
             $where['f.user_id'] = $user_id;
-            $field = 'friend_id user_id, head_pic, nickname, auth_video_status, twoway';
+            $field = 'friend_id user_id, head_pic, nickname, birthday, auth_video_status, twoway';
         } else {
             $join_on = 'f.friend_id = u.user_id';
             $where['f.friend_id'] = $user_id;
-            $field = 'u.user_id, head_pic, nickname, auth_video_status, twoway';
+            $field = 'u.user_id, head_pic, nickname, birthday, auth_video_status, twoway';
         }
 
         $limit_start = ($page-1)*20;
@@ -561,6 +569,12 @@ class User extends Base {
             ->field($field)
             ->limit($limit_start, 20)
             ->select();
+
+        if(is_array($lists) && !empty($lists)){
+            foreach ($lists as &$item) {
+                $item['age'] = getAge($item['birthday']);
+            }
+        } 
 
         response_success($lists);
     }
