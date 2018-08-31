@@ -133,7 +133,7 @@
                 </li>
                 <li class="editItem">
                     <div>
-                        <label class="editItemTitle">个性签名</label>
+                        <label class="editItemTitle" style="float:none;">个性签名</label>
                         <div class="editItemContent signatureWrap">
                             <span class="signature">signature</span>
                         </div>
@@ -243,6 +243,7 @@
     <script src="__STATIC__/js-dist/user-editHomePage.min.js"></script>
     <!-- jquery.form-js -->
     <script src="__STATIC__/js/js-plugins/jquery.form.js"></script>
+    <script src="__STATIC__/js/areaCodeArr.js"></script>
     <script src="__STATIC__/js/Global.js"></script>
     <script>
         var EditHome = {
@@ -319,16 +320,18 @@
                 } else {
                     $(".income").html("填写").addClass("canChoose")
                 }
-                //常住地
-                data.baseinfo.permanent_province = "辽宁省"; //测试用
-                data.baseinfo.permanent_city = "沈阳市"; //测试用
-                if (data.baseinfo.permanent_province && data.baseinfo.permanent_province !== "" && data.baseinfo
-                    .permanent_city && data.baseinfo.permanent_city !== "") {
-                    EditHome.curPermanent_province = data.baseinfo.permanent_province
-                    EditHome.curPermanent_city = data.baseinfo.permanent_city
+                //常住地 获取的是编码
+                // data.baseinfo.permanent_province = "辽宁省"; //测试用
+                // data.baseinfo.permanent_city = "沈阳市"; //测试用
+                if (data.baseinfo.permanent_province && data.baseinfo.permanent_province !== "" && data.baseinfo.permanent_city && data.baseinfo.permanent_city !== "") {
+                    let provObj=codeToAreaObj(data.baseinfo.permanent_province);
+                    let cityObj=codeToAreaObj(data.baseinfo.permanent_city);
+                    EditHome.curPermanent_province = provObj.name; 
+                    EditHome.curPermanent_city = cityObj.name; 
+                    // console.log(EditHome.curPermanent_province,EditHome.curPermanent_city)
 
-                    document.getElementById("city-picker").value = data.baseinfo.permanent_province + " " +
-                        data.baseinfo.permanent_city
+                    document.getElementById("city-picker").value = EditHome.curPermanent_province + " " +
+                    EditHome.curPermanent_city
                 }
                 EditHome.refreshPicker()
 
@@ -1026,6 +1029,7 @@
                     dataType: "json",
                     success: function (result) {
                         console.log(result)
+                        Global.updateLocalUserinfo(key,value);
                         callback()
                     }
                 })
@@ -1183,7 +1187,7 @@
                     console.log(mUserInfo)
                     EditHome.user_id = Number(mUserInfo.user_id);
                 } else {
-                    EditHome.user_id = 1; //测试用
+                    EditHome.user_id = 48; //测试用
                 }
 
                 //获取用户信息

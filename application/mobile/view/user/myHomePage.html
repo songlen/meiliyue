@@ -1103,9 +1103,10 @@
                     dataType: "json",
                     success: function (result) {
                         console.log(result)
+                        Global.updateLocalUserinfo(key,value);
                         callback()
                     }
-                })
+                });
             },
             savePageSession: function () {
                 //key : homePage

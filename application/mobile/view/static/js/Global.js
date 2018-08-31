@@ -153,6 +153,7 @@ let Global = (function () {
         $(ele).removeClass("eventsDisabled");
     }
 
+    //普通的全屏视频预览 动态add
     function fullScreen(ele) {
         let $fullScreen = $(
             `
@@ -163,12 +164,14 @@ let Global = (function () {
 
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
-                        <video id="video1" width="100%" height="100%" src=${$(ele).attr("src")} controls="controls" autoplay loop></video>
+                        <video id="video1" width="100%" height="100%" src=${$(ele).attr("data-src")} controls="controls" autoplay="autoplay" loop></video>
                     </div>
                 </div>
             </div>
             `
         );
+
+        let video1=$fullScreen.find("#video1")[0];
 
         //点击关闭事件
         $fullScreen.find(".closeFullScreen").click(function () {
@@ -176,6 +179,7 @@ let Global = (function () {
         });
 
         $("body").append($fullScreen);
+        video1.play();
     }
 
     function fullScreenAuth({
@@ -427,6 +431,21 @@ let Global = (function () {
         img.src=src;
     }
 
+    //更新本地的userinfo
+    function updateLocalUserinfo(key,value){
+        if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
+            localStorage.getItem("mUserInfo") !== "null") {
+            let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+            console.log(mUserInfo)
+            
+            //更新key value
+            mUserInfo[key]=value;
+
+            localStorage["mUserInfo"] = JSON.stringify(JSON.stringify(mUserInfo));
+            localStorage.setItem("mUserInfo", JSON.stringify(JSON.stringify(mUserInfo)));
+        }
+    }
+
     //Global暴露的接口------------------------
     return {
         //值
@@ -449,7 +468,8 @@ let Global = (function () {
         fullScreenImg, //全屏显示图片 src
         filterHttpImg, //过滤http头像img  src
         compressImg, //压缩图片，file callback(blob)
-        getImgWidth //获取图片原始宽高
+        getImgWidth, //获取图片原始宽高
+        updateLocalUserinfo //更新本地的userinfo key,value
     }
 })();
 
@@ -458,7 +478,7 @@ let Global = (function () {
 //上传文件的回调 args 文件路径
 function getJavaFiles(args) { // 路径/plulic/../..
     console.log(args)
-    alert(args)
+    // alert(args)
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
@@ -484,15 +504,22 @@ function getJavaFiles(args) { // 路径/plulic/../..
         })
 
         $(".showPicUl").prepend($liTemp);
+
+        alert("视频"+src)
     }
     //是视频
     else if (url.indexOf(".mp4") > -1 || url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1 || url.indexOf(".mov") > -1) {
+        // alert(1)
         let $liTemp = $(`
             <li class="edit-pic-item">
-                <video class="showPic" src="${src}" width="100%" height="100%" preload="auto"></video>
+                <video class="showPic" src="" data-src=${src} width="100%" height="100%"></video>
                 <a href="javascript:void(0)" class="edit-closePic"></a>
             </li>
         `);
+
+        //<video class="showPic" src="${src}" width="100%" height="100%" autoplay="autoplay" loop></video>
+
+        // alert(src)
 
         //取消视频
         $liTemp.find("a.edit-closePic").click(function (event) {
@@ -503,6 +530,10 @@ function getJavaFiles(args) { // 路径/plulic/../..
             });
         })
 
+        // alert(3)
+
         $(".showPicUl").prepend($liTemp);
+
+        alert("视频"+src)
     }
 }
