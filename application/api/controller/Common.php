@@ -22,7 +22,6 @@ class Common extends Base {
      * @return [type] [description]
      */
     public function uploadFile(){
-        p(ini_get('upload_max_filesize'));
         $type = I('type');
         switch ($type) {
             case 'dynamic_image':
