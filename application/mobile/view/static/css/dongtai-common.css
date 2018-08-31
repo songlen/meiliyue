@@ -407,26 +407,26 @@ footer li a {
 
 /* 短视频页 */
 
-.shortVideo-page {
+.video-page {
     margin-top: 0.14rem;
     margin-left: 0.06rem;
     margin-right: 0.06rem;
     /* display: none; */
 }
 
-.shortVideo-page ul {
+.video-page ul {
     display: flex;
     flex-wrap: wrap;
 }
 
-.shortVideo-page ul li {
+.video-page ul li {
     width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.shortVideo-page .mVideo {
+.video-page .mVideo {
     width: 1.6rem;
     height: 2.37rem;
     border-radius: 5px;
