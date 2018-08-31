@@ -22,10 +22,10 @@ class Dynamics extends Base {
      * @return [type] [description]
      */
     public function index(){
-        $user_id = I('user_id', 1);
-        $range = I('range', 1);
-        $attention = I('attention', 0);
-        $jizha = I('jizha', 0);
+        $user_id = I('user_id');
+        $range = I('range');
+        $attention = I('attention');
+        $jizha = I('jizha');
         $page = I('page', 1);
 
 
@@ -69,7 +69,7 @@ class Dynamics extends Base {
             ->order('d.id desc')
             ->limit($limit_start, 10)
             ->select();
-p(Db::name('dynamics')->getLastSql());
+
         if(is_array($lists) && !empty($lists)){
             
             foreach ($lists as $k => &$item) {
