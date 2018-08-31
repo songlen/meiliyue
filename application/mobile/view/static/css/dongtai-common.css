@@ -1295,7 +1295,7 @@ a.operate {
 }
 
 /* 动态详情小视频 */
-.detailImgVideo::after{
+.detailImgVideoWrap::after{
     content:"";
     display: block;
     position: absolute;
