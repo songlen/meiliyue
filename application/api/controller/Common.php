@@ -22,12 +22,13 @@ class Common extends Base {
      * @return [type] [description]
      */
     public function uploadFile(){
+        p(ini_get('upload_max_filesize'));
         $type = I('type');
         switch ($type) {
-            case 'danamic_image':
+            case 'dynamic_image':
                 $uploadPath = UPLOAD_PATH.'dynamics/image';
                 break;
-            case 'danamic_video':
+            case 'dynamic_video':
                 $uploadPath = UPLOAD_PATH.'dynamics/video';
                 break;
             
