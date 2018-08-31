@@ -69,7 +69,7 @@ class Dynamics extends Base {
             ->order('d.id desc')
             ->limit($limit_start, 10)
             ->select();
-
+p(Db::name('dynamics')->getLastSql());
         if(is_array($lists) && !empty($lists)){
             
             foreach ($lists as $k => &$item) {

@@ -554,11 +554,11 @@ class User extends Base {
         if($type == '1'){
             $join_on = 'f.friend_id = u.user_id';
             $where['f.user_id'] = $user_id;
-            $field = 'friend_id user_id, head_pic, nickname, birthday, auth_video_status, twoway';
+            $field = 'friend_id user_id, head_pic, nickname, auth_video_status, twoway';
         } else {
             $join_on = 'f.friend_id = u.user_id';
             $where['f.friend_id'] = $user_id;
-            $field = 'u.user_id, head_pic, nickname, birthday, auth_video_status, twoway';
+            $field = 'u.user_id, head_pic, nickname, auth_video_status, twoway';
         }
 
         $limit_start = ($page-1)*20;
@@ -569,12 +569,6 @@ class User extends Base {
             ->field($field)
             ->limit($limit_start, 20)
             ->select();
-
-        if(is_array($lists) && !empty($lists)){
-            foreach ($lists as &$item) {
-                $item['age'] = getAge($item['birthday']);
-            }
-        } 
 
         response_success($lists);
     }
