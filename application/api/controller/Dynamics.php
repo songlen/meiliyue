@@ -111,20 +111,21 @@ class Dynamics extends Base {
         $data['user_id'] = I('user_id');
         $data['type'] = I('type');
         $data['content'] = I('content');
-        // $data['location'] = I('location');
-        // $data['visible'] = I('visible');
-
-        $shopinfo_config = tpCache('shop_info');
-        $data['status'] = ($shopinfo_config['examine_invite'] == '1' ? 1 : 2);
         $data['add_time'] = time();
 
-        /********************** 上传图片 *********************/
+        /********************* 根据后台设置的是否审核动态来定动态状态 ***************/
+        $shopinfo_config = tpCache('shop_info');
+        $data['status'] = ($shopinfo_config['examine_invite'] == '1' ? 1 : 2);
+        
+
+        /********************** 上传图片， 图片视频app通过common里面的文件上传接口上传了 *********************/
         if($data['type'] == '2'){
             $data['image'] = json_decode(html_entity_decode(I('image')), true);
         }
         /************************ 上传视频 **********************/
         if($data['type'] == '3'){
             $data['video'] = I('video');
+            $data['video_thumb'] = I('video_thumb');
         }
 
         if(D('dynamics')->add($data)){
