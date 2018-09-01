@@ -50,7 +50,7 @@ class CarAuth extends Base {
     public function image(){
     	$id = I('id');
 
-    	$info = M('IdentityAuth')->where('id', $id)->field('image')->find();
+    	$info = M('CarAuth')->where('id', $id)->field('image')->find();
 
     	$this->assign('image', $info['image']);
     	return $this->fetch();
@@ -61,7 +61,7 @@ class CarAuth extends Base {
     	$status = I('status');
     	$user_id = I('user_id');
 
-    	M('IdentityAuth')->where('id', $id)->setField('status', $status);
+    	M('CarAuth')->where('id', $id)->setField('status', $status);
     	M('users')->where('user_id', $user_id)->setField('auth_identity_status', $status);
 
     }
