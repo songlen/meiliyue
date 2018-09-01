@@ -1244,10 +1244,14 @@
                 })
                 //点击编辑图标
                 $(".editHomePage").click(function () {
-                    if ($(".mask").length == 0) {
-                        $('body').append($('<div class="mask"></div>'))
-                    }
-                    $('.gotoEditHome').show();
+                    // if ($(".mask").length == 0) {
+                    //     $('body').append($('<div class="mask"></div>'))
+                    // }
+                    // $('.gotoEditHome').show();
+
+                    Homepage.savePageSession();
+
+                    window.location.href = Global.host + "/index.php/mobile/user/editHomePage.html";
                 })
                 //点击弹出的 取消
                 $('.home-cancel').click(function () {
