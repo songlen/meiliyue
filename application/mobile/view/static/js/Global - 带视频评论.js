@@ -227,7 +227,6 @@ let Global = (function () {
         head_pic,
         src,
         poster,
-        dynamic_id
     }){
         if(head_pic){
             head_pic=filterHttpImg(head_pic);
@@ -249,9 +248,20 @@ let Global = (function () {
                     <div class="fullScreenWrap">
                         <span class="progressBar"></span>
                         <video id="video1" width="100%" height="100%" src="${src}" poster="${poster}" autoplay="autoplay" loop></video>
-                        <div class="videoFooter" style="justify-content: flex-end;">
-                            <div class="dynamicDetailBtn" style="font-size:inherit;color:#fff;margin-right:30px;">查看动态详情</div>
+                        <div class="videoFooter">
+                            <div class="videoCommentBtn"></div>
+                            
                         </div>
+                    </div>
+                    <!-- 小视频评论 -->
+                    <div class="" style="height: 300px;background-color: red;;">
+
+                    </div>
+
+                    <!-- 小视频评论input -->
+                    <div class="videoInput">
+                        <input type="text">
+                        <span class="sendComment">发送</span>
                     </div>
                 </div>
             </div>
@@ -262,7 +272,6 @@ let Global = (function () {
         let $div=$(divHtml);
         let video=$div.find("#video1")[0];
 
-        // 绑定事件
         //关闭事件
         $div.find(".closeFullScreen").click(function(event){
             event.stopPropagation();
@@ -279,12 +288,6 @@ let Global = (function () {
                 this.pause()
             }
         });
-        //去动态详情页
-        $div.find(".dynamicDetailBtn").click(function(event){
-            event.stopPropagation();
-            window.location.href = GlobalHost + '/index.php/mobile/dynamics/detail/id/' + dynamic_id + '.html';
-        });
-        // 绑定事件 end
 
         //总是从头开始播放
         video.currentTime = 0; 
@@ -300,6 +303,7 @@ let Global = (function () {
         //append div
         video.play()
         $("body").append($div);
+            
     }
 
     function fullScreenImg(src) {

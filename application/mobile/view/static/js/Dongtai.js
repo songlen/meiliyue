@@ -273,7 +273,8 @@ $(function () {
                     user_id:item.user_id,
                     // head_pic:
                     src:Global.filterHttpImg(item.video_url),
-                    poster:Global.host+item.video_thumb
+                    poster:Global.host+item.video_thumb,
+                    dynamic_id:item.dynamic_id,
                 };
                 Global.fullScreenVideo(options);
             },
