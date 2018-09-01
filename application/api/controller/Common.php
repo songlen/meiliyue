@@ -23,25 +23,24 @@ class Common extends Base {
      */
     public function uploadFile(){
         $type = I('type');
-        switch ($type) {
-            case 'dynamic_image':
-                $uploadPath = UPLOAD_PATH.'dynamics/image';
-                break;
-            case 'dynamic_video':
-                $uploadPath = UPLOAD_PATH.'dynamics/video';
-                break;
-            
-            default:
-                $uploadPath = UPLOAD_PATH.'files';
-                break;
-        }
 
+        if( ! in_array($type, array('dynamic_image', 'dynamic_video'))) response_error('', '不被允许的类型');
         if(empty($_FILES)) response_error('文件不能为空');
 
+        /************* 上传路径 ***************/        
+        $uploadPath = UPLOAD_PATH.'files';
+        if($type == 'dynamic_image') $uploadPath = UPLOAD_PATH.'dynamics/image';
+        if($type == 'dynamic_video') $uploadPath = UPLOAD_PATH.'dynamics/video';
+        
         $FileLogic = new FileLogic();
         $result = $FileLogic->uploadSingleFile('file', $uploadPath);
         if($result['status'] == '1'){
-            response_success(array('filepath'=>$result['fullPath']));
+            $filepath = $result['fullPath'];
+            $thumb = '';
+            if($type == 'dynamic_video'){
+                $thumb = $FileLogic->video2thumb($filepath);
+            }
+            response_success(array('filepath'=>$filepath, 'thumb'=>$thumb));
         } else {
             response_error('', '文件上传失败');
         }

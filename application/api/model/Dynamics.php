@@ -18,8 +18,8 @@ class Dynamics extends Model {
                 }
             }
             // 保存视频路径
-            if($data['video']){
-               $video = $data['video'];
+            if($data['video'] && $data['video_thumb']){
+               /*$video = $data['video'];
                vendor('Alchemy.BinaryDriver.ProcessRunnerInterface');
                vendor('Alchemy.BinaryDriver.Listeners.ListenerInterface');
                vendor('Alchemy.BinaryDriver.Listeners.Listeners');
@@ -54,8 +54,8 @@ class Dynamics extends Model {
                 $video_pic = substr($video, 0, $pos).'.jpg';
                 $videoObj
                     ->frame(\FFMpeg\Coordinate\TimeCode::fromSeconds(0))
-                    ->save(ROOT_PATH.$video_pic);
-                M('dynamics_image')->insert(array('dynamic_id'=>$insert_id, 'image'=>$video_pic, 'video'=>$video));
+                    ->save(ROOT_PATH.$video_pic);*/
+                M('dynamics_image')->insert(array('dynamic_id'=>$insert_id, 'image'=>$data['video_thumb'], 'video'=>$data['video']));
             }
             return true;
         } else {

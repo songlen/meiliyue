@@ -45,4 +45,43 @@ class FileLogic extends Controller {
         }
         
 	}
+
+    public function video2thumb($video_url){
+        vendor('Alchemy.BinaryDriver.ProcessRunnerInterface');
+        vendor('Alchemy.BinaryDriver.Listeners.ListenerInterface');
+        vendor('Alchemy.BinaryDriver.Listeners.Listeners');
+        vendor('Alchemy.BinaryDriver.ProcessRunner');
+        vendor('Alchemy.BinaryDriver.ProcessBuilderFactoryInterface');
+        vendor('Alchemy.BinaryDriver.ProcessBuilderFactory');
+        vendor('Alchemy.BinaryDriver.ConfigurationInterface');
+        vendor('Alchemy.BinaryDriver.Configuration');
+        vendor('Alchemy.BinaryDriver.EventEmitterInterface');
+        vendor('Alchemy.BinaryDriver.ProcessRunnerAwareInterface');
+        vendor('Alchemy.BinaryDriver.ProcessBuilderFactoryAwareInterface');
+        vendor('Alchemy.BinaryDriver.ConfigurationAwareInterface');
+        vendor('Alchemy.BinaryDriver.BinaryInterface');
+        vendor('Alchemy.BinaryDriver.AbstractBinary');
+        vendor('Doctrine.Common.Cache.MultiPutCache');
+        vendor('Doctrine.Common.Cache.MultiGetCache');
+        vendor('Doctrine.Common.Cache.ClearableCache');
+        vendor('Doctrine.Common.Cache.FlushableCache');
+        vendor('Doctrine.Common.Cache.Cache');
+        vendor('Doctrine.Common.Cache.CacheProvider');
+        vendor('Doctrine.Common.Cache.ArrayCache');
+         // 创建视频缩略图
+         $ffmpeg = \FFMpeg\FFMpeg::create(array(
+             'ffmpeg.binaries'  => VENDOR_PATH.'php-ffmpeg/bin/ffmpeg.exe',
+             'ffprobe.binaries' => VENDOR_PATH.'php-ffmpeg/bin/ffprobe.exe',
+             // 'ffmpeg.binaries'  => '/usr/bin/ffmpeg',
+             // 'ffprobe.binaries' => '/usr/bin/ffprobe',
+         ));
+
+         $videoObj = $ffmpeg->open(ROOT_PATH.$video_url);
+         $pos = strpos($video_url, '.');
+         $video_pic = substr($video_url, 0, $pos).'.jpg';
+         $videoObj->frame(\FFMpeg\Coordinate\TimeCode::fromSeconds(0))
+                ->save(ROOT_PATH.$video_pic);
+
+        return $video_pic;
+    }
 }
