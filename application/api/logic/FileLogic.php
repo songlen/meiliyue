@@ -1,6 +1,6 @@
 <?php
 /**
- * 短信验证码类
+ * 文件上传类
  */
 
 namespace app\api\logic;
@@ -70,18 +70,18 @@ class FileLogic extends Controller {
         vendor('Doctrine.Common.Cache.ArrayCache');
          // 创建视频缩略图
          $ffmpeg = \FFMpeg\FFMpeg::create(array(
-             'ffmpeg.binaries'  => VENDOR_PATH.'php-ffmpeg/bin/ffmpeg.exe',
-             'ffprobe.binaries' => VENDOR_PATH.'php-ffmpeg/bin/ffprobe.exe',
-             // 'ffmpeg.binaries'  => '/usr/bin/ffmpeg',
-             // 'ffprobe.binaries' => '/usr/bin/ffprobe',
+             // 'ffmpeg.binaries'  => VENDOR_PATH.'php-ffmpeg/bin/ffmpeg.exe',
+             // 'ffprobe.binaries' => VENDOR_PATH.'php-ffmpeg/bin/ffprobe.exe',
+             'ffmpeg.binaries'  => '/usr/bin/ffmpeg',
+             'ffprobe.binaries' => '/usr/bin/ffprobe',
          ));
 
          $videoObj = $ffmpeg->open(ROOT_PATH.$video_url);
          $pos = strpos($video_url, '.');
-         $video_pic = substr($video_url, 0, $pos).'.jpg';
+         $video_thumb = substr($video_url, 0, $pos).'.jpg';
          $videoObj->frame(\FFMpeg\Coordinate\TimeCode::fromSeconds(0))
-                ->save(ROOT_PATH.$video_pic);
+                ->save(ROOT_PATH.$video_thumb);
 
-        return $video_pic;
+        return $video_thumb;
     }
 }

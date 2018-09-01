@@ -5,6 +5,7 @@ use think\Db;
 use app\api\logic\SmsLogic;
 use app\api\logic\FileLogic;
 use app\api\logic\GeographyLogic;
+use app\api\logic\DynamicLogic;
 
 class User extends Base {
 
@@ -23,75 +24,49 @@ class User extends Base {
      */
     public function uploadFile(){
         $user_id = I('user_id/d');
-        $file = $this->request->file('file');
         $type = I('type'); 
         $action = I('action', 'add');
 
-        // $image_upload_limit_size = config('image_upload_limit_size');
-        // 上传路径
-       if($type == 'head_pic'){
-            // $validate = ['ext'=>'jpg,png,gif,jpeg'];
-            $uploadPath = UPLOAD_PATH.'head_pic/';
-       }
-       if($type == 'auth_video'){
-            $uploadPath = UPLOAD_PATH.'auth_video/';
-       }
+        if(!in_array($type, array('head_pic', 'auth_video'))) response_error('', '不被支持的文件类型');
+        /******************** 上传文件 **************/
+        if($type == 'head_pic') $uploadPath = UPLOAD_PATH.'head_pic/';
+        if($type == 'auth_video') $uploadPath = UPLOAD_PATH.'auth_video/';
 
-        if (!is_dir($uploadPath)){
-            mkdir($uploadPath, 0777, true);
-        }
-        // 执行上传
-        // $file->validate($validate);
-        $info = $file->move($uploadPath, true);
-        if($info){
-            $parentDir = date('Ymd'); // 系统默认在上传目录下创建了日期目录
-            $fullPath = '/'.$uploadPath.$parentDir.'/'.$info->getFilename();
-            // 修改用户表头像记录
+        $FileLogic = new FileLogic();
+        $result = $FileLogic->uploadSingleFile('file', $uploadPath);
+        if($result['status'] == '1'){
+            $fullPath = $result['fullPath'];
+
+            $DynamicLogic = new DynamicLogic();
+            /**************** 修改用户表 头像记录 ************/
             if($type == 'head_pic'){
                 Db::name('users')->update(array('user_id'=>$user_id, 'head_pic'=>$fullPath));
-                /************ 更新动态 *********/
-                $dynamics_data = array(
-                    'user_id' => $user_id,
-                    'type' => 2,
-                    'description' => '更新了形象照',
-                    'image' => array($fullPath),
-                    'origin' => 2,
-                    'add_time' => time(),
-                );
-                $shopinfo_config = tpCache('shop_info');
-                $data['status'] = ($shopinfo_config['examine_invite'] == '1' ? 1 : 2);
-                D('dynamics')->add($dynamics_data);
-
-                response_success(array('head_pic'=>$fullPath));
+                // 更新上传头像动态
+                $DynamicLogic->add($user_id, 2, array($fullPath));
             }
-            // 记录认证视频
+            /**************** 记录认证视频 ************/
             if($type == 'auth_video'){
                 $count = Db::name('users_auth_video')->where('user_id', $user_id)->count();
                 if($count){
                     Db::name('users_auth_video')->where('user_id', $user_id)->update(array('auth_video_url'=> $fullPath, 'add_time' => time()));
                 } else {
                     Db::name('users_auth_video')->insert(array('user_id'=>$user_id, 'auth_video_url'=> $fullPath, 'add_time' => time()));
-
                 }
                 // 更新用户表视频认证状态
                 Db::name('users')->where('user_id', $user_id)->setField('auth_video_status', 1);
-                /************ 上传形象视频，更新动态 *********/
-                /*if($type == 'auth_video'){
-                    $dynamics_data = array(
-                        'user_id' => $user_id,
-                        'type' => 3,
-                        'description' => '更新了形象视频',
-                        'video' => $fullPath,
-                        'origin' => 3,
-                        'add_time' => time(),
-                    );
-                    D('dynamics')->add($dynamics_data);
-                }*/
+                // 更新认证视频动态
+                $video_thumb = $FileLogic->video2thumb($fullPath);
+                $videodata = array(
+                    'video' => $fullPath,
+                    'video_thumb' => $video_thumb,
+                );
+                $DynamicLogic->add($user_id, 3, [], $videodata);
             }
 
-            response_success();
-        }else{
-            response_error('', $file->getError());
+            response_success('', '上传成功');
+            
+        } else {
+            response_error('', '提交失败');
         }
     }
 
