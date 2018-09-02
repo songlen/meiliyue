@@ -70,6 +70,54 @@ class User extends Base {
         }
     }
 
+    /**
+     * [uploadPhoto 上传照片、精华照片]
+     * type 1 普通照片 2  精华照片
+     * file_type 1 图片 2 视频
+     * @return [type] [description]
+     */
+    public function uploadPhoto(){
+        $user_id = I('user_id/d');
+        $type = I('type'); 
+        $file_type = I('file_type', 1); 
+
+        $uploadPath = UPLOAD_PATH.'photo/';
+        $FileLogic = new FileLogic();
+        $uploadResult = $FileLogic->uploadMultiFile('file', $uploadPath);
+
+        if($uploadResult['status'] == '1'){
+            $images = $uploadResult['image'];
+            foreach ($images as $imageUrl) {
+                $photoData = array(
+                    'user_id' => $user_id,
+                    'thumb' => $imageUrl,
+                    'url' => $imageUrl,
+                    'type' => $type,
+                    'add_time' => time(),
+                    'file_type' => $file_type,
+                );
+                M('user_photo')->insert($photoData);
+            }
+            
+            // 发表动态
+            $description = $type == '1' ? '上传了照片到相册' : '上传了精华照片到相册';
+            $dynamics_data = array(
+                'user_id' => $user_id,
+                'type' => 2,
+                'description' => $description,
+                'image' => $images,
+                'origin' => 4,
+                'add_time' => time(),
+            );
+            D('dynamics')->add($dynamics_data);
+
+            response_success(array('files'=>$images));
+
+        }else{
+            response_error('', $file->getError());
+        }
+    }
+
     // 常见问题
     public function questions(){
 
@@ -351,54 +399,6 @@ class User extends Base {
             ->select();
 
         response_success($data);
-    }
-
-    /**
-     * [uploadPhoto 上传照片、精华照片]
-     * type 1 普通照片 2  精华照片
-     * file_type 1 图片 2 视频
-     * @return [type] [description]
-     */
-    public function uploadPhoto(){
-        $user_id = I('user_id/d');
-        $type = I('type'); 
-        $file_type = I('file_type', 1); 
-
-        $uploadPath = UPLOAD_PATH.'photo/';
-        $FileLogic = new FileLogic();
-        $uploadResult = $FileLogic->uploadMultiFile('file', $uploadPath);
-
-        if($uploadResult['status'] == '1'){
-            $images = $uploadResult['image'];
-            foreach ($images as $imageUrl) {
-                $photoData = array(
-                    'user_id' => $user_id,
-                    'thumb' => $imageUrl,
-                    'url' => $imageUrl,
-                    'type' => $type,
-                    'add_time' => time(),
-                    'file_type' => $file_type,
-                );
-                M('user_photo')->insert($photoData);
-            }
-            
-            // 发表动态
-            $description = $type == '1' ? '上传了照片到相册' : '上传了精华照片到相册';
-            $dynamics_data = array(
-                'user_id' => $user_id,
-                'type' => 2,
-                'description' => $description,
-                'image' => $images,
-                'origin' => 4,
-                'add_time' => time(),
-            );
-            D('dynamics')->add($dynamics_data);
-
-            response_success(array('files'=>$images));
-
-        }else{
-            response_error('', $file->getError());
-        }
     }
 
     /**
