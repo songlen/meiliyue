@@ -27,7 +27,9 @@
             <input type="text" value="" name="content" style="display: none;">
 
             <input type="text" value="" name="image" style="display: none;">
+
             <input type="text" value="" name="video" style="display: none;">
+            <input type="text" value="" name="video_thumb" style="display: none;">
             <!-- 隐藏域 end -->
             <div class="edit-content">
                 <!-- <textarea name="" id="edit-text" placeholder="此刻你在想什么......"></textarea> -->
@@ -185,6 +187,10 @@
             },
             //发动态
             sendDynamic: function () {
+                if($("img.showPicVideo").length==0){
+                    Global.messageWin("请上传视频");
+                    return;
+                }
 
                 var contentStr = document.getElementById("edit-text").innerHTML.trim();
 
@@ -204,9 +210,10 @@
                     console.log(imageJson)
                     $(":input[name='image']").val(imageJson);
                 } else if (Edit._type == 3) { //视频
-                    let videoStr = "/public/" + $("video.showPic").attr("data-src").split("/public/")[1];
-                    // alert(videoStr)
+                    let videoStr = "/public/" + $("img.showPicVideo").attr("data-src").split("/public/")[1];
+                    let thumbStr="/public/" + $("img.showPicVideo").attr("src").split("/public/")[1];
                     $(":input[name='video']").val(videoStr);
+                    $(":input[name='video_thumb']").val(thumbStr);
                 }
 
                 Global.openLoading();
