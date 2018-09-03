@@ -486,7 +486,7 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
     let src = Global.host + args; //video或img src
     let srcThumb=""; 
     if(thumb&&thumb!==""){
-        srcThumb=Global.host + args; //thumb的src
+        srcThumb=Global.host + thumb; //thumb的src
     }
     let url = args.toLowerCase();
 
