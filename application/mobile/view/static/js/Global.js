@@ -479,7 +479,7 @@ let Global = (function () {
 function getJavaFiles(src,imgSrc) { // 路径/plulic/../..
     console.log(src)
     alert(src)
-    alert(imgSrc)
+    alert(imgSrc) 
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
