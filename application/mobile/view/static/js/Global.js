@@ -476,14 +476,15 @@ let Global = (function () {
 // ---------------------------------------------------
 
 //上传文件的回调 args 文件路径
-function getJavaFiles(args) { // 路径/plulic/../..
-    console.log(args)
-    // alert(args)
+function getJavaFiles(src,imgSrc) { // 路径/plulic/../..
+    console.log(src)
+    alert(src)
+    alert(imgSrc)
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
-    let src = Global.host + args;
-    let url = args.toLowerCase();
+    let src = Global.host + src;
+    let url = src.toLowerCase();
 
     //是图片
     if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) {
