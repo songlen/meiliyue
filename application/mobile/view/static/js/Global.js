@@ -183,45 +183,7 @@ let Global = (function () {
         video1.play();
     }
 
-    function fullScreenAuth({
-
-    }) {
-
-        // let $div=$(`
-        //     <div class="fullScreen" style="display: none">
-        //         <div class="videoHeader">
-        //             <div class="closeFullScreen" @click="closeFullScreen"></div>
-        //             <div class="videoOperate"></div>
-        //             <div class="img-box">
-        //                 <img src="../static/images/icon/tx.png">
-        //             </div>
-        //         </div>
-
-        //         <div class="fullScreenScroll">
-        //             <div class="fullScreenWrap">
-        //                 <span class="progressBar"></span>
-        //                 <video id="video1" width="100%" height="100%" src="" autoplay loop></video>
-        //                 <div class="videoFooter">
-        //                     <div class="videoCommentBtn"></div>
-        //                     <span class="littleTri"></span>
-        //                 </div>
-        //             </div>
-                  
-
-        //             <div class="" style="height: 300px;background-color: red;">
-
-        //             </div>
-
-              
-        //             <div class="videoInput">
-        //                 <input type="text">
-        //                 <span class="sendComment">发送</span>
-        //             </div>
-        //         </div>
-        //     </div>
-        // `);
-    }
-
+    //全屏叽喳小视频
     function fullScreenVideo({
         user_id,
         head_pic,
@@ -446,6 +408,29 @@ let Global = (function () {
         }
     }
 
+    //获取头像的认证视频url
+    function getAuthVideoUrl(user_id,callback){
+        let postData = {
+            user_id: user_id
+        }
+        let url = GlobalHost + "/index.php/Api/user/getAuthVideoUrl";
+        console.log(postData)
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: postData,
+            dataType: "json",
+            success: function (result) {
+                console.log(result)
+                if(result.data&&result.data.video_url&&result.data.video_url!==""){
+                    callback(result.data.video_url);
+                }else{
+                    console.log("请求失败")
+                }
+            }
+        });
+    }
+
     //Global暴露的接口------------------------
     return {
         //值
@@ -463,13 +448,13 @@ let Global = (function () {
         eleCantClick, //让元素无法点击 ele:元素
         eleCanClick, //ele:元素
         fullScreen, // 简单的预览全屏视频 ele:video元素
-        fullScreenAuth, //预览全屏认证小视频
         fullScreenVideo, //全屏叽喳视频（有去动态详情的按钮）
         fullScreenImg, //全屏显示图片 src
         filterHttpImg, //过滤http头像img  src
         compressImg, //压缩图片，file callback(blob)
         getImgWidth, //获取图片原始宽高
-        updateLocalUserinfo //更新本地的userinfo key,value
+        updateLocalUserinfo, //更新本地的userinfo key,value
+        getAuthVideoUrl //获取认证视频url; user_id callback(url)
     }
 })();
 

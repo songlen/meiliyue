@@ -238,7 +238,6 @@ a.close {
 
 .publicPic {
     /* height: 0.9rem; */
-    padding-bottom: 0.05rem;
 }
 
 .publicPic .publicPic-title,
@@ -266,9 +265,8 @@ a.close {
 
 .publicPic ul>a>img,
 .edit-pic-item img {
-    width: calc(100% - 0.1rem);
-    /* height: 0.66rem; */
-    margin: 0.05rem;
+    /* width: calc(100% - 0.1rem);
+    margin: 0.05rem; */
 }
 
 .edit-pic-item .edit-closePic {
