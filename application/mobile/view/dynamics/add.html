@@ -339,7 +339,7 @@
                     Edit.showFullPic(this);
                 });
                 //点击video显示全屏预览
-                $(".showPicUl").delegate("video.showPic", "click", function () {
+                $(".showPicUl").delegate("img.showPicVideo", "click", function () {
                     let src=$(this).attr("data-src");
                     Global.fullScreen(src);
                 });
