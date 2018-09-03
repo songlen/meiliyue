@@ -244,6 +244,12 @@ class User extends Base {
             }
         }
 
+         /***************  标记已读 ****************/
+        Db::name('user_visitor')
+            ->where('reply_user_id', $user_id)
+            ->where('is_read', 0)
+            ->setField('is_read', 1);
+
         response_success($lists);
     }
 
@@ -508,6 +514,12 @@ class User extends Base {
             }
         }
 
+        /*************** 进入来访者 标记已读 ****************/
+        Db::name('user_visitor')
+            ->where('to_user_id', $user_id)
+            ->where('is_read', 0)
+            ->setField('is_read', 1);
+
         response_success($lists);
     }
 
@@ -621,5 +633,25 @@ class User extends Base {
         } else {
             response_error('', '该用户视频未认证');
         }
+    }
+
+        // 标记读消息
+    public function readMessage(){
+        $user_id = I('user_id');
+        $message_id = I('message_id');
+
+        $count = M('user_message')->where(array('user_id'=>$user_id, 'message_id'=>$message_id))->count();
+        if($count){
+            M('user_message')->where(array('user_id'=>$user_id, 'message_id'=>$message_id))->setField('status', 1);
+        } else {
+            $data = array(
+                'user_id' => $user_id,
+                'message_id' => $message_id,
+                'status' => '1',
+            );
+            M('user_message')->insert($data);
+        }
+
+        response_success();
     }
 }
