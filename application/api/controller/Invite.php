@@ -54,7 +54,7 @@ class Invite extends Base {
         if($sex) $where['u.sex'] = ($sex == 1) ? 1 : 2;
         if($province) $where['u.province'] = $province;
         if($city) $where['u.city'] = $city;
-        if($auth_video) $where['u.auth_video_status'] = 1;
+        if($auth_video) $where['u.auth_video_status'] = 2;
 
         $where['i.status'] = '2';
         $limit_start = ($page-1)*10;
