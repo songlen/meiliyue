@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use think\AjaxPage;
 use think\Page;
 use think\Db;
+use app\api\logic\MessageLogic;
 
 class IdentityAuth extends Base {
 
@@ -61,8 +62,14 @@ class IdentityAuth extends Base {
     	$status = I('status');
     	$user_id = I('user_id');
 
-    	M('IdentityAuth')->where('id', $id)->setField('status', $status);
+    	$result = M('IdentityAuth')->where('id', $id)->setField('status', $status);
     	M('users')->where('user_id', $user_id)->setField('auth_identity_status', $status);
 
+        // 发送站内消息
+        if($result && in_array($status, array(2, 3))){
+            $messsage = $status == 2 ? '恭喜您，身份认证已通过' : '很抱歉，身份认证未通过';
+            $MessageLogic = new MessageLogic();
+            $MessageLogic->add($user_id, $messsage);
+        }
     }
  }

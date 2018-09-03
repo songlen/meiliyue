@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use think\AjaxPage;
 use think\Page;
 use think\Db;
+use app\api\logic\MessageLogic;
 
 class UserAuthVideo extends Base {
 
@@ -55,8 +56,14 @@ class UserAuthVideo extends Base {
     	$status = I('status');
     	$user_id = I('user_id');
 
-    	M('UsersAuthVideo')->where('id', $id)->setField('status', $status);
+    	$result = M('UsersAuthVideo')->where('id', $id)->setField('status', $status);
     	M('users')->where('user_id', $user_id)->setField('auth_video_status', $status);
 
+        // 发送站内消息
+        if($result && in_array($status, array(2, 3))){
+            $messsage = $status == 2 ? '恭喜您，视频认证已通过' : '很抱歉，视频认证未通过';
+            $MessageLogic = new MessageLogic();
+            $MessageLogic->add($user_id, $messsage);
+        }
     }
  }

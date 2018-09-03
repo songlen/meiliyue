@@ -61,8 +61,14 @@ class CarAuth extends Base {
     	$status = I('status');
     	$user_id = I('user_id');
 
-    	M('CarAuth')->where('id', $id)->setField('status', $status);
+    	$result = M('CarAuth')->where('id', $id)->setField('status', $status);
     	M('users')->where('user_id', $user_id)->setField('auth_identity_status', $status);
 
+        // 发送站内消息
+        if($result && in_array($status, array(2, 3))){
+            $messsage = $status == 2 ? '恭喜您，车辆认证已通过' : '很抱歉，车辆认证未通过';
+            $MessageLogic = new MessageLogic();
+            $MessageLogic->add($user_id, $messsage);
+        }
     }
  }
