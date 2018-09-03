@@ -345,6 +345,7 @@ a.close {
 .myTalk .myTalk-item {
     /* width: 0.43rem; */
     height: 0.43rem;
+    line-height: 0.43rem;
     margin: 0 0.05rem;
 }
 
