@@ -245,7 +245,7 @@ class User extends Base {
         }
 
          /***************  标记已读 ****************/
-        Db::name('user_visitor')
+        Db::name('dynamics_comment')
             ->where('reply_user_id', $user_id)
             ->where('is_read', 0)
             ->setField('is_read', 1);
