@@ -476,13 +476,18 @@ let Global = (function () {
 // ---------------------------------------------------
 
 //上传文件的回调 args 文件路径
-function getJavaFiles(args) { // 路径/plulic/../..
+function getJavaFiles(args,thumb) { // 路径/plulic/../..
     console.log(args)
     // alert(args)
+    // alert(thumb)
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
-    let src = Global.host + args;
+    let src = Global.host + args; //video或img src
+    let srcThumb=""; 
+    if(thumb&&thumb!==""){
+        srcThumb=Global.host + thumb; //thumb的src
+    }
     let url = args.toLowerCase();
 
     //是图片
@@ -504,22 +509,15 @@ function getJavaFiles(args) { // 路径/plulic/../..
         })
 
         $(".showPicUl").prepend($liTemp);
-
-        // alert("视频"+src)
     }
     //是视频
     else if (url.indexOf(".mp4") > -1 || url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1 || url.indexOf(".mov") > -1) {
-        // alert(1)
         let $liTemp = $(`
             <li class="edit-pic-item">
-                <video class="showPic" src="" data-src=${src} width="100%" height="100%"></video>
+                <img class="showPicVideo" src="${srcThumb}" data-src=${src} width="100%" height="100%"></img>
                 <a href="javascript:void(0)" class="edit-closePic"></a>
             </li>
         `);
-
-        //<video class="showPic" src="${src}" width="100%" height="100%" autoplay="autoplay" loop></video>
-
-        // alert(src)
 
         //取消视频
         $liTemp.find("a.edit-closePic").click(function (event) {
@@ -530,10 +528,6 @@ function getJavaFiles(args) { // 路径/plulic/../..
             });
         })
 
-        // alert(3)
-
         $(".showPicUl").prepend($liTemp);
-
-        // alert("视频"+src)
     }
 }
