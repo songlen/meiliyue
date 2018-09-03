@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use think\AjaxPage;
 use think\Page;
 use think\Db;
+use app\api\logic\MessageLogic;
 
 class CarAuth extends Base {
 
