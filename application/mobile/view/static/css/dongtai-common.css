@@ -532,6 +532,7 @@ footer li a {
 }
 
 .showPic,
+.showPicVideo,
 .edit-pic .edit-pic-item>video,
 .edit-pic .edit-pic-item>img {
     /* width: 0.81rem;
