@@ -175,7 +175,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: Global.host + "/index.php/Api/user/friend",
+                    url: Global.host + "/index.php/Api/user/attentionFans",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
@@ -230,7 +230,7 @@
                         friend_id: Number(toUserId),
                     };
                     console.log(postData)
-                    // Fans.openLoading();
+                    Global.openLoading();
                     $.ajax({
                         type: "POST",
                         url: Global.host + "/index.php/Api/User/attention",
@@ -239,15 +239,10 @@
                         success: function (result) {
                             console.log(result)
 
-                            // Fans.closeLoading();
-                            // setTimeout(function(){
-                            //     Fans.closeLoading();
-                            // },200)
+                            Global.closeLoading("关注成功");
 
-                            // if (result.code == 200) {
                             $li.find(".attentionOperate").show();
                             $li.find(".addFriend").hide();
-                            // }
                         }
                     });
                 });
