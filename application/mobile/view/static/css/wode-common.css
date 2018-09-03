@@ -877,6 +877,13 @@ li.friendItem {
     margin: 0;
 }
 
+.fans-tab .videoStatus{
+    width:0.18rem;
+    height:0.18rem;
+    right: -0.04rem;
+    bottom: -0.01rem;
+}
+
 .friendItem-avatar>span {
     display: inline-block;
     width: 0.2rem;
