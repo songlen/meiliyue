@@ -17,6 +17,42 @@ class User extends Base {
 	}
 
     /**
+     * [index 我的 页面 需要的接口]
+     * @return [type] [description]
+     */
+    public function index(){
+        $user_id = I('user_id');
+
+        /************** 是否有未读消息 *************/
+        $message_read = Db::name('message')->alias('m')
+            ->join('user_message um', 'um.message_id=m.message_id', 'left')
+            ->where(function ($query) use ($user_id){
+                $query->where(array('user_id'=>$user_id, 'type'=>'0', 'status'=>'0'));
+            })
+            ->whereOr(function($query) use ($user_id){
+                $query->where('type', '1')->where('status', null);
+            })
+            ->count();
+        $result['message_read'] = $message_read ? 1 : 0;
+
+        /************** 是否有未读评论 *************/
+        $comment_read = Db::name('dynamics_comment')->where(array('reply_user_id'=>$user_id, 'is_read'=>0))->count();
+        $result['comment_read'] = $comment_read ? 1 : 0;
+
+         /************** 最近来访 5 个头像 *************/
+         $visitor = Db::name('user_visitor')->alias('uv')
+            ->join('users u', 'uv.user_id=u.user_id','left')
+            ->where('to_user_id', $user_id)
+            ->limit(5)
+            ->order('id desc')
+            ->field('head_pic, uv.is_read')
+            ->select();
+        $result['visitor'] = $visitor;
+
+        response_success($result);
+    }
+
+    /**
      * [uploadFile 上传头像/认证视频]
      * @param [type] $[type] [文件类型 head_pic 头像 auth_video 视频认证]
      * @param  $[action] [ 默认 add 添加 edit 修改]
