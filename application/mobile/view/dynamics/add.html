@@ -185,6 +185,10 @@
             },
             //发动态
             sendDynamic: function () {
+                if($("img.showPicVideo").length==0){
+                    Global.messageWin("请上传视频");
+                    return;
+                }
 
                 var contentStr = document.getElementById("edit-text").innerHTML.trim();
 
@@ -204,7 +208,6 @@
                     console.log(imageJson)
                     $(":input[name='image']").val(imageJson);
                 } else if (Edit._type == 3) { //视频
-                    //let videoStr = "/public/" + $("video.showPic").attr("data-src").split("/public/")[1];
                     let videoStr = "/public/" + $("img.showPicVideo").attr("data-src").split("/public/")[1];
                     $(":input[name='video']").val(videoStr);
                 }
