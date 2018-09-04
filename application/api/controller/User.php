@@ -454,7 +454,7 @@ class User extends Base {
         $data['longitude'] = I('longitude');
         $data['latitude'] = I('latitude');
 
-        if($user_id == 1) response_success('', '操作成功');
+        if($user_id == 2) response_success('', '操作成功'); // 上线后取消
 
         if(M('users')->where('user_id', $user_id)->update($data) !== false){
             response_success('', '操作成功');
@@ -628,7 +628,7 @@ class User extends Base {
         $user_id = I('user_id');
 
         $video = M('users_auth_video')->where('user_id', $user_id)->field('auth_video_url')->find();
-        if($video){
+        if($video == 2){
             response_success(array('video_url'=>$video['auth_video_url']));
         } else {
             response_error('', '该用户视频未认证');
