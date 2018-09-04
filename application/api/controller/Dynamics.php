@@ -56,7 +56,7 @@ class Dynamics extends Base {
         // 叽喳小视频
         if($jizha){
             $where['type'] = '3';
-            $field = 'u.user_id, nickname, sex, age, d.id dynamic_id, d.type';
+            $field = 'u.user_id, nickname, birthday, sex, age, d.id dynamic_id, d.type';
         }
 
 
