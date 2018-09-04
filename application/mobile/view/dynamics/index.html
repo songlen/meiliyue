@@ -80,8 +80,8 @@
                                 </div>
                                 <!-- video -->
                                 <div v-cloak v-if="item.video_thumb&&item.video_thumb!==''&&item.video_url&&item.video_url!==''">
-                                    <div class="dynamicImgBox detailImgVideoWrap">
-                                        <img :src="GlobalHost+item.video_thumb" @click.stop="openDetailVideo(item)"></img>
+                                    <div class="dynamicImgBox detailImgVideoWrap" @click.stop="openDetailVideo(item)">
+                                        <img :src="GlobalHost+item.video_thumb"></img>
                                     </div>
                                 </div>
                             </div>
@@ -142,8 +142,8 @@
                                 </div>
                                 <!-- video -->
                                 <div v-cloak v-if="item.video_thumb&&item.video_thumb!==''&&item.video_url&&item.video_url!==''">
-                                    <div class="dynamicImgBox detailImgVideoWrap">
-                                        <img :src="GlobalHost+item.video_thumb" @click.stop="openDetailVideo(item)"></img>
+                                    <div class="dynamicImgBox detailImgVideoWrap" @click.stop="openDetailVideo(item)">
+                                        <img :src="GlobalHost+item.video_thumb"></img>
                                     </div>
                                 </div>
                             </div>
