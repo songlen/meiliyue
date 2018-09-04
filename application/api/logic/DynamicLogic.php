@@ -37,6 +37,7 @@ class DynamicLogic extends Controller {
 		$data = array(
 			'user_id' => $user_id,
 			'description' => $description,
+			'origin' => $origin,
 			'add_time' => time(),
 		);
 		/********************* 根据后台设置的是否审核动态来定动态状态 ***************/
