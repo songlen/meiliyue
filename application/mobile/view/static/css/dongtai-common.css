@@ -268,8 +268,11 @@ footer li a {
     margin-bottom: 0.05rem;
 }
 
-.list-item .item-content img {
+.list-item .item-content .dynamicImgBox {
     width: calc(30% - 5px);
+}
+.list-item .item-content .dynamicImgBox img {
+    width: 100%;
 }
 
 .list-item .item-content>p img.emoji_icon {
