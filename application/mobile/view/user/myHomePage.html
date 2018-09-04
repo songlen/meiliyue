@@ -1122,54 +1122,6 @@
 
                 sessionStorage.setItem('homePage', JSON.stringify(pageData))
             },
-            showVideo: function ({
-                user_id,
-                head_pic,
-                src
-            }) {
-                console.log(user_id, head_pic, src)
-                let $fullScreen = $(
-                    `
-                    <div class="fullScreen">
-                        <div class="videoHeader">
-                            <div class="closeFullScreen"></div>
-                            <div class="videoOperate"></div>
-                            <div class="img-box">
-                                <img src=${head_pic}>
-                            </div>
-                        </div>
-    
-                        <div class="fullScreenScroll">
-                            <div class="fullScreenWrap">
-                                <span class="progressBar"></span>
-                                <video id="video1" width="100%" height="100%" src=${src} autoplay loop></video>
-                                <div class="videoFooter">
-                                    <div class="videoCommentBtn"></div>
-                                    <span class="littleTri"></span>
-                                </div>
-                            </div>
-                            <!-- 小视频评论 -->
-                            <div class="" style="height: 300px;background-color: red;;">
-    
-                            </div>
-                            
-                            <!-- 小视频评论input -->
-                            <div class="videoInput">
-                                <input type="text">
-                                <span class="sendComment">发送</span>
-                            </div>
-                        </div>
-                    </div>
-                `
-                );
-
-                //点击关闭事件
-                $fullScreen.find(".closeFullScreen").click(function () {
-                    $fullScreen.remove();
-                });
-
-                $("body").append($fullScreen);
-            },
             showFullPic: function (ele) { //bug不能选index
                 let srcArr = [];
                 let $curUl = $(ele).closest(".myPhotos");
@@ -1272,13 +1224,11 @@
                 })
                 //点击视频认证
                 $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
-                    let head_pic="/public/upload/head_pic/20180728/938806dc024e113e09aa3b0321e2b91e.jpg";
-                    let option = {
-                        user_id: 1,
-                        head_pic: Global.filterHttpImg(head_pic),
-                        src: "https://media.w3.org/2010/05/sintel/trailer.mp4",
-                    };
-                    Homepage.showVideo(option);
+                    let user_id=Homepage.user_id;
+                    Global.getAuthVideoUrl(user_id,function(url){
+                        let src=Global.host+url;
+                        Global.fullScreen(src);
+                    });
                 });
                 //点击我的邀约，跳邀约详情
                 $(".myInviteSome").delegate("p.inviDetail", "click", function () {

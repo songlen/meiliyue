@@ -318,6 +318,14 @@
                                 //视频认证
                                 if(item.auth_video_status==2){
                                     $liTemp.find(".videoStatus").show();
+
+                                    $liTemp.find(".videoStatus").click(function(){
+                                        let user_id=$liTemp.attr("data-toUserId");
+                                        Global.getAuthVideoUrl(user_id,function(url){
+                                            let src=Global.host+url;
+                                            Global.fullScreen(src);
+                                        });
+                                    });
                                 }
                                 //sex
                                 if (item.sex == 1) { //男

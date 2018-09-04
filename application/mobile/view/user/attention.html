@@ -99,7 +99,7 @@
                                     <div class="friendHeadWrap">
                                         <img src=${headUrl}>
                                     </div>
-                                    <span class="videoStatus"></span>
+                                    <span class="videoStatus" style="display:none;"></span>
                                 </div>
 
                                 <div class="comments-text">
@@ -118,8 +118,16 @@
                         `
                         );
                         //视频认证
-                        if (item.auth_video_status !== 2) {
-                            $li.find(".videoStatus").hide();
+                        if (item.auth_video_status == 2) {
+                            $li.find(".videoStatus").show();
+
+                            $li.find(".videoStatus").click(function(){
+                                let user_id=$li.attr("data-userId");
+                                Global.getAuthVideoUrl(user_id,function(url){
+                                    let src=Global.host+url;
+                                    Global.fullScreen(src);
+                                });
+                            });
                         }
                         //sex
                         if (item.sex == 1) {
