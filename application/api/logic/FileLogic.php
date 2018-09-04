@@ -6,6 +6,7 @@
 namespace app\api\logic;
 use think\Db;
 use think\Controller;
+use think\Image;
 
 class FileLogic extends Controller {
 
@@ -20,9 +21,13 @@ class FileLogic extends Controller {
         foreach ($files as $file) {
 	        $info = $file->move($uploadPath, true);
 	        if($info){
-                $parentDir = '/'.date('Ymd'); // 系统默认在上传目录下创建了日期目录
+                $parentDir = date('Ymd'); // 系统默认在上传目录下创建了日期目录
                 $fullPath = '/'.$uploadPath.$parentDir.'/'.$info->getFilename();
                 $image[] = $fullPath;
+                // 图片压缩
+                $origin_path = '.'.$fullPath;
+                $ImageObj = \think\Image::open($origin_path);
+                $ImageObj->save($origin_path, null, 60);
             }   
         }
         return array('status' => '1', 'image'=>$image);
@@ -39,11 +44,17 @@ class FileLogic extends Controller {
         if($info){
             $parentDir = '/'.date('Ymd'); // 系统默认在上传目录下创建了日期目录
             $fullPath = '/'.$uploadPath.$parentDir.'/'.$info->getFilename();
+
+            // 图片压缩
+            $origin_path = '.'.$fullPath;
+            $ImageObj = \think\Image::open($origin_path);
+            $ImageObj->save($origin_path, null, 60);
+
+
             return array('status'=>1, 'fullPath'=>$fullPath);
         } else {
         	return array('status' => -1);
         }
-        
 	}
 
     public function video2thumb($video_url){
@@ -83,5 +94,11 @@ class FileLogic extends Controller {
                 ->save(ROOT_PATH.$video_thumb);
 
         return $video_thumb;
+    }
+
+    public function thumb($filepath, $width=150, $height=150, $type=1){
+        $origin_path = '.'.$filepath;
+        $ImageObj = \think\Image::open($origin_path);
+        $ImageObj->save($origin_path);
     }
 }
