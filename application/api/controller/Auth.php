@@ -79,8 +79,10 @@ class Auth extends Base {
     	$sex = I('sex');
     	$birthday = I('birthday');
     	$country = I('country');
-    	$province = I('province');
-    	$city = I('city');
+        $province = I('province');
+        $city = I('city');
+        $permanent_province = I('province');
+        $permanent_city = I('city');
         $qq = I('qq');
         $longitude = I('longitude');
         $latitude = I('latitude');
@@ -114,9 +116,11 @@ class Auth extends Base {
     		'token' => md5(time().mt_rand(1,999999999)),
    			'sex' => $sex,
 			'birthday' => $birthday,
-			'country' => $country,
-			'province' => $province,
-			'city' => $city,
+            'country' => $country,
+            'province' => $province,
+            'country' => $country,
+            'permanent_province' => $province,
+			'permanent_city' => $city,
             'qq' => $qq,
             'longitude' => $longitude,
             'latitude' => $latitude,
@@ -149,6 +153,8 @@ class Auth extends Base {
         $birthday = I('birthday');
         $country = I('country');
         $province = I('province');
+        $permanent_province = I('province');
+        $permanent_city = I('city');
         $city = I('city');
         $qq = I('qq');
         $longitude = I('longitude');
@@ -182,6 +188,8 @@ class Auth extends Base {
                 'birthday' => $birthday,
                 'country' => $country,
                 'province' => $province,
+                'permanent_province' = $province;
+                'permanent_city' = $city;
                 'city' => $city,
                 'qq' => $qq,
                 'longitude' => $longitude,
