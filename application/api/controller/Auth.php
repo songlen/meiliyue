@@ -188,8 +188,8 @@ class Auth extends Base {
                 'birthday' => $birthday,
                 'country' => $country,
                 'province' => $province,
-                'permanent_province' = $province;
-                'permanent_city' = $city;
+                'permanent_province' => $province,
+                'permanent_city' => $city,
                 'city' => $city,
                 'qq' => $qq,
                 'longitude' => $longitude,
