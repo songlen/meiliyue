@@ -382,7 +382,7 @@
                     let mHtml =
                         `
                         <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
+                            <a href="javascript:void(0)" class="fl"></a>
                             <span class="title">修改昵称</span>
                             <a href="javascript:void(0)" class="fr mSave saveNickname">确定</a>
                         </header>
@@ -400,10 +400,10 @@
                     var profInput = document.getElementById("profInput")
                     var isWrong = false
                     profInput.value = $(".nickname").html()
-                    $(".modifyDataWrap>header .back").click(function () {
-                        $(".modifyDataWrap").hide()
-                        $(".modifyDataWrap").html("")
-                    })
+                    // $(".modifyDataWrap>header .back").click(function () {
+                    //     $(".modifyDataWrap").hide()
+                    //     $(".modifyDataWrap").html("")
+                    // })
                     profInput.onchange = function () {
                         limitInput(this)
                     }
@@ -431,13 +431,17 @@
                     $(".saveNickname").click(function () {
                         var valueStr = profInput.value.trim()
                         if (valueStr !== "" && !isWrong) {
+                            Global.openLoading();
                             EditHome.modifyData("nickname", valueStr, function () {
-                                $(".modifyDataWrap").hide()
-                                $(".modifyDataWrap").html("")
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
 
                                 //更新原网页
                                 $(".nickname").html(valueStr).removeClass("canChoose")
                             })
+                        }else{
+                            EditHome.closeModifyDiv();
                         }
                     })
                     //js end
@@ -450,7 +454,7 @@
                     let mHtml =
                         `
                             <header>
-                                <a href="javascript:void(0)" class="back fl"></a>
+                                <a href="javascript:void(0)" class="fl"></a>
                                 <span class="title">修改年龄</span>
                                 <a href="javascript:void(0)" class="fr mSave saveAge">确定</a>
                             </header>
@@ -473,10 +477,10 @@
                     var oldAgeHtml = $(".age").html()
                     var ageInput = document.getElementById("ageInput")
                     $(".age-edit").html(oldAgeHtml)
-                    $(".modifyDataWrap>header .back").click(function () {
-                        $(".modifyDataWrap").hide()
-                        $(".modifyDataWrap").html("")
-                    })
+                    // $(".modifyDataWrap>header .back").click(function () {
+                    //     $(".modifyDataWrap").hide()
+                    //     $(".modifyDataWrap").html("")
+                    // })
                     $(".chooseDate").click(function () {
                         ageInput.click()
                     })
@@ -517,14 +521,18 @@
                             //     //更新原网页
                             //     $(".nickname").html(valueStr).removeClass("canChoose")
                             // })
+                            Global.openLoading();
                             //ajax年龄
                             EditHome.modifyData("age", valueStr, function () {
-                                $(".modifyDataWrap").hide()
-                                $(".modifyDataWrap").html("")
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
 
                                 //更新原网页
                                 $(".age").html(valueStr).removeClass("canChoose")
                             })
+                        }else{
+                            EditHome.closeModifyDiv();
                         }
                     })
                     //js end
@@ -537,7 +545,7 @@
                     let mHtml =
                         `
                         <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
+                            <a href="javascript:void(0)" class="fl"></a>
                             <span class="title">身高</span>
                             <a href="javascript:void(0)" class="fr mSave saveHeight">确定</a>
                         </header>
@@ -552,10 +560,10 @@
                             'cm</li>'))
                     }
                     //js
-                    $(".modifyDataWrap>header .back").click(function () {
-                        $(".modifyDataWrap").hide()
-                        $(".modifyDataWrap").html("")
-                    })
+                    // $(".modifyDataWrap>header .back").click(function () {
+                    //     $(".modifyDataWrap").hide()
+                    //     $(".modifyDataWrap").html("")
+                    // })
                     $(".height-content ul li").click(function () {
                         $(this).addClass("actived").siblings().removeClass("actived")
                     })
@@ -564,13 +572,17 @@
                             var valueStr = $(".height-content ul li.actived").html()
                             var valueStrNum = valueStr.substr(0, valueStr.length - 2)
                             console.log(valueStrNum)
+                            Global.openLoading();
                             EditHome.modifyData("height", valueStrNum, function () {
-                                $(".modifyDataWrap").hide()
-                                $(".modifyDataWrap").html("")
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
 
                                 //更新原网页
                                 $(".height").html(valueStr).removeClass("canChoose")
                             })
+                        }else{
+                            EditHome.closeModifyDiv();
                         }
                     })
 
@@ -584,7 +596,7 @@
                     let mHtml =
                         `
                             <header>
-                                <a href="javascript:void(0)" class="back fl"></a>
+                                <a href="javascript:void(0)" class="fl"></a>
                                 <span class="title">体重</span>
                                 <a href="javascript:void(0)" class="fr mSave saveWeight">确定</a>
                             </header>
@@ -599,10 +611,10 @@
                             'kg</li>'))
                     }
                     //js
-                    $(".modifyDataWrap>header .back").click(function () {
-                        $(".modifyDataWrap").hide()
-                        $(".modifyDataWrap").html("")
-                    })
+                    // $(".modifyDataWrap>header .back").click(function () {
+                    //     $(".modifyDataWrap").hide()
+                    //     $(".modifyDataWrap").html("")
+                    // })
                     $(".weight-content ul li").click(function () {
                         $(this).addClass("actived").siblings().removeClass("actived")
                     })
@@ -611,13 +623,17 @@
                             var valueStr = $(".weight-content ul li.actived").html()
                             var valueStrNum = valueStr.substr(0, valueStr.length - 2)
                             console.log(valueStrNum)
+                            Global.openLoading();
                             EditHome.modifyData("weight", valueStrNum, function () {
-                                $(".modifyDataWrap").hide()
-                                $(".modifyDataWrap").html("")
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
 
                                 //更新原网页
                                 $(".weight").html(valueStr).removeClass("canChoose")
                             })
+                        }else{
+                            EditHome.closeModifyDiv();
                         }
                     })
 
@@ -631,7 +647,7 @@
                     let mHtml =
                         `
                         <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
+                            <a href="javascript:void(0)" class="fl"></a>
                             <span class="title">最满意部位</span>
                             <a href="javascript:void(0)" class="fr mSave saveParts">确定</a>
                         </header>
@@ -657,10 +673,10 @@
                         `
                     $(".modifyDataWrap")[0].innerHTML = mHtml
                     //js
-                    $(".modifyDataWrap>header .back").click(function () {
-                        $(".modifyDataWrap").hide()
-                        $(".modifyDataWrap").html("")
-                    })
+                    // $(".modifyDataWrap>header .back").click(function () {
+                    //     $(".modifyDataWrap").hide()
+                    //     $(".modifyDataWrap").html("")
+                    // })
                     $(".partsList li").click(function () {
                         if ($(this).hasClass("actived")) {
                             $(this).removeClass("actived")
@@ -680,9 +696,11 @@
                         console.log(valueStr)
 
                         if (valueStr !== "") {
+                            Global.openLoading();
                             EditHome.modifyData("satisfactory_parts", valueStr, function () {
-                                $(".modifyDataWrap").hide()
-                                $(".modifyDataWrap").html("")
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
 
                                 //更新原网页
                                 var $ul = $('<ul></ul>')
@@ -692,6 +710,8 @@
                                 $(".satisfactory_parts").html($ul).removeClass(
                                     "canChoose")
                             })
+                        }else{
+                            EditHome.closeModifyDiv();
                         }
                     })
                     //js end
@@ -704,7 +724,7 @@
                     let mHtml =
                         `
                         <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
+                            <a href="javascript:void(0)" class="fl"></a>
                             <span class="title">职业</span>
                             <a href="javascript:void(0)" class="fr mSave saveProfess">确定</a>
                         </header>
@@ -738,10 +758,10 @@
                         `
                     $(".modifyDataWrap")[0].innerHTML = mHtml
                     //js
-                    $(".modifyDataWrap>header .back").click(function () {
-                        $(".modifyDataWrap").hide()
-                        $(".modifyDataWrap").html("")
-                    })
+                    // $(".modifyDataWrap>header .back").click(function () {
+                    //     $(".modifyDataWrap").hide()
+                    //     $(".modifyDataWrap").html("")
+                    // })
                     document.getElementById("profInput").oninput = function () {
                         if (this.value == "") {
                             $(".clearInput").hide()
@@ -761,13 +781,17 @@
                     $(".saveProfess").click(function () {
                         var valueStr = document.getElementById("profInput").value
                         if (valueStr !== "") {
+                            Global.openLoading();
                             EditHome.modifyData("profession", valueStr, function () {
-                                $(".modifyDataWrap").hide()
-                                $(".modifyDataWrap").html("")
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
 
                                 //更新原网页
                                 $(".profession").html(valueStr).removeClass("canChoose")
                             })
+                        }else{
+                            EditHome.closeModifyDiv();
                         }
                     })
                     //js end
@@ -780,7 +804,7 @@
                     let mHtml =
                         `
                             <header>
-                                <a href="javascript:void(0)" class="back fl"></a>
+                                <a href="javascript:void(0)" class="fl"></a>
                                 <span class="title">收入</span>
                                 <a href="javascript:void(0)" class="fr mSave saveIncome">确定</a>
                             </header>
@@ -798,20 +822,22 @@
                         `
                     $(".modifyDataWrap")[0].innerHTML = mHtml
                     //js
-                    $(".modifyDataWrap>header .back").click(function () {
-                        $(".modifyDataWrap").hide()
-                        $(".modifyDataWrap").html("")
-                    })
+                    // $(".modifyDataWrap>header .back").click(function () {
+                    //     $(".modifyDataWrap").hide()
+                    //     $(".modifyDataWrap").html("")
+                    // })
                     $(".income-content ul li").click(function () {
                         $(this).addClass("actived").siblings().removeClass("actived")
                     })
                     $(".saveIncome").click(function () {
                         if ($(".income-content ul li.actived").length > 0) {
                             var valueStr = Number($(".income-content ul li.actived").attr(
-                                "data-income"))
+                                "data-income"));
+                            Global.openLoading();
                             EditHome.modifyData("income", valueStr, function () {
-                                $(".modifyDataWrap").hide()
-                                $(".modifyDataWrap").html("")
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
 
                                 //更新原网页
                                 let realStr
@@ -842,6 +868,8 @@
                                 }
                                 $(".income").html(realStr).removeClass("canChoose")
                             })
+                        }else{
+                            EditHome.closeModifyDiv();
                         }
                     })
                     //js end
@@ -854,7 +882,7 @@
                     let mHtml =
                         `
                         <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
+                            <a href="javascript:void(0)" class="fl"></a>
                             <span class="title">个性签名</span>
                             <a href="javascript:void(0)" class="fr mSave saveSignature">确定</a>
                         </header>
@@ -874,10 +902,10 @@
                     if ($(".signature").html() !== "请选择" && $(".signature").html() !== "填写") {
                         textarea.value = $(".signature").html()
                     }
-                    $(".modifyDataWrap>header .back").click(function () {
-                        $(".modifyDataWrap").hide()
-                        $(".modifyDataWrap").html("")
-                    })
+                    // $(".modifyDataWrap>header .back").click(function () {
+                    //     $(".modifyDataWrap").hide()
+                    //     $(".modifyDataWrap").html("")
+                    // })
                     textarea.onchange = function () {
                         limitCount(this)
                     }
@@ -900,13 +928,17 @@
                     $(".saveSignature").click(function () {
                         var valueStr = textarea.value
                         if (valueStr !== "") {
+                            Global.openLoading();
                             EditHome.modifyData("signature", valueStr, function () {
-                                $(".modifyDataWrap").hide()
-                                $(".modifyDataWrap").html("")
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
 
                                 //更新原网页
                                 $(".signature").html(valueStr).removeClass("canChoose")
                             })
+                        }else{
+                            EditHome.closeModifyDiv();
                         }
                     })
                     //js end
@@ -919,7 +951,7 @@
                     let mHtml =
                         `
                         <header>
-                            <a href="javascript:void(0)" class="back fl"></a>
+                            <a href="javascript:void(0)" class="fl"></a>
                             <span class="title">手机&微信号</span>
                             <a href="javascript:void(0)" class="fr mSave savePhoneOwechat">确定</a>
                         </header>
@@ -937,21 +969,25 @@
                     if ($(".phoneOwechat").html() !== "请选择" && $(".phoneOwechat").html() !== "填写") {
                         textarea.value = $(".phoneOwechat").html()
                     }
-                    $(".modifyDataWrap>header .back").click(function () {
-                        $(".modifyDataWrap").hide()
-                        $(".modifyDataWrap").html("")
-                    })
+                    // $(".modifyDataWrap>header .back").click(function () {
+                    //     $(".modifyDataWrap").hide()
+                    //     $(".modifyDataWrap").html("")
+                    // })
                     $(".savePhoneOwechat").click(function () {
                         var valueStr = textarea.value
                         if (valueStr !== "") {
+                            Global.openLoading();
                             EditHome.modifyData("phoneOwechat", valueStr, function () {
-                                $(".modifyDataWrap").hide()
-                                $(".modifyDataWrap").html("")
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
 
                                 //更新原网页
                                 $(".phoneOwechat").html(valueStr).removeClass(
                                     "canChoose")
                             })
+                        }else{
+                            EditHome.closeModifyDiv();
                         }
                     })
                     //js end
@@ -965,7 +1001,7 @@
                     let mHtml =
                         `
                             <header>
-                                <a href="javascript:void(0)" class="back fl"></a>
+                                <a href="javascript:void(0)" class="fl"></a>
                                 <span class="title">感情状况</span>
                                 <a href="javascript:void(0)" class="fr mSave saveEmotion">确定</a>
                             </header>
@@ -982,24 +1018,28 @@
                         `
                     $(".modifyDataWrap")[0].innerHTML = mHtml
                     //js
-                    $(".modifyDataWrap>header .back").click(function () {
-                        $(".modifyDataWrap").hide()
-                        $(".modifyDataWrap").html("")
-                    })
+                    // $(".modifyDataWrap>header .back").click(function () {
+                    //     $(".modifyDataWrap").hide()
+                    //     $(".modifyDataWrap").html("")
+                    // })
                     $(".emotion-content ul li").click(function () {
                         $(this).addClass("actived").siblings().removeClass("actived")
                     })
                     $(".saveEmotion").click(function () {
                         if ($(".emotion-content ul li.actived").length > 0) {
                             var valueStr = $(".emotion-content ul li.actived").html()
+                            Global.openLoading();
                             EditHome.modifyData("emotion_status", valueStr, function () {
-                                $(".modifyDataWrap").hide()
-                                $(".modifyDataWrap").html("")
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
 
                                 //更新原网页
                                 $(".emotion_status").html(valueStr).removeClass(
                                     "canChoose")
                             })
+                        }else{
+                            EditHome.closeModifyDiv();
                         }
                     })
                     //js end
@@ -1138,6 +1178,11 @@
                         }  
                     });
                 }
+            },
+            //关闭弹窗
+            closeModifyDiv:function(){
+                $(".modifyDataWrap").hide()
+                $(".modifyDataWrap").html("")
             },
             eventsBind: function () {
                 //点击back
