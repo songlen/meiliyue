@@ -51,7 +51,7 @@ class Dynamics extends Base {
         }
 
         if($range || $attention){
-            $field = 'u.user_id, head_pic, nickname, u.sex, u.birthday, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time, d.flower_num';
+            $field = 'u.user_id, head_pic, nickname, u.sex, u.birthday, u.age, d.id dynamic_id, d.type, d,description, d.content, d.location, d.add_time, d.flower_num';
         }
         // 叽喳小视频
         if($jizha){

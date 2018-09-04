@@ -34,7 +34,7 @@ class Dynamics extends Base {
         $info = Db::name('dynamics')->alias('d')
             ->join('users u', 'd.user_id=u.user_id', 'left')
             ->where($where)
-            ->field('u.user_id, head_pic, nickname, u.sex, u.birthday, u.age, d.id dynamic_id, d.type, d.content, d.location, d.add_time, d.flower_num, d.origin')
+            ->field('u.user_id, head_pic, nickname, u.sex, u.birthday, u.age, d.id dynamic_id, d.type, d.description, d.content, d.location, d.add_time, d.flower_num, d.origin')
             ->find();
 
         if($info) {
