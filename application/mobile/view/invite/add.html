@@ -352,11 +352,6 @@
                 });
                 //添加图片
                 $(".addPic").click(function () {
-                    // if ($(".msgWrap").length == 0) {
-                    //     $('body').append($('<div class="msgWrap"></div>'))
-                    // }
-                    // $('.avatarOperating').show()
-
                     if ($("img.showPic").length >= 3) {
                         Global.messageWin("最多上传3张图片");
                         return;
@@ -367,35 +362,10 @@
                     if(Global.isIOS()){
                         jumpIOS(1);
                     }else{
+                        alert.log(33)
                         window.Android.gotoJavaCamera(1);
                     }
                 });
-                // //点击avatarOperating的添加图片
-                // $('.goAddPic').click(function () {
-                //     if ($("img.showPic").length >= 3) {
-                //         Global.messageWin("最多上传3张图片");
-                //         return;
-                //     }
-                //     window.Android.gotoJavaCamera(1);
-
-                //     $('.home-cancel')[0].click();
-                // });
-                // //点击avatarOperating的添加视频
-                // $('.goAddVideo').click(function () {
-                //     if ($("video.showPic").length >= 1) {
-                //         Global.messageWin("最多上传1个视频");
-                //         return;
-                //     }
-                //     window.Android.gotoJavaCamera(3);
-
-                //     $('.home-cancel')[0].click();
-                // });
-                // //点击avatarOperating的取消
-                // $('.home-cancel').click(function () {
-                //     $('.msgWrap').remove()
-                //     $('.avatarOperating').hide()
-                // });
-
                 //点击图片显示大图
                 $(".showPicUl").delegate("img.showPic", "click", function () {
                     console.log($(this).attr("src"))
