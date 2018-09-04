@@ -126,7 +126,7 @@ class Auth extends Base {
             'latitude' => $latitude,
             'active_time' => time(),
             'is_line' => '1',
-            'phoneOrwechat' => $mobile,
+            'phoneOwechat' => $mobile,
     	);
 
     	$user_id = M('users')->insertGetId($map);
