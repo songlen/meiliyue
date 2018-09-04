@@ -627,8 +627,8 @@ class User extends Base {
     public function getAuthVideoUrl(){
         $user_id = I('user_id');
 
-        $video = M('users_auth_video')->where('user_id', $user_id)->field('auth_video_url')->find();
-        if($video == 2){
+        $video = M('users_auth_video')->where('user_id', $user_id)->field('auth_video_url, status')->find();
+        if($video['atatus'] == 2){
             response_success(array('video_url'=>$video['auth_video_url']));
         } else {
             response_error('', '该用户视频未认证');
