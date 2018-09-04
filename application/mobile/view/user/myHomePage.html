@@ -643,24 +643,6 @@
                         });
                     }
                 }
-
-                // function readURL(input) {
-                //     if (input.files && input.files[0]) {
-                //         var reader = new FileReader();
-                //         reader.onload = function (e) {
-                //             $liTemp.find('.showPic').attr('src', e.target.result);
-
-                //             //上传图片+回调
-                //             Homepage.uploadPic(type, $liTemp, function () {
-                //                 $(".homeFormWrap").remove();
-
-                //                 $(el).closest(".myPhotos").prepend($liTemp);
-                //                 $(el).closest(".myPhotos").prepend($liTemp);
-                //             });
-                //         }
-                //         reader.readAsDataURL(input.files[0]);
-                //     }
-                // }
             },
             modifyDataBind: function () {
                 //感情状况
@@ -1143,9 +1125,8 @@
             },
             //点击头像input file选择图片了，修改头像
             editHeadpic: function (input) { //input file
-                let file = $(input).val();
-                console.log(file)
-                if (file.length > 0) {
+                let fileList=input.files;
+                if (fileList.length > 0) {
                     //修改头像
                     //jquery.form.js方法
                     $(":input[name='user_id']").val(Homepage.user_id);
@@ -1165,7 +1146,6 @@
                             Global.closeLoading("修改成功", function () {
                                 //更新页面的头像
                                 let head_pic=Global.filterHttpImg(result.data.head_pic);
-                                alert(head_pic)
                                 $(".avatar-pic").find("img").attr("src",head_pic);
                             });
                         }  
