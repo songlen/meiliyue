@@ -24,7 +24,7 @@ class Common extends Base {
     public function uploadFile(){
         $type = I('type');
 
-        if( ! in_array($type, array('dynamic_image', 'dynamic_video'))) response_error('', '不被允许的类型');
+        if( ! in_array($type, array('invite_image', 'dynamic_image', 'dynamic_video'))) response_error('', '不被允许的类型');
         if(empty($_FILES)) response_error('文件不能为空');
 
         /************* 上传路径 ***************/        
