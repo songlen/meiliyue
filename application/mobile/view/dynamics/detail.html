@@ -43,7 +43,11 @@
                 </div>
                 <div class="details-content-text">
                     <p class="dynamic-text details-comments-text" @click="startComment(0)">
+                        <if condition="$info.origin eq 1">
                         {$info.content}
+                        <else />
+                        {$info.description}
+                        </if>
                     </p>
                     <if condition="$info['type'] == 2 && !empty($info['image'])">
                         <foreach name="$info.image" item="image">
