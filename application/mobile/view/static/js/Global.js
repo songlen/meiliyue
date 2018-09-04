@@ -493,7 +493,7 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
                 $(self).closest('.edit-pic-item').remove();
             });
         })
-
+        alert("增加")
         $(".showPicUl").prepend($liTemp);
     }
     //是视频
@@ -513,7 +513,7 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
                 $(self).closest('.edit-pic-item').remove();
             });
         })
-
+        alert("增加视频")
         $(".showPicUl").prepend($liTemp);
     }
 }
