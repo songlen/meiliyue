@@ -450,6 +450,15 @@ class User extends Base {
             ->order('id desc')
             ->select();
 
+        /************** 记录来访者 *****************/
+        $visitordata = array(
+            'user_id'=>$user_id,
+            'to_user_id' => $toUserId,
+            'add_time' => time(),
+        );
+        Db::name('user_visitor')->where(array('user_id'=>$user_id, 'to_user_id'=>$toUserId))->delete();
+        Db::name('user_visitor')->insert($visitordata);
+
 
         response_success($data);
     }
