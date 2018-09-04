@@ -545,7 +545,7 @@ class User extends Base {
      * @return [type] [description]
      */
     public function visitor(){
-        $user_id = 1;
+        $user_id = I('user_id');
         $page = I('page', 1);
         $type = I('type', 1);
 
