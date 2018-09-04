@@ -737,35 +737,10 @@
                         window.location.href = url;
                     },
                     openVideoScreen(item) {
-                        let self = this;
-                        let toUserId = item.user_id;
-                        let head_pic = Global.filterHttpImg(item.head_pic);
-                        console.log(head_pic)
-                        this.getVideoUrl(toUserId, function (url) {
-                            // url="https://media.w3.org/2010/05/sintel/trailer.mp4";  //测试用
-                            self.showVideo({
-                                user_id: toUserId,
-                                head_pic: head_pic,
-                                src: url
-                            });
-                        });
-                    },
-                    getVideoUrl(user_id, callback) { //user_id
-                        let self=this;
-                        $.ajax({
-                            type: "POST",
-                            url: self.GlobalHost + "/index.php/Api/user/getAuthVideoUrl",
-                            data: {
-                                user_id: user_id
-                            },
-                            dataType: "json",
-                            success: function (result) {
-                                console.log(result)
-                                if (result.code == 200) { //测试用
-                                    let url = self.GlobalHost + result.data.video_url;
-                                    callback(url);
-                                }
-                            }
+                        let user_id=item.user_id;
+                        Global.getAuthVideoUrl(user_id,function(url){
+                            let src=Global.host+url;
+                            Global.fullScreen(src);
                         });
                     },
                     showVideo: function ({

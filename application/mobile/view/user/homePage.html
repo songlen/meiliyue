@@ -776,9 +776,8 @@
                     Global.getAuthVideoUrl(Homepage.toUserId,function(url){
                         console.log(url)
                         //全屏预览视频
-                        // let src=Global.host+url;
-                        // let posterSrc=?;
-                        // Global.fullScreen(src,posterSrc);
+                        let src=Global.host+url;
+                        Global.fullScreen(src);
                     });
                 });
                 //点击我的邀约，跳邀约详情
