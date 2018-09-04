@@ -65,7 +65,7 @@
                     <p class="picCount"></p>
                 </div>
                 <ul class="myPhotos photos">
-                    <a href="javascript:void(0)" class="addMyPhotos flex4" data-type="1">
+                    <a href="javascript:void(0)" class="addMyPhotos flex4" data-type="1" style="padding: 0.05rem;">
                         <img src="__STATIC__/images/icon/拍照.png">
                     </a>
                 </ul>
@@ -77,7 +77,7 @@
                     <p class="picCount quintessenceCount"></p>
                 </div>
                 <ul class="myPhotos quintessencePhotos">
-                    <a href="javascript:void(0)" class="addMyPhotos flex4" data-type="2">
+                    <a href="javascript:void(0)" class="addMyPhotos flex4" data-type="2" style="padding: 0.05rem;">
                         <img src="__STATIC__/images/icon/拍照.png">
                     </a>
                 </ul>
@@ -90,8 +90,8 @@
                 </div>
 
                 <div class="myInvite-content">
-                    <div class="myInvite-tip">
-                        <p class="noInvite" style="display: none;">未发布任何邀约</p>
+                    <div class="myInvite-tip myInviteSome">
+                        <p class="noInvite noInviteSome" style="display: none;">未发布任何邀约</p>
                     </div>
                     <div class="releaseInvite">
                         发布邀约
@@ -105,15 +105,11 @@
                     <p class="myTalkCount"></p>
                 </div>
 
-                <ul class="myTalkList">
-                    <!-- <li class="myTalk-item">
-                        <img src="__STATIC__/images/icon/tx.png">
-                    </li> -->
-                </ul>
-
-                <a href="javascript:void(0)" class="more">
-                    <img src="__STATIC__/images/icon/back.png">
-                </a>
+                <div class="myInvite-content">
+                    <div class="myInvite-tip myTalkSome">
+                        <p class="noInvite noTalkSome" style="display: none;">未发布任何动态</p>
+                    </div>
+                </div>
             </div>
 
             <div class="myApprove">
@@ -349,7 +345,9 @@
                         let $liTemp = $(
                             `
                                 <li class="edit-pic-item flex4">
-                                    <img class="showPic" src=${Global.host+item.url}>
+                                    <div style="margin:0.05rem;height:calc(100% - 0.1rem);overflow:hidden;">
+                                        <img class="showPic" src=${Global.host+item.url}>
+                                    </div>
                                 </li>
                             `
                         );
@@ -370,7 +368,9 @@
                         let $liTemp = $(
                             `
                                 <li class="edit-pic-item flex4">
-                                    <img class="showPic" src=${Global.host+item.url}>
+                                    <div style="margin:0.05rem;height:calc(100% - 0.1rem);overflow:hidden;">
+                                        <img class="showPic" src=${Global.host+item.url}>
+                                    </div>
                                 </li>
                             `
                         );
@@ -380,10 +380,10 @@
                 //我的邀约
                 $(".myInviteCount").html(data.invite.length);
                 if (data.invite.length == 0) {
-                    $(".noInvite").show()
+                    $(".noInviteSome").show()
                 } else {
                     data.invite.forEach(function (value, index) {
-                        $(".myInvite-tip").append($('<p class="inviDetail" data-id="' + value.id + '">' +
+                        $(".myInviteSome").append($('<p class="inviDetail" data-id="' + value.id + '">' +
                             value.title + '</p>'))
                     })
                 }
@@ -397,14 +397,18 @@
                     }
                     $(".myTalkCount").html(dynamicsArr.length)
                     dynamicsArr.forEach(function (value, index) {
-                        $(".myTalkList").append($(
-                            `
-                            <li class="myTalk-item" data-id=${value.id}>
-                                ${value.title}
-                            </li>
-                            `
-                        ));
+                        // $(".myTalkList").append($(
+                        //     `
+                        //     <li class="myTalk-item" data-id=${value.id}>
+                        //         ${value.title}
+                        //     </li>
+                        //     `
+                        // ));
+                        $(".myTalkSome").append($('<p class="inviDetail" data-id="' + value.id + '">' +
+                            value.title + '</p>'))
                     })
+                }else{
+                    $(".noTalkSome").show();
                 }
                 //认证
                 if (data.baseinfo.mobile_validated == 0) {
@@ -1277,13 +1281,13 @@
                     Homepage.showVideo(option);
                 });
                 //点击我的邀约，跳邀约详情
-                $(".myInvite-tip").delegate("p.inviDetail", "click", function () {
+                $(".myInviteSome").delegate("p.inviDetail", "click", function () {
                     let detailId = $(this).attr("data-id");
                     let url = Global.host + "/index.php/mobile/invite/detail/id/" + detailId + ".html";
                     window.location.href = url;
                 });
                 //点击我的动态，跳动态详情
-                $(".myTalkList").delegate(".myTalk-item", "click", function () {
+                $(".myTalkSome").delegate("p.inviDetail", "click", function () {
                     let detailId = $(this).attr("data-id");
                     window.location.href = Global.host + '/index.php/mobile/dynamics/detail/id/' +
                         detailId +

@@ -18,6 +18,7 @@
             <a class="back homepageBack" href="javascript:void(0)"></a>
             <div class="title"></div>
             <!-- <a class="operate" href="javascript:void(0)"></a> -->
+            <a href="javascript:void(0)"></a>
         </header>
 
         <div class="all-content">
@@ -75,8 +76,8 @@
                 </div>
 
                 <div class="myInvite-content">
-                    <div class="myInvite-tip">
-                        <p class="noInvite" style="display: none;">未发布任何邀约</p>
+                    <div class="myInvite-tip myInviteSome">
+                        <p class="noInvite noInviteSome" style="display: none;">未发布任何邀约</p>
                     </div>
                     <div class="inviteToMine" style="display: none;">
                         邀请他参加我的邀约
@@ -90,12 +91,11 @@
                     <p class="myTalkCount"></p>
                 </div>
 
-                <ul class="myTalkList">
-                </ul>
-
-                <a href="javascript:void(0)" class="more">
-                    <img src="__STATIC__/images/icon/back.png">
-                </a>
+                <div class="myInvite-content">
+                    <div class="myInvite-tip myTalkSome">
+                        <p class="noInvite noTalkSome" style="display: none;">未发布任何动态</p>
+                    </div>
+                </div>
             </div>
 
             <div class="myApprove">
@@ -400,7 +400,9 @@
                         let $liTemp = $(
                             `
                                 <li class="edit-pic-item flex4">
-                                    <img class="showPic" src=${Global.host+item.url}>
+                                    <div style="margin:0.05rem;height:calc(100% - 0.1rem);overflow:hidden;">
+                                        <img class="showPic" src=${Global.host+item.url}>
+                                    </div>
                                 </li>
                             `
                         );
@@ -410,10 +412,10 @@
                 //TA的邀约
                 $(".myInviteCount").html(data.invite.length)
                 if (data.invite.length == 0) {
-                    $(".noInvite").show()
+                    $(".noInviteSome").show()
                 } else {
                     data.invite.forEach(function (value, index) {
-                        $(".myInvite-tip").append($('<p class="inviDetail" data-id="' + value.id + '">' +
+                        $(".myInviteSome").append($('<p class="inviDetail" data-id="' + value.id + '">' +
                             value.title + '</p>'))
                     })
                 }
@@ -426,14 +428,18 @@
                     }
                     $(".myTalkCount").html(dynamicsArr.length)
                     dynamicsArr.forEach(function (value, index) {
-                        $(".myTalkList").append($(
-                            `
-                        <li class="myTalk-item" data-id=${value.id}>
-                            ${value.title}
-                        </li>
-                        `
-                        ))
+                        // $(".myTalkList").append($(
+                        //     `
+                        // <li class="myTalk-item" data-id=${value.id}>
+                        //     ${value.title}
+                        // </li>
+                        // `
+                        // ))
+                        $(".myTalkSome").append($('<p class="inviDetail" data-id="' + value.id + '">' +
+                            value.title + '</p>'))
                     })
+                }else{
+                    $(".noTalkSome").show();
                 }
                 //手机号
                 if (data.baseinfo.mobile_validated == 0) {
@@ -648,54 +654,6 @@
                     $(".signatureDialog").hide()
                 })
             },
-            showVideo: function ({
-                user_id,
-                head_pic,
-                src
-            }) {
-                console.log(user_id, head_pic, src)
-                let $fullScreen = $(
-                    `
-                        <div class="fullScreen">
-                            <div class="videoHeader">
-                                <div class="closeFullScreen"></div>
-                                <div class="videoOperate"></div>
-                                <div class="img-box">
-                                    <img src=${head_pic}>
-                                </div>
-                            </div>
-
-                            <div class="fullScreenScroll">
-                                <div class="fullScreenWrap">
-                                    <span class="progressBar"></span>
-                                    <video id="video1" width="100%" height="100%" src=${src} autoplay loop></video>
-                                    <div class="videoFooter">
-                                        <div class="videoCommentBtn"></div>
-                                        <span class="littleTri"></span>
-                                    </div>
-                                </div>
-                                <!-- 小视频评论 -->
-                                <div class="" style="height: 300px;background-color: red;;">
-
-                                </div>
-                                
-                                <!-- 小视频评论input -->
-                                <div class="videoInput">
-                                    <input type="text">
-                                    <span class="sendComment">发送</span>
-                                </div>
-                            </div>
-                        </div>
-                    `
-                );
-
-                //点击关闭事件
-                $fullScreen.find(".closeFullScreen").click(function () {
-                    $fullScreen.remove();
-                });
-
-                $("body").append($fullScreen);
-            },
             //user_id
             getVideoUrl: function (user_id, callback) {
                 $.ajax({
@@ -815,38 +773,22 @@
                 //点击 “关注” 系列 end
                 //点击视频认证
                 $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
-                    // if(Homepage.mUserInfo.level<2){
-                    //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
-                    //         //去vip申请页面
-                    //     });
-                    //     return;
-                    // }else{
-                    //     Homepage.getVideoUrl(Homepage.toUserId, function (url) {
-                    //         // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
-                    //         Homepage.showVideo({
-                    //             user_id: Homepage.toUserId,
-                    //             head_pic: Homepage.head_pic,
-                    //             src: url
-                    //         });
-                    //     });
-                    // }
-                    Homepage.getVideoUrl(Homepage.toUserId, function (url) {
-                        // url="https://media.w3.org/2010/05/sintel/trailer.mp4";//测试用
-                        Homepage.showVideo({
-                            user_id: Homepage.toUserId,
-                            head_pic: Homepage.head_pic,
-                            src: url
-                        });
+                    Global.getAuthVideoUrl(Homepage.toUserId,function(url){
+                        console.log(url)
+                        //全屏预览视频
+                        // let src=Global.host+url;
+                        // let posterSrc=?;
+                        // Global.fullScreen(src,posterSrc);
                     });
                 });
                 //点击我的邀约，跳邀约详情
-                $(".myInvite-tip").delegate("p.inviDetail", "click", function () {
+                $(".myInviteSome").delegate("p.inviDetail", "click", function () {
                     let detailId = $(this).attr("data-id");
                     let url = Global.host + "/index.php/mobile/invite/detail/id/" + detailId + ".html";
                     window.location.href = url;
                 });
                 //点击我的动态，跳动态详情
-                $(".myTalkList").delegate(".myTalk-item", "click", function () {
+                $(".myTalkSome").delegate("p.inviDetail", "click", function () {
                     let detailId = $(this).attr("data-id");
                     window.location.href = Global.host + '/index.php/mobile/dynamics/detail/id/' +
                         detailId +
