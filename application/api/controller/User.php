@@ -80,8 +80,6 @@ class User extends Base {
                 Db::name('users')->update(array('user_id'=>$user_id, 'head_pic'=>$fullPath));
                 // 更新上传头像动态
                 $DynamicLogic->add($user_id, 2, array($fullPath));
-
-                $resultdata = array('head_pic'=>$fullPath);
             }
             /**************** 记录认证视频 ************/
             if($type == 'auth_video'){
@@ -95,14 +93,14 @@ class User extends Base {
                 Db::name('users')->where('user_id', $user_id)->setField('auth_video_status', 1);
                 // 更新认证视频动态
                 $video_thumb = $FileLogic->video2thumb($fullPath);
-                $resultdata = $videodata = array(
+                $videodata = array(
                     'video' => $fullPath,
                     'video_thumb' => $video_thumb,
                 );
                 $DynamicLogic->add($user_id, 3, [], $videodata);
             }
 
-            response_success($resultdata, '上传成功');
+            response_success('', '上传成功');
             
         } else {
             response_error('', '提交失败');
@@ -163,49 +161,49 @@ class User extends Base {
      * file_type 1 图片 2 视频
      * @return [type] [description]
      */
-    /*public function uploadPhoto(){
-        $user_id = I('user_id/d');
-        $type = I('type'); 
-        $file_type = I('file_type', 1); 
+    // public function uploadPhoto(){
+    //     $user_id = I('user_id/d');
+    //     $type = I('type'); 
+    //     $file_type = I('file_type', 1); 
 
-        $FileLogic = new FileLogic();
+    //     $FileLogic = new FileLogic();
         
-        /************** 处理上传的图片 **/
-        if($file_type == 1){
-            $uploadPath = UPLOAD_PATH.'photo/';
-            $uploadResult = $FileLogic->uploadMultiFile('file', $uploadPath);
+    //     /************** 处理上传的图片 ****************/
+    //     if($file_type == 1){
+    //         $uploadPath = UPLOAD_PATH.'photo/';
+    //         $uploadResult = $FileLogic->uploadMultiFile('file', $uploadPath);
 
-            if($uploadResult['status'] != 1) response_error('', '上传失败');
+    //         if($uploadResult['status'] != 1) response_error('', '上传失败');
 
-            $images = $uploadResult['image'];
-            foreach ($images as $imageUrl) {
-                $photoData = array(
-                    'user_id' => $user_id,
-                    'thumb' => $imageUrl,
-                    'url' => $imageUrl,
-                    'type' => $type,
-                    'add_time' => time(),
-                    'file_type' => $file_type,
-                );
-                M('user_photo')->insert($photoData);
-            }
+    //         $images = $uploadResult['image'];
+    //         foreach ($images as $imageUrl) {
+    //             $photoData = array(
+    //                 'user_id' => $user_id,
+    //                 'thumb' => $imageUrl,
+    //                 'url' => $imageUrl,
+    //                 'type' => $type,
+    //                 'add_time' => time(),
+    //                 'file_type' => $file_type,
+    //             );
+    //             M('user_photo')->insert($photoData);
+    //         }
             
-            // 发表动态
-            $description = $type == '1' ? '上传了照片到相册' : '上传了精华照片到相册';
-            $dynamics_data = array(
-                'user_id' => $user_id,
-                'type' => 2,
-                'description' => $description,
-                'image' => $images,
-                'origin' => 4,
-                'add_time' => time(),
-            );
-            D('dynamics')->add($dynamics_data);
+    //         // 发表动态
+    //         $description = $type == '1' ? '上传了照片到相册' : '上传了精华照片到相册';
+    //         $dynamics_data = array(
+    //             'user_id' => $user_id,
+    //             'type' => 2,
+    //             'description' => $description,
+    //             'image' => $images,
+    //             'origin' => 4,
+    //             'add_time' => time(),
+    //         );
+    //         D('dynamics')->add($dynamics_data);
 
-            response_success(array('files'=>$images));
+    //         response_success(array('files'=>$images));
 
-        }
-    }*/
+    //     }
+    // }
 
     // 常见问题
     public function questions(){
