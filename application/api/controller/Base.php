@@ -32,11 +32,10 @@ class Base extends Controller {
         $pathinfo = $this->request->pathinfo();
         $method = $this->request->method();
         $param = $this->request->param();
-        $param = $_POST;
 
-        // if($_FILES){
-        //     $param = array_merge($param, $_FILES);
-        // }
+        if($_FILES){
+            $param = array_merge($param, $_FILES);
+        }
 
         $data = "\r\n".date('Y-m-d H:i:s')." ".$pathinfo." method: {$method} \r\n param: ".var_export($param, true);
 
