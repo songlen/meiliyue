@@ -107,7 +107,8 @@ class Invite extends Base {
         $shopinfo_config = tpCache('shop_info');
         $data['status'] = ($shopinfo_config['examine_invite'] == '1' ? 1 : 2);
 
-        $file = I('file');
+        // $file = I('file');
+        p($file);
         if($file){
             $data['image'] = serialize($file);
         }
