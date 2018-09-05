@@ -191,7 +191,7 @@ let Global = (function () {
         // 绑定事件 end
 
         //append div
-        video.play()
+        video1.play()
         $("body").append($div);
     }
 
