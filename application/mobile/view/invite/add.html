@@ -331,14 +331,15 @@
 
             },
             showFullPic: function (el) {
-                let index = $(el).attr("data-index");
                 let srcArr = [];
-                $(".showPicUl .showPic").each(function () {
-                    srcArr.unshift($(this).attr("src"));
+                $(".showPicUl .showPic").each(function (index,element) {
+                    $(this).attr("data-index",index)
+                    srcArr.push($(this).attr("src"));
                 });
                 console.log(srcArr)
                 let swiper = $.photoBrowser({
-                    items: srcArr
+                    items: srcArr,
+                    initIndex:$(el).attr("data-index")
                 });
                 // swiper.open(index);
                 swiper.open();

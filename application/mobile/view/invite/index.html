@@ -109,8 +109,6 @@
                                             <img v-else src="/application/mobile/view/static/images/icon/tx.png">
                                         </div>
                                         <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click="showVideo(item)"></span>
-                                        <!-- 测试用 -->
-                                        <!-- <span class="videoStatus" @click.stop="openVideoScreen(item)"></span> -->
                                     </div>
     
                                     <div class="details">
@@ -752,53 +750,12 @@
                             Global.fullScreen(src);
                         });
                     },
-                    showVideo: function ({
-                        user_id,
-                        head_pic,
-                        src
-                    }) {
-                        console.log(user_id, head_pic, src)
-                        let $fullScreen = $(
-                            `
-                            <div class="fullScreen">
-                                <div class="videoHeader">
-                                    <div class="closeFullScreen"></div>
-                                    <div class="videoOperate"></div>
-                                    <div class="img-box">
-                                        <img src=${head_pic}>
-                                    </div>
-                                </div>
-
-                                <div class="fullScreenScroll">
-                                    <div class="fullScreenWrap">
-                                        <span class="progressBar"></span>
-                                        <video id="video1" width="100%" height="100%" src=${src} autoplay loop></video>
-                                        <div class="videoFooter">
-                                            <div class="videoCommentBtn"></div>
-                                            <span class="littleTri"></span>
-                                        </div>
-                                    </div>
-                                    <!-- 小视频评论 -->
-                                    <div class="" style="height: 300px;background-color: red;;">
-
-                                    </div>
-                                    
-                                    <!-- 小视频评论input -->
-                                    <div class="videoInput">
-                                        <input type="text">
-                                        <span class="sendComment">发送</span>
-                                    </div>
-                                </div>
-                            </div>
-                        `
-                        );
-
-                        //点击关闭事件
-                        $fullScreen.find(".closeFullScreen").click(function () {
-                            $fullScreen.remove();
+                    showVideo: function (item) {
+                        let user_id=item.user_id;
+                        Global.getAuthVideoUrl(user_id,function(url){
+                            let src=Global.host+url;
+                            Global.fullScreen(src);
                         });
-
-                        $("body").append($fullScreen);
                     },
                     closeReleasing: function () {
                         if (this.isPlusing) {
