@@ -32,6 +32,7 @@ class Base extends Controller {
         $pathinfo = $this->request->pathinfo();
         $method = $this->request->method();
         $param = $this->request->param();
+        $param = $_POST;
 
         // if($_FILES){
         //     $param = array_merge($param, $_FILES);
