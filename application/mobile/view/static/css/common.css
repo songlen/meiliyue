@@ -1495,7 +1495,7 @@ li.inviteDetail ul.inviteDetail-list li.detailImages {
 
 li.detailImages img {
   max-width: 100px;
-  max-height: 100px;
+  /* max-height: 100px; */
 }
 
 .invitation .items ul.areaTime li {
@@ -1553,7 +1553,7 @@ li.detailImages img {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 6;
+  z-index: 8;
   background-color: #000;
 }
 
