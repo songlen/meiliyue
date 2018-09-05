@@ -192,7 +192,7 @@ let Global = (function () {
 
         //append div
         video1.play()
-        $("body").append($div);
+        $("body").append($fullScreen);
     }
 
     //全屏叽喳小视频
