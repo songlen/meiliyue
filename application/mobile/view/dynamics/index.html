@@ -178,7 +178,7 @@
                     <ul>
                         <li v-cloak v-for="(item,index) in videoDataList.list" ::key="index" @click="videoFullScreen(item)">
                             <div class="mVideo">
-                                <img style="width: 100%;height: 100%;" :src="GlobalHost+item.video_thumb"></video>
+                                <img style="width: 118%;margin-left: -9%;margin-top: -2%;" :src="GlobalHost+item.video_thumb"></video>
                             </div>
 
                             <div>
@@ -201,8 +201,8 @@
 
 
                 <div style="min-height: 4.7em;overflow: hidden;">
-                    <div class="weui-loadmore" v-cloak v-show="isLoading">
-                    <!-- <div class="weui-loadmore"> -->
+                    <!-- <div class="weui-loadmore" v-cloak v-show="isLoading"> -->
+                    <div class="weui-loadmore" style="display:none;">
                         <i class="weui-loading"></i>
                         <span class="weui-loadmore__tips">正在加载</span>
                     </div>

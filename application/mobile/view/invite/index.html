@@ -358,7 +358,7 @@
                     } else {
                         // alert("无localStorage")
                         console.log("无session/local")
-                        this.user_id = 1; //测试用
+                        this.user_id = 3; //测试用
                         // proCode = "370000"; //山东 测试用
                         proCode=""; //测试用
                     }
@@ -456,8 +456,8 @@
                             longitude = mUserInfo.longitude;
                             latitude = mUserInfo.latitude;
                         }
-                        // longitude = "117.2100770"; //测试用
-                        // latitude ="36.7006690"; //测试用
+                        longitude = "117.2100770"; //测试用
+                        latitude ="36.7006690"; //测试用
 
                         let postDataTemp = {
                             order_type: _self.order_type,
@@ -552,29 +552,38 @@
                     },
                     //控制筛选栏的位置
                     handleAddress() {
+                        
                         let scrollTemp = document.getElementsByClassName('dropRefresh')[0].scrollTop;
                         let wrapHeight = document.getElementsByClassName('dropRefresh')[0].clientHeight;
                         let ulHeight = document.getElementsByClassName('mInviteList')[0].clientHeight;
-                        // console.log(scrollTemp)
+
                         //控制top的位置
-                        if (scrollTemp >= 150) {
-                            // $(".inviteTopWrap").css("margin-top", "-206px");
-                            // $(".inviteTopWrap").css("transform", "translate3d(0,-206px,0)");
-                            // $(".dropRefresh").css("margin-top", "-206px");
-                            $(".indexPage").css({
-                                "transform":"translate3d(0,-206px,0)",
-                                "bottom":"-206px"
-                            });
-                        } else {
-                            // $(".inviteTopWrap").css("transform", "translate3d(0,0,0)");
-                            // $(".dropRefresh").css("margin-top", "-50px");
-                            $(".indexPage").css({
-                                "transform":"translate3d(0,0,0)",
-                                "bottom":"0"
-                            });
+                        let mInviteListHeight=document.getElementsByClassName('mInviteList')[0].clientHeight;
+                        let indexPageHeight=document.getElementsByClassName('indexPage')[0].clientHeight;
+                        console.log(mInviteListHeight,indexPageHeight)
+                        if(mInviteListHeight>(indexPageHeight+206)){ //邀约列表足够长时，才改top位置
+                            if (scrollTemp >= 150) {
+                                // $(".inviteTopWrap").css("margin-top", "-206px");
+                                // $(".inviteTopWrap").css("transform", "translate3d(0,-206px,0)");
+                                // $(".dropRefresh").css("margin-top", "-206px");
+                                $(".indexPage").css({
+                                    "transform":"translate3d(0,-206px,0)",
+                                    "bottom":"-206px"
+                                });
+                            } else {
+                                // $(".inviteTopWrap").css("transform", "translate3d(0,0,0)");
+                                // $(".dropRefresh").css("margin-top", "-50px");
+                                $(".indexPage").css({
+                                    "transform":"translate3d(0,0,0)",
+                                    "bottom":"0"
+                                });
+                            }
                         }
+
+                        
+
                         //滚动加载
-                        console.log(scrollTemp + wrapHeight - ulHeight)
+                        //console.log(scrollTemp + wrapHeight - ulHeight)
                         if (scrollTemp > 0 && scrollTemp + wrapHeight - ulHeight >= 85) { //原来是85？
                             if (!this.isLoading) {
                                 this.isLoading = true;

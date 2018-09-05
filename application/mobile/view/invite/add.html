@@ -80,19 +80,19 @@
                         <span class="fl">买单</span>
                         <span class="fr choose">
                             <span>AA</span>
-                            <span class="active">当然你买</span>
+                            <span class="active payMoneyText"></span>
                         </span>
                     </li>
                     <li class="clearfix catch">
                         <span class="fl">
                             <input type="checkbox" checked="checked" id="myCheck">
                             <label for="myCheck"></label>
-                            <label for="myCheck">需要接送我</label>
+                            <label for="myCheck" class="jiesongText"></label>
                         </span>
                         <span class="fr">
                             <input type="checkbox" checked="checked" id="myCheck1">
                             <label for="myCheck1"></label>
-                            <label for="myCheck1">对方可携带三两好友</label>
+                            <label for="myCheck1" class="with_confidante_text"></label>
                         </span>
                     </li>
                 </ul>
@@ -191,7 +191,7 @@
                     ReleInvite._user_sex = Number(mUserInfo.sex);
                 } else {
                     ReleInvite._user_id = 1; //测试用
-                    ReleInvite._user_sex = 2; //测试用
+                    ReleInvite._user_sex = 1; //测试用 男
                 }
                 console.log(ReleInvite._user_id)
 
@@ -226,9 +226,19 @@
                     $(".inviteTheme").html(ReleInvite._theme);
                 }
 
-                //根据sex 修改"当然你买"
-
-                //
+                //根据sex 修改选项
+                if(ReleInvite._user_sex==1){
+                    //买单
+                    $(".payMoneyText").html("我买单");
+                    //接送
+                    $(".jiesongText").html("我接送");
+                    //带闺蜜
+                    $(".with_confidante_text").html("对方可携带一名闺蜜");
+                }else{
+                    $(".payMoneyText").html("当然你买");
+                    $(".jiesongText").html("需要接送");
+                    $(".with_confidante_text").html("对方可携带三两好友");
+                }
             },
             initSomeDom: function () {
                 //地点选择器

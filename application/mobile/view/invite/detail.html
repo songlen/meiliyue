@@ -93,12 +93,12 @@
                         <span class="fl is_jiesong" style="display: none;">
                             <input type="checkbox" checked="checked" id="myCheck">
                             <label></label>
-                            <label>需要接送我</label>
+                            <label class="jiesongText"></label>
                         </span>
                         <span class="fl with_confidante" style="display: none;">
                             <input type="checkbox" checked="checked" id="myCheck1">
                             <label></label>
-                            <label>对方可携带三两好友</label>
+                            <label class="with_confidante_text"></label>
                         </span>
                     </li>
                 </ul>
@@ -140,6 +140,7 @@
         var Interested = {
             originUserId: "", //自己的user_id
             toUserId: "", //这条邀约发布者的user_id
+            toUserSex:"", //这条邀约发布者的sex
             detailId: "", //这条邀约的id
 
 
@@ -183,6 +184,7 @@
 
                         if (result.data && result.data !== "") {
                             Interested.toUserId = result.data.user_id;
+                            Interested.toUserSex = result.data.sex;
 
                             //更新dom
                             Interested.updateDom(result.data);
@@ -205,12 +207,15 @@
                 if(data.auth_video_status==2){
                     $(".videoStatus").show();
                 }
+                //昵称
                 $(".person .name").html(data.nickname)
+                //性别
                 if (data.sex == 1) {
                     $(".sexAge").addClass("male");
                 } else {
                     $(".sexAge").addClass("female");
                 }
+                //年龄
                 $(".sexAge .age").html(data.age);
                 // $(".person .distance .distanceText").html(data.distance)
 
@@ -233,7 +238,7 @@
                     });
                     $(".detailImages").show();
                 }
-                //付钱
+                //买单
                 if(data.pay&&data.pay!==""){
                     $(".inviteDetail .inviteDetail-list li .payType").html(data.pay);
                     $(".payTypeLi").show();
@@ -249,11 +254,22 @@
                     $(".areaTime .areaPlace").html(data.place);
                     $(".areaPlaceLi").show();
                 }
-                //接送，携带好友
+                //接送
                 if (data.is_jiesong === 1) {
+                    if(Interested.toUserSex==1){
+                        $(".jiesongText").html("我接送");
+                    }else{
+                        $(".jiesongText").html("需要接送");
+                    }
                     $(".is_jiesong").show();
                 }
+                //携带好友
                 if (data.with_confidante === 1) {
+                    if(Interested.toUserSex==1){
+                        $(".with_confidante_text").html("对方可携带一名闺蜜");
+                    }else{
+                        $(".with_confidante_text").html("对方可携带三两好友");
+                    }
                     $(".with_confidante").show();
                 }
                 //----------------------------------------
