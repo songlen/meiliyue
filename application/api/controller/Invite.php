@@ -106,7 +106,7 @@ class Invite extends Base {
         // 后台设置的是否审核
         $shopinfo_config = tpCache('shop_info');
         $data['status'] = ($shopinfo_config['examine_invite'] == '1' ? 1 : 2);
- file_put_contents('runtime/log/request.log', $data['file']);
+ file_put_contents('runtime/log/request.log', var_export($data['file']), true);
         if($data['file']){
             $data['image'] = serialize($data['file']);
         }
