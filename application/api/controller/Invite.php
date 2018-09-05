@@ -111,6 +111,10 @@ class Invite extends Base {
             $data['image'] = serialize(json_decode(html_entity_decode(I('file')), true));
         }
 
+        // 判断邀约数量
+        $num = Db::name('invite')->where('user_id', $data['user_id'])->count();
+        if($num >= 5) response_error('', '您已发满5条邀约，请删除不需要的邀约后再发布');
+
         M('invite')->insert($data);
         response_success('', '操作成功');
     }
@@ -165,5 +169,25 @@ class Invite extends Base {
             ->select();
 
         response_success($list);
+    }
+
+    // 判断用户已发布的邀约数量，最多5条
+    public function totalNum(){
+        $user_id = I('user_id');
+
+        $num = Db::name('invite')->where('user_id', $user_id)->count();
+
+        response_success(array('num'=>$num));
+    }
+
+    public function del(){
+        $user_id = I('user_id');
+        $invite_id = I('invite_id');
+
+        if(Db::name('invite')->where(array('user_id'=>$user_id,'id'=>$invite_id))->delete()){
+            response_success('', '删除成功');
+        } else {
+            response_error('', '删除失败');
+        }
     }
 }

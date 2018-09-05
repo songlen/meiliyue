@@ -135,6 +135,17 @@ class Dynamics extends Base {
         }
     }
 
+    public function del(){
+        $user_id = I('user_id');
+        $dynamic_id = I('dynamic_id');
+
+        if(Db::name('dynamics')->where(array('user_id'=>$user_id,'id'=>$dynamic_id))->delete()){
+            response_success('', '删除成功');
+        } else {
+            response_error('', '删除失败');
+        }
+    }
+
     // 送小花朵
     public function giveFlower(){
         $dynamic_id = I('dynamic_id');

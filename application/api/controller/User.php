@@ -439,7 +439,7 @@ class User extends Base {
         $data['invite'] = M('invite')->where('user_id', $toUserId)
             ->field('id, title')
             ->order('id desc')
-            ->limit(3)
+            ->limit(5)
             ->select();
         /************** 他的动态 *********/
         $data['dynamics'] = M('invite')->where('user_id', $toUserId)
@@ -467,7 +467,7 @@ class User extends Base {
     }
 
     public function myHomePage(){
-        $user_id = I('user_id', 1);
+        $user_id = I('user_id');
         /************ 获得自己的信息 **************/
         $user = M('users')->where('user_id', $user_id)->find();
         unset($user['password']);
@@ -479,7 +479,7 @@ class User extends Base {
         $data['invite'] = M('invite')->where('user_id', $user_id)
             ->field('id, title')
             ->order('id desc')
-            ->limit(3)
+            ->limit(5)
             ->select();
         /************** 我的的动态 *********/
         $data['dynamics'] = M('invite')->where('user_id', $user_id)
