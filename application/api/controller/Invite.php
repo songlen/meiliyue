@@ -128,10 +128,9 @@ class Invite extends Base {
             ->field('u.user_id, head_pic, auth_video_status, nickname, u.sex, u.birthday, u.age, i.id invite_id, i.title, i.description, i.time, i.place, image, i.object, i.pay, i.is_jiesong, i.with_confidante')
             ->find();
 
-        if($info['image']){
-            $info['image'] = unserialize($info['image']);
-            $info['age'] = getAge($info['birthday']);
-        }
+        if(empty($info)) response_error('', '该内容不存在或已删除');
+        if($info['image']) $info['image'] = unserialize($info['image']);
+        $info['age'] = getAge($info['birthday']);
 
         response_success($info);
     }
