@@ -36,7 +36,7 @@
             <input type="text" value="" name="longitude" style="display: none;">
             <input type="text" value="" name="latitude" style="display: none;">
 
-            <input type="text" value="" name="file[]" style="display: none;">
+            <input type="text" value="" name="file" style="display: none;">
             <!-- 隐藏域 end -->
             <div class="theme items">
                 <ul>
@@ -311,11 +311,10 @@
                     srcArr.push(srcTemp);
                 });
                 console.log(srcArr)
-                let imageStr = "'"+srcArr+"'";
-                alert(imageStr)
+                let imageStr = JSON.stringify(srcArr);
+                // alert(imageStr)
                 // console.log(imageJson)
-                $(":input[name='file[]']").val(imageStr);
-
+                $(":input[name='file']").val(imageStr);
 
                 Global.openLoading();
 
