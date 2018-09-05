@@ -668,14 +668,22 @@ a.operate {
     display: inline-block;
     width: calc(33.3333% - 1px);
     /* max-height: 80px; */
-    height: 80px;
+    height: 1rem;
     overflow: hidden;
     margin-top: 5px;
+    position: relative;
 }
 .details-content .details-content-text img {
     /* width: calc(33.3333% - 1px);
     margin-top: 5px; */
     width: 100%;
+}
+.details-content .details-content-text img.detailImg{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 
 .details-content .details-content-text img.emoji_icon {
