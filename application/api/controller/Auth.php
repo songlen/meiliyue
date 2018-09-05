@@ -291,33 +291,4 @@ class Auth extends Base {
             response_error('', $error);
         }
     }
-
-    // 忘记密码
-    public function resetPwd(){
-        $mobile = I('mobile');
-        $code = I('code');
-        $password = I('password');
-        $password_confirm = I('password_confirm');
-
-        if(check_mobile($mobile) == false){
-            response_error('', '手机号码有误');
-        }
-        // 检测验证码
-        $SmsLogic = new SmsLogic();
-        if($SmsLogic->checkCode($mobile, $code, '1', $error) == false) response_error('', $error);
-
-        if($password != $password_confirm){
-            response_error('', '两次密码输入不一致');
-        }
-
-        $user = Db::name('users')->where("mobile = $mobile")->find();
-        if(empty($user)){
-            response_error('', '手机号不存在');
-        }
-
-        $password = encrypt($password);
-        Db::name('users')->where("mobile=$mobile")->update(array('password'=>$password));
-
-        response_success('', '操作成功');
-    }
 }
