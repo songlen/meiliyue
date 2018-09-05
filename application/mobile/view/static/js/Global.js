@@ -165,7 +165,7 @@ let Global = (function () {
 
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
-                        <video id="video1" width="100%" height="100%" src=${src} controls="controls" autoplay="autoplay" loop poster=${posterSrc}></video>
+                        <video id="video1" width="100%" height="100%" src="${src}" poster=${posterSrc} autoplay="autoplay" loop ></video>
                     </div>
                 </div>
             </div>
@@ -174,13 +174,25 @@ let Global = (function () {
 
         let video1=$fullScreen.find("#video1")[0];
 
+        // 绑定事件
         //点击关闭事件
         $fullScreen.find(".closeFullScreen").click(function () {
             $fullScreen.remove();
         });
+        //点击 控制video
+        $(video1).click(function (event) {
+            event.stopPropagation()
+            if (this.paused) {
+                this.play()
+            } else {
+                this.pause()
+            }
+        });
+        // 绑定事件 end
 
+        //append div
+        video1.play()
         $("body").append($fullScreen);
-        video1.play();
     }
 
     //全屏叽喳小视频

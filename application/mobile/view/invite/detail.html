@@ -64,7 +64,6 @@
                             </li>
                             <!-- 图片 -->
                             <li class="detailImages" style="display:none;">
-                                <img class="inviImg" data-index=${index} src=${Global.host+src}>
                             </li>
                             <!-- 付钱 -->
                             <li class="payTypeLi" style="display:none;">
@@ -163,7 +162,7 @@
                     url = url + ".html";
                 }
                 if (url.indexOf("file:///") > -1) {
-                    url = "http://meiliyue.caapa.org/index.php/mobile/invite/detail/id/6.html"; //测试用
+                    url = "http://meiliyue.caapa.org/index.php/mobile/invite/detail/id/22.html"; //测试用
                 }
                 let strTemp = url.split("/detail/id/")[1];
                 Interested.detailId = Number(strTemp.substr(0, strTemp.length - 5));
