@@ -311,7 +311,7 @@
                     srcArr.push(srcTemp);
                 });
                 console.log(srcArr)
-                let imageStr = "'"+srcArr+"'";
+                let imageStr = JSON.stringify(JSON.stringify(srcArr));
                 alert(imageStr)
                 // console.log(imageJson)
                 $(":input[name='file[]']").val(imageStr);
