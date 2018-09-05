@@ -329,7 +329,7 @@ footer li a {
 .invitation .items li .top .img-box {
   width: 0.57rem;
   height: 0.57rem;
-  margin-right: 10px;
+  /* margin-right: 10px; */
   overflow: hidden;
   border-radius: 50%;
   position: relative;
@@ -364,7 +364,7 @@ footer li a {
 
 .yaoyueIndex .videoStatus {
   bottom: 0;
-  right: 0.06rem;
+  right: -0.03rem;
 }
 
 .invitation .items li .top .details {
