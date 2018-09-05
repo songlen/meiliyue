@@ -108,7 +108,7 @@ class Invite extends Base {
         $data['status'] = ($shopinfo_config['examine_invite'] == '1' ? 1 : 2);
 
         if(I('file')){
-            $data['image'] = json_decode(html_entity_decode(I('file')), true);
+            $data['image'] = serialize(json_decode(html_entity_decode(I('file')), true));
         }
 
         M('invite')->insert($data);
