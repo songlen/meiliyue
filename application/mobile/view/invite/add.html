@@ -293,16 +293,17 @@
                 $(":input[name='with_confidante']").val($("#myCheck1").is(':checked') ? 1 : 0);
                 $(":input[name='longitude']").val("");
                 $(":input[name='latitude']").val("");
-
+                
+                //图片
                 let srcArr = [];
                 $("img.showPic").each(function () {
                     let srcTemp = "/public/" + $(this).attr("src").split("/public/")[1];
                     srcArr.push(srcTemp);
                 });
                 console.log(srcArr)
-                let imageJson = JSON.stringify(srcArr)
-                console.log(imageJson)
-                $(":input[name='file[]']").val(imageJson);
+                // let imageJson = JSON.stringify(srcArr)
+                // console.log(imageJson)
+                $(":input[name='file[]']").val(srcArr);
 
 
                 Global.openLoading();
@@ -362,7 +363,7 @@
                     if(Global.isIOS()){
                         jumpIOS(1);
                     }else{
-                        alert(33)
+                        // alert(33)
                         window.Android.gotoJavaCamera(1);
                     }
                 });

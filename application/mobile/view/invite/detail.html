@@ -26,9 +26,13 @@
                 <ul>
                     <li>
                         <div class="top">
-                            <div class="img-box">
-                                <img src="__STATIC__/images/icon/tx.png">
+                            <div class="videoStatusWrap" style="position:relative;">
+                                <div class="img-box">
+                                    <img src="__STATIC__/images/icon/tx.png">
+                                </div>
+                                <span class="videoStatus" style="display:none;"></span>
                             </div>
+                                
                             <div class="details">
                                 <div class="person">
                                     <span class="name"></span>
@@ -48,22 +52,27 @@
                     <!-- 邀约详情 -->
                     <li class="detail inviteDetail">
                         <ul class="inviteDetail-list">
-                            <li>
+                            <!-- 主题 -->
+                            <li class="titleLi">
                                 <span class="bigDot"></span>
                                 <span class="title"></span>
                             </li>
-                            <li class="descriptionLi">
+                            <!-- 描述 -->
+                            <li class="descriptionLi" style="display: none;">
                                 <span class="smallDot"></span>
                                 <span class="description"></span>
                             </li>
-                            <!-- <li class="detailImages">
+                            <!-- 图片 -->
+                            <li class="detailImages" style="display:none;">
                                 <img class="inviImg" data-index=${index} src=${Global.host+src}>
-                            </li> -->
-                            <li>
+                            </li>
+                            <!-- 付钱 -->
+                            <li class="payTypeLi" style="display:none;">
                                 <span class="smallDot"></span>
                                 <span class="payType"></span>
                             </li>
-                            <li>
+                            <!-- 邀约对象性别 -->
+                            <li class="otherSideSexLi" style="display:none;">
                                 <span class="smallDot"></span>
                                 <span class="otherSideSex"></span>
                             </li>
@@ -76,7 +85,7 @@
                         时间：
                         <span class="detailTime"></span>
                     </li>
-                    <li>
+                    <li class="areaPlaceLi" style="display:none;">
                         地点：
                         <span class="areaPlace"></span>
                     </li>
@@ -153,7 +162,7 @@
                     url = url + ".html";
                 }
                 if (url.indexOf("file:///") > -1) {
-                    url = "http://meiliyue.caapa.org/index.php/mobile/invite/detail/id/19.html"; //测试用
+                    url = "http://meiliyue.caapa.org/index.php/mobile/invite/detail/id/6.html"; //测试用
                 }
                 let strTemp = url.split("/detail/id/")[1];
                 Interested.detailId = Number(strTemp.substr(0, strTemp.length - 5));
@@ -192,6 +201,10 @@
                         $(".img-box img").attr("src", Global.host + data.head_pic)
                     }
                 }
+                //视频认证
+                if(data.auth_video_status==2){
+                    $(".videoStatus").show();
+                }
                 $(".person .name").html(data.nickname)
                 if (data.sex == 1) {
                     $(".sexAge").addClass("male");
@@ -200,25 +213,42 @@
                 }
                 $(".sexAge .age").html(data.age);
                 // $(".person .distance .distanceText").html(data.distance)
+
+                // 邀约内容了
+                //主题
                 $(".inviteDetail .inviteDetail-list li .title").html(data.title)
-                $(".inviteDetail .inviteDetail-list li .description").html(data.description)
+                //描述
+                if(data.description&&data.description!==""){
+                    $(".inviteDetail .inviteDetail-list li .description").html(data.description);
+                    $(".descriptionLi").show();
+                }
                 //图片
                 if (data.image && data.image !== "" && data.image.length !== 0) {
-                    let $li = $("<li class='detailImages'></li>");
                     data.image.forEach(function (src, index) {
-                        $li.append($(
+                        $(".detailImages").append($(
                             `
                             <img class="inviImg" data-index=${index} src=${Global.host+src}>
                             `
                         ));
                     });
-
-                    $(".descriptionLi").after($li)
+                    $(".detailImages").show();
                 }
-                $(".inviteDetail .inviteDetail-list li .payType").html(data.pay);
-                $(".inviteDetail .inviteDetail-list li .otherSideSex").html(data.object);
+                //付钱
+                if(data.pay&&data.pay!==""){
+                    $(".inviteDetail .inviteDetail-list li .payType").html(data.pay);
+                    $(".payTypeLi").show();
+                }
+                //邀约对象性别
+                if(data.object&&data.object!==""){
+                    $(".inviteDetail .inviteDetail-list li .otherSideSex").html(data.object);
+                    $(".otherSideSexLi").show();
+                }
+                //时间和place
                 $(".areaTime .detailTime").html(data.time)
-                $(".areaTime .areaPlace").html(data.place)
+                if(data.place&&data.place!==""){
+                    $(".areaTime .areaPlace").html(data.place);
+                    $(".areaPlaceLi").show();
+                }
                 //接送，携带好友
                 if (data.is_jiesong === 1) {
                     $(".is_jiesong").show();
@@ -226,7 +256,7 @@
                 if (data.with_confidante === 1) {
                     $(".with_confidante").show();
                 }
-
+                //----------------------------------------
                 //不是自己的邀约
                 if (Interested.originUserId !== Interested.toUserId) {
                     $(".interest").show(); //btn
@@ -401,6 +431,14 @@
                     let url = Global.host + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
                     console.log(url)
                     window.location.href = url;
+                });
+                //点击认证视频
+                $(".videoStatusWrap").delegate(".videoStatus","click",function(){
+                    let user_id=Interested.toUserId;
+                    Global.getAuthVideoUrl(user_id,function(url){
+                        let src=Global.host+url;
+                        Global.fullScreen(src);
+                    });
                 });
             },
             init: function () {
