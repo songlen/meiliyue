@@ -24,10 +24,14 @@ class FileLogic extends Controller {
                 $parentDir = date('Ymd'); // 系统默认在上传目录下创建了日期目录
                 $fullPath = '/'.$uploadPath.$parentDir.'/'.$info->getFilename();
                 $image[] = $fullPath;
-                // 图片压缩
-                $origin_path = '.'.$fullPath;
-                $ImageObj = \think\Image::open($origin_path);
-                $ImageObj->save($origin_path, null, 60);
+
+                $suffix = substr(strrchr($fullPath, '.'), 1);
+                if(in_array($suffix, array('jpeg', 'jpg', 'gif', 'png', 'bmp'))){
+                    // 图片压缩
+                    $origin_path = '.'.$fullPath;
+                    $ImageObj = \think\Image::open($origin_path);
+                    $ImageObj->save($origin_path, null, 60);
+                }
             }   
         }
         return array('status' => '1', 'image'=>$image);
@@ -45,10 +49,13 @@ class FileLogic extends Controller {
             $parentDir = '/'.date('Ymd'); // 系统默认在上传目录下创建了日期目录
             $fullPath = '/'.$uploadPath.$parentDir.'/'.$info->getFilename();
 
-            // 图片压缩
-            $origin_path = '.'.$fullPath;
-            $ImageObj = \think\Image::open($origin_path);
-            $ImageObj->save($origin_path, null, 60);
+            $suffix = substr(strrchr($fullPath, '.'), 1);
+            if(in_array($suffix, array('jpeg', 'jpg', 'gif', 'png', 'bmp'))){
+                // 图片压缩
+                $origin_path = '.'.$fullPath;
+                $ImageObj = \think\Image::open($origin_path);
+                $ImageObj->save($origin_path, null, 60);
+            }
 
 
             return array('status'=>1, 'fullPath'=>$fullPath);
