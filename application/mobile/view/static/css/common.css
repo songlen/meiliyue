@@ -363,8 +363,8 @@ footer li a {
 }
 
 .yaoyueIndex .videoStatus {
-  bottom: 0.04rem;
-  right: 0.07rem;
+  bottom: 0;
+  right: 0.06rem;
 }
 
 .invitation .items li .top .details {

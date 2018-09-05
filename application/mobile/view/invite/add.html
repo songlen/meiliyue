@@ -311,10 +311,10 @@
                     srcArr.push(srcTemp);
                 });
                 console.log(srcArr)
-                let imageJson = JSON.stringify(srcArr)
-                alert(imageJson)
+                let imageStr = "'"+srcArr+"'";
+                alert(imageStr)
                 // console.log(imageJson)
-                $(":input[name='file[]']").val(srcArr);
+                $(":input[name='file[]']").val(imageStr);
 
 
                 Global.openLoading();
