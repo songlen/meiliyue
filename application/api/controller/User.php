@@ -78,6 +78,8 @@ class User extends Base {
             /**************** 修改用户表 头像记录 ************/
             if($type == 'head_pic'){
                 Db::name('users')->update(array('user_id'=>$user_id, 'head_pic'=>$fullPath));
+
+                $resultdata = array('head_pic'=>$fullPath);
                 // 更新上传头像动态
                 $DynamicLogic->add($user_id, 2, array($fullPath));
             }
@@ -93,14 +95,14 @@ class User extends Base {
                 Db::name('users')->where('user_id', $user_id)->setField('auth_video_status', 1);
                 // 更新认证视频动态
                 $video_thumb = $FileLogic->video2thumb($fullPath);
-                $videodata = array(
+                $resultdata = $videodata = array(
                     'video' => $fullPath,
                     'video_thumb' => $video_thumb,
                 );
                 $DynamicLogic->add($user_id, 3, [], $videodata);
             }
 
-            response_success('', '上传成功');
+            response_success($resultdata, '上传成功');
             
         } else {
             response_error('', '提交失败');
