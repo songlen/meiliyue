@@ -2310,7 +2310,7 @@ button.swiper-pagination-bullet {
     -webkit-transition: opacity .3s;
     transition: opacity .3s;
     /* tongzhou */
-    z-index: 1;
+    z-index: 6;
 }
 
 .weui-photo-browser-modal.weui-photo-browser-modal-visible {
