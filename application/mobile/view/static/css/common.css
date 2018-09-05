@@ -355,6 +355,12 @@ footer li a {
   right: 0.13rem;
   bottom: 0;
 }
+.interested .invitation-enrollWrap .videoStatus{
+  width: 0.2rem;
+  height: 0.2rem;
+  bottom: 0;
+  right: 0.06rem;
+}
 
 .yaoyueIndex .videoStatus {
   bottom: 0.04rem;

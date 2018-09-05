@@ -463,9 +463,9 @@ let Global = (function () {
 //上传文件的回调 args 文件路径
 function getJavaFiles(args,thumb) { // 路径/plulic/../..
     console.log(args)
-    alert(1)
-    alert(args)
-    alert(thumb)
+    // alert(1)
+    // alert(args)
+    // alert(thumb)
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
@@ -493,7 +493,7 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
                 $(self).closest('.edit-pic-item').remove();
             });
         })
-        alert("增加")
+        // alert("增加")
         $(".showPicUl").prepend($liTemp);
     }
     //是视频
@@ -513,7 +513,7 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
                 $(self).closest('.edit-pic-item').remove();
             });
         })
-        alert("增加视频")
+        // alert("增加视频")
         $(".showPicUl").prepend($liTemp);
     }
 }
