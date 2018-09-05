@@ -668,7 +668,7 @@ a.operate {
     display: inline-block;
     width: calc(33.3333% - 1px);
     /* max-height: 80px; */
-    height: 80px;
+    height: 1rem;
     overflow: hidden;
     margin-top: 5px;
     position: relative;
