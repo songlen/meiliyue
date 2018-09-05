@@ -480,7 +480,7 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
     if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) {
         let $liTemp = $(`
             <li class="edit-pic-item">
-                <img class="showPic" data-index=${$(".edit-pic-item").length} src="${src}" alt="上传文件">
+                <img class="showPic" data-index=${$(".edit-pic-item").length} src="${src}">
                 <a href="javascript:void(0)" class="edit-closePic"></a>
             </li>
         `);
