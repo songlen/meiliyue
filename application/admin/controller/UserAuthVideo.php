@@ -6,6 +6,7 @@ use think\AjaxPage;
 use think\Page;
 use think\Db;
 use app\api\logic\MessageLogic;
+use app\api\logic\DynamicLogic;
 
 class UserAuthVideo extends Base {
 
@@ -64,6 +65,18 @@ class UserAuthVideo extends Base {
             $messsage = $status == 2 ? '恭喜您，视频认证已通过' : '很抱歉，视频认证未通过';
             $MessageLogic = new MessageLogic();
             $MessageLogic->add($user_id, $messsage);
+        }
+
+        // 发布动态
+        if($result && $status == 2){
+            $video = M('UsersAuthVideo')->where('id', $id)->find();
+            $videodata = array(
+                'video' => $video['auth_video_url'],
+                'video_thumb' => $video['video_thumb'],
+            );
+
+            $DynamicLogic = new DynamicLogic();
+            $DynamicLogic->add($user_id, 3, [], $videodata);
         }
     }
  }

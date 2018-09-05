@@ -74,32 +74,33 @@ class User extends Base {
         if($result['status'] == '1'){
             $fullPath = $result['fullPath'];
 
-            $DynamicLogic = new DynamicLogic();
             /**************** 修改用户表 头像记录 ************/
             if($type == 'head_pic'){
                 Db::name('users')->update(array('user_id'=>$user_id, 'head_pic'=>$fullPath));
 
                 $resultdata = array('head_pic'=>$fullPath);
                 // 更新上传头像动态
+                $DynamicLogic = new DynamicLogic();
                 $DynamicLogic->add($user_id, 2, array($fullPath));
             }
             /**************** 记录认证视频 ************/
             if($type == 'auth_video'){
+                $video_thumb = $FileLogic->video2thumb($fullPath);
+
                 $count = Db::name('users_auth_video')->where('user_id', $user_id)->count();
                 if($count){
-                    Db::name('users_auth_video')->where('user_id', $user_id)->update(array('auth_video_url'=> $fullPath, 'add_time' => time()));
+                    Db::name('users_auth_video')->where('user_id', $user_id)->update(array('auth_video_url'=> $fullPath, 'video_thumb'=>$video_thumb, 'add_time' => time()));
                 } else {
-                    Db::name('users_auth_video')->insert(array('user_id'=>$user_id, 'auth_video_url'=> $fullPath, 'add_time' => time()));
+                    Db::name('users_auth_video')->insert(array('user_id'=>$user_id, 'auth_video_url'=> $fullPath, 'video_thumb'=>$video_thumb, 'add_time' => time()));
                 }
                 // 更新用户表视频认证状态
                 Db::name('users')->where('user_id', $user_id)->setField('auth_video_status', 1);
-                // 更新认证视频动态
-                $video_thumb = $FileLogic->video2thumb($fullPath);
-                $resultdata = $videodata = array(
+
+                // 返回前端结果
+                $resultdata = array(
                     'video' => $fullPath,
                     'video_thumb' => $video_thumb,
                 );
-                $DynamicLogic->add($user_id, 3, [], $videodata);
             }
 
             response_success($resultdata, '上传成功');

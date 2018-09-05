@@ -27,9 +27,9 @@ class Auth extends Base {
         }
         $user = Db::name('users')->where("account_mobile", $mobile)->find();
         if (!$user) {
-            response_error('', '账号不存在！');
+            response_error('', '用户名或密码填写错误，请核对后再次提交');
         } elseif (encrypt($password) != $user['password']) {
-            response_error('', '密码错误！');
+            response_error('', '用户名或密码填写错误，请核对后再次提交');
         } elseif ($user['is_lock'] == 1) {
             response_error('', '账号异常已被锁定！');
         }
@@ -137,6 +137,30 @@ class Auth extends Base {
         $userInfo = M('users')->where('user_id', $user_id)->find();
         unset($userInfo['password']);
         return response_success($userInfo, '注册成功');
+    }
+
+    // 忘记密码
+    public function resetPwd(){
+        $mobile = I('mobile');
+        $code = I('code');
+        $password = I('password');
+
+        if(check_mobile($mobile) == false){
+            response_error('', '手机号码有误');
+        }
+        // 检测验证码
+        $SmsLogic = new SmsLogic();
+        if($SmsLogic->checkCode($mobile, $code, '1', $error) == false) response_error('', $error);
+
+        $user = Db::name('users')->where("mobile = $mobile")->find();
+        if(empty($user)){
+            response_error('', '手机号不存在');
+        }
+
+        $password = encrypt($password);
+        Db::name('users')->where("mobile=$mobile")->update(array('password'=>$password));
+
+        response_success('', '密码修改成功');
     }
 
     /*
