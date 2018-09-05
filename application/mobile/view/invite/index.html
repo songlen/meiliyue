@@ -648,12 +648,17 @@
                     },
                     //跳到邀约发布页面
                     openReleaseInvite(type) { //type number 邀约类型
-                        this.savePageToSession()
-
-                        $(".plus")[0].click();
-
-                        window.location.href = this.GlobalHost + "/index.php/mobile/invite/add/type/" + type +
-                            ".html"
+                        Global.openLoading();
+                        Global.checkInvite(this.user_id,function(num){
+                            Global.closeLoadingNow();
+                            $(".plus")[0].click();
+                            if(num>=5){
+                                Global.messageWin("您已发满5条邀约，请删除不需要的邀约后再发布");
+                                return;
+                            }
+                            this.savePageToSession()
+                            window.location.href = this.GlobalHost + "/index.php/mobile/invite/add/type/" + type +".html";
+                        });
                     },
                     //跳转页面之前，保存页面信息
                     savePageToSession() {

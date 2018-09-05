@@ -11,13 +11,17 @@ let Global = (function () {
         }
     }
 
-    function closeLoading(resultMsg, callback = function () {}, delay = 500) {
+    function closeLoading(resultMsg="处理中", callback = function () {}, delay = 500) {
         $(".mLoading").html(resultMsg);
         setTimeout(function () {
             $(".mLoadingMask")
                 .add($(".mLoading")).remove();
             callback();
         }, delay);
+    }
+    
+    function closeLoadingNow() {
+        $(".mLoadingMask").add($(".mLoading")).remove();
     }
 
     function messageWin(msg) {
@@ -443,6 +447,25 @@ let Global = (function () {
         });
     }
 
+    //检查能否发邀约
+    function checkInvite(user_id,callback){
+        let postData = {
+            user_id: user_id
+        };
+        console.log(postData)
+        let url = GlobalHost + "/index.php/Api/invite/totalNum";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: postData,
+            dataType: "json",
+            success: function (result) {
+                console.log(result)
+                callback(result.data.num);
+            }
+        }); 
+    }
+
     //Global暴露的接口------------------------
     return {
         //值
@@ -450,6 +473,7 @@ let Global = (function () {
         //方法
         openLoading, //msg
         closeLoading, //msg:完成瞬间显示的文字;callback;delay:人工设定延迟
+        closeLoadingNow, //单纯的关闭loding，没有参数
         messageWin, //msg
         messageConfirWin, //msg;callback：点击确定的回调
         bindLimitCount, //element:textarea元素;textCount:限制的字数;showElement:实时显示字数的元素  注:没有表情插件的
@@ -460,13 +484,16 @@ let Global = (function () {
         eleCantClick, //让元素无法点击 ele:元素
         eleCanClick, //ele:元素
         fullScreen, // 简单的预览全屏视频 ele:video元素
-        fullScreenVideo, //全屏叽喳视频（有去动态详情的按钮）
         fullScreenImg, //全屏显示图片 src
         filterHttpImg, //过滤http头像img  src
         compressImg, //压缩图片，file callback(blob)
         getImgWidth, //获取图片原始宽高
         updateLocalUserinfo, //更新本地的userinfo key,value
-        getAuthVideoUrl //获取认证视频url; user_id callback(url)
+        getAuthVideoUrl, //获取认证视频url; user_id callback(url)
+
+        //单独功能
+        fullScreenVideo, //全屏叽喳视频（有去动态详情的按钮）
+        checkInvite
     }
 })();
 

@@ -1172,9 +1172,17 @@
                 })
                 //跳添加邀约页面
                 $(".openReleaseInvite").click(function () {
-                    let type = $(this).attr("data-type");
-                    window.location.href = Global.host + "/index.php/mobile/invite/add/type/" + type +
-                        ".html";
+                    Global.openLoading();
+                    Global.checkInvite(Homepage.user_id,function(num){
+                        Global.closeLoadingNow();
+                        $(".m_shade").add($(".maskm")).hide();
+                        if(num>=5){
+                            Global.messageWin("您已发满5条邀约，请删除不需要的邀约后再发布");
+                            return;
+                        }
+                        let type = $(this).attr("data-type");
+                        window.location.href = Global.host + "/index.php/mobile/invite/add/type/" + type +".html";
+                    });
                 })
                 //点击编辑图标
                 $(".editHomePage").click(function () {
