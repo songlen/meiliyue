@@ -102,22 +102,13 @@ class Invite extends Base {
         $data['pay'] = I('pay');
         $data['is_jiesong'] = I('is_jiesong');
         $data['with_confidante'] = I('with_confidante');
-
         $data['add_time'] = time();
+        // 后台设置的是否审核
         $shopinfo_config = tpCache('shop_info');
         $data['status'] = ($shopinfo_config['examine_invite'] == '1' ? 1 : 2);
 
-        if($_FILES['file']){
-            $FileLogic = new FileLogic();
-            $uploadPath = UPLOAD_PATH.'invite/';
-            $result = $FileLogic->uploadMultiFile('file', $uploadPath);
-            if($result['status'] == '1'){
-                $image = $result['image'];
-            } else {
-                response_error('', '图片上传失败');
-            }
-
-            $data['image'] = serialize($image);
+        if($data['file']){
+            $data['image'] = serialize($data['file']);
         }
 
         M('invite')->insert($data);
