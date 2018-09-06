@@ -78,4 +78,20 @@ class User extends Base {
 
         return $this->fetch();
     }
+
+    public function signIn(){
+        $user_id = I('user_id');
+        // 取出签到页面的数据
+        $user = Db::name('users')->where('user_id', $user_id)->field('signInDays, flower_num')->find();
+
+        $count = Db::name('user_sign_log')->where(array('user_id'=>$user_id, 'date'=>date('Y-m-d')))->count();
+        $info = array(
+            'signInDays' => $user['signInDays'],
+            'flower_num' => $user_id['flower_num'],
+            'isSign' => $count ? 1 : 0,
+        );
+
+        $this->assign('info', $info);
+        return $this->fetch();
+    }
 }

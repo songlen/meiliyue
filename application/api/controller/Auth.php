@@ -152,7 +152,7 @@ class Auth extends Base {
         $SmsLogic = new SmsLogic();
         if($SmsLogic->checkCode($mobile, $code, '1', $error) == false) response_error('', $error);
 
-        $user = Db::name('users')->where("mobile = $mobile")->find();
+        $user = Db::name('users')->where("account_mobile = $mobile")->find();
         if(empty($user)){
             response_error('', '手机号不存在');
         }

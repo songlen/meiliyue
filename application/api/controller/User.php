@@ -724,4 +724,10 @@ class User extends Base {
 
         response_success();
     }
+
+    // 签到  
+    public function signIn(){
+        $user_id = I('user_id');
+
+        $count = Db::name('user_sign_log')->where(array('user_id'=>$user_id, 'date'=>date('Y-m-d')))->count();
 }
