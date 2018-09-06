@@ -11,6 +11,7 @@ class Task {
         if(is_array($users) && is_array($users)){
             foreach ($users as &$item) {
                 $item['age'] = getAge($item['birthday']);
+                unset($item['birthday']);
             }
         }
 
