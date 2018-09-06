@@ -127,7 +127,7 @@
         <ul>
             <li class="">分享到好友</li>
             <!-- <li class="">举报</li> -->
-            <li class="deleteDetail">删除</li>
+            <li class="deleteDetail" style="display:none;">删除</li>
             <li class="home-cancel">取消</li>
         </ul>
     </div>
@@ -281,6 +281,7 @@
                 //是自己的邀约
                 else {
                     // $(".enroll-list").show();
+                    $(".deleteDetail").show();
                     Interested.showInterestedList();
                 }
 

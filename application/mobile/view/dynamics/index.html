@@ -495,10 +495,6 @@
 
                     window.location.href = this.GlobalHost + "/index.php/mobile/dynamics/add/type/" + type + ".html";
                 },
-                //头像加载失败，默认图片
-                defaultImg(event) {
-                    event.target.src = "__STATIC__/images/icon/tx.png"
-                },
                 //跳转之前存数据到session
                 savePageToSession() {
                     //key : dongtaiPage
@@ -514,24 +510,6 @@
                     console.log(pageData)
 
                     sessionStorage.setItem('dongtaiPage', JSON.stringify(pageData))
-                },
-                //打开全屏小视频
-                videoFullScreen(item) {
-                    console.log(item)
-                    let options={
-                        user_id:item.user_id,
-                        // head_pic:
-                        src:Global.filterHttpImg(item.video_url),
-                        poster:Global.host+item.video_thumb,
-                        dynamic_id:item.dynamic_id,
-                    };
-                    Global.fullScreenVideo(options);
-                },
-                //关闭全屏小视频
-                closeFullScreen() {
-                    let video1=document.getElementById("video1");
-                    $(video1).attr("src","");
-                    $(".fullScreen").hide();
                 },
                 gotoDongtaiDetail(item) {
                     this.savePageToSession();
@@ -593,55 +571,6 @@
                         Global.fullScreen(src);
                     });
                 },
-                showVideo: function ({
-                    user_id,
-                    head_pic,
-                    src
-                }) {
-                    console.log(user_id, head_pic, src)
-                    let $fullScreen = $(`
-                        <div class="fullScreen">
-                            <div class="videoHeader">
-                                <div class="closeFullScreen"></div>
-                                <div class="videoOperate"></div>
-                                <div class="img-box">
-                                    <img src=${head_pic}>
-                                </div>
-                            </div>
-
-                            <div class="fullScreenScroll">
-                                <div class="fullScreenWrap">
-                                    <span class="progressBar"></span>
-                                    <video id="video2" width="100%" height="100%" src=${src} autoplay loop></video>
-                                    <div class="videoFooter">
-                                        <div class="videoCommentBtn"></div>
-                                        <span class="littleTri"></span>
-                                    </div>
-                                </div>
-                                <!-- 小视频评论 -->
-                                <div class="" style="height: 300px;background-color: red;;">
-
-                                </div>
-                                
-                                <!-- 小视频评论input -->
-                                <div class="videoInput">
-                                    <input type="text">
-                                    <span class="sendComment">发送</span>
-                                </div>
-                            </div>
-                        </div>
-                    `);
-
-                    //点击关闭事件
-                    $fullScreen.find(".closeFullScreen").click(function () {
-                        $fullScreen.remove();
-                    });
-
-                    $("body").append($fullScreen);
-                },
-                messageWin: function (msg) {
-                    Global.messageWin(msg);
-                },
                 //动态列表送花
                 giveFlower: function (item) {
                     var _self = this;
@@ -652,8 +581,6 @@
                         dynamic_id: item.dynamic_id
                     }
                     console.log(postData)
-                    // this.messageWin("您的小花数量不足！");//测试用
-                    // return;
                     $.ajax({
                         type: "POST",
                         url: _self.GlobalHost + "/index.php/Api/Dynamics/giveFlower",
@@ -665,7 +592,7 @@
                                 //小花数量加一
                                 item.flower_num = item.flower_num + 1;
                             } else { //送花失败
-                                _self.messageWin("您的小花数量不足！");
+                                Global.messageWin("您的小花数量不足！");
                             }
                         }
                     });
@@ -681,6 +608,7 @@
                 openDetailVideo(item){
                     console.log(item)
                     let src=Global.host+item.video_url;
+                    let postSrc=Global.host+item.video_thumb;
                     Global.fullScreen(src);
                 }
             }

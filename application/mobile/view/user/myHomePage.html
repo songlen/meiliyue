@@ -332,7 +332,6 @@
                 }
                 //个人相册
                 if (data.photos && data.photos !== "" && data.photos.length !== 0) {
-                    $(".picCount").html(data.photos.length);
                     let showArr = data.photos.length >= 3 ? data.photos.slice(0, 3) : data.photos;
                     //图片升序排列
                     showArr.sort(function (a, b) {
@@ -352,10 +351,10 @@
                         $("ul.photos").prepend($liTemp);
                     });
                 }
+                //个人相册数量
+                $(".picCount").html(data.count.normalPhotoCount);
                 //精华照片
-                if (data.quintessence_photos && data.quintessence_photos !== "" && data.quintessence_photos.length !==
-                    0) {
-                    $(".quintessenceCount").html(data.quintessence_photos.length);
+                if (data.quintessence_photos && data.quintessence_photos !== "" && data.quintessence_photos.length !==0) {
                     let showArr = data.quintessence_photos.length >= 3 ? data.quintessence_photos.slice(0, 3) :
                         data.quintessence_photos;
                     //图片升序排列
@@ -375,8 +374,9 @@
                         $("ul.quintessencePhotos").prepend($liTemp);
                     });
                 }
+                //精华照片数量
+                $(".quintessenceCount").html(data.count.jinghuaPhotoCount);
                 //我的邀约
-                $(".myInviteCount").html(data.invite.length);
                 if (data.invite.length == 0) {
                     $(".noInviteSome").show()
                 } else {
@@ -385,6 +385,8 @@
                             value.title + '</p>'))
                     })
                 }
+                //我的邀约数量
+                $(".myInviteCount").html(data.count.inviteCount);
                 //我的动态
                 if (data.dynamics && data.dynamics !== "") {
                     let dynamicsArr = [];
@@ -393,21 +395,14 @@
                     } else { //data的动态不是数组
                         dynamicsArr.push(data.dynamics)
                     }
-                    $(".myTalkCount").html(dynamicsArr.length)
                     dynamicsArr.forEach(function (value, index) {
-                        // $(".myTalkList").append($(
-                        //     `
-                        //     <li class="myTalk-item" data-id=${value.id}>
-                        //         ${value.title}
-                        //     </li>
-                        //     `
-                        // ));
-                        $(".myTalkSome").append($('<p class="inviDetail" data-id="' + value.id + '">' +
-                            value.title + '</p>'))
+                        $(".myTalkSome").append($('<p class="inviDetail" data-id="' + value.id + '">' +value.title + '</p>'))
                     })
                 }else{
                     $(".noTalkSome").show();
                 }
+                //我的动态数量
+                $(".myTalkCount").html(data.count.dynamicsCount)
                 //认证
                 if (data.baseinfo.mobile_validated == 0) {
                     $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
@@ -1220,12 +1215,20 @@
                     let url = Global.host + "/index.php/mobile/invite/detail/id/" + detailId + ".html";
                     window.location.href = url;
                 });
-                //点击我的动态，跳动态详情
-                $(".myTalkSome").delegate("p.inviDetail", "click", function () {
-                    let detailId = $(this).attr("data-id");
-                    window.location.href = Global.host + '/index.php/mobile/dynamics/detail/id/' +
-                        detailId +
-                        '.html';
+                //点击我的动态，跳动态列表
+                // $(".myTalkSome").delegate("p.inviDetail", "click", function () {
+                //     let detailId = $(this).attr("data-id");
+                //     window.location.href = Global.host + '/index.php/mobile/dynamics/detail/id/' +
+                //         detailId +
+                //         '.html';
+                // });
+                $(".myTalkSome").click(function () {
+                    let displayStatus=$(this).find(".noTalkSome").css("display");
+                    if(displayStatus!=="none"){ //这个人没动态
+                        return;
+                    }
+                    //去我的动态列表页面
+                    window.location.href = Global.host + '/index.php/mobile/user/myDynamicList.html';
                 });
                 //点击图片显示大图 -- 普通图片
                 $(".photos").delegate("img.showPic", "click", function () {

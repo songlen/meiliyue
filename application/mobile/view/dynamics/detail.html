@@ -179,7 +179,8 @@
         <!-- 更多操作提示窗 -->
         <div class="avatarOperating-jubao" style="display: none;">
             <ul>
-                <li class="deleteDetail">删除</li>
+                <li class="">分享给好友</li>
+                <li class="deleteDetail" style="display:none;">删除</li>
                 <li class="jubao-cancel">取消</li>
             </ul>
         </div>
@@ -203,10 +204,12 @@
     <script src="__STATIC__/js/Global.js"></script>
     <script>
         var dynamic_origin_id = '{$info["user_id"]}';
+        // alert(dynamic_origin_id)
         var Details = {
             user_id: "",
-            dynamic_id: "",
             dynamic_origin_id: "",
+
+            dynamic_id: "",
 
             _flowerTimer: null,
             replyDiv: null,
@@ -223,6 +226,7 @@
                 } else {
                     Details.user_id = 1; //测试用
                 }
+                // alert("user_id:"+Details.user_id)
                 //dynamic_id
                 var ulrStr = window.location.href;
                 if (!(ulrStr.indexOf(".html") > -1)) { //后面不带.html
@@ -239,6 +243,11 @@
                 Details.dynamic_origin_id = Number(dynamic_origin_id);
                 // Details.dynamic_origin_id = 1; //测试用
                 console.log("动态发布者：" + Details.dynamic_origin_id)
+                
+                //是否是自己的动态 updateDom
+                if(Details.user_id==Details.dynamic_origin_id){
+                    $(".deleteDetail").show();
+                }
             },
             //送花
             giveFlower: function () {
@@ -507,9 +516,14 @@
                     success: function (result) {
                         console.log(result)
                         if(result.msg=="删除成功"){
-                            //删除动态成功 后
+                            //删除动态成功 后 
+                            //删除动态index session
                             if (sessionStorage.getItem("dongtaiPage") && sessionStorage.getItem("dongtaiPage") !== null&&sessionStorage.getItem("dongtaiPage") !== "null") {
                                 sessionStorage.setItem('dongtaiPage', null);
+                            }
+                            //删除我的动态列表 session
+                            if (sessionStorage.getItem("myDongtaiPage") && sessionStorage.getItem("myDongtaiPage") !== null&&sessionStorage.getItem("myDongtaiPage") !== "null") {
+                                sessionStorage.setItem('myDongtaiPage', null);
                             }
                             window.history.back(-1);
                         }

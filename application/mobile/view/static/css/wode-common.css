@@ -304,6 +304,9 @@ a.close {
     background: url(../images/icon/back.png) right center no-repeat;
     border-right: 0.12rem solid transparent;
 }
+.myInvite-content .myInvite-tip.myTalkSome p {
+    background: none;
+}
 
 .myInvite-content .myInvite-tip img {
     height: 0.11rem;
