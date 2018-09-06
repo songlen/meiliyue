@@ -672,16 +672,17 @@
                     }
                 });
             },
-            showFullPic: function (ele) {
+            showFullPic: function (el) {
                 let srcArr = [];
-                let $curUl = $(ele).closest(".myPhotos");
-                $curUl.find("img.showPic").each(function () {
-                    // srcArr.unshift($(this).attr("src"));
+                let $curUl = $(el).closest(".myPhotos");
+                $curUl.find("img.showPic").each(function (index,element) {
+                    $(this).attr("data-index",index);
                     srcArr.push($(this).attr("src"));
                 });
                 console.log(srcArr)
                 let swiper = $.photoBrowser({
-                    items: srcArr
+                    items: srcArr,
+                    initIndex:$(el).attr("data-index")
                 });
                 // swiper.open(index);
                 swiper.open();

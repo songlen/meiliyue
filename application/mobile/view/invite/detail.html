@@ -127,6 +127,7 @@
         <ul>
             <li class="">分享到好友</li>
             <!-- <li class="">举报</li> -->
+            <li class="deleteDetail">删除</li>
             <li class="home-cancel">取消</li>
         </ul>
     </div>
@@ -388,18 +389,47 @@
                 });
             },
             showFullPic: function (el) {
-                let index = $(el).attr("data-index");
                 let srcArr = [];
-                $(".detailImages img.inviImg").each(function () {
-                    // srcArr.unshift($(this).attr("src"));
+                $(".detailImages img.inviImg").each(function (index,element) {
+                    $(this).attr("data-index",index);
                     srcArr.push($(this).attr("src"));
                 });
                 console.log(srcArr)
                 let swiper = $.photoBrowser({
-                    items: srcArr
+                    items: srcArr,
+                    initIndex:$(el).attr("data-index")
                 });
                 // swiper.open(index);
                 swiper.open();
+            },
+            deleteDetail(){
+                let postData = {
+                    user_id: Interested.originUserId,
+                    invite_id:Interested.detailId
+                }
+                let url = Global.host + "/index.php/Api/Invite/del";
+                console.log(postData)
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: postData,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+                        if(result.msg=="删除成功"){
+                            //删除邀约成功 后
+                            //删除邀约列表session
+                            if (sessionStorage.getItem("inviIndexPage") && sessionStorage.getItem("inviIndexPage") !==null && sessionStorage.getItem("inviIndexPage") !== "null") {
+                                sessionStorage.setItem('inviIndexPage', null);
+                            }
+                            //删除myHomePage session
+                            if (sessionStorage.getItem("homePage") && sessionStorage.getItem("homePage") !== null && sessionStorage.getItem("homePage") !== "null") {
+                                sessionStorage.setItem('homePage', null);
+                            }
+                            window.history.back(-1);
+                        }
+                    }
+                });
             },
             eventsBind: function () {
                 //返回
@@ -453,6 +483,13 @@
                     Global.getAuthVideoUrl(user_id,function(url){
                         let src=Global.host+url;
                         Global.fullScreen(src);
+                    });
+                });
+                //点击删除
+                $(".deleteDetail").click(function(){
+                    $(".avatarOperating .home-cancel")[0].click();
+                    Global.messageConfirWin("确认删除这条邀约？",function(){
+                        Interested.deleteDetail();
                     });
                 });
             },

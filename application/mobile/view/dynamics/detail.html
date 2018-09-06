@@ -19,8 +19,7 @@
         <header>
             <a href="javascript:window.history.back(-1)" class="back"></a>
             <div class="title">动态详情</div>
-            <!-- <a href="javascript:void(0)" class="operate"></a> -->
-            <a href="javascript:void(0)"></a>
+            <a href="javascript:void(0)" class="operate"></a>
         </header>
 
         <div class="details-page">
@@ -180,7 +179,7 @@
         <!-- 更多操作提示窗 -->
         <div class="avatarOperating-jubao" style="display: none;">
             <ul>
-                <li class="">举报</li>
+                <li class="deleteDetail">删除</li>
                 <li class="jubao-cancel">取消</li>
             </ul>
         </div>
@@ -230,7 +229,7 @@
                     ulrStr = ulrStr + ".html";
                 }
                 if (ulrStr.indexOf("file://") > -1) {
-                    ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/69.html" //测试用
+                    ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/22.html" //测试用
                 }
                 var strTemp = ulrStr.split("/detail/id/")[1];
                 Details.dynamic_id = Number(strTemp.substr(0, strTemp.length - 5));
@@ -479,18 +478,43 @@
                 })
             },
             showFullPic: function (el) {
-                // let index = $(el).attr("data-index");
                 let srcArr = [];
-                $("img.detailImg").each(function () {
-                    // srcArr.unshift($(this).attr("src"));
+                $("img.detailImg").each(function (index,element) {
+                    $(this).attr("data-index",index);
                     srcArr.push($(this).attr("src"));
                 });
                 console.log(srcArr)
                 let swiper = $.photoBrowser({
-                    items: srcArr
+                    items: srcArr,
+                    initIndex:$(el).attr("data-index")
                 });
                 // swiper.open(index);
                 swiper.open();
+            },
+            //删除动态
+            deleteDetail(){
+                let postData = {
+                    user_id: Details.user_id,
+                    dynamic_id:Details.dynamic_id
+                }
+                let url = Global.host + "/index.php/Api/Dynamics/del";
+                console.log(postData)
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: postData,
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result)
+                        if(result.msg=="删除成功"){
+                            //删除动态成功 后
+                            if (sessionStorage.getItem("dongtaiPage") && sessionStorage.getItem("dongtaiPage") !== null&&sessionStorage.getItem("dongtaiPage") !== "null") {
+                                sessionStorage.setItem('dongtaiPage', null);
+                            }
+                            window.history.back(-1);
+                        }
+                    }
+                });
             },
             eventsBind: function () {
                 //点击送花
@@ -512,20 +536,18 @@
                     // })
                     $('body').css('overflow', 'auto')
                 })
-                //更多操作 举报
-                // $(".operate").click(function () {
-                //     if ($(".mask").length == 0) {
-                //         $('body').append($('<div class="mask"></div>'))
-                //     }
-                //     $('.avatarOperating-jubao').show()
-                //     $('body').css('overflow', 'hidden')
-                // })
-                //更多操作 举报-取消
+                //更多操作 删除
+                $(".operate").click(function () {
+                    if ($(".mask").length == 0) {
+                        $('body').append($('<div class="mask"></div>'))
+                    }
+                    $('.avatarOperating-jubao').show()
+                    $('body').css('overflow', 'hidden')
+                })
+                //更多操作 删除-取消
                 $(".jubao-cancel").click(function () {
                     $('.mask').remove()
-                    // $('.avatarOperating').animate({'bottom':'-2rem'},300,function(){
                     $('.avatarOperating-jubao').hide()
-                    // })
                     $('body').css('overflow', 'auto')
                 });
                 //点击这条动态的头像去个人主页
@@ -552,6 +574,13 @@
                     let src=$(this).find("img").attr("data-src");
                     let posterSrc=$(this).find("img").attr("src");
                     Global.fullScreen(src,posterSrc);
+                });
+                //点击删除
+                $(".deleteDetail").click(function(){
+                    $(".jubao-cancel")[0].click();
+                    Global.messageConfirWin("确认删除这条动态？",function(){
+                        Details.deleteDetail();
+                    });
                 });
             },
             init: function () {

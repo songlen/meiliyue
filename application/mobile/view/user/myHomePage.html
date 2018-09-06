@@ -536,15 +536,12 @@
                 Homepage.setProps();
 
                 //根据sesstion 返回页面滚动位置
-                if (sessionStorage.getItem("homePage") && sessionStorage.getItem("homePage") !== null &&
-                    sessionStorage.getItem(
-                        "homePage") !== "null") {
+                if (sessionStorage.getItem("homePage") && sessionStorage.getItem("homePage") !== null && sessionStorage.getItem("homePage") !== "null") {
                     let pageData = JSON.parse(sessionStorage.getItem("homePage"))
                     console.log(pageData)
-
                     //滚动位置
                     setTimeout(function () {
-                        $(".homepage .all-content")[0].scrollTop = pageData.pageScrollTop
+                        $(".homepage .all-content")[0].scrollTop = pageData.pageScrollTop;
                     }, 0);
                 }
 
@@ -1102,16 +1099,17 @@
 
                 sessionStorage.setItem('homePage', JSON.stringify(pageData))
             },
-            showFullPic: function (ele) { //bug不能选index
+            showFullPic: function (el) { //bug不能选index
                 let srcArr = [];
-                let $curUl = $(ele).closest(".myPhotos");
-                $curUl.find("img.showPic").each(function () {
-                    // srcArr.unshift($(this).attr("src"));
+                let $curUl = $(el).closest(".myPhotos");
+                $curUl.find("img.showPic").each(function (index,element) {
+                    $(this).attr("data-index",index);
                     srcArr.push($(this).attr("src"));
                 });
                 console.log(srcArr)
                 let swiper = $.photoBrowser({
-                    items: srcArr
+                    items: srcArr,
+                    initIndex:$(el).attr("data-index")
                 });
                 // swiper.open(index);
                 swiper.open();
@@ -1172,9 +1170,17 @@
                 })
                 //跳添加邀约页面
                 $(".openReleaseInvite").click(function () {
-                    let type = $(this).attr("data-type");
-                    window.location.href = Global.host + "/index.php/mobile/invite/add/type/" + type +
-                        ".html";
+                    Global.openLoading();
+                    Global.checkInvite(Homepage.user_id,function(num){
+                        Global.closeLoadingNow();
+                        $(".m_shade").add($(".maskm")).hide();
+                        if(num>=5){
+                            Global.messageWin("您已发满5条邀约，请删除不需要的邀约后再发布");
+                            return;
+                        }
+                        let type = $(this).attr("data-type");
+                        window.location.href = Global.host + "/index.php/mobile/invite/add/type/" + type +".html";
+                    });
                 })
                 //点击编辑图标
                 $(".editHomePage").click(function () {

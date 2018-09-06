@@ -332,7 +332,7 @@
             showFullPic: function (el) {
                 let srcArr = [];
                 $(".showPicUl .showPic").each(function (index,element) {
-                    $(this).attr("data-index",index)
+                    $(this).attr("data-index",index);
                     srcArr.push($(this).attr("src"));
                 });
                 console.log(srcArr)
