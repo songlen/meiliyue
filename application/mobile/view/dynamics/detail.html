@@ -179,6 +179,7 @@
         <!-- 更多操作提示窗 -->
         <div class="avatarOperating-jubao" style="display: none;">
             <ul>
+                <li class="">分享给好友</li>
                 <li class="deleteDetail">删除</li>
                 <li class="jubao-cancel">取消</li>
             </ul>
@@ -203,6 +204,7 @@
     <script src="__STATIC__/js/Global.js"></script>
     <script>
         var dynamic_origin_id = '{$info["user_id"]}';
+        alert(dynamic_origin_id)
         var Details = {
             user_id: "",
             dynamic_id: "",
@@ -223,6 +225,7 @@
                 } else {
                     Details.user_id = 1; //测试用
                 }
+                alert("user_id:"+Details.user_id)
                 //dynamic_id
                 var ulrStr = window.location.href;
                 if (!(ulrStr.indexOf(".html") > -1)) { //后面不带.html
