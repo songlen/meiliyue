@@ -17,7 +17,8 @@
         <div class="allWrap" :class="{blur:isReleasing}">
             <header>
                 <a href="javascript:window.history.back(-1)" class="back"></a>
-                <div class="title">我的动态</div>
+                <div class="title" v-if="isMine">我的动态</div>
+                <div class="title" v-else>TA的动态</div>
                 <a href="javascript:void(0)"></a>
             </header>
 
@@ -52,7 +53,7 @@
                                     </div>
                                     <!-- video -->
                                     <div v-cloak v-if="item.video_thumb&&item.video_thumb!==''&&item.video_url&&item.video_url!==''">
-                                        <div class="dynamicImgBox detailImgVideoWrap">
+                                        <div class="dynamicImgBox detailImgVideoWrap" @click.stop="openDetailVideo(item)">
                                             <img :src="GlobalHost+item.video_thumb"></img>
                                         </div>
                                     </div>
@@ -339,6 +340,11 @@
                             this.isReleasing = false;
                         }
                     }
+                },
+                openDetailVideo(item){
+                    console.log(item)
+                    let src=Global.host+item.video_url;
+                    Global.fullScreen(src);
                 },
                 getPageInfo(){
                     //user_id
