@@ -730,5 +730,37 @@ class User extends Base {
         $user_id = I('user_id');
 
         $count = Db::name('user_sign_log')->where(array('user_id'=>$user_id, 'date'=>date('Y-m-d')))->count();
+        if($count) response_error('', '您今天已签到');
+
+        Db::name('users')->where('user_id', $user_id)->setInc('flower_num', 10);
+        $data = array(
+            'user_id' => $user_id,
+            'date' => date('Y-m-d'),
+        );
+        Db::name('user_sign_log')->insert($data);
+
+        response_success('', '签到成功');
+    }
+
+    // 代表大会
+    public function  congress(){
+        $filepath = RUNTIME_PATH.'cache/congress.php';
+        if(file_exists($filepath)){
+            $users = include $filepath;
+        } else {
+            $users = Db::name('users')->order('fansNum desc')->field('user_id, head_pic, nickname, sex, birthday, age, auth_video_status')->select(50);
+
+            if(is_array($users) && is_array($users)){
+                foreach ($users as &$item) {
+                    $item['age'] = getAge($item['birthday']);
+                }
+            }
+
+            file_put_contents($filepath, "<?php \r\n return ".var_export($users, true).';');
+        }
+
+        
+
+        response_success($users);
     }
 }
