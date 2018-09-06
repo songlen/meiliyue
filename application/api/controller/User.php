@@ -730,4 +730,5 @@ class User extends Base {
         $user_id = I('user_id');
 
         $count = Db::name('user_sign_log')->where(array('user_id'=>$user_id, 'date'=>date('Y-m-d')))->count();
+    }
 }

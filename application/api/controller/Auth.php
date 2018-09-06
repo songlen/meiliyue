@@ -158,7 +158,7 @@ class Auth extends Base {
         }
 
         $password = encrypt($password);
-        Db::name('users')->where("mobile=$mobile")->update(array('password'=>$password));
+        Db::name('users')->where("account_mobile=$mobile")->update(array('password'=>$password));
 
         response_success('', '密码修改成功');
     }
