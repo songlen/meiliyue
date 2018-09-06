@@ -507,9 +507,14 @@
                     success: function (result) {
                         console.log(result)
                         if(result.msg=="删除成功"){
-                            //删除动态成功 后
+                            //删除动态成功 后 
+                            //删除动态index session
                             if (sessionStorage.getItem("dongtaiPage") && sessionStorage.getItem("dongtaiPage") !== null&&sessionStorage.getItem("dongtaiPage") !== "null") {
                                 sessionStorage.setItem('dongtaiPage', null);
+                            }
+                            //删除我的动态列表 session
+                            if (sessionStorage.getItem("myDongtaiPage") && sessionStorage.getItem("myDongtaiPage") !== null&&sessionStorage.getItem("myDongtaiPage") !== "null") {
+                                sessionStorage.setItem('myDongtaiPage', null);
                             }
                             window.history.back(-1);
                         }

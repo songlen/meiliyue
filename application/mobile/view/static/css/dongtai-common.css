@@ -1324,3 +1324,42 @@ a.operate {
     background: url(../images/icon/播放.png) center center no-repeat;
     background-size: 100%;
 }
+
+/* 我的动态列表页面 */
+.myDongtai header{
+    align-items: center;
+    justify-content: space-between;
+}
+.myDongtai header .back{
+    margin-left: 0.1rem;
+    /* border:solid transparent;
+    border-width: 0.05rem 0;
+    box-sizing: content-box; */
+}
+.myDongtai header .title{
+    color: #fff;
+}
+.myDongtai .myItem{
+    padding-left: 0;
+}
+.myDongtai .myItem .detailDate{
+    float: left;
+    width: 0.4rem;
+    color: #a0a0a0;
+    text-align: center;
+}
+.detailDate-day{
+    font-weight: 550;
+    color: #c1c1c1;
+    font-size: 0.2rem;
+}
+.detailDate-month{
+    font-size: 0.13rem;
+}
+
+.myDongtai .myItem .myItemContent{
+    margin-left: 0.46rem;
+}
+.myDongtai .myItem .myItemContent .item-content{
+    /* margin-top: 0; */
+}
