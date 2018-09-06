@@ -59,17 +59,22 @@ class User extends Base {
         if($user_id == $toUserId){
             $this->redirect('user/myHomePage');
         }
-file_put_contents('runtime/log/request.log', "\r\n homepage-$user_id-$toUserId", FILE_APPEND);
+
         return $this->fetch();
     }
 
     // 我的个人主页
     public function myHomePage(){
-file_put_contents('runtime/log/request.log', "\r\n myhomepage", FILE_APPEND);
+
         return $this->fetch();
     }
 
     public function editHomePage(){
+
+        return $this->fetch();
+    }
+
+    public function myDynamicList(){
 
         return $this->fetch();
     }
