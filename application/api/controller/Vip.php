@@ -114,6 +114,24 @@ class Vip extends Base {
 		echo 'success';
 	}
 
+	public function IOSCallback(){
+		$user_id = I('user_id');
+		$level = I('level');
+
+		// 计算到期日期
+		$user = Db::name('users')->where('user_id', $user_id)->field('vip_expire_date')->find();
+		$old_date = $user['vip_expire_date'] ? $user['vip_expire_date'] : date('Y-m-d');
+		$enum = Config::load(APP_PATH.'enum.php', ture);
+		$vip_config = $enum['vip'];
+		$num = $vip_config[$level]['num'];
+		$unit = $vip_config[$level]['unit'];
+		$expire_date = date('Y-m-d', strtotime('+'.$num.$unit, strtotime($old_date)));
+
+		Db::name('users')->where('user_id', $user_id)->update(array('level'=>$level, 'vip_expire_date'=>$expire_date));
+
+		response_success();
+	}
+
 	private function changeVip($order_no, $user_id, $level){
 
 		Db::name('vip_order')->where('order_no', $order_no)->update(array('paystatus'=>'1', 'paytime'=>time()));
