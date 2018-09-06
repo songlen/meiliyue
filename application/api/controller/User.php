@@ -462,6 +462,11 @@ class User extends Base {
         Db::name('user_visitor')->where(array('user_id'=>$user_id, 'to_user_id'=>$toUserId))->delete();
         Db::name('user_visitor')->insert($visitordata);
 
+        /************** 统计数量 *************/
+        $data['count']['normalPhotoCount'] = Db::name('user_photo')->where(array('user_id'=>$toUserId, 'type'=>1))->count();
+        $data['count']['jinghuaPhotoCount'] = Db::name('user_photo')->where(array('user_id'=>$toUserId, 'type'=>2))->count();
+        $data['count']['inviteCount'] = Db::name('invite')->where(array('status'=>2, 'user_id'=>$toUserId))->count();
+        $data['count']['dynamicsCount'] = Db::name('dynamics')->where(array('status'=>2, 'user_id'=>$toUserId))->count();
 
         response_success($data);
     }
@@ -502,6 +507,12 @@ class User extends Base {
             ->field('id, thumb, url, type, file_type')
             ->order('id desc')
             ->select();
+
+        /************** 统计数量 *************/
+        $data['count']['normalPhotoCount'] = Db::name('user_photo')->where(array('user_id'=>$user_id, 'type'=>1))->count();
+        $data['count']['jinghuaPhotoCount'] = Db::name('user_photo')->where(array('user_id'=>$user_id, 'type'=>2))->count();
+        $data['count']['inviteCount'] = Db::name('invite')->where(array('status'=>2, 'user_id'=>$user_id))->count();
+        $data['count']['dynamicsCount'] = Db::name('dynamics')->where(array('status'=>2, 'user_id'=>$user_id))->count();
 
         response_success($data);
     }
