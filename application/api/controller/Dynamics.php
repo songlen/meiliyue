@@ -138,6 +138,7 @@ class Dynamics extends Base {
     // 我的动态列表
     public function myList(){
         $user_id = I('user_id');
+        $page = I('page', 1);
 
         $limit_start = ($page-1)*10;
         $where['d.status'] = '2';
