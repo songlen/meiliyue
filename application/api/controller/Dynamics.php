@@ -135,6 +135,53 @@ class Dynamics extends Base {
         }
     }
 
+    // 我的动态列表
+    public function myList(){
+        $user_id = I('user_id');
+
+        $limit_start = ($page-1)*10;
+        $where['d.status'] = '2';
+        $where['d.user_id'] = $user_id;
+        $lists = Db::name('dynamics')->alias('d')
+            ->join('users u', 'd.user_id=u.user_id', 'left')
+            ->where($where)
+            ->field('u.user_id, head_pic, nickname, u.sex, u.birthday, u.age, d.id dynamic_id, d.type, d.description, d.content, d.location, d.add_time, d.flower_num')
+            ->order('d.id desc')
+            ->limit($limit_start, 10)
+            ->select();
+
+        if(is_array($lists) && !empty($lists)){
+            
+            foreach ($lists as $k => &$item) {
+                $item['age'] = getAge($item['birthday']);
+                // 图片类型，取出图片
+                if($item['type'] == '2'){
+                    $dynamics_image = M('dynamics_image')->where('dynamic_id', $item['dynamic_id'])->field('image')->select();
+                    $image = array();
+                    if(is_array($lists) && !empty($lists)){
+                        foreach ($dynamics_image as $v) {
+                            $image[] = $v['image'];
+                        }
+                    }
+                    $item['image'] = $image;
+                }
+                // 视频
+                if($item['type'] == '3'){
+                    $dynamics_image = M('dynamics_image')->where('dynamic_id', $item['dynamic_id'])->field('image, video video_url')->find();
+                    
+                    $item['video_thumb'] = $dynamics_image['image'];
+                    $item['video_url'] = $dynamics_image['video_url'];
+                }
+
+                // 查看人数
+                $item['viewer_count'] = M('dynamics_viewer')->where('dynamic_id', $item['dynamic_id'])->count();
+                // 评论数 
+                $item['comment_count'] = M('dynamics_comment')->where('dynamic_id', $item['dynamic_id'])->count();
+            }
+        }
+
+        response_success($lists);
+    }
     public function del(){
         $user_id = I('user_id');
         $dynamic_id = I('dynamic_id');
