@@ -507,6 +507,10 @@
                     success: function (result) {
                         console.log(result)
                         if(result.msg=="删除成功"){
+                            //删除动态成功 后
+                            if (sessionStorage.getItem("dongtaiPage") && sessionStorage.getItem("dongtaiPage") !== null&&sessionStorage.getItem("dongtaiPage") !== "null") {
+                                sessionStorage.setItem('dongtaiPage', null);
+                            }
                             window.history.back(-1);
                         }
                     }

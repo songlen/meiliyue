@@ -40,8 +40,8 @@
 
         <div class="personalInformation">
             <p class="contentTitle">个人信息&nbsp;
-                <span class="curCount">0</span>/
-                <span class="sumCount">5</span>
+                <span class="curCount"></span>/
+                <span class="sumCount"></span>
             </p>
             <ul>
                 <li class="editItem">
@@ -60,7 +60,7 @@
                     <div>
                         <label class="editItemTitle">昵称</label>
                         <div class="editItemContent">
-                            <span class="nickname">name</span>
+                            <span class="nickname"></span>
                         </div>
                     </div>
                 </li>
@@ -68,7 +68,7 @@
                     <div>
                         <label class="editItemTitle">年龄</label>
                         <div class="editItemContent">
-                            <span class="age">age</span>
+                            <span class="age"></span>
                         </div>
                     </div>
                 </li>
@@ -76,7 +76,7 @@
                     <div>
                         <label class="editItemTitle">身高</label>
                         <div class="editItemContent">
-                            <span class="height">height</span>
+                            <span class="height"></span>
                         </div>
                     </div>
                 </li>
@@ -84,7 +84,7 @@
                     <div>
                         <label class="editItemTitle">体重</label>
                         <div class="editItemContent">
-                            <span class="weight">weight</span>
+                            <span class="weight"></span>
                         </div>
                     </div>
                 </li>
@@ -101,15 +101,15 @@
 
         <div class="friendsInformation">
             <p class="contentTitle">交友信息&nbsp;
-                <span class="curCount">0</span>/
-                <span class="sumCount">5</span>
+                <span class="curCount"></span>/
+                <span class="sumCount"></span>
             </p>
             <ul>
                 <li class="editItem">
                     <div>
                         <label class="editItemTitle">职业</label>
                         <div class="editItemContent">
-                            <span class="profession">profession</span>
+                            <span class="profession"></span>
                         </div>
                     </div>
                 </li>
@@ -117,7 +117,7 @@
                     <div>
                         <label class="editItemTitle">收入</label>
                         <div class="editItemContent">
-                            <span class="income">income</span>
+                            <span class="income"></span>
                         </div>
                     </div>
                 </li>
@@ -135,7 +135,7 @@
                     <div>
                         <label class="editItemTitle" style="float:none;">个性签名</label>
                         <div class="editItemContent signatureWrap">
-                            <span class="signature">signature</span>
+                            <span class="signature"></span>
                         </div>
                     </div>
                 </li>
@@ -143,7 +143,7 @@
                     <div>
                         <label class="editItemTitle">邮箱账号</label>
                         <div class="editItemContent">
-                            <span class="email">email</span>
+                            <span class="email"></span>
                         </div>
                     </div>
                 </li>
@@ -151,7 +151,7 @@
                     <div>
                         <label class="editItemTitle">手机&微信号</label>
                         <div class="editItemContent">
-                            <span class="phoneOwechat">phoneOwechat</span>
+                            <span class="phoneOwechat"></span>
                         </div>
                     </div>
                 </li>
@@ -160,15 +160,15 @@
 
         <div class="emotionalView">
             <p class="contentTitle">情感观&nbsp;
-                <span class="curCount">0</span>/
-                <span class="sumCount">5</span>
+                <span class="curCount"></span>/
+                <span class="sumCount"></span>
             </p>
             <ul>
                 <li class="editItem">
                     <div>
                         <label class="editItemTitle">感情状况</label>
                         <div class="editItemContent">
-                            <span class="emotion_status">emotion_status</span>
+                            <span class="emotion_status"></span>
                         </div>
                     </div>
                 </li>
@@ -201,8 +201,8 @@
 
         <!-- <div class="hobbys">
             <p class="contentTitle">兴趣爱好&nbsp;
-                <span class="curCount">0</span>/
-                <span class="sumCount">5</span>
+                <span class="curCount"></span>/
+                <span class="sumCount"></span>
             </p>
             <ul>
                 <li class="editItem">
@@ -399,6 +399,7 @@
                     //js
                     var profInput = document.getElementById("profInput")
                     var isWrong = false
+                    let oldNickname=$(".nickname").html();
                     profInput.value = $(".nickname").html()
                     // $(".modifyDataWrap>header .back").click(function () {
                     //     $(".modifyDataWrap").hide()
@@ -430,7 +431,7 @@
                     })
                     $(".saveNickname").click(function () {
                         var valueStr = profInput.value.trim()
-                        if (valueStr !== "" && !isWrong) {
+                        if (valueStr !== "" && !isWrong&&valueStr!==oldNickname) {
                             Global.openLoading();
                             EditHome.modifyData("nickname", valueStr, function () {
                                 Global.closeLoading("修改成功",function(){
@@ -899,8 +900,10 @@
                     $(".modifyDataWrap")[0].innerHTML = mHtml
                     //js
                     var textarea = document.getElementById('signatureInput')
+                    let oldSignature="";
                     if ($(".signature").html() !== "请选择" && $(".signature").html() !== "填写") {
-                        textarea.value = $(".signature").html()
+                        textarea.value = $(".signature").html();
+                        oldSignature=$(".signature").html();
                     }
                     // $(".modifyDataWrap>header .back").click(function () {
                     //     $(".modifyDataWrap").hide()
@@ -927,7 +930,7 @@
                     }
                     $(".saveSignature").click(function () {
                         var valueStr = textarea.value
-                        if (valueStr !== "") {
+                        if (valueStr !== ""&&valueStr !==oldSignature) {
                             Global.openLoading();
                             EditHome.modifyData("signature", valueStr, function () {
                                 Global.closeLoading("修改成功",function(){
@@ -945,6 +948,50 @@
 
                     $(".modifyDataWrap").show()
                 })
+
+                //email
+                $(".email").closest(".editItem").click(function () {
+                    let mHtml =
+                        `
+                        <header>
+                            <a href="javascript:void(0)" class="fl"></a>
+                            <span class="title">邮箱</span>
+                            <a href="javascript:void(0)" class="fr mSave saveEmail">确定</a>
+                        </header>
+                        <div class="phoneOwechat-content mEditContent">
+                            <div class="signatureInputWrap">
+                                <textarea id="phoneInput" placeholder="请输入邮箱"></textarea>
+                            </div>
+                        </div>
+                        `
+                    $(".modifyDataWrap")[0].innerHTML = mHtml
+                    //js
+                    var textarea = document.getElementById('phoneInput')
+                    let oldEmail="";
+                    if ($(".email").html() !== "请选择" && $(".email").html() !== "填写") {
+                        textarea.value = $(".email").html();
+                        oldEmail=$(".email").html();
+                    }
+                    $(".saveEmail").click(function () {
+                        var valueStr = textarea.value
+                        if (valueStr !== ""&&valueStr !==oldEmail) {
+                            Global.openLoading();
+                            EditHome.modifyData("email", valueStr, function () {
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
+
+                                //更新原网页
+                                $(".email").html(valueStr).removeClass("canChoose");
+                            })
+                        }else{
+                            EditHome.closeModifyDiv();
+                        }
+                    })
+                    //js end
+
+                    $(".modifyDataWrap").show()
+                });
 
                 //手机&微信号
                 $(".phoneOwechat").closest(".editItem").click(function () {
@@ -965,9 +1012,11 @@
                         `
                     $(".modifyDataWrap")[0].innerHTML = mHtml
                     //js
-                    var textarea = document.getElementById('phoneInput')
+                    var textarea = document.getElementById('phoneInput');
+                    let oldPhone="";
                     if ($(".phoneOwechat").html() !== "请选择" && $(".phoneOwechat").html() !== "填写") {
-                        textarea.value = $(".phoneOwechat").html()
+                        textarea.value = $(".phoneOwechat").html();
+                        oldPhone= $(".phoneOwechat").html();
                     }
                     // $(".modifyDataWrap>header .back").click(function () {
                     //     $(".modifyDataWrap").hide()
@@ -975,7 +1024,7 @@
                     // })
                     $(".savePhoneOwechat").click(function () {
                         var valueStr = textarea.value
-                        if (valueStr !== "") {
+                        if (valueStr !== ""&&valueStr !==oldPhone) {
                             Global.openLoading();
                             EditHome.modifyData("phoneOwechat", valueStr, function () {
                                 Global.closeLoading("修改成功",function(){

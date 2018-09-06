@@ -536,15 +536,12 @@
                 Homepage.setProps();
 
                 //根据sesstion 返回页面滚动位置
-                if (sessionStorage.getItem("homePage") && sessionStorage.getItem("homePage") !== null &&
-                    sessionStorage.getItem(
-                        "homePage") !== "null") {
+                if (sessionStorage.getItem("homePage") && sessionStorage.getItem("homePage") !== null && sessionStorage.getItem("homePage") !== "null") {
                     let pageData = JSON.parse(sessionStorage.getItem("homePage"))
                     console.log(pageData)
-
                     //滚动位置
                     setTimeout(function () {
-                        $(".homepage .all-content")[0].scrollTop = pageData.pageScrollTop
+                        $(".homepage .all-content")[0].scrollTop = pageData.pageScrollTop;
                     }, 0);
                 }
 
