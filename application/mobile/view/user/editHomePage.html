@@ -930,7 +930,7 @@
                     }
                     $(".saveSignature").click(function () {
                         var valueStr = textarea.value
-                        if (valueStr !== ""&&valueStr !==oldSignature) {
+                        if (valueStr !==oldSignature) {
                             Global.openLoading();
                             EditHome.modifyData("signature", valueStr, function () {
                                 Global.closeLoading("修改成功",function(){
@@ -938,7 +938,11 @@
                                 });
 
                                 //更新原网页
-                                $(".signature").html(valueStr).removeClass("canChoose")
+                                if(valueStr==""){
+                                    $(".signature").html("填写").addClass("canChoose")
+                                }else{
+                                    $(".signature").html(valueStr).removeClass("canChoose")
+                                }
                             })
                         }else{
                             EditHome.closeModifyDiv();
