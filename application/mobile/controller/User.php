@@ -94,4 +94,9 @@ class User extends Base {
         $this->assign('info', $info);
         return $this->fetch();
     }
+
+    // 全国人气代表大会
+    public function congress(){
+        return $this->fetch();
+    }
 }

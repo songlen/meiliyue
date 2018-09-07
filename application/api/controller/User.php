@@ -760,8 +760,6 @@ class User extends Base {
             file_put_contents($filepath, "<?php \r\n return ".var_export($users, true).';');
         }
 
-        
-
         response_success($users);
     }
 }
