@@ -85,7 +85,7 @@ body{
     z-index: 2;
 }
 .daysNumReal{
-    position: absolute;
+    position: relative;
     z-index: 3;
 }
 .dayTip{
