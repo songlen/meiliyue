@@ -66,9 +66,10 @@
                 </li>
                 <li class="editItem">
                     <div>
-                        <label class="editItemTitle">年龄</label>
+                        <label class="editItemTitle">生日</label>
                         <div class="editItemContent">
-                            <span class="age"></span>
+                            <!-- <span class="birthday"></span> -->
+                            <input type="text" id='datetime-picker' style="text-align:right;" />
                         </div>
                     </div>
                 </li>
@@ -240,8 +241,9 @@
     </div>
 
 
-    <script src="__STATIC__/js-dist/user-editHomePage.min.js"></script>
-    <!-- jquery.form-js -->
+    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/city-picker.min.js"></script>
     <script src="__STATIC__/js/js-plugins/jquery.form.js"></script>
     <script src="__STATIC__/js/areaCodeArr.js"></script>
     <script src="__STATIC__/js/Global.js"></script>
@@ -260,11 +262,40 @@
                     $(".avatar-pic").find("img").attr("src",head_pic);
                 }
                 $(".nickname").html(data.baseinfo.nickname)
-                if (data.baseinfo.age && data.baseinfo.age !== "") {
-                    $(".age").html(data.baseinfo.age)
-                } else {
-                    $(".age").html("填写").addClass("canChoose")
+                //年龄
+                // if (data.baseinfo.age && data.baseinfo.age !== "") {
+                //     $(".age").html(data.baseinfo.age)
+                // } else {
+                //     $(".age").html("填写").addClass("canChoose")
+                // }
+                //生日
+                // if(data.baseinfo.birthday && data.baseinfo.birthday !== ""){
+                //     $(".birthday").html(data.baseinfo.birthday)
+                // }else{
+                //     $(".birthday").html("填写").addClass("canChoose")
+                // }
+                //生日日期选择器
+                let oldBirthday="";
+                if(data.baseinfo.birthday && data.baseinfo.birthday !== ""){
+                    oldBirthday=data.baseinfo.birthday
+                    $("#datetime-picker").val(data.baseinfo.birthday)
                 }
+                $("#datetime-picker").calendar({
+                    dateFormat: "yyyy-mm-dd",
+                    value:[data.baseinfo.birthday],
+                    onClose:function(){
+                        let valueStr=$("#datetime-picker").val()
+                        if(valueStr!==oldBirthday){
+                            Global.openLoading();
+                            EditHome.modifyData("birthday", valueStr, function () {
+                                Global.closeLoading("修改成功",function(){
+                                    EditHome.closeModifyDiv();
+                                });
+                            }) 
+                        }
+                    }
+                });
+                //生日日期选择器 end
                 if (data.baseinfo.height && data.baseinfo.height !== "") {
                     $(".height").html(data.baseinfo.height + "cm")
                 } else {
@@ -451,95 +482,94 @@
                 })
 
                 //年龄
-                $(".age").closest(".editItem").click(function () {
-                    let mHtml =
-                        `
-                            <header>
-                                <a href="javascript:void(0)" class="fl"></a>
-                                <span class="title">修改年龄</span>
-                                <a href="javascript:void(0)" class="fr mSave saveAge">确定</a>
-                            </header>
-                            <div class="age-content mEditContent">
-                                <input id="ageInput" type="date" value="1995-01-01" style="position:absolute;width:0;height:0;bottom:0;right:0;"/>
-                                <ul>
-                                    <li class="chooseDate">
-                                        <label>年龄</label>
-                                        <span class="age-edit"></span>
-                                    </li>
-                                    <li>
-                                        <label>星座</label>
-                                        <span class="astro-edit">摩羯座</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        `
-                    $(".modifyDataWrap")[0].innerHTML = mHtml
-                    //js
-                    var oldAgeHtml = $(".age").html()
-                    var ageInput = document.getElementById("ageInput")
-                    $(".age-edit").html(oldAgeHtml)
-                    // $(".modifyDataWrap>header .back").click(function () {
-                    //     $(".modifyDataWrap").hide()
-                    //     $(".modifyDataWrap").html("")
-                    // })
-                    $(".chooseDate").click(function () {
-                        ageInput.click()
-                    })
-                    ageInput.onchange = function () {
-                        callInput(this)
-                    }
-                    ageInput.onkeydown = function () {
-                        callInput(this)
-                    }
-                    ageInput.onkeyup = function () {
-                        callInput(this)
-                    }
+                // $(".age").closest(".editItem").click(function () {
+                //     let mHtml =
+                //         `
+                //             <header>
+                //                 <a href="javascript:void(0)" class="fl"></a>
+                //                 <span class="title">修改年龄</span>
+                //                 <a href="javascript:void(0)" class="fr mSave saveAge">确定</a>
+                //             </header>
+                //             <div class="age-content mEditContent">
+                //                 <input id="ageInput" type="date" value="1995-01-01" style="position:absolute;width:0;height:0;bottom:0;right:0;"/>
+                //                 <ul>
+                //                     <li class="chooseDate">
+                //                         <label>年龄</label>
+                //                         <span class="age-edit"></span>
+                //                     </li>
+                //                     <li>
+                //                         <label>星座</label>
+                //                         <span class="astro-edit">摩羯座</span>
+                //                     </li>
+                //                 </ul>
+                //             </div>
+                //         `
+                //     $(".modifyDataWrap")[0].innerHTML = mHtml
+                //     //js
+                //     var oldAgeHtml = $(".age").html()
+                //     var ageInput = document.getElementById("ageInput")
+                //     $(".age-edit").html(oldAgeHtml)
+                //     // $(".modifyDataWrap>header .back").click(function () {
+                //     //     $(".modifyDataWrap").hide()
+                //     //     $(".modifyDataWrap").html("")
+                //     // })
+                //     $(".chooseDate").click(function () {
+                //         ageInput.click()
+                //     })
+                //     ageInput.onchange = function () {
+                //         callInput(this)
+                //     }
+                //     ageInput.onkeydown = function () {
+                //         callInput(this)
+                //     }
+                //     ageInput.onkeyup = function () {
+                //         callInput(this)
+                //     }
 
-                    function callInput(el) {
-                        console.log(el.value)
-                        var year = el.value.split("-")[0]
-                        var month = el.value.split("-")[1]
-                        var date = el.value.split("-")[2]
-                        var astro = getAstro(month, date)
+                //     function callInput(el) {
+                //         console.log(el.value)
+                //         var year = el.value.split("-")[0]
+                //         var month = el.value.split("-")[1]
+                //         var date = el.value.split("-")[2]
+                //         var astro = getAstro(month, date)
 
-                        document.getElementsByClassName("age-edit")[0].innerHTML = new Date().getFullYear() -
-                            year
-                        document.getElementsByClassName("astro-edit")[0].innerHTML = astro + "座"
-                    }
+                //         document.getElementsByClassName("age-edit")[0].innerHTML = new Date().getFullYear() -
+                //             year
+                //         document.getElementsByClassName("astro-edit")[0].innerHTML = astro + "座"
+                //     }
 
-                    function getAstro(m, d) {
-                        return "魔羯水瓶双鱼牡羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯".substr(m * 2 - (d < "102223444433".charAt(m -
-                            1) - -19) * 2, 2);
-                    }
-                    $(".saveAge").click(function () {
-                        var valueStr = document.getElementsByClassName("age-edit")[0].innerHTML
-                        if (valueStr !== "" && valueStr !== oldAgeHtml) {
-                            //ajax星座
-                            // EditHome.modifyData("nickname", valueStr, function () {
-                            //     $(".modifyDataWrap").hide()
-                            //     $(".modifyDataWrap").html("")
+                //     function getAstro(m, d) {
+                //         return "魔羯水瓶双鱼牡羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯".substr(m * 2 - (d < "102223444433".charAt(m -1) - -19) * 2, 2);
+                //     }
+                //     $(".saveAge").click(function () {
+                //         var valueStr = document.getElementsByClassName("age-edit")[0].innerHTML
+                //         if (valueStr !== "" && valueStr !== oldAgeHtml) {
+                //             //ajax星座
+                //             // EditHome.modifyData("nickname", valueStr, function () {
+                //             //     $(".modifyDataWrap").hide()
+                //             //     $(".modifyDataWrap").html("")
 
-                            //     //更新原网页
-                            //     $(".nickname").html(valueStr).removeClass("canChoose")
-                            // })
-                            Global.openLoading();
-                            //ajax年龄
-                            EditHome.modifyData("age", valueStr, function () {
-                                Global.closeLoading("修改成功",function(){
-                                    EditHome.closeModifyDiv();
-                                });
+                //             //     //更新原网页
+                //             //     $(".nickname").html(valueStr).removeClass("canChoose")
+                //             // })
+                //             Global.openLoading();
+                //             //ajax年龄
+                //             EditHome.modifyData("age", valueStr, function () {
+                //                 Global.closeLoading("修改成功",function(){
+                //                     EditHome.closeModifyDiv();
+                //                 });
 
-                                //更新原网页
-                                $(".age").html(valueStr).removeClass("canChoose")
-                            })
-                        }else{
-                            EditHome.closeModifyDiv();
-                        }
-                    })
-                    //js end
+                //                 //更新原网页
+                //                 $(".age").html(valueStr).removeClass("canChoose")
+                //             })
+                //         }else{
+                //             EditHome.closeModifyDiv();
+                //         }
+                //     })
+                //     //js end
 
-                    $(".modifyDataWrap").show()
-                })
+                //     $(".modifyDataWrap").show()
+                // })
 
                 //身高
                 $(".height").closest(".editItem").click(function () {
@@ -1284,9 +1314,9 @@
                     console.log(mUserInfo)
                     EditHome.user_id = Number(mUserInfo.user_id);
                 } else {
-                    EditHome.user_id = 48; //测试用
+                    EditHome.user_id = 1; //测试用
                 }
-
+                
                 //获取用户信息
                 EditHome.getDataUpdateDom()
             }
