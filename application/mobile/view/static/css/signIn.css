@@ -15,7 +15,7 @@ body{
     line-height: 50px;
     background-color: #302e40;
     color: #fff;
-    font-size: 0.16rem;
+    font-size: 16px;
 }
 .back{
     width: 0.2rem;
@@ -37,6 +37,7 @@ body{
     left: 0;
     right: 0;
     bottom: 0;
+    overflow-y: auto;
 }
 .content{
     background-color: #fff;

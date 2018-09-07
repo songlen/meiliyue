@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <title>每日领奖励</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/css/base.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/dailyReward.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/signIn.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
 </head>
 
-<body class="dailyReward-page">
+<body class="signIn-page">
     <header>
         <a href="javascript:void(0)" class="back"></a>
         <div class="title">每日领奖励</div>
@@ -38,7 +38,7 @@
             </div>
             <div class="property">
                 <div class="flower">
-                    <img class="flowerIcon" src="../static/images/icon/花2.png">
+                    <img class="flowerIcon" src="__STATIC__/images/icon/花2.png">
                     <div class="">拥有小花<span class="flowerCount"></span>朵</div>
                 </div>
             </div>
@@ -50,10 +50,10 @@
         </div>
     </div>
 
-    <script src="../static/js/jquery-3.1.1.min.js"></script>
-    <script src="../static/js/Global.js"></script>
+    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
     <script>
-        let DailyReward={
+        let SignIn={
             userInfo:{},
             
             //userInfo
@@ -61,9 +61,9 @@
                 if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!== null&&localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
-                    DailyReward.userInfo = mUserInfo;
+                    SignIn.userInfo = mUserInfo;
                 } else {
-                    DailyReward.userInfo = JSON.parse("{\"user_id\":1,\"uuid\":97875266,\"account_mobile\":\"13051832424\",\"email\":\"\",\"sex\":1,\"birthday\":\"1991-09-24\",\"age\":26,\"height\":127,\"weight\":37,\"reg_time\":1536025186,\"last_login\":1536025186,\"last_ip\":\"\",\"qq\":\"437753880\",\"head_pic\":\"/public/upload/head_pic//20180904/65d288e656d9d0b192bec982d76d99e8.png\",\"province\":0,\"city\":0,\"district\":0,\"nickname\":\"tong\",\"level\":1,\"discount\":\"1.00\",\"total_amount\":\"0.00\",\"is_lock\":0,\"token\":\"4b14230c1c1956d4cedd9e49c0d2c145\",\"message_mask\":63,\"satisfactory_parts\":null,\"longitude\":\"0.0000000\",\"latitude\":\"0.0000000\",\"auth_video_status\":2,\"auth_identity_status\":0,\"auth_car_status\":0,\"active_time\":1536282087,\"is_line\":1,\"income\":null,\"rockets\":0,\"signInDays\":null,\"flower_num\":0,\"signature\":\"个性\",\"permanent_province\":null,\"permanent_city\":null,\"profession\":\"航空公司\",\"phoneOwechat\":\"13051832424\",\"emotion_status\":null,\"rongyun_token\":\"2Mxv2N0Kg2WPNFftBKjLsjoJzC1b/p237t784hHIriRLkvc548Y7iX2boQyN2n7kj6RpzxE4XchLf2hz0SZhgg==\",\"sort\":0,\"vip_expire_date\":\"2020-12-04\",\"fansNum\":0}")
+                    SignIn.userInfo = JSON.parse("{\"user_id\":1,\"uuid\":97875266,\"account_mobile\":\"13051832424\",\"email\":\"\",\"sex\":1,\"birthday\":\"1991-09-24\",\"age\":26,\"height\":127,\"weight\":37,\"reg_time\":1536025186,\"last_login\":1536025186,\"last_ip\":\"\",\"qq\":\"437753880\",\"head_pic\":\"/public/upload/head_pic//20180904/65d288e656d9d0b192bec982d76d99e8.png\",\"province\":0,\"city\":0,\"district\":0,\"nickname\":\"tong\",\"level\":1,\"discount\":\"1.00\",\"total_amount\":\"0.00\",\"is_lock\":0,\"token\":\"4b14230c1c1956d4cedd9e49c0d2c145\",\"message_mask\":63,\"satisfactory_parts\":null,\"longitude\":\"0.0000000\",\"latitude\":\"0.0000000\",\"auth_video_status\":2,\"auth_identity_status\":0,\"auth_car_status\":0,\"active_time\":1536282087,\"is_line\":1,\"income\":null,\"rockets\":0,\"signInDays\":null,\"flower_num\":0,\"signature\":\"个性\",\"permanent_province\":null,\"permanent_city\":null,\"profession\":\"航空公司\",\"phoneOwechat\":\"13051832424\",\"emotion_status\":null,\"rongyun_token\":\"2Mxv2N0Kg2WPNFftBKjLsjoJzC1b/p237t784hHIriRLkvc548Y7iX2boQyN2n7kj6RpzxE4XchLf2hz0SZhgg==\",\"sort\":0,\"vip_expire_date\":\"2020-12-04\",\"fansNum\":0}")
                 }
             },
             //更新签到天数
@@ -84,14 +84,14 @@
             },
             updateDom(){
                 //签到天数
-                DailyReward.updateSignInDays(DailyReward.userInfo.signInDays)
+                SignIn.updateSignInDays(SignIn.userInfo.signInDays)
                 //小花数量
-                $(".flowerCount").html(DailyReward.userInfo.flower_num)
+                $(".flowerCount").html(SignIn.userInfo.flower_num)
             },
             //签到
             signIn(){
                 let postData = {
-                    user_id: DailyReward.userInfo.user_id
+                    user_id: SignIn.userInfo.user_id
                 }
                 console.log(postData)
                 $(".signInBtn").addClass("eventsDisabled")
@@ -107,12 +107,12 @@
                         Global.messageWin(result.msg)
                         if(result.code==200){
                             //签到成功updateDom、更新userInfo
-                            DailyReward.userInfo.signInDays=DailyReward.userInfo.signInDays+1
-                            DailyReward.updateSignInDays(DailyReward.userInfo.signInDays)
-                            DailyReward.userInfo.flower_num=DailyReward.userInfo.flower_num+10
-                            $(".flowerCount").html(DailyReward.userInfo.flower_num)
+                            SignIn.userInfo.signInDays=SignIn.userInfo.signInDays+1
+                            SignIn.updateSignInDays(SignIn.userInfo.signInDays)
+                            SignIn.userInfo.flower_num=SignIn.userInfo.flower_num+10
+                            $(".flowerCount").html(SignIn.userInfo.flower_num)
                             //更新localStorage
-                            localStorage.setItem("mUserInfo",JSON.stringify(JSON.stringify(DailyReward.userInfo)))
+                            localStorage.setItem("mUserInfo",JSON.stringify(JSON.stringify(SignIn.userInfo)))
                         }
                     }
                 })
@@ -124,17 +124,17 @@
                 })
                 //点击签到
                 $(".signInBtn").click(function(){
-                    DailyReward.signIn()
+                    SignIn.signIn()
                 })
             },
             init(){
-                DailyReward.getPageInfo()
-                DailyReward.updateDom()
-                DailyReward.eventsBind()
+                SignIn.getPageInfo()
+                SignIn.updateDom()
+                SignIn.eventsBind()
             }
         }
         $(function(){
-            DailyReward.init(); 
+            SignIn.init(); 
         })
     </script>
 </body>
