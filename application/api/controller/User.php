@@ -443,7 +443,7 @@ class User extends Base {
             ->select();
         /************** 他的动态 *********/
         $data['dynamics'] = M('dynamics')->where('user_id', $toUserId)
-            ->field('id, title')
+            ->field('id, description, content')
             ->order('id desc')
             ->find();
 
@@ -488,7 +488,7 @@ class User extends Base {
             ->select();
         /************** 我的的动态 *********/
         $data['dynamics'] = M('dynamics')->where('user_id', $user_id)
-            ->field('id, title')
+            ->field('id, description, content')
             ->order('id desc')
             ->find();
 
