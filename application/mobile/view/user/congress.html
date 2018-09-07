@@ -79,15 +79,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="diyiming" v-if="topThreeList[0]">
+                    <div class="diyiming" v-cloak v-if="topThreeList[0]">
                         {{topThreeList[0].nickname}}
                     </div>
                     <div class="ersanming">
-                        <div class="ersanmingText" v-if="topThreeList[1]">
+                        <div class="ersanmingText" v-cloak v-if="topThreeList[1]">
                             {{topThreeList[1].nickname}}
                         </div>
                         <div class="diyimingPlaceholder"></div>
-                        <div class="ersanmingText" v-if="topThreeList[2]">
+                        <div class="ersanmingText" v-cloak v-if="topThreeList[2]">
                             {{topThreeList[2].nickname}}
                         </div>
                     </div>
@@ -95,7 +95,7 @@
 
                 <ul>
                     <li class="list-item" v-cloak v-for="(item,index) in fourthList" :key="index" >
-                        <div class="list-rank">
+                        <div class="list-rank" v-cloak>
                             {{index+4}}
                         </div>
                         <div class="list-content">
@@ -110,10 +110,10 @@
                             </div>
                             <div class="nameNcharm">
                                 <div class="nickName">
-                                    <span>{{item.nickname}}</span>
+                                    <span v-cloak>{{item.nickname}}</span>
                                     <span class="sexAge" :class="{female:item.sex==2,male:item.sex==1}">
                                         <i class="sex"></i>
-                                        <span class="age">{{item.age}}</span>
+                                        <span class="age" v-cloak>{{item.age}}</span>
                                     </span>
                                 </div>
                                 <!-- <div class="charmValue">
