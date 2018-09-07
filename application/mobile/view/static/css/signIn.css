@@ -6,7 +6,7 @@
 body{
     background-color: #f2f4fc;
 }
-.dailyReward-page header {
+.signIn-page header {
     position: fixed;
     top: 0;
     left: 0;
@@ -134,4 +134,8 @@ body{
     background-color: #ffe456;
     color: #000;
     margin: 0.2rem 0 0.3rem;
+}
+.btn.gray{
+    background-color: #d3d3d3;
+    color: #fff;
 }
