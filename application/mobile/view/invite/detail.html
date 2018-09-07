@@ -422,15 +422,12 @@
                             //删除邀约列表session
                             if (sessionStorage.getItem("inviIndexPage") && sessionStorage.getItem("inviIndexPage") !==null && sessionStorage.getItem("inviIndexPage") !== "null") {
                                 sessionStorage.setItem('inviIndexPage', null);
-                                window.history.back(-1);
-                                return
                             }
                             //删除myHomePage session
                             if (sessionStorage.getItem("homePage") && sessionStorage.getItem("homePage") !== null && sessionStorage.getItem("homePage") !== "null") {
                                 sessionStorage.setItem('homePage', null);
-                                window.history.go(-1);
-                                return
                             }
+                            window.history.back(-1);
                         }
                     }
                 });
