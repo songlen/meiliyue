@@ -86,7 +86,7 @@ class User extends Base {
         $count = Db::name('user_sign_log')->where(array('user_id'=>$user_id, 'date'=>date('Y-m-d')))->count();
         $info = array(
             'signInDays' => $user['signInDays'],
-            'flower_num' => $user_id['flower_num'],
+            'flower_num' => $user['flower_num'],
             'isSign' => $count ? 1 : 0,
         );
 
