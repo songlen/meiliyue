@@ -64,11 +64,20 @@ class Index extends Base {
             $where['city'] = $city;
         }
         if($auth_video_status) $where['auth_video_status'] = '2';;
-        if($age_l && $age_r) $where['age'] = array(array('>=', $age_l), array('<', $age_r));
         if($height_l && $height_r) $where['height'] = array(array('>=', $height_l), array('<', $height_r));
         
         // 满意部位
         if($satisfactory_parts) $where['satisfactory_parts'] = array('like', "%$satisfactory_parts%");
+        // 年龄
+        if($age_l && $age_r){
+            $y = date('Y');
+            $m = date('m');
+            $d = date('d');
+            $birthday_l = $y-$age_l.'-'.$m.'-'.$d;
+            $birthday_r = ($y-$age_r-1).'-'.$m.'-'.$d;
+            // $where .= " and birthday <= '$birthday_l'";
+            $where['birthday'] = array('BETWEEN', "$birthday_l, $birthday_r");
+        }
 
         $limit_start = ($page-1)*18;
         $users = M('users')->where($where)
