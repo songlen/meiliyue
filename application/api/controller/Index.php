@@ -77,7 +77,8 @@ class Index extends Base {
             $birthday_l = $y-$age_l.'-'.$m.'-'.$d;
             $birthday_r = ($y-$age_r-1).'-'.$m.'-'.$d;
 
-            $where['birthday'] = array(array('>=', $birthday_l), array('<=', $birthday_l));
+            // $where['birthday'] = array(array('>=', $birthday_l), array('<=', $birthday_r));
+            $where['TIMESTAMPDIFF(YEAR, birthday, CURDATE())'] = array('BETWEEN', "$age_l, $age_r");
         }
 
         $limit_start = ($page-1)*18;
@@ -87,6 +88,7 @@ class Index extends Base {
             ->order($order)
             ->select();
 
+            // p(M('users')->getLastSql());
         response_success($users);
     }
 
