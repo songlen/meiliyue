@@ -421,16 +421,10 @@
                 //TA的邀约数量
                 $(".myInviteCount").html(data.count.inviteCount);
                 //TA的动态
-                if (data.dynamics && data.dynamics !== "") {
-                    if (Object.prototype.toString.call(data.dynamics) === '[object Array]') {
-                        dynamicsArr = data.dynamics
-                    } else {
-                        dynamicsArr.push(data.dynamics)
-                    }
-                    dynamicsArr.forEach(function (value, index) {
-                        $(".myTalkSome").append($('<p class="inviDetail" data-id="' + value.id + '">' +
-                            value.title + '</p>'))
-                    })
+                if (data.dynamics) {
+                    let title=data.dynamics.content+data.dynamics.description;
+                    let dynamics_id=data.dynamics.id;
+                    $(".myTalkSome").append($('<p class="inviDetail" data-id="' +dynamics_id + '">' +title + '</p>'))
                 }else{
                     $(".noTalkSome").show();
                 }
