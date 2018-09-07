@@ -2,8 +2,7 @@
 
 namespace app\mobile\controller;
 
-
-use think\db;
+use think\Db;
 
 class User extends Base {
 
