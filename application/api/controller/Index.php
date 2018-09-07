@@ -73,10 +73,11 @@ class Index extends Base {
             $y = date('Y');
             $m = date('m');
             $d = date('d');
+
             $birthday_l = $y-$age_l.'-'.$m.'-'.$d;
             $birthday_r = ($y-$age_r-1).'-'.$m.'-'.$d;
-            // $where .= " and birthday <= '$birthday_l'";
-            $where['birthday'] = array('BETWEEN', "'$birthday_l', '$birthday_r'");
+
+            $where['birthday'] = array(array('>=', $birthday_l), array('<=', $birthday_l));
         }
 
         $limit_start = ($page-1)*18;
