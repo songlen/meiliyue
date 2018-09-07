@@ -84,13 +84,10 @@ class User extends Base {
         $user = Db::name('users')->where('user_id', $user_id)->field('signInDays, flower_num')->find();
 
         $count = Db::name('user_sign_log')->where(array('user_id'=>$user_id, 'date'=>date('Y-m-d')))->count();
-        $info = array(
-            'signInDays' => $user['signInDays'],
-            'flower_num' => $user['flower_num'],
-            'isSign' => $count ? 1 : 0,
-        );
 
-        $this->assign('info', $info);
+        $isSign = $count ? 1 : 0;
+
+        $this->assign('isSign', $isSign);
         return $this->fetch();
     }
 
