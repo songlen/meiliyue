@@ -442,7 +442,7 @@ class User extends Base {
             ->limit(5)
             ->select();
         /************** 他的动态 *********/
-        $data['dynamics'] = M('invite')->where('user_id', $toUserId)
+        $data['dynamics'] = M('dynamics')->where('user_id', $toUserId)
             ->field('id, title')
             ->order('id desc')
             ->find();
@@ -487,7 +487,7 @@ class User extends Base {
             ->limit(5)
             ->select();
         /************** 我的的动态 *********/
-        $data['dynamics'] = M('invite')->where('user_id', $user_id)
+        $data['dynamics'] = M('dynamics')->where('user_id', $user_id)
             ->field('id, title')
             ->order('id desc')
             ->find();
