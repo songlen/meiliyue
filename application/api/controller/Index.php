@@ -68,7 +68,7 @@ class Index extends Base {
         if($height_l && $height_r) $where['height'] = array(array('>=', $height_l), array('<', $height_r));
         
         // 满意部位
-        if($satisfactory_parts) $where['satisfactory_parts'] = $satisfactory_parts;
+        if($satisfactory_parts) $where['satisfactory_parts'] = array('like', "%$satisfactory_parts%");
 
         $limit_start = ($page-1)*18;
         $users = M('users')->where($where)
