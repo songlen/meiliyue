@@ -54,6 +54,8 @@ header{
     right: 0;
     bottom: 0;
     overflow-y: auto;
+
+    transform: translate3d(0, 0, 0);
 }
 .myRank{
     color: #fff;
@@ -79,6 +81,8 @@ header{
     box-shadow: 0 0.05rem 0.2rem 3px #ffc3b0;
     position: relative;
     overflow: hidden;
+
+    transform: translate3d(0, 0, 0);
 }
 /* .board .head_pic{
     position: absolute;
@@ -98,11 +102,13 @@ header{
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translate(-50%,0);
+    transform: translate3d(-50%,0,0);
     z-index: 1;
     /* 文字 */
     display: flex;
     justify-content: space-between;
+
+    /* transform: translate3d(0, 0, 0); */
 }
 .ersanming::after{
     content: "";
@@ -131,10 +137,12 @@ header{
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translate(-50%,0);
+    transform: translate3d(-50%,0,0);
     z-index: 2;
     /* 文字 */
     text-align: center;
+
+    /* transform: translate3d(0, 0, 0); */
 }
 .diyiming::after{
     content: "";
@@ -170,7 +178,9 @@ header{
     position: absolute;
     bottom: -0.2rem;
     left: 50%;
-    transform: translate(-50%,0);
+    transform: translate3d(-50%,0,0);
+
+    /* transform: translate3d(0, 0, 0); */
 }
 .rankingNum1{
     background-color: #fff3a1;
@@ -194,6 +204,8 @@ header{
     display: flex;
     align-items: center;
     padding: 0 0.1rem;
+
+    transform: translate3d(0, 0, 0);
 }
 .list-rank{
     width: 0.16rem;
