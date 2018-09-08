@@ -544,7 +544,7 @@
                         console.log(item)
                         this.savePageToSession()
 
-                        let toUrl = this.GlobalHost + "/index.php/mobile/invite/detail/id/"+item.id+".html";
+                        let toUrl = Global.host + "/index.php/mobile/invite/detail/id/"+item.id+".html";
 
                         window.location.href = toUrl;
                     },
@@ -658,7 +658,7 @@
                                 return;
                             }
                             self.savePageToSession()
-                            window.location.href = this.GlobalHost + "/index.php/mobile/invite/add/type/" + type +".html";
+                            window.location.href = Global.host + "/index.php/mobile/invite/add/type/" + type +".html";
                         });
                     },
                     //跳转页面之前，保存页面信息
@@ -743,9 +743,9 @@
                         let toUserId = item.user_id;
                         let url = "";
                         if (user_id === toUserId) {
-                            url = this.GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                            url = Global.host + "/index.php/mobile/user/myHomePage.html";
                         } else {
-                            url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
+                            url = Global.host + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
                         }
                         window.location.href = url;
                     },
