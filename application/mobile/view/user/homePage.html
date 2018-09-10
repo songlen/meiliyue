@@ -440,21 +440,21 @@
                         "__STATIC__/images/icon/手机号认证.png")
                     $(".myApprove-phone").html("手机号已认证")
                     $(".myApprove-phone+.approveBtn").hide();
-                    $(".myApprove-phone").click(function () {
-                        // if(Homepage.mUserInfo.level==0){
-                        //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
-                        //         //去vip申请页面
-                        //     });
-                        //     return;
-                        // }else{
-                        //     if(Homepage.baseinfo.phoneOwechat&&Homepage.baseinfo.phoneOwechat!==""){
-                        //         Global.messageWin(`微信/手机号：${Homepage.baseinfo.phoneOwechat}`);
-                        //     }
-                        // }
-                        if (Homepage.baseinfo.phoneOwechat && Homepage.baseinfo.phoneOwechat !== "") {
-                            Global.messageWin(`微信/手机号：${Homepage.baseinfo.phoneOwechat}`);
-                        }
-                    });
+                    // $(".myApprove-phone").click(function () {
+                    //     // if(Homepage.mUserInfo.level==0){
+                    //     //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
+                    //     //         //去vip申请页面
+                    //     //     });
+                    //     //     return;
+                    //     // }else{
+                    //     //     if(Homepage.baseinfo.phoneOwechat&&Homepage.baseinfo.phoneOwechat!==""){
+                    //     //         Global.messageWin(`微信/手机号：${Homepage.baseinfo.phoneOwechat}`);
+                    //     //     }
+                    //     // }
+                    //     if (Homepage.baseinfo.phoneOwechat && Homepage.baseinfo.phoneOwechat !== "") {
+                    //         Global.messageWin(`微信/手机号：${Homepage.baseinfo.phoneOwechat}`);
+                    //     }
+                    // });
                 }
                 if (data.baseinfo.auth_video_status == 2) {
                     $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
