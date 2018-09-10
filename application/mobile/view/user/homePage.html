@@ -747,20 +747,24 @@
                 })
                 //点击 已关注
                 $(".attended").click(function () {
-                    Homepage.cancelAttention(function () {
-                        $(".attended").hide()
-                        $(".attend").show()
+                    Global.messageConfirWin("确认取消关注？",function(){
+                        Homepage.cancelAttention(function () {
+                            $(".attended").hide()
+                            $(".attend").show()
 
-                        Homepage.attentionStatus = 0
+                            Homepage.attentionStatus = 0
+                        })
                     })
                 })
                 //点击 相互关注
                 $(".attendAll").click(function () {
-                    Homepage.cancelAttention(function () {
-                        $(".attendAll").hide()
-                        $(".attend").show()
+                    Global.messageConfirWin("确认取消关注？",function(){
+                        Homepage.cancelAttention(function () {
+                            $(".attendAll").hide()
+                            $(".attend").show()
 
-                        Homepage.attentionStatus = 2
+                            Homepage.attentionStatus = 2
+                        })
                     })
                 })
                 //点击 “关注” 系列 end
