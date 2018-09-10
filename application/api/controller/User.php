@@ -657,7 +657,7 @@ class User extends Base {
             $where['f.user_id'] = $user_id;
             $field = 'friend_id user_id, head_pic, nickname, auth_video_status, twoway';
         } else {
-            $join_on = 'f.user = u.user_id';
+            $join_on = 'f.user_id = u.user_id';
             $where['f.friend_id'] = $user_id;
             $field = 'u.user_id, head_pic, nickname, auth_video_status, twoway';
         }
