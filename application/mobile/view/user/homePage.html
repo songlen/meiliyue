@@ -41,7 +41,7 @@
                         <span class="age"></span>
                     </span>
                     <!-- <span class="edit-personal-constellation">摩羯座</span> -->
-                    <span class="haveAttend">
+                    <span class="haveAttend" style="font-size:0;">
                         <span class="attend" style="display:none;">加关注</span>
                         <span class="attended" style="display:none;">已关注</span>
                         <span class="attendAll" style="display: none;">相互关注</span>
@@ -599,13 +599,15 @@
                     friend_id: Homepage.toUserId
                 }
                 console.log(postData)
+                $(".haveAttend>span").addClass("eventsDisabled")
                 $.ajax({
                     type: "POST",
                     url: Global.host + "/index.php/Api/User/attention",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
-                        console.log(result.data)
+                        $(".haveAttend>span").removeClass("eventsDisabled")
+                        console.log(result)
                         callback()
                     }
                 })
@@ -616,13 +618,15 @@
                     friend_id: Homepage.toUserId
                 }
                 console.log(postData)
+                $(".haveAttend>span").addClass("eventsDisabled")
                 $.ajax({
                     type: "POST",
                     url: Global.host + "/index.php/Api/User/cancelAttention",
                     data: postData,
                     dataType: "json",
                     success: function (result) {
-                        console.log(result.data)
+                        $(".haveAttend>span").removeClass("eventsDisabled")
+                        console.log(result)
                         callback()
                     }
                 })

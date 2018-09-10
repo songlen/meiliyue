@@ -1157,6 +1157,7 @@
                 })
                 //跳添加邀约页面
                 $(".openReleaseInvite").click(function () {
+                    let self=this;
                     Global.openLoading();
                     Global.checkInvite(Homepage.user_id,function(num){
                         Global.closeLoadingNow();
@@ -1165,7 +1166,7 @@
                             Global.messageWin("您已发满5条邀约，请删除不需要的邀约后再发布");
                             return;
                         }
-                        let type = $(this).attr("data-type");
+                        let type = $(self).attr("data-type");
                         window.location.href = Global.host + "/index.php/mobile/invite/add/type/" + type +".html";
                     });
                 })

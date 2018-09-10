@@ -304,7 +304,7 @@ a.close {
     background: url(../images/icon/back.png) right center no-repeat;
     border-right: 0.12rem solid transparent;
 }
-.myInvite-content .myInvite-tip.myTalkSome p {
+.myInvite-content .myInvite-tip p.noInvite {
     background: none;
 }
 
@@ -1120,13 +1120,13 @@ a.operate {
     float: right;
     margin-right: 0.12rem;
     box-sizing: border-box;
-    /* width: 0.75rem; */
-    /* height: 0.29rem; */
-    padding-right: 0.05rem;
     border-radius: 0.15rem;
     overflow: hidden;
-    line-height: 0.29rem;
-    padding-left: 0.27rem;
+    height: 0.29rem;
+    padding: 0 0.08rem 0 0.3rem;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
 }
 
 .addfriends-page .attendAll,

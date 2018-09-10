@@ -35,9 +35,9 @@
                     <ul>
                         <li class="list-item myItem" v-cloak v-for="(item,index) in dataList.list" :key="index" @click="gotoDongtaiDetail(item)">
                             <div class="detailDate">
-                                <div class="detailDate-day">{{item.add_time | filterDate}}</div>
-                                <div class="detailDate-month">{{item.add_time | filterMonth}}月</div>
-                                <div class="detailDate-month">{{item.add_time | filterYear}}</div>
+                                <div class="detailDate-day" v-cloak>{{item.add_time | filterDate}}</div>
+                                <div class="detailDate-month" v-cloak>{{item.add_time | filterMonth}}月</div>
+                                <div class="detailDate-month" v-cloak>{{item.add_time | filterYear}}</div>
                             </div>
                             <div class="myItemContent">
                                 <div class="item-content">
