@@ -285,6 +285,7 @@ class User extends Base {
             ->where('dc.reply_user_id', $user_id)
             ->field('d.type, d.description, d.content,u.user_id, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.birthday, u.age, dc.dynamic_id, dc.content, dc.parent_id, dc.add_time')
             ->limit($start_limit, 20)
+            ->order('id desc')
             ->select();
 
         if(is_array($lists) && !empty($lists)){
@@ -621,7 +622,7 @@ class User extends Base {
         $uuid = I('uuid'); // 要搜索的id
 
         $friendInfo = M('users')->where('uuid', $uuid)
-            ->field('user_id, head_pic, nickname, sex, age, signature, auth_video_status')
+            ->field('user_id, head_pic, nickname, sex, birthday, age, signature, auth_video_status')
             ->find();
 
         if(empty($friendInfo)) response_error('', '用户不存在');
@@ -637,6 +638,8 @@ class User extends Base {
             $friend = M('friend')->where(array('user_id'=>$toUserId, 'friend_id'=>$user['user_id']))->find();
             if($friend) $friendInfo['attention'] = 2; // 被关注
         }
+
+        $friendInfo['age'] = getAge($friendInfo['birthday'])
 
         response_success($friendInfo);
     }
