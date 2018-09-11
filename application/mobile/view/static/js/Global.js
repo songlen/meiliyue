@@ -502,7 +502,7 @@ let Global = (function () {
 //上传文件的回调 args 文件路径
 function getJavaFiles(args,thumb) { // 路径/plulic/../..
     console.log(args)
-    alert("getJavaFiles")
+    // alert("getJavaFiles")
     // alert(args)
     // alert(thumb)
 
