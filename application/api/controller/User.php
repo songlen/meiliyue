@@ -639,7 +639,7 @@ class User extends Base {
             if($friend) $friendInfo['attention'] = 2; // 被关注
         }
 
-        $friendInfo['age'] = getAge($friendInfo['birthday'])
+        $friendInfo['age'] = getAge($friendInfo['birthday']);
 
         response_success($friendInfo);
     }
