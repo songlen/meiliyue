@@ -672,6 +672,12 @@ a.close {
     flex: 1 0 0;
     max-width: calc(100% - 0.9rem);
 }
+/* 搜索好友 */
+.addfriends-content .attention-tab .comments-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
 .fans-tab .comments-text .signature,
 .attention-tab .comments-text .signature,
@@ -1133,12 +1139,12 @@ a.operate {
 .addfriends-page .attend,
 .addfriends-page .attended {
     float: right;
-    padding-right: 0.06rem;
+    padding: 0 0.08rem 0 0.3rem;
     border-radius: 0.15rem;
     overflow: hidden;
-    line-height: 0.23rem;
-    padding-left: 0.26rem;
     font-size: 13px;
+    display: flex;
+    align-items: center;
 }
 
 .attend {
