@@ -270,6 +270,10 @@ footer li a {
 
 .list-item .item-content .dynamicImgBox {
     width: calc(30% - 5px);
+
+    overflow: hidden;
+    height: 0;
+    padding-bottom: 30%;
 }
 .list-item .item-content .dynamicImgBox img {
     width: 100%;
