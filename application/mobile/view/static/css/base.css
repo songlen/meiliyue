@@ -111,8 +111,7 @@ button {
 
 [v-cloak] {
     display: none;
-  }
-  
+}
 
 /* 禁用元素点击事件 */
 .eventsDisabled {
@@ -167,6 +166,7 @@ button {
 .msgWrap .msgCtrl>span:nth-of-type(2) {
     border-left: 1px solid #e2e2e2;
 }
+
 /* 性别年龄 */
 .sexAge {
     display: inline-flex;
@@ -323,6 +323,7 @@ button {
     align-items: center;
     justify-content: center;
 }
+
 .videoCommentBtn {
     width: 30px;
     height: 30px;

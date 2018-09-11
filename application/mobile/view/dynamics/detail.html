@@ -415,13 +415,14 @@
                             }
 
                             console.log(postData)
-
+                            $(".sendComment").addClass("eventsDisabled")
                             $.ajax({
                                 type: "POST",
                                 url: this.GlobalHost + "/index.php/Api/dynamics/addComment",
                                 data: postData,
                                 dataType: "json",
                                 success: function (result) {
+                                    $(".sendComment").removeClass("eventsDisabled")
                                     console.log(result)
                                     //放数据
                                     if (result.msg == "操作成功") {
