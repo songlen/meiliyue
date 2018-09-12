@@ -285,7 +285,7 @@ class User extends Base {
             ->where('dc.reply_user_id', $user_id)
             ->field('d.type, d.description, d.content,u.user_id, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.birthday, u.age, dc.dynamic_id, dc.content, dc.parent_id, dc.add_time')
             ->limit($start_limit, 20)
-            ->order('id desc')
+            ->order('dc.id desc')
             ->select();
 
         if(is_array($lists) && !empty($lists)){
