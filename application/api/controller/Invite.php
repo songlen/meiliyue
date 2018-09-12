@@ -40,9 +40,9 @@ class Invite extends Base {
 
         $GeographyLogic = new GeographyLogic();
         // 计算1000km 范围内的经纬度
-        $around = $GeographyLogic->getAround($user_longitude, $user_latitude, 1000000);
+        /*$around = $GeographyLogic->getAround($user_longitude, $user_latitude, 1000000);
         $where['u.longitude'] = array('BETWEEN', array($around['minLongitude'], $around['maxLongitude']));
-        $where['u.latitude'] = array('BETWEEN', array($around['minLatitude'], $around['maxLatitude']));
+        $where['u.latitude'] = array('BETWEEN', array($around['minLatitude'], $around['maxLatitude']));*/
         // sql 计算距离 并按距离排序
         $field .= ", ROUND(6378.138*2*ASIN(SQRT(POW(SIN(($user_latitude*PI()/180-u.latitude*PI()/180)/2),2)+COS($user_latitude*PI()/180)*COS(u.latitude*PI()/180)*POW(SIN(($user_longitude*PI()/180-u.longitude*PI()/180)/2),2))), 2) AS distance";
         if($order_type == 3) {
