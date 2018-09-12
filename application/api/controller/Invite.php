@@ -165,8 +165,14 @@ class Invite extends Base {
         $list = Db::name('invite_enroll')->alias('ie')
             ->join('users u', 'u.user_id=ie.user_id', 'left')
             ->where('ie.invite_id',  $invite_id)
-            ->field('u.user_id, u.nickname, u.head_pic, u.sex, u.age, u.auth_video_status')
+            ->field('u.user_id, u.nickname, u.head_pic, u.sex, birthday, u.age, u.auth_video_status')
             ->select();
+
+        if( !empty($list) && is_array($list)) {
+            foreach ($list as &$item) {
+                $item['age'] = getAge($item['birthday']);
+            }
+        }
 
         response_success($list);
     }
