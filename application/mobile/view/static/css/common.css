@@ -1235,13 +1235,15 @@ header .search {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%;
+  right: 0;
+  /* width: 100%; */
+  /* width: 100vw; */
   border: none;
-  background: url(../images/icon/price.png) no-repeat 35% center;
-  background-size: 0.23rem;
-  background-color: #ffe455;
+  background: #ffe455 url(../images/icon/price.png) 35vw center no-repeat;
+  background-size: 0.23rem 0.23rem;
   height: 0.43rem;
   line-height: 0.43rem;
+  text-align: center;
   padding-left: 0.23rem;
   z-index: 4;
 }
