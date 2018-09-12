@@ -104,9 +104,6 @@
             </div>
         </div>
 
-        <!-- <button class="interest" style="display: none;">我感兴趣</button> -->
-        <div class="interest" style="display: none;">我感兴趣</div>
-
         <div class="enrollWrap" style="display:none;">
             <div class="enrollTips">
                 邀约留言仅双方可见
@@ -121,6 +118,9 @@
         </div>
 
     </div>
+
+    <!-- <button class="interest" style="display: none;">我感兴趣</button> -->
+    <div class="interest" style="display: none;">我感兴趣</div>
 
     <!-- 弹框 -->
     <div class="_shade"></div>
@@ -154,7 +154,7 @@
                     console.log(mUserInfo)
                     Interested.originUserId = Number(mUserInfo.user_id);
                 } else {
-                    Interested.originUserId = 21; //测试用
+                    Interested.originUserId = 1; //测试用
                     // Interested.originUserId = 1; //测试用 自己看自己
                 }
 
@@ -164,7 +164,7 @@
                     url = url + ".html";
                 }
                 if (url.indexOf("file:///") > -1) {
-                    url = "http://meiliyue.caapa.org/index.php/mobile/invite/detail/id/22.html"; //测试用
+                    url = "http://meiliyue.caapa.org/index.php/mobile/invite/detail/id/24.html"; //测试用
                 }
                 let strTemp = url.split("/detail/id/")[1];
                 Interested.detailId = Number(strTemp.substr(0, strTemp.length - 5));
