@@ -55,9 +55,9 @@ class Common extends Base {
 
         if(!file_exists($filepath)) return false;
 
-        $Image = \think\Image::open($filepath);
-        // 对图像使用默认的顺时针旋转90度操作
-        $Image->rotate($degrees)->save($filepath);
+        // $Image = \think\Image::open($filepath);
+        // // 对图像使用默认的顺时针旋转90度操作
+        // $Image->rotate($degrees)->save($filepath);
 
         response_success();
     }
