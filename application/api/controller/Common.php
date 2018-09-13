@@ -58,5 +58,7 @@ class Common extends Base {
         $Image = \think\Image::open($filepath);
         // 对图像使用默认的顺时针旋转90度操作
         $Image->rotate($degrees)->save($filepath);
+
+        response_success();
     }
 }
