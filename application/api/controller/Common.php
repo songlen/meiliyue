@@ -45,4 +45,18 @@ class Common extends Base {
             response_error('', '文件上传失败');
         }
     }
+
+
+    // 旋转图片
+    public function rotate($filepath, $degrees = 90){
+        $filepath  = input('filepath');
+        $degrees  = input('degrees', 90);
+
+
+        if(!file_exists($filepath)) return false;
+
+        $Image = \think\Image::open($filepath);
+        // 对图像使用默认的顺时针旋转90度操作
+        $Image->rotate($degrees)->save($filepath);
+    }
 }
