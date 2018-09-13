@@ -49,8 +49,8 @@ class Common extends Base {
 
     // 旋转图片
     public function rotate($filepath, $degrees = 90){
-        $filepath  = input('filepath');
-        $degrees  = input('degrees', 90);
+        $filepath  = I('filepath');
+        $degrees  = I('degrees', 90);
 
 
         if(!file_exists($filepath)) return false;
