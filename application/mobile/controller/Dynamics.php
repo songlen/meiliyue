@@ -70,13 +70,13 @@ class Dynamics extends Base {
             ->select();
 
         /********* 记录查看此条动态的人 **************/
-        $viewer_id = 1;
+        /*$viewer_id = 1;
         if($viewer_id != $info['user_id']){
             $is_exist = M('dynamics_viewer')->where(array('dynamic_id'=>$id, 'viewer_id'=>$viewer_id))->find();
             if(!$is_exist){
                 M('dynamics_viewer')->insert(array('dynamicus_id'=>$id, 'viewer_id'=>$viewer_id));
             }
-        }
+        }*/
 
         $this->assign('info', $info);
         $this->assign('viewers', $viewers);
