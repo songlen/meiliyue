@@ -18,7 +18,8 @@
         <header>
             <a href="javascript:window.history.back(-1)" class="back"></a>
             <div class="title">动态详情</div>
-            <a href="javascript:void(0)" class="operate"></a>
+            <!-- operate class -->
+            <a href="javascript:void(0)" class="isOperate"></a>
         </header>
 
         <div class="details-page">
@@ -178,8 +179,8 @@
         <!-- 更多操作提示窗 -->
         <div class="avatarOperating-jubao" style="display: none;">
             <ul>
-                <li class="">分享给好友</li>
-                <li class="deleteDetail" style="display:none;">删除</li>
+                <!-- <li class="">分享给好友</li> -->
+                <li class="deleteDetail">删除</li>
                 <li class="jubao-cancel">取消</li>
             </ul>
         </div>
@@ -243,7 +244,7 @@
                 
                 //是否是自己的动态 updateDom
                 if(Details.user_id==Details.dynamic_origin_id){
-                    $(".deleteDetail").show();
+                    $("header a.isOperate").addClass("operate")
                 }
             },
             //送花

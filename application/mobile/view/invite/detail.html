@@ -16,7 +16,7 @@
     <header>
         <a href="javascript:void(0)" class="back fl"></a>
         <span class="title">邀约详情</span>
-        <a href="javascript:void(0)" class="operate fr"></a>
+        <a href="javascript:void(0)" class="operate fr" style="display: none;"></a>
     </header>
 
     <div class="invitation-enrollWrap">
@@ -126,7 +126,7 @@
     <div class="_shade"></div>
     <div class="avatarOperating" style="display: none;">
         <ul>
-            <li class="">分享到好友</li>
+            <!-- <li class="">分享到好友</li> -->
             <!-- <li class="">举报</li> -->
             <li class="deleteDetail" style="display:none;">删除</li>
             <li class="home-cancel">取消</li>
@@ -155,7 +155,6 @@
                     Interested.originUserId = Number(mUserInfo.user_id);
                 } else {
                     Interested.originUserId = 1; //测试用
-                    // Interested.originUserId = 1; //测试用 自己看自己
                 }
 
                 //detailId
@@ -196,6 +195,10 @@
             //根据inviteItem更新Dom
             updateDom: function (data) {
                 console.log(data)
+                //右上角a标签
+                if(Interested.originUserId==Interested.toUserId){
+                    $("header a.operate").show()
+                }
                 //头像
                 if(data.head_pic&&data.head_pic!==""){
                     if(data.head_pic.indexOf("http:")>-1){
