@@ -215,7 +215,7 @@ let Global = (function () {
 
         let divHtml=`
             <div class="fullScreen">
-                <div class="videoHeader">
+                <div class="videoHeader" style="display:none;">
                     <div class="closeFullScreen"></div>
                     
                     <div class="img-box">
@@ -226,10 +226,12 @@ let Global = (function () {
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
                         <span class="progressBar"></span>
-                        <video id="video1" width="100%" height="100%" src="${src}" poster="${poster}" loop controls="controls" preload="auto"></video>
-                        <div class="videoFooter" style="justify-content: flex-end;">
-                            <div class="dynamicDetailBtn" style="font-size:0.16rem;color:#fff;margin-right:30px;">查看动态详情</div>
-                        </div>
+                        <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" 
+                            poster="http://meiliyue.caapa.org/public/upload/dynamics/video/20180913/33ca112e04a7c5fb3e62d20f53181cdd.jpg"
+                        >
+                            <source src="http://meiliyue.caapa.org/public/upload/dynamics/video/20180913/33ca112e04a7c5fb3e62d20f53181cdd.mov" type='video/mp4'>
+                            <source src="http://meiliyue.caapa.org/public/upload/dynamics/video/20180913/33ca112e04a7c5fb3e62d20f53181cdd.mov" type='video/webm'>
+                        </video>
                     </div>
                 </div>
             </div>
@@ -238,7 +240,9 @@ let Global = (function () {
         //<span class="littleTri"></span>
         
         let $div=$(divHtml);
-        let video=$div.find("#video1")[0];
+        let video=$div.find("#my-video")[0];
+
+        
 
         // 绑定事件
         //关闭事件
@@ -281,6 +285,7 @@ let Global = (function () {
         //append div
         // video.play()
         $("body").append($div);
+        var player = videojs('my-video');
     }
 
     function fullScreenImg(src) {
