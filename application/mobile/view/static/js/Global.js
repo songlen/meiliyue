@@ -226,7 +226,7 @@ let Global = (function () {
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
                         <span class="progressBar"></span>
-                        <video id="video1" width="100%" height="100%" src="${src}" poster="${poster}" autoplay="autoplay" loop></video>
+                        <video id="video1" width="100%" height="100%" src="${src}" poster="${poster}" loop controls="controls" preload="auto"></video>
                         <div class="videoFooter" style="justify-content: flex-end;">
                             <div class="dynamicDetailBtn" style="font-size:0.16rem;color:#fff;margin-right:30px;">查看动态详情</div>
                         </div>
@@ -247,16 +247,16 @@ let Global = (function () {
             let $fullScreen=$(this).closest(".fullScreen");
             $fullScreen.remove();
         });
-        //点击 控制video
-        $(video).click(function (event) {
-            event.stopPropagation()
-            console.log(this.paused)
-            if (this.paused) {
-                this.play()
-            } else {
-                this.pause()
-            }
-        });
+        // //点击 控制video
+        // $(video).click(function (event) {
+        //     event.stopPropagation()
+        //     console.log(this.paused)
+        //     if (this.paused) {
+        //         this.play()
+        //     } else {
+        //         this.pause()
+        //     }
+        // });
         //去动态详情页
         $div.find(".dynamicDetailBtn").click(function(event){
             event.stopPropagation();
@@ -268,7 +268,7 @@ let Global = (function () {
         // 绑定事件 end
 
         //总是从头开始播放
-        video.currentTime = 0; 
+        // video.currentTime = 0; 
         //进度条
         setInterval(function () {
             if (video.currentTime >= video.duration) {
@@ -279,7 +279,7 @@ let Global = (function () {
         }, 50);
 
         //append div
-        video.play()
+        // video.play()
         $("body").append($div);
     }
 
