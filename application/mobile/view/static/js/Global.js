@@ -215,7 +215,7 @@ let Global = (function () {
 
         let divHtml=`
             <div class="fullScreen">
-                <div class="videoHeader" style="display:none;">
+                <div class="videoHeader">
                     <div class="closeFullScreen"></div>
                     
                     <div class="img-box">
@@ -226,12 +226,10 @@ let Global = (function () {
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
                         <span class="progressBar"></span>
-                        <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" 
-                            poster="http://meiliyue.caapa.org/public/upload/dynamics/video/20180913/33ca112e04a7c5fb3e62d20f53181cdd.jpg"
-                        >
-                            <source src="http://meiliyue.caapa.org/public/upload/dynamics/video/20180913/33ca112e04a7c5fb3e62d20f53181cdd.mov" type='video/mp4'>
-                            <source src="http://meiliyue.caapa.org/public/upload/dynamics/video/20180913/33ca112e04a7c5fb3e62d20f53181cdd.mov" type='video/webm'>
-                        </video>
+                        <video id="video1" width="100%" height="100%" src="${src}" poster="${poster}" autoplay="autoplay" loop></video>
+                        <div class="videoFooter" style="justify-content: flex-end;">
+                            <div class="dynamicDetailBtn" style="font-size:0.16rem;color:#fff;margin-right:30px;">查看动态详情</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -240,9 +238,7 @@ let Global = (function () {
         //<span class="littleTri"></span>
         
         let $div=$(divHtml);
-        let video=$div.find("#my-video")[0];
-
-        
+        let video=$div.find("#video1")[0];
 
         // 绑定事件
         //关闭事件
@@ -251,16 +247,16 @@ let Global = (function () {
             let $fullScreen=$(this).closest(".fullScreen");
             $fullScreen.remove();
         });
-        // //点击 控制video
-        // $(video).click(function (event) {
-        //     event.stopPropagation()
-        //     console.log(this.paused)
-        //     if (this.paused) {
-        //         this.play()
-        //     } else {
-        //         this.pause()
-        //     }
-        // });
+        //点击 控制video
+        $(video).click(function (event) {
+            event.stopPropagation()
+            console.log(this.paused)
+            if (this.paused) {
+                this.play()
+            } else {
+                this.pause()
+            }
+        });
         //去动态详情页
         $div.find(".dynamicDetailBtn").click(function(event){
             event.stopPropagation();
@@ -272,7 +268,7 @@ let Global = (function () {
         // 绑定事件 end
 
         //总是从头开始播放
-        // video.currentTime = 0; 
+        video.currentTime = 0; 
         //进度条
         setInterval(function () {
             if (video.currentTime >= video.duration) {
@@ -283,9 +279,8 @@ let Global = (function () {
         }, 50);
 
         //append div
-        // video.play()
+        video.play()
         $("body").append($div);
-        var player = videojs('my-video');
     }
 
     function fullScreenImg(src) {
