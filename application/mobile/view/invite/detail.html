@@ -106,12 +106,12 @@
 
         <div class="enrollWrap" style="display:none;">
             <div class="enrollTips">
-                邀约留言仅双方可见
+                感兴趣的人(共计<span class="interestedCount"></span>人)
             </div>
             <div class="enroll-list">
-                <div class="enrollTitle">
+                <!-- <div class="enrollTitle">
                     报名人数(共计<span class="interestedCount"></span>人)
-                </div>
+                </div> -->
                 <ul class="enrollUl">
                 </ul>
             </div>
@@ -154,7 +154,7 @@
                     console.log(mUserInfo)
                     Interested.originUserId = Number(mUserInfo.user_id);
                 } else {
-                    Interested.originUserId = 1; //测试用
+                    Interested.originUserId = 3; //测试用
                 }
 
                 //detailId
