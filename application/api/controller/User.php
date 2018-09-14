@@ -735,10 +735,11 @@ class User extends Base {
         $count = Db::name('user_sign_log')->where(array('user_id'=>$user_id, 'date'=>date('Y-m-d')))->count();
         if($count) response_error('', '您今天已签到');
 
-        Db::name('users')->where('user_id', $user_id)
-            ->setInc('flower_num', 10)
-            ->setInc('signInDays')
-            ;
+        $setInc = array(
+            'flower_num' => array('exp', 'flower_num+1'),
+            'signInDays' => array('exp', 'signInDays+1'),
+        );
+        Db::name('users')->where('user_id', $user_id)->update($setInc);
         $data = array(
             'user_id' => $user_id,
             'date' => date('Y-m-d'),
