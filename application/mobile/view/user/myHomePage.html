@@ -611,15 +611,16 @@
                     if (ele.files.length > 0) {
                         //上传图片+回调
                         Homepage.uploadPic(type, $liTemp, function (src) {
-                            //删除上传时的form
-                            $(".homeFormWrap").remove();
-
                             //更新dom
-                            if ($curUl.find("li").length >= 1) {
+                            if ($curUl.find("li").length >= 3) {
                                 $curUl.find("li:last").remove();
                             }
+
                             $liTemp.find(".showPic").attr("src", Global.host + src);
                             $curUl.prepend($liTemp);
+
+                            //删除上传时的form
+                            $(".homeFormWrap").remove();
 
                             Homepage.setProps();
                         });
