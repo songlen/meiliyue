@@ -887,7 +887,7 @@ a.operate {
     justify-content: space-between;
     align-items: center;
     background-color: #f8f8fc;
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
