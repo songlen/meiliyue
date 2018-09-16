@@ -581,16 +581,19 @@
                 let $liTemp = $(
                     `
                         <li class="edit-pic-item flex4">
-                            
-                            <img class="showPic" src="__STATIC__/images/icon/tx.png">
-    
-                            <div class="homeFormWrap" style="display:none;">
-                                <form id="homeForm" action=${url} method="post" enctype="multipart/form-data">
-                                    <input type="text" value="" name="user_id" style="display: none;">
-                                    <input type="text" value="" name="type" style="display: none;">
-                                    <input type="text" value="" name="file_type" style="display: none;">
-                                    <input class="albumInput" type="file" name="file[]" accept="image/*" style="display: none">
-                                </form>
+                            <div style="margin:0.05rem;height:calc(100% - 0.1rem);overflow:hidden;">
+
+                                <img class="showPic" src="__STATIC__/images/icon/tx.png">
+                                
+                                <div class="homeFormWrap" style="display:none;">
+                                    <form id="homeForm" action=${url} method="post" enctype="multipart/form-data">
+                                        <input type="text" value="" name="user_id" style="display: none;">
+                                        <input type="text" value="" name="type" style="display: none;">
+                                        <input type="text" value="" name="file_type" style="display: none;">
+                                        <input class="albumInput" type="file" name="file[]" accept="image/*" style="display: none">
+                                    </form>
+                                </div>
+
                             </div>
                         </li>
                     `
@@ -602,12 +605,15 @@
 
                 //触发点击input file change
                 $liTemp.find(".albumInput")[0].click();
-                // gotoUploadPic($liTemp.find(".albumInput")[0]); //第一次input不触发change，手动触发
+                gotoUploadPic($liTemp.find(".albumInput")[0]); //第一次input不触发change，手动触发
 
                 function gotoUploadPic(ele) { //ele input file
                     alert(ele.files.length)
                     alert(ele.value)
                     alert(ele.files)
+                    console.log(ele.files.length)
+                    console.log(ele.value)
+                    console.log(ele.files[0].name)
                     if (ele.files.length > 0) {
                         //上传图片+回调
                         Homepage.uploadPic(type, $liTemp, function (src) {
