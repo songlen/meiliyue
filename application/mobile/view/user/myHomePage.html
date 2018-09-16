@@ -605,6 +605,7 @@
                 gotoUploadPic($liTemp.find(".albumInput")[0]); //第一次input不触发change，手动触发
 
                 function gotoUploadPic(ele) { //ele input file
+                    alert(ele.files.length)
                     if (ele.files.length > 0) {
                         //上传图片+回调
                         Homepage.uploadPic(type, $liTemp, function (src) {
