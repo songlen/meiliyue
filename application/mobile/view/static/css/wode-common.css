@@ -269,6 +269,12 @@ a.close {
     margin: 0.05rem; */
 }
 
+.myHomepage  .publicPic ul>a>img,
+.myHomepage  .edit-pic-item img {
+    width: calc(100% - 0.1rem);
+    margin: 0.05rem;
+}
+
 .edit-pic-item .edit-closePic {
     display: inline-block;
     width: 0.16rem;
