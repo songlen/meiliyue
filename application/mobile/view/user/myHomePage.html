@@ -615,6 +615,9 @@
                     console.log(ele.files.length)
                     console.log(ele.value)
                     console.log(ele.files[0].name)
+                    if(ele.files[0].name.indexOF("IMG_")>-1){ //临时解决上传？
+                        return
+                    }
                     if (ele.files.length > 0) {
                         //上传图片+回调
                         Homepage.uploadPic(type, $liTemp, function (src) {
