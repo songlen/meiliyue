@@ -154,7 +154,7 @@ a.close {
 
 .edit-personal-avatar .avatar-pic img {
     width: 100%;
-    /* height: 100%; */
+    height: 100%;
 }
 
 /* 编辑资料里的小头像 */
@@ -881,6 +881,7 @@ li.friendItem {
 
 .friendHeadWrap>img {
     width: 100%;
+    height: 100%;
 }
 
 .friendItem-avatar {

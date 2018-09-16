@@ -10,6 +10,7 @@
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script src="__STATIC__/js/Global.js"></script>
 </head>
 
 <body class="friends-page">
@@ -48,7 +49,6 @@
 
 
     <script src="__STATIC__/js-min/user-fans.min.js"></script>
-    <script src="__STATIC__/js/Global.js"></script>
     <script>
         var Fans = {
             user_id: "",
@@ -103,7 +103,7 @@
                             <li class="friendItem" data-userId=${item.user_id}>
                                 <div class="friendItem-avatar">
                                     <div class="friendHeadWrap">
-                                        <img src=${headUrl}>
+                                        <img src=${headUrl} onload="Global.resizeHeadpic(this)">
                                     </div>
                                     <span class="videoStatus" style="display:none;"></span>
                                 </div>

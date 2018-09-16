@@ -10,6 +10,7 @@
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script src="__STATIC__/js/Global.js"></script>
 </head>
 
 <body class="addfriends-page">
@@ -87,7 +88,6 @@
     </div>
 
     <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
-    <script src="__STATIC__/js/Global.js"></script>
     <script>
         let AddFriend = {
             user_id: "",
@@ -165,7 +165,7 @@
                                                style="justify-content: space-between;">
                             <div class="friendItem-avatar">
                                 <div class="friendHeadWrap">
-                                    <img src=${head_pic}>
+                                    <img src=${head_pic} onload="Global.resizeHeadpic(this)">
                                 </div>
                                 <span class="videoStatus" style="display:none;"></span>
                             </div>

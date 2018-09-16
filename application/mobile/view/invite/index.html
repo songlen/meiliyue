@@ -11,6 +11,7 @@
     <script>
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script src="__STATIC__/js/Global.js"></script>
 </head>
 
 <body class="yaoyueIndex">
@@ -106,7 +107,7 @@
                                 <div class="top">
                                     <div style="width: 0.57rem;height: 0.57rem;margin-right: 0.1rem;position: relative;">
                                         <div class="img-box" @click.stop="gotoHomePage(item)">
-                                            <img v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg">
+                                            <img v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg" onload="Global.resizeHeadpic(this)">
                                             <img v-else src="/application/mobile/view/static/images/icon/tx.png">
                                         </div>
                                         <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click="showVideo(item)"></span>
@@ -282,7 +283,6 @@
     
 
     <script src="__STATIC__/js-min/invite-index.min.js"></script>
-    <script src="__STATIC__/js/Global.js"></script>
     <script>
         $(function () {
             //页面宽高

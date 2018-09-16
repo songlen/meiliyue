@@ -132,10 +132,10 @@ footer li a {
   /* transition: top 0.4s;
   opacity: 1;
   -webkit-backface-visibility: hidden; */
-  
+
   z-index: 6;
   transition: transform 0.4s;
-  transform: translate3d(0,0,0);
+  transform: translate3d(0, 0, 0);
 }
 
 .invitation .view {
@@ -330,13 +330,8 @@ footer li a {
 }
 
 .invitation .items li .top .img-box>img {
-  /* width: 120%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  tonghzou,下拉变方bug */
   width: 100%;
+  height: 100%;
 }
 
 .videoStatus {
@@ -349,12 +344,13 @@ footer li a {
   right: 0.13rem;
   bottom: 0;
 }
-.interested .invitation-enrollWrap .videoStatus{
+
+/* .interested .invitation-enrollWrap .videoStatus{
   width: 0.2rem;
   height: 0.2rem;
   bottom: 0;
   right: 0.06rem;
-}
+} */
 
 .yaoyueIndex .videoStatus {
   bottom: 0;
@@ -1037,7 +1033,7 @@ footer li a {
   width: 100vw;
   position: fixed;
   /* top: 110vh; */
-  top:130vh;
+  top: 130vh;
   background-color: #efefef;
   z-index: 10;
   transition: top 0.3s;
@@ -1820,15 +1816,15 @@ li.edit-pic-item {
   border-left: 1px solid #e9e9e9;
 }
 
-.mLoadingMask{
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #000;
-    opacity: 0.3;
-    z-index: 9;
+.mLoadingMask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000;
+  opacity: 0.3;
+  z-index: 9;
 }
 
 .mLoading {

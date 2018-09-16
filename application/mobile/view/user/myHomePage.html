@@ -10,6 +10,7 @@
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script src="__STATIC__/js/Global.js"></script>
 </head>
 
 <body class="homepage myHomepage">
@@ -38,7 +39,7 @@
             <div class="edit-personal-avatar">
                 <div style="position: relative;">
                     <div class="avatar-pic">
-                        <img src="__STATIC__/images/icon/tx.png">
+                        <img src="__STATIC__/images/icon/tx.png" onload="Global.resizeHeadpic(this)">
                     </div>
                     <span class="videoStatus" style="display: none;"></span>
                 </div>
@@ -293,7 +294,6 @@
     <!-- ------------------------------------- -->
 
     <script src="__STATIC__/js-min/user-myHomePage.min.js"></script>
-    <script src="__STATIC__/js/Global.js"></script>
     <script>
         var Homepage = {
             _mTimer: null,

@@ -10,6 +10,7 @@
     <script>
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script src="__STATIC__/js/Global.js"></script>
 </head>
 
 <body class="interested">
@@ -28,7 +29,7 @@
                         <div class="top">
                             <div class="videoStatusWrap" style="position:relative;margin-right: 0.1rem;">
                                 <div class="img-box">
-                                    <img src="__STATIC__/images/icon/tx.png">
+                                    <img src="__STATIC__/images/icon/tx.png" onload="Global.resizeHeadpic(this)">
                                 </div>
                                 <span class="videoStatus" style="display:none;"></span>
                             </div>
@@ -136,7 +137,6 @@
     <!-- --------------------------------------------- -->
 
     <script src="__STATIC__/js-min/invite-detail.min.js"></script>
-    <script src="__STATIC__/js/Global.js"></script>
     <script>
         var Interested = {
             originUserId: "", //自己的user_id
@@ -349,7 +349,7 @@
                                     <li class="comments-item" data-toUserId=${item.user_id}>
                                         <div class="comments-avatar">
                                             <div class="comments-avatar-wrap">
-                                                <img src="${headUrl}">
+                                                <img src="${headUrl}" onload="Global.resizeHeadpic(this)">
                                             </div>
                                             <span class="videoStatus" style="display:none;"></span>
                                         </div>
