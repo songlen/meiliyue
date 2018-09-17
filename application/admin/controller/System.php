@@ -30,7 +30,7 @@ class System extends Base
 		/*配置列表*/
 		$group_list = [
             'shop_info' => '网站信息',
-            'tag'       => '标签设置',
+            // 'tag'       => '标签设置',
             // 'basic'     => '基本设置',
             // 'smtp'      => '邮件设置',
             // 'push'      => '推送设置',
