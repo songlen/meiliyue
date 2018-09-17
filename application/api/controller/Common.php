@@ -24,13 +24,15 @@ class Common extends Base {
     public function uploadFile(){
         $type = I('type');
 
-        if( ! in_array($type, array('invite_image', 'dynamic_image', 'dynamic_video'))) response_error('', '不被允许的类型');
+        if( ! in_array($type, array('invite_image', 'dynamic_image', 'dynamic_video', 'photo'))) response_error('', '不被允许的类型');
         if(empty($_FILES)) response_error('文件不能为空');
 
         /************* 上传路径 ***************/        
         $uploadPath = UPLOAD_PATH.'files';
+        if($type == 'invite_image') $uploadPath = UPLOAD_PATH.'invite/image';
         if($type == 'dynamic_image') $uploadPath = UPLOAD_PATH.'dynamics/image';
         if($type == 'dynamic_video') $uploadPath = UPLOAD_PATH.'dynamics/video';
+        if($type == 'photo') $uploadPath = UPLOAD_PATH.'photo';
         
         $FileLogic = new FileLogic();
         $result = $FileLogic->uploadSingleFile('file', $uploadPath);
