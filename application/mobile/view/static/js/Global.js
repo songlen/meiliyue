@@ -169,7 +169,7 @@ let Global = (function () {
 
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
-                        <video id="video1" width="100%" height="100%" src="${src}" poster=${posterSrc} autoplay="autoplay" muted loop ></video>
+                        <video id="video1" width="100%" height="100%" src="${src}" poster=${posterSrc} autoplay="autoplay" loop ></video>
                     </div>
                 </div>
             </div>
@@ -226,7 +226,7 @@ let Global = (function () {
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
                         <span class="progressBar"></span>
-                        <video id="video1" width="100%" height="100%" src="${src}" poster="${poster}" autoplay="autoplay" muted loop></video>
+                        <video id="video1" width="100%" height="100%" src="${src}" poster="${poster}" autoplay="autoplay" loop></video>
                         <div class="videoFooter" style="justify-content: flex-end;">
                             <div class="dynamicDetailBtn" style="font-size:0.16rem;color:#fff;margin-right:30px;">查看动态详情</div>
                         </div>
@@ -466,6 +466,17 @@ let Global = (function () {
         }); 
     }
 
+    function resizeHeadpic(imgEle){
+        console.log(imgEle.width,imgEle.height)
+        if(imgEle.width>imgEle.height){
+            imgEle.style.width="auto"
+            imgEle.style.height="100%"
+        }else{
+            imgEle.style.width="100%"
+            imgEle.style.height="auto"
+        }
+    }
+
     //Global暴露的接口------------------------
     return {
         //值
@@ -490,6 +501,7 @@ let Global = (function () {
         getImgWidth, //获取图片原始宽高
         updateLocalUserinfo, //更新本地的userinfo key,value
         getAuthVideoUrl, //获取认证视频url; user_id callback(url)
+        resizeHeadpic, //设置头像style
 
         //单独功能
         fullScreenVideo, //全屏叽喳视频（有去动态详情的按钮）

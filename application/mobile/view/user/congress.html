@@ -10,6 +10,7 @@
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script src="__STATIC__/js/Global.js"></script>
 </head>
 
 <body class="congress-page">
@@ -47,7 +48,7 @@
                             <div class="ersanmingHeadItem">
                                 <div class="head_pic">
                                     <div class="img-box img-box-rank1">
-                                        <img v-cloak v-if="topThreeList[0]&&topThreeList[0].head_pic&&topThreeList[0].head_pic!==''" :src="topThreeList[0].head_pic | ifHttpImg" @click="gotoHomePage(topThreeList[0])">
+                                        <img v-cloak v-if="topThreeList[0]&&topThreeList[0].head_pic&&topThreeList[0].head_pic!==''" :src="topThreeList[0].head_pic | ifHttpImg" onload="Global.resizeHeadpic(this)" @click="gotoHomePage(topThreeList[0])">
                                         <img v-cloak v-else src="/application/mobile/view/static/images/icon/tx.png">
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="topThreeList[0]&&topThreeList[0].auth_video_status==2" @click.stop="openVideoScreen(topThreeList[0])"></span>
@@ -59,7 +60,7 @@
                             <div class="ersanmingHeadItem">
                                 <div class="head_pic">
                                     <div class="img-box img-box-rank2">
-                                        <img v-cloak v-if="topThreeList[1]&&topThreeList[1].head_pic&&topThreeList[1].head_pic!==''" :src="topThreeList[1].head_pic | ifHttpImg" @click="gotoHomePage(topThreeList[1])">
+                                        <img v-cloak v-if="topThreeList[1]&&topThreeList[1].head_pic&&topThreeList[1].head_pic!==''" :src="topThreeList[1].head_pic | ifHttpImg" onload="Global.resizeHeadpic(this)" @click="gotoHomePage(topThreeList[1])">
                                         <img v-cloak v-else src="/application/mobile/view/static/images/icon/tx.png">
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="topThreeList[1]&&topThreeList[1].auth_video_status==2" @click.stop="openVideoScreen(topThreeList[1])"></span>
@@ -70,7 +71,7 @@
                             <div class="ersanmingHeadItem">
                                 <div class="head_pic">
                                     <div class="img-box img-box-rank2">
-                                        <img v-cloak v-if="topThreeList[2]&&topThreeList[2].head_pic&&topThreeList[2].head_pic!==''" :src="topThreeList[2].head_pic | ifHttpImg" @click="gotoHomePage(topThreeList[2])">
+                                        <img v-cloak v-if="topThreeList[2]&&topThreeList[2].head_pic&&topThreeList[2].head_pic!==''" :src="topThreeList[2].head_pic | ifHttpImg" onload="Global.resizeHeadpic(this)" @click="gotoHomePage(topThreeList[2])">
                                         <img v-cloak v-else src="/application/mobile/view/static/images/icon/tx.png">
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="topThreeList[2]&&topThreeList[2].auth_video_status==2" @click.stop="openVideoScreen(topThreeList[2])"></span>
@@ -102,7 +103,7 @@
                             <div class="">
                                 <div class="head_pic">
                                     <div class="img-box" @click="gotoHomePage(item)">
-                                        <img v-cloak v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg">
+                                        <img v-cloak v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg" onload="Global.resizeHeadpic(this)">
                                         <img v-cloak v-else src="/application/mobile/view/static/images/icon/tx.png">
                                     </div>
                                     <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click.stop="openVideoScreen(item)"></span>
@@ -139,7 +140,6 @@
 
     <!-- -------------------------------------- -->
     <script src="__STATIC__/js-min/user-congress.min.js"></script>
-    <script src="__STATIC__/js/Global.js"></script>
     <!-- 页面--js -->
     <script>
         let congressApp=new Vue({
