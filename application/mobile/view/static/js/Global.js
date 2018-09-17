@@ -466,6 +466,17 @@ let Global = (function () {
         }); 
     }
 
+    function resizeHeadpic(imgEle){
+        console.log(imgEle.width,imgEle.height)
+        if(imgEle.width>imgEle.height){
+            imgEle.style.width="auto"
+            imgEle.style.height="100%"
+        }else{
+            imgEle.style.width="100%"
+            imgEle.style.height="auto"
+        }
+    }
+
     //Global暴露的接口------------------------
     return {
         //值
@@ -490,6 +501,7 @@ let Global = (function () {
         getImgWidth, //获取图片原始宽高
         updateLocalUserinfo, //更新本地的userinfo key,value
         getAuthVideoUrl, //获取认证视频url; user_id callback(url)
+        resizeHeadpic, //设置头像style
 
         //单独功能
         fullScreenVideo, //全屏叽喳视频（有去动态详情的按钮）

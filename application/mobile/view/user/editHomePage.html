@@ -10,6 +10,7 @@
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script src="__STATIC__/js/Global.js"></script>
 </head>
 
 <body class="editHome-page">
@@ -50,7 +51,7 @@
                         <div class="editItemContent changeHeadpicEnter">
                             <span class="avatar-pic-wrap">
                                 <div class="avatar-pic">
-                                    <img src="__STATIC__/images/icon/tx.png">
+                                    <img src="__STATIC__/images/icon/tx.png" onload="Global.resizeHeadpic(this)">
                                 </div>
                             </span>
                         </div>
@@ -242,7 +243,6 @@
 
 
     <script src="__STATIC__/js-min/user-editHomePage.min.js"></script>
-    <script src="__STATIC__/js/Global.js"></script>
     <script>
         var EditHome = {
             user_id: "",

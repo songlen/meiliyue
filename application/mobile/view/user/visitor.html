@@ -10,6 +10,7 @@
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script src="__STATIC__/js/Global.js"></script>
 </head>
 
 <body class="visitors-page">
@@ -51,7 +52,6 @@
 
 
     <script src="__STATIC__/js-min/user-visitor.min.js"></script>
-    <script src="__STATIC__/js/Global.js"></script>
     <script>
         var Visitors = {
             user_id: "",
@@ -89,7 +89,7 @@
                             <li class="comments-item" data-toUserId=${item.user_id}>
                                 <div class="comments-avatar">
                                     <div class="comments-avatar-wrap">
-                                        <img src="${headUrl}">
+                                        <img src="${headUrl}" onload="Global.resizeHeadpic(this)">
                                     </div>
                                     <span class="videoStatus" style="display:none;"></span>
                                 </div>

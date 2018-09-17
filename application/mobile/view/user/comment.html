@@ -10,6 +10,7 @@
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script src="__STATIC__/js/Global.js"></script>
 </head>
 
 <body class="comments-page">
@@ -71,7 +72,6 @@
     <!-- 回复评论page end -->
 
     <script src="__STATIC__/js-min/user-comment.min.js"></script>
-    <script src="__STATIC__/js/Global.js"></script>
     <script>
         var Comments = {
             user_id: "",
@@ -103,7 +103,7 @@
                                 >
                                 <div class="comments-avatar">
                                     <div class="comments-avatar-wrap">
-                                        <img src="${headUrl}">
+                                        <img src="${headUrl}" onload="Global.resizeHeadpic(this)">
                                     </div>
                                     <span class="videoStatus" style="display:none;"></span>
                                 </div>

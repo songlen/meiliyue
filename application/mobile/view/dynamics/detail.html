@@ -10,6 +10,7 @@
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
+    <script src="__STATIC__/js/Global.js"></script>
 </head>
 
 <body class="details">
@@ -26,7 +27,7 @@
             <div class="details-content">
                 <div class="details-content-head">
                     <div class="details-headImgWrap">
-                        <img src="{$info.head_pic}">
+                        <img src="{$info.head_pic}" onload="Global.resizeHeadpic(this)">
                     </div>
                     <div class="details-content-head-text">
                         <div>
@@ -107,7 +108,7 @@
                     <li class="details-comments-item" v-cloak v-for="(item,index) in commentsList" :key="index">
                         <div style="position: relative;" v-cloak>
                             <div class="comment-headWrap" v-cloak @click="applyHomepage(item)">
-                                <img v-cloak v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg">
+                                <img v-cloak v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg" onload="Global.resizeHeadpic(this)">
                                 <img v-cloak v-else src="/application/mobile/view/static/images/icon/tx.png">
                             </div>
                             <!-- <span class="videoStatus"></span> -->
@@ -199,7 +200,6 @@
 
 
     <script src="__STATIC__/js-min/dynamics-detail.min.js"></script>
-    <script src="__STATIC__/js/Global.js"></script>
     <script>
         var dynamic_origin_id = '{$info["user_id"]}';
         // alert(dynamic_origin_id)
