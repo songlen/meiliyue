@@ -164,7 +164,7 @@ class Auth extends Base {
     }
 
     /*
-     * 第三方登录接口
+     * 第三方注册接口
      * account_id 微信 openid 微博 id
      * sex 1 男 2 女
      */
