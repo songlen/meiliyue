@@ -364,18 +364,14 @@
                 });
                 //添加图片
                 $(".addPic").click(function () {
+                    event.stopPropagation()
                     if ($("img.showPic").length >= 3) {
                         Global.messageWin("最多上传3张图片");
                         return;
                     }
-
-                    // alert(Global.isIOS())
-
                     if(Global.isIOS()){
-                        // alert("ios")
                         jumpIOS(1);
                     }else{
-                        // alert("Android")
                         window.Android.gotoJavaCamera(1);
                     }
                 });
