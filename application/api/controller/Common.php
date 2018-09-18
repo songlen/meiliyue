@@ -55,7 +55,7 @@ class Common extends Base {
         if(empty($_FILES)) response_error('文件不能为空');
 
         /************* 上传路径 ***************/        
-        if($type == 'photo') $uploadPath = UPLOAD_PATH.'photo/images';
+        if($type == 'photo_images') $uploadPath = UPLOAD_PATH.'photo/images';
 
         $FileLogic = new FileLogic();
         $result = $FileLogic->uploadMultiFile('file', $uploadPath);
