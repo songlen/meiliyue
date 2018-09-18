@@ -21,7 +21,7 @@ class FileLogic extends Controller {
         foreach ($files as $file) {
 	        $info = $file->move($uploadPath, true);
 	        if($info){
-                $parentDir = date('Ymd'); // 系统默认在上传目录下创建了日期目录
+                $parentDir = '/'.date('Ymd'); // 系统默认在上传目录下创建了日期目录
                 $fullPath = '/'.$uploadPath.$parentDir.'/'.$info->getFilename();
                 $image[] = $fullPath;
 
