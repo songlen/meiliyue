@@ -588,12 +588,14 @@
                     url: Global.host + "/index.php/Api/User/uploadPhoto",
                     data: postData,
                     success: function (res) {
+                        alert(JSON.stringify(res))
                         if(res.code==200){
                             //更新dom
+                            let ul
                             if(type==1){ //普通照片
-                                let ul = document.querySelector("ul.photos")
+                                ul = document.querySelector("ul.photos")
                             }else{ //精华照片
-                                let ul = document.querySelector("ul.quintessencePhotos")
+                                ul = document.querySelector("ul.quintessencePhotos")
                             }
                             srcArr.forEach(function(src){
                                 alert(Global.host+src)
