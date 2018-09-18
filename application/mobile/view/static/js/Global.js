@@ -573,5 +573,6 @@ function uploadPhotos(){
     var res=arguments[0]
     alert(res)
     alert(JSON.stringify(res))
+    alert(res[0])
     // alert("上传多张调用js成功！")
 }
