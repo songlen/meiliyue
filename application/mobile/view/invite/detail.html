@@ -236,7 +236,9 @@
                     data.image.forEach(function (src, index) {
                         $(".detailImages").append($(
                             `
-                            <img class="inviImg" data-index=${index} src=${Global.host+src}>
+                                <div class="dynamicImgBox">
+                                    <img class="inviImg" data-index=${index} src=${Global.host+src}>
+                                </div>
                             `
                         ));
                     });

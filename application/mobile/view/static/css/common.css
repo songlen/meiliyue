@@ -1932,3 +1932,17 @@ li.edit-pic-item {
 .invitation-enrollWrap .comments-text {
   border-bottom: 1px solid #d8d8d8;
 }
+
+/* 邀约详情图片 */
+.dynamicImgBox {
+  width: calc(30% - 5px);
+
+  overflow: hidden;
+  height: 0;
+  padding-bottom: 30%;
+}
+
+.dynamicImgBox img {
+  width: 100%;
+  height: auto;
+}
