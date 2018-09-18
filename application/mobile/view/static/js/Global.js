@@ -575,7 +575,7 @@ function uploadPhotos(){
         var res=arguments[0] //图片路径数组
 
         Homepage.uploadPic(res,function(res){
-            // alert(res)
+            alert(res)
         })
 
         // let ul = document.querySelector("ul.photos")
