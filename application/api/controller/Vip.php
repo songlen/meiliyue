@@ -129,6 +129,16 @@ class Vip extends Base {
 
 		Db::name('users')->where('user_id', $user_id)->update(array('level'=>$level, 'vip_expire_date'=>$expire_date));
 
+		// ios没走下单接口，这里支付成功记录一下
+		$order_no = $this->generateOrderno();
+		$data = array(
+			'order_no' => $order_no,
+			'user_id' => $user_id,
+			'level' => $level,
+			'createtime' => time(),
+		);
+		Db::name('vip_order')->insert($data)
+
 		response_success();
 	}
 

@@ -63,7 +63,7 @@ class CarAuth extends Base {
     	$user_id = I('user_id');
 
     	$result = M('CarAuth')->where('id', $id)->setField('status', $status);
-    	M('users')->where('user_id', $user_id)->setField('auth_identity_status', $status);
+    	M('users')->where('user_id', $user_id)->setField('auth_car_status', $status);
 
         // 发送站内消息
         if($result && in_array($status, array(2, 3))){

@@ -144,18 +144,6 @@ class User extends Base {
     }
 
     /**
-     * 用户收货地址查看
-     */
-    public function address(){
-        $uid = I('get.id');
-        $lists = D('user_address')->where(array('user_id'=>$uid))->select();
-        $regionList = get_region_list();
-        $this->assign('regionList',$regionList);
-        $this->assign('lists',$lists);
-        return $this->fetch();
-    }
-
-    /**
      * 删除会员
      */
     public function delete(){
@@ -340,16 +328,6 @@ class User extends Base {
         }
         $this->ajaxReturn(['status'=>-1,'msg'=>'未查询到相应数据！！']);
     }
-    
-    /**
-     * 分销树状关系
-     */
-    public function ajax_distribut_tree()
-    {
-          $list = M('users')->where("first_leader = 1")->select();
-          return $this->fetch();
-    }
-
     /**
      *
      * @time 2016/08/31

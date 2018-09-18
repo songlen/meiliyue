@@ -76,6 +76,7 @@ return	array(
 			array('name'=>'视频认证','act'=>'index','op'=>'UserAuthVideo'),
 			array('name'=>'身份认证','act'=>'index','op'=>'IdentityAuth'),
 			array('name'=>'车辆认证','act'=>'index','op'=>'CarAuth'),
+			array('name'=>'VIP购买记录','act'=>'index','op'=>'Vip'),
 			// array('name'=>'会员等级','act'=>'levelList','op'=>'User'),
 			// array('name'=>'充值记录','act'=>'recharge','op'=>'User'),
 			// array('name'=>'提现申请','act'=>'withdrawals','op'=>'User'),
