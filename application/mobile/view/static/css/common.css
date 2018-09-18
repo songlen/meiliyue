@@ -1485,10 +1485,10 @@ li.inviteDetail ul.inviteDetail-list li.detailImages {
   /* 与dot span相同 */
 }
 
-li.detailImages img {
+/* li.detailImages img {
   max-width: 100px;
-  /* max-height: 100px; */
-}
+  max-height: 100px;
+} */
 
 .invitation .items ul.areaTime li {
   margin: 0;
@@ -1934,15 +1934,8 @@ li.edit-pic-item {
 }
 
 /* 邀约详情图片 */
-.dynamicImgBox {
+.inviImgWrap {
   width: calc(30% - 5px);
-
   overflow: hidden;
-  height: 0;
-  padding-bottom: 30%;
-}
-
-.dynamicImgBox img {
-  width: 100%;
-  height: auto;
+  height: 100px;
 }

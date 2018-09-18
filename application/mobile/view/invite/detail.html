@@ -236,8 +236,8 @@
                     data.image.forEach(function (src, index) {
                         $(".detailImages").append($(
                             `
-                                <div class="dynamicImgBox">
-                                    <img class="inviImg" data-index=${index} src=${Global.host+src}>
+                                <div class="inviImgWrap">
+                                    <img class="inviImg" data-index=${index} src=${Global.host+src} onload="Global.resizeHeadpic(this)">
                                 </div>
                             `
                         ));
