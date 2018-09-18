@@ -568,6 +568,9 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
     }
 }
 
-function qqq(){
-    alert("上传多张调用js成功！")
+//个人主页上传多张图片
+function uploadPhotos(){
+    alert(arguments)
+    alert(arguments.length)
+    // alert("上传多张调用js成功！")
 }
