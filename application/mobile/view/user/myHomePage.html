@@ -555,22 +555,42 @@
                 });
             },
             //上传普通/精华图片
-            uploadPic: function (type, $li, callback) { //type类型：1普通，2精华
-                // jquery.form.js方法
-                $li.find(":input[name='user_id']").val(Homepage.user_id);
-                $li.find(":input[name='type']").val(type);
-                $li.find(":input[name='file_type']").val(1);
+            // uploadPic: function (type, $li, callback) { //type类型：1普通，2精华
+            //     // jquery.form.js方法
+            //     $li.find(":input[name='user_id']").val(Homepage.user_id);
+            //     $li.find(":input[name='type']").val(type);
+            //     $li.find(":input[name='file_type']").val(1);
 
-                Global.openLoading();
-                console.log("上传")
-                $li.find("#homeForm").ajaxSubmit(function (result) {  
-                    console.log(result)                  
-                    if (result.data && result.data !== "" && result.data.length !== 0) {
-                        console.log("上传结束")
-                        Global.closeLoading("上传成功", function () {
-                            callback(result.data.files[0]); //上传文件的图片路径
-                        });
-                    }  
+            //     Global.openLoading();
+            //     console.log("上传")
+            //     $li.find("#homeForm").ajaxSubmit(function (result) {  
+            //         console.log(result)                  
+            //         if (result.data && result.data !== "" && result.data.length !== 0) {
+            //             console.log("上传结束")
+            //             Global.closeLoading("上传成功", function () {
+            //                 callback(result.data.files[0]); //上传文件的图片路径
+            //             });
+            //         }  
+            //     });
+            // },
+            //上传普通照片
+            uploadPic:function(srcArr,callback){
+                var jsonArr=JSON.stringify(srcArr)
+                var postData = {
+                    user_id: Homepage.user_id,
+                    type:1,
+                    file_type:1,
+                    file: jsonArr,
+                }
+                console.log(postData)
+                $.ajax({
+                    type: "POST",
+                    url: Global.host + "/index.php/Api/User/uploadPhoto",
+                    data: postData,
+                    success: function (res) {
+                        console.log(res)
+                        callback(res)
+                    }
                 });
             },
             addMyPhotos: function (el) { //el点击的加号
