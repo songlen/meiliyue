@@ -574,26 +574,30 @@ function uploadPhotos(){
     if(true){ //安卓
         var res=arguments[0] //图片路径数组
 
-        let ul = document.querySelector("ul.photos")
-        res.forEach(function(src){
-            alert(Global.host+src)
-            let li=document.createElement("li")
-            li.className="edit-pic-item flex4"
-            li.innerHTML=`
-                <div style="margin:0.05rem;height:calc(100% - 0.1rem);overflow:hidden;">
-                    <img class="showPic" src=${Global.host+src}>
-                </div>
-                <div>${Global.host+src}</div>
-            `
-            //更新dom
-            if ($(ul).find("li").length >= 3) {
-                $(ul).find("li:last").remove();
-            }
-            $(ul).prepend($(li))
-
-            //
-            Homepage.setProps();
+        Homepage.uploadPic(res,function(result){
+            alert(result)
         })
+
+        // let ul = document.querySelector("ul.photos")
+        // res.forEach(function(src){
+        //     alert(Global.host+src)
+        //     let li=document.createElement("li")
+        //     li.className="edit-pic-item flex4"
+        //     li.innerHTML=`
+        //         <div style="margin:0.05rem;height:calc(100% - 0.1rem);overflow:hidden;">
+        //             <img class="showPic" src=${Global.host+src}>
+        //         </div>
+        //         <div>${Global.host+src}</div>
+        //     `
+        //     //更新dom
+        //     if ($(ul).find("li").length >= 3) {
+        //         $(ul).find("li:last").remove();
+        //     }
+        //     $(ul).prepend($(li))
+
+        //     //
+        //     Homepage.setProps();
+        // })
     }else{ //ios
 
     }
