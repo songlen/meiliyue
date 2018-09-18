@@ -582,7 +582,7 @@
                     file_type:1,
                     file: jsonArr,
                 }
-                console.log(postData)
+                alert(JSON.stringify(postData))
                 $.ajax({
                     type: "POST",
                     url: Global.host + "/index.php/Api/User/uploadPhoto",
