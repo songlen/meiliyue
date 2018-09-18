@@ -582,13 +582,13 @@
                     file_type:1,
                     file: jsonArr,
                 }
-                alert(JSON.stringify(postData))
+                // alert(JSON.stringify(postData))
                 $.ajax({
                     type: "POST",
                     url: Global.host + "/index.php/Api/User/uploadPhoto",
                     data: postData,
                     success: function (res) {
-                        alert(JSON.stringify(res))
+                        // alert(JSON.stringify(res))
                         if(res.code==200){
                             //更新dom
                             let ul
@@ -598,7 +598,6 @@
                                 ul = document.querySelector("ul.quintessencePhotos")
                             }
                             srcArr.forEach(function(src){
-                                alert(Global.host+src)
                                 let li=document.createElement("li")
                                 li.className="edit-pic-item flex4"
                                 li.innerHTML=`
@@ -655,10 +654,6 @@
                 //gotoUploadPic($liTemp.find(".albumInput")[0]); //第一次input不触发change，手动触发
 
                 function gotoUploadPic(ele) { //ele input file
-                    // alert(ele.files.length)
-                    // alert(ele.value)
-                    // alert(ele.files)
-                    alert(ele.files[0].name)
                     console.log(ele.files.length)
                     console.log(ele.value)
                     console.log(ele.files[0].name)

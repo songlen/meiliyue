@@ -513,9 +513,9 @@ let Global = (function () {
 
 //上传文件的回调 args 文件路径
 function getJavaFiles(args,thumb) { // 路径/plulic/../..
-    alert("getJavaFiles")
-    alert(args)
-    alert(thumb)
+    // alert("getJavaFiles")
+    // alert(args)
+    // alert(thumb)
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
@@ -570,7 +570,7 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
 
 //个人相册原生回调
 function uploadPhotos(){
-    alert(1)
+    // alert(1)
     if(true){ //安卓
         var res=arguments[0] //图片路径数组
 
@@ -582,7 +582,7 @@ function uploadPhotos(){
 
 //精华照片原生回调
 function uploadPhotos2(){
-    alert(2)
+    // alert(2)
     if(true){ //安卓
         var res=arguments[0] //图片路径数组
 
