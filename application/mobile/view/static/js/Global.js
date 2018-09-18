@@ -574,8 +574,8 @@ function uploadPhotos(){
     if(true){ //安卓
         var res=arguments[0] //图片路径数组
 
-        Homepage.uploadPic(res,function(res){
-            alert(res)
+        Homepage.uploadPic(res,function(result){
+            alert(result)
         })
 
         // let ul = document.querySelector("ul.photos")
