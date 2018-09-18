@@ -30,9 +30,10 @@ class Vip extends Base {
         
         $lists = $model->alias('vo')->where($condition)
         	->join('users u', 'vo.user_id=u.user_id', 'left')
+            ->where('paystatus', 1)
         	->order('id desc')
         	->limit($Page->firstRow.','.$Page->listRows)
-        	->field('u.user_id, u.nickname, u.uuid, vo.id, vo.level, vo.paystatus, vo.paytime')
+        	->field('u.user_id, u.nickname, u.vip_expire_date, u.uuid, vo.id, vo.level, vo.paystatus, vo.paytime')
         	->select();
 
                            
