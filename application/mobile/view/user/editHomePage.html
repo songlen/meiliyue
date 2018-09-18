@@ -251,7 +251,7 @@
 
             //将数据加到dom上
             updateDom: function (data) {
-                console.log(data)
+                // console.log(data)
                 //头像
                 if(data.baseinfo.head_pic&&data.baseinfo.head_pic!==""){
                     let head_pic=Global.filterHttpImg(data.baseinfo.head_pic);
@@ -355,10 +355,9 @@
                     let cityObj=codeToAreaObj(data.baseinfo.permanent_city);
                     EditHome.curPermanent_province = provObj.name; 
                     EditHome.curPermanent_city = cityObj.name; 
-                    // console.log(EditHome.curPermanent_province,EditHome.curPermanent_city)
+                    console.log(EditHome.curPermanent_province,EditHome.curPermanent_city)
 
-                    document.getElementById("city-picker").value = EditHome.curPermanent_province + " " +
-                    EditHome.curPermanent_city
+                    document.getElementById("city-picker").value = EditHome.curPermanent_province + " " +EditHome.curPermanent_city
                 }
                 EditHome.refreshPicker()
 
