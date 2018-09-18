@@ -87,6 +87,7 @@ header {
     height: 2.4rem;
     border-radius: 0.08rem;
     margin: 0.15rem auto;
+    padding-top: 0.1rem;
     background: linear-gradient(to right, #ffbfab, #fe9acc);
     box-shadow: 0 0.05rem 0.2rem 3px #ffc3b0;
     position: relative;
