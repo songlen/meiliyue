@@ -66,7 +66,7 @@
                     <p class="picCount"></p>
                 </div>
                 <ul class="myPhotos photos">
-                    <a href="javascript:void(0)" class="addMyPhotos flex4" data-type="1" style="padding: 0.05rem;">
+                    <a href="javascript:void(0)" class="addMyPhotos flex4 addMyPhotos1" data-type="1" style="padding: 0.05rem;">
                         <img src="__STATIC__/images/icon/拍照.png">
                     </a>
                 </ul>
@@ -78,7 +78,7 @@
                     <p class="picCount quintessenceCount"></p>
                 </div>
                 <ul class="myPhotos quintessencePhotos">
-                    <a href="javascript:void(0)" class="addMyPhotos flex4" data-type="2" style="padding: 0.05rem;">
+                    <a href="javascript:void(0)" class="addMyPhotos flex4 addMyPhotos2" data-type="2" style="padding: 0.05rem;">
                         <img src="__STATIC__/images/icon/拍照.png">
                     </a>
                 </ul>
@@ -574,11 +574,11 @@
             //     });
             // },
             //上传普通照片
-            uploadPic:function(srcArr,callback){
+            uploadPic:function(srcArr,type,callback){ //参数1：路径数组 参数2：1普通照片or2精华照片 参数3：回调
                 var jsonArr=JSON.stringify(srcArr)
                 var postData = {
                     user_id: Homepage.user_id,
-                    type:1,
+                    type:type,
                     file_type:1,
                     file: jsonArr,
                 }
@@ -588,9 +588,33 @@
                     url: Global.host + "/index.php/Api/User/uploadPhoto",
                     data: postData,
                     success: function (res) {
-                        console.log(res)
-                        alert(JSON.stringify(res))
-                        callback(res)
+                        if(res.code==200){
+                            //更新dom
+                            if(type==1){ //普通照片
+                                let ul = document.querySelector("ul.photos")
+                            }else{ //精华照片
+                                let ul = document.querySelector("ul.quintessencePhotos")
+                            }
+                            srcArr.forEach(function(src){
+                                alert(Global.host+src)
+                                let li=document.createElement("li")
+                                li.className="edit-pic-item flex4"
+                                li.innerHTML=`
+                                    <div style="margin:0.05rem;height:calc(100% - 0.1rem);overflow:hidden;">
+                                        <img class="showPic" src=${Global.host+src}>
+                                    </div>
+                                    <div>${Global.host+src}</div>
+                                `
+                                //更新dom
+                                if ($(ul).find("li").length >= 3) {
+                                    $(ul).find("li:last").remove();
+                                }
+                                $(ul).prepend($(li))
+                    
+                                //
+                                Homepage.setProps();
+                            })
+                        }
                     }
                 });
             },
@@ -1172,10 +1196,14 @@
                 $(".homepageBack").click(function () {
                     window.history.back(-1);
                 })
-                //添加图片
-                $(".addMyPhotos").click(function () {
+                //添加图片 个人相册
+                $(".addMyPhotos1").click(function () {
                     // Homepage.addMyPhotos(this);
-                    window.Android.androidMulUpload(1,"uploadPhotos"); //参数1：1图片 2视频  参数2：调用的js方法的名称
+                    window.Android.androidMulUpload(1,"uploadPhotos") //参数1：1图片 2视频  参数2：调用的js方法的名称
+                })
+                //添加图片 精华照片
+                $(".addMyPhotos2").click(function () {
+                    window.Android.androidMulUpload(1,"uploadPhotos2")
                 })
                 //发布邀约
                 $(".releaseInvite").click(function (event) {

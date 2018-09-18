@@ -568,38 +568,27 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
     }
 }
 
-//个人主页上传多张图片
+//个人相册原生回调
 function uploadPhotos(){
     alert(1)
     if(true){ //安卓
         var res=arguments[0] //图片路径数组
 
-        //调用上传个人相册接口
-        Homepage.uploadPic(res,function(result){
-            if(result.code==200){
-                let ul = document.querySelector("ul.photos")
-                res.forEach(function(src){
-                    alert(Global.host+src)
-                    let li=document.createElement("li")
-                    li.className="edit-pic-item flex4"
-                    li.innerHTML=`
-                        <div style="margin:0.05rem;height:calc(100% - 0.1rem);overflow:hidden;">
-                            <img class="showPic" src=${Global.host+src}>
-                        </div>
-                        <div>${Global.host+src}</div>
-                    `
-                    //更新dom
-                    if ($(ul).find("li").length >= 3) {
-                        $(ul).find("li:last").remove();
-                    }
-                    $(ul).prepend($(li))
-        
-                    //
-                    Homepage.setProps();
-                })
-            }
-        })
+        Homepage.uploadPic(res,1)
     }else{ //ios
 
     }
 }
+
+//精华照片原生回调
+function uploadPhotos2(){
+    alert(2)
+    if(true){ //安卓
+        var res=arguments[0] //图片路径数组
+
+        Homepage.uploadPic(res,2)
+    }else{ //ios
+
+    }
+}
+
