@@ -513,10 +513,9 @@ let Global = (function () {
 
 //上传文件的回调 args 文件路径
 function getJavaFiles(args,thumb) { // 路径/plulic/../..
-    console.log(args)
-    // alert("getJavaFiles")
-    // alert(args)
-    // alert(thumb)
+    alert("getJavaFiles")
+    alert(args)
+    alert(thumb)
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
@@ -544,7 +543,7 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
                 $(self).closest('.edit-pic-item').remove();
             });
         })
-        // alert("增加")
+        // alert("增加图片")
         $(".showPicUl").prepend($liTemp);
     }
     //是视频
@@ -566,5 +565,35 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
         })
         // alert("增加视频")
         $(".showPicUl").prepend($liTemp);
+    }
+}
+
+//个人主页上传多张图片
+function uploadPhotos(){
+    if(true){ //安卓
+        var res=arguments[0] //图片路径数组
+
+        let ul = document.querySelector("ul.photos")
+        res.forEach(function(src){
+            alert(Global.host+src)
+            let li=document.createElement("li")
+            li.className="edit-pic-item flex4"
+            li.innerHTML=`
+                <div style="margin:0.05rem;height:calc(100% - 0.1rem);overflow:hidden;">
+                    <img class="showPic" src=${Global.host+src}>
+                </div>
+                <div>${Global.host+src}</div>
+            `
+            //更新dom
+            if ($(ul).find("li").length >= 3) {
+                $(ul).find("li:last").remove();
+            }
+            $(ul).prepend($(li))
+
+            //
+            Homepage.setProps();
+        })
+    }else{ //ios
+
     }
 }
