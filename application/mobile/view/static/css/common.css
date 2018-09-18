@@ -1937,6 +1937,7 @@ li.edit-pic-item {
 .inviImgWrap {
   display: inline-block;
   width: calc(30% - 5px);
+  margin: 5px;
   overflow: hidden;
   height: 100px;
 }
