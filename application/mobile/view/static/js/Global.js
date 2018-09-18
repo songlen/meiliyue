@@ -514,7 +514,7 @@ let Global = (function () {
 //上传文件的回调 args 文件路径
 function getJavaFiles(args,thumb) { // 路径/plulic/../..
     console.log(args)
-    // alert("getJavaFiles")
+    alert("getJavaFiles")
     // alert(args)
     // alert(thumb)
 
@@ -544,7 +544,7 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
                 $(self).closest('.edit-pic-item').remove();
             });
         })
-        alert("增加图片")
+        // alert("增加图片")
         $(".showPicUl").prepend($liTemp);
     }
     //是视频
@@ -564,7 +564,7 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
                 $(self).closest('.edit-pic-item').remove();
             });
         })
-        alert("增加视频")
+        // alert("增加视频")
         $(".showPicUl").prepend($liTemp);
     }
 }
