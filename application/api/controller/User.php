@@ -125,9 +125,7 @@ class User extends Base {
         /*$uploadPath = UPLOAD_PATH.'photo/';
         $FileLogic = new FileLogic();
         $uploadResult = $FileLogic->uploadMultiFile('file', $uploadPath);*/
-        
-        $files = serialize(json_decode(html_entity_decode(I('file')), true));
-        
+        $files = json_decode(htmlspecialchars_decode(html_entity_decode($files)), true);
         foreach ($files as $imageUrl) {
             $photoData = array(
                 'user_id' => $user_id,
@@ -154,7 +152,7 @@ class User extends Base {
             D('dynamics')->add($dynamics_data);
         }
 
-        response_success(array('files'=>$files));
+        response_success('', '上传成功');
 
     }
 
