@@ -570,7 +570,8 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
 
 //个人主页上传多张图片
 function uploadPhotos(){
-    alert(arguments)
-    alert(arguments.length)
+    var res=arguments[0]
+    alert(res)
+    alert(JSON.stringify(res))
     // alert("上传多张调用js成功！")
 }
