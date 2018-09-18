@@ -182,12 +182,14 @@
                                 <img style="width: 118%;margin-left: -9%;margin-top: -2%;" :src="GlobalHost+item.video_thumb"></video>
                             </div>
 
-                            <div>
+                            <div style="width:80%;margin: 0.05rem 0 0.15rem;">
                                 <div>
-                                    <span class="name">{{item.nickname}}</span>
-                                    <span class="sexAge" :class="{female:item.sex==2,male:item.sex==1}">
+                                    <span class="sexAge fr" :class="{female:item.sex==2,male:item.sex==1}" style="margin-top: 0.02rem;">
                                         <i class="sex"></i>
                                         <span class="age">{{item.age}}</span>
+                                    </span>
+                                    <span class="name" style="margin-right:0.05rem;display: block;max-width:calc(100% - 0.42rem);overflow: hidden;text-overflow:ellipsis;white-space: nowrap;text-align: right;">
+                                        {{item.nickname}}
                                     </span>
                                 </div>
 
