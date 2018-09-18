@@ -534,13 +534,6 @@
                 $(".giveFlower").click(function () {
                     Details.giveFlower()
                 })
-                //点击头像打开个人主页
-                $(".details-headImgWrap").click(function () {
-                    //save
-
-                    //打开他人的个人主页
-
-                })
                 //申请查看主页-取消
                 $(".home-cancel").click(function () {
                     $('.mask').remove()
@@ -570,10 +563,9 @@
                     let toUserId = Details.dynamic_origin_id;
                     let url = "";
                     if (user_id === toUserId) {
-                        url = this.GlobalHost + "/index.php/mobile/user/myHomePage.html";
+                        url = Global.host + "/index.php/mobile/user/myHomePage.html";
                     } else {
-                        url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id +
-                            "/toUserId/" + toUserId + ".html";
+                        url = Global.host + "/index.php/mobile/user/homePage/user_id/" + user_id +"/toUserId/" + toUserId + ".html";
                     }
                     window.location.href = url;
                 });

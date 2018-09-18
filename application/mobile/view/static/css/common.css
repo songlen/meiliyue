@@ -1485,10 +1485,10 @@ li.inviteDetail ul.inviteDetail-list li.detailImages {
   /* 与dot span相同 */
 }
 
-li.detailImages img {
+/* li.detailImages img {
   max-width: 100px;
-  /* max-height: 100px; */
-}
+  max-height: 100px;
+} */
 
 .invitation .items ul.areaTime li {
   margin: 0;
@@ -1931,4 +1931,13 @@ li.edit-pic-item {
 
 .invitation-enrollWrap .comments-text {
   border-bottom: 1px solid #d8d8d8;
+}
+
+/* 邀约详情图片 */
+.inviImgWrap {
+  display: inline-block;
+  width: calc(30% - 5px);
+  margin: 5px;
+  overflow: hidden;
+  height: 100px;
 }
