@@ -1153,7 +1153,8 @@
                 })
                 //添加图片
                 $(".addMyPhotos").click(function () {
-                    Homepage.addMyPhotos(this);
+                    // Homepage.addMyPhotos(this);
+                    window.Android.androidMulUpload(1,"qqq"); //参数1：1图片 2视频  参数2：调用的js方法的名称
                 })
                 //发布邀约
                 $(".releaseInvite").click(function (event) {

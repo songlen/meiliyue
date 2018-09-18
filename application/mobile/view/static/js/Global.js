@@ -567,3 +567,7 @@ function getJavaFiles(args,thumb) { // 路径/plulic/../..
         $(".showPicUl").prepend($liTemp);
     }
 }
+
+function qqq(){
+    alert("上传多张调用js成功！")
+}
