@@ -137,7 +137,7 @@ class Vip extends Base {
 			'level' => $level,
 			'createtime' => time(),
 		);
-		Db::name('vip_order')->insert($data)
+		Db::name('vip_order')->insert($data);
 
 		response_success();
 	}
