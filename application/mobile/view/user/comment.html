@@ -146,14 +146,13 @@
                         }
                         //图片?
 
-
                         $(".commentsList").append($li);
-
-                        //是否显示 无评论图片
-                        if ($(".commentsList li").length == 0) {
-                            $(".noComments").show();
-                        }
                     });
+                }
+
+                //是否显示 无评论图片
+                if ($(".commentsList li").length == 0) {
+                    $(".noComments").show();
                 }
 
                 //滚动加载的"正在加载"是否显示

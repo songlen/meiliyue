@@ -75,12 +75,12 @@ let Global = (function () {
         element.onchange = function () {
             limitCount(this)
         }
-        // element.onkeydown = function () {
-        //     limitCount(this)
-        // }
-        // element.onkeyup = function () {
-        //     limitCount(this)
-        // }
+        element.onkeydown = function () {
+            limitCount(this)
+        }
+        element.onkeyup = function () {
+            limitCount(this)
+        }
 
         function limitCount(el) {
             // el.value = el.value.substring(0, textCount)
