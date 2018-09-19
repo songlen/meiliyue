@@ -4,7 +4,7 @@ namespace app\api\controller;
 
 use think\Db;
 use app\api\logic\FileLogic;
-
+use think\Log;
 
 class Common extends Base {
 
@@ -83,5 +83,11 @@ class Common extends Base {
         $Image->rotate($degrees)->save($filepath);
 
         response_success();
+    }
+
+    public function writeLog(){
+        $content = I('content');
+
+        var_dump(Log::write($content));
     }
 }
