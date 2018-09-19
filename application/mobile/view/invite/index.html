@@ -546,8 +546,15 @@
                         this.savePageToSession()
 
                         let toUrl = Global.host + "/index.php/mobile/invite/detail/id/"+item.id+".html";
-
+                        
                         window.location.href = toUrl;
+
+
+                        if(Global.isIOS()){
+                            // jumpIOS(1);
+                        }else{
+                            window.Android.gotoNewWebView(toUrl)
+                        }
                     },
                     //控制筛选栏的位置
                     handleAddress() {
