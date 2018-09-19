@@ -88,6 +88,12 @@ class Common extends Base {
     public function writeLog(){
         $content = I('content');
 
-        var_dump(Log::write($content));
+        Log::write($content, 'shantui', true);
+        response_success();
+    }
+
+    public function getLog(){
+        $content = Log::getLog();
+        response_success($content);
     }
 }
