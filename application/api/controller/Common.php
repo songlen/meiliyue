@@ -91,9 +91,4 @@ class Common extends Base {
         Log::write($content, 'shantui', true);
         response_success();
     }
-
-    public function getLog(){
-        $content = Log::getLog();
-        response_success($content);
-    }
 }

@@ -65,6 +65,7 @@ class FileLogic extends Controller {
 	}
 
     public function video2thumb($video_url){
+        vendor('Alchemy.BinaryDriver.Exception.ExecutableNotFoundException');
         vendor('Alchemy.BinaryDriver.ProcessRunnerInterface');
         vendor('Alchemy.BinaryDriver.Listeners.ListenerInterface');
         vendor('Alchemy.BinaryDriver.Listeners.Listeners');
