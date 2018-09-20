@@ -1196,11 +1196,19 @@
                 //添加图片 个人相册
                 $(".addMyPhotos1").click(function () {
                     // Homepage.addMyPhotos(this);
-                    window.Android.androidMulUpload(1,"uploadPhotos") //参数1：1图片 2视频  参数2：调用的js方法的名称
+                    if(Global.isIOS()){
+
+                    }else{
+                        window.Android.androidMulUpload(1,"uploadPhotos") //参数1：1图片 2视频  参数2：调用的js方法的名称
+                    }
                 })
                 //添加图片 精华照片
                 $(".addMyPhotos2").click(function () {
-                    window.Android.androidMulUpload(1,"uploadPhotos2")
+                    if(Global.isIOS()){
+                        
+                    }else{
+                        window.Android.androidMulUpload(1,"uploadPhotos2")
+                    }
                 })
                 //发布邀约
                 $(".releaseInvite").click(function (event) {

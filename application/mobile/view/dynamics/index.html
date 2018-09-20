@@ -516,7 +516,13 @@
                 gotoDongtaiDetail(item) {
                     this.savePageToSession();
 
-                    window.location.href = this.GlobalHost + '/index.php/mobile/dynamics/detail/id/' + item.dynamic_id + '.html'
+                    let url=this.GlobalHost + '/index.php/mobile/dynamics/detail/id/' + item.dynamic_id + '.html'
+
+                    if(Global.isIOS()){
+                        window.location.href = url;
+                    }else{
+                        window.Android.gotoNewWebView(url)
+                    }
                 },
                 //打开全屏小视频
                 videoFullScreen(item) {

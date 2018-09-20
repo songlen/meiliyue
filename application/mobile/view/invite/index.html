@@ -543,11 +543,8 @@
 
                         let toUrl = Global.host + "/index.php/mobile/invite/detail/id/"+item.id+".html";
                         
-                        // window.location.href = toUrl;
-
-
                         if(Global.isIOS()){
-                            // jumpIOS(1);
+                            window.location.href = toUrl;
                         }else{
                             window.Android.gotoNewWebView(toUrl)
                         }
