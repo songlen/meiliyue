@@ -65,6 +65,7 @@ class FileLogic extends Controller {
 	}
 
     public function video2thumb($video_url){
+        vendor('Alchemy.BinaryDriver.Exception.ExceptionInterface');
         vendor('Alchemy.BinaryDriver.Exception.ExecutableNotFoundException');
         vendor('Alchemy.BinaryDriver.ProcessRunnerInterface');
         vendor('Alchemy.BinaryDriver.Listeners.ListenerInterface');
@@ -89,10 +90,10 @@ class FileLogic extends Controller {
         vendor('Doctrine.Common.Cache.ArrayCache');
          // 创建视频缩略图
          $ffmpeg = \FFMpeg\FFMpeg::create(array(
-             // 'ffmpeg.binaries'  => VENDOR_PATH.'php-ffmpeg/bin/ffmpeg.exe',
-             // 'ffprobe.binaries' => VENDOR_PATH.'php-ffmpeg/bin/ffprobe.exe',
-             'ffmpeg.binaries'  => '/usr/bin/ffmpeg',
-             'ffprobe.binaries' => '/usr/bin/ffprobe',
+             'ffmpeg.binaries'  => VENDOR_PATH.'php-ffmpeg/bin/ffmpeg.exe',
+             'ffprobe.binaries' => VENDOR_PATH.'php-ffmpeg/bin/ffprobe.exe',
+             // 'ffmpeg.binaries'  => '/usr/bin/ffmpeg',
+             // 'ffprobe.binaries' => '/usr/bin/ffprobe',
          ));
 
          $videoObj = $ffmpeg->open(ROOT_PATH.$video_url);
