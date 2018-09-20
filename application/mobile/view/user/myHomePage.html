@@ -320,12 +320,11 @@
                 //星座
                 // $(".edit-personal-constellation").html() 
                 //地区
-                let provinceName=getProvObj(data.baseinfo.province.toString()).name;
-                let cityName=getCityObj(data.baseinfo.city.toString()).name;
-                console.log(provinceName,cityName)
-                if(provinceName||cityName){
-                    $(".province").html(getProvObj(data.baseinfo.province.toString()).name);
-                    $(".province-city").html(getCityObj(data.baseinfo.city.toString()).name);
+                let provinceObj=getProvObj(data.baseinfo.province.toString())
+                let cityObj=getCityObj(data.baseinfo.city.toString())
+                // console.log(provinceName,cityName)
+                let provCityStr=(provinceObj?provinceObj.name:"")+(cityObj?cityObj.name:"")
+                if(provCityStr.trim()!==""){
                     $(".edit-personal-areaWrap").show();
                 }
                 //个人相册
