@@ -2,6 +2,7 @@ let Global = (function () {
 
     let GlobalHost="http://meiliyue.caapa.org";
 
+
     function openLoading(msg = "处理中") {
         if ($(".mLoadingMask").length == 0) {
             $("body").append($('<div class="mLoadingMask"></div>'));
@@ -330,72 +331,6 @@ let Global = (function () {
         return srcTemp;
     }
 
-    //压缩图片的方法
-    function compressImg(file,callback){
-        let reader = new FileReader();
-        let img = new Image();
-        //canvas
-        let canvas = document.createElement('canvas');
-        let context = canvas.getContext('2d');
-
-        //图片加载完毕后
-        img.onload = function () {
-            // 图片原始尺寸
-            var originWidth = this.width;
-            var originHeight = this.height;
-            // 最大尺寸限制
-            var maxWidth = 400, maxHeight = 400;
-            // 目标尺寸
-            var targetWidth = originWidth, targetHeight = originHeight;
-            // 图片尺寸超过400x400的限制
-            if (originWidth > maxWidth || originHeight > maxHeight) {
-                if (originWidth / originHeight > maxWidth / maxHeight) {
-                    // 更宽，按照宽度限定尺寸
-                    targetWidth = maxWidth;
-                    targetHeight = Math.round(maxWidth * (originHeight / originWidth));
-                } else {
-                    targetHeight = maxHeight;
-                    targetWidth = Math.round(maxHeight * (originWidth / originHeight));
-                }
-            }
-                
-            // canvas对图片进行缩放
-            canvas.width = targetWidth;
-            canvas.height = targetHeight;
-            // 清除画布
-            context.clearRect(0, 0, targetWidth, targetHeight);
-            // 图片压缩
-            context.drawImage(img, 0, 0, targetWidth, targetHeight);
-            // canvas转为blob并上传
-            canvas.toBlob(function (blob) {
-                // // 图片ajax上传
-                // var xhr = new XMLHttpRequest();
-                // // 文件上传成功
-                // xhr.onreadystatechange = function() {
-                //     if (xhr.status == 200) {
-                //         // xhr.responseText就是返回的数据
-                //     }
-                // };
-                // // 开始上传
-                // xhr.open("POST", 'upload.php', true);
-                // xhr.send(blob);  
-                
-                callback(blob);
-
-            }, file.type || 'image/png');
-        };
-
-        // 文件base64化，以便获知图片原始尺寸 ，将file转成img的src
-        reader.onload = function(e) {
-            img.src = e.target.result;
-        };
-
-        //init触发
-        if(file.type.indexOf("image")>-1){
-            reader.readAsDataURL(file);   
-        }
-    }
-
     //获取img的宽高？？？？？？？？？？？？？？
     function getImgWidth(src,callback){
         let img = new Image();
@@ -403,7 +338,7 @@ let Global = (function () {
             let obj={};
             obj.width=this.width;
             obj.height=this.height;
-            console.log(obj.width,obj.height)
+            // console.log(obj.width,obj.height)
             callback(obj);
         }
         img.src=src;
@@ -497,7 +432,6 @@ let Global = (function () {
         fullScreen, // 简单的预览全屏视频 ele:video元素
         fullScreenImg, //全屏显示图片 src
         filterHttpImg, //过滤http头像img  src
-        compressImg, //压缩图片，file callback(blob)
         getImgWidth, //获取图片原始宽高
         updateLocalUserinfo, //更新本地的userinfo key,value
         getAuthVideoUrl, //获取认证视频url; user_id callback(url)
@@ -509,7 +443,7 @@ let Global = (function () {
     }
 })();
 
-// ---------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------
 
 //上传文件的回调 args 文件路径
 function getJavaFiles(args,thumb) { // 路径/plulic/../..

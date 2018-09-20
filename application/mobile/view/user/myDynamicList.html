@@ -18,8 +18,8 @@
         <div class="allWrap" :class="{blur:isReleasing}">
             <header>
                 <a href="javascript:window.history.back(-1)" class="back"></a>
-                <div class="title" v-cloak v-if="isMine">我的动态</div>
-                <div class="title" v-cloak v-else>TA的动态</div>
+                <div class="title" v-cloak>{{isMine?"我的动态":"TA的动态"}}}</div>
+                <!-- <div class="title" v-cloak v-else>TA的动态</div> -->
                 <a href="javascript:void(0)"></a>
             </header>
 
