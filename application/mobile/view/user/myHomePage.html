@@ -323,7 +323,7 @@
                 let provinceObj=getProvObj(data.baseinfo.province.toString())
                 let cityObj=getCityObj(data.baseinfo.city.toString())
                 // console.log(provinceName,cityName)
-                let provCityStr=(provinceObj?provinceObj.name:"")+(cityObj?cityObj.name:"")
+                let provCityStr=(provinceObj&&provinceObj!=={}?provinceObj.name:"")+(cityObj&&cityObj!=={}?cityObj.name:"")
                 if(provCityStr.trim()!==""){
                     $(".edit-personal-areaWrap").show();
                 }
