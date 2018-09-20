@@ -493,9 +493,13 @@
                     //window.location("edit.html?user_id=" + 123)
                     this.savePageToSession();
 
-                    // window.location.href = "edit.html"
+                    let url= this.GlobalHost + "/index.php/mobile/dynamics/add/type/" + type + ".html";
 
-                    window.location.href = this.GlobalHost + "/index.php/mobile/dynamics/add/type/" + type + ".html";
+                    if(Global.isIOS()){
+                        window.location.href = url;
+                    }else{
+                        window.Android.gotoNewWebView(url)
+                    }
                 },
                 //跳转之前存数据到session
                 savePageToSession() {
@@ -553,7 +557,12 @@
                     } else {
                         url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
                     }
-                    window.location.href = url;
+
+                    if(Global.isIOS()){
+                        window.location.href = url;
+                    }else{
+                        window.Android.gotoNewWebView(url)
+                    }
                 },
                 //初始化下拉刷新
                 initPullToRefresh() {

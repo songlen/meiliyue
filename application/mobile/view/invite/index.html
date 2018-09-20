@@ -659,7 +659,13 @@
                                 return;
                             }
                             self.savePageToSession()
-                            window.location.href = Global.host + "/index.php/mobile/invite/add/type/" + type +".html";
+
+                            let url=Global.host + "/index.php/mobile/invite/add/type/" + type +".html";
+                            if(Global.isIOS()){
+                                window.location.href = url;
+                            }else{
+                                window.Android.gotoNewWebView(url)
+                            }
                         });
                     },
                     //跳转页面之前，保存页面信息
@@ -748,7 +754,13 @@
                         } else {
                             url = Global.host + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
                         }
-                        window.location.href = url;
+
+                        if(Global.isIOS()){
+                            window.location.href = url;
+                        }else{
+                            window.Android.gotoNewWebView(url)
+                        }
+                        
                     },
                     openVideoScreen(item) {
                         let user_id=item.user_id;
