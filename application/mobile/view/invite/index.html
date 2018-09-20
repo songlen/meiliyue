@@ -338,11 +338,7 @@
                     let _self = this
                     //userInfo user_id province
                     let proCode;
-                    if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
-                        localStorage.getItem("mUserInfo") !== "null") {
-                        // alert(1)
-                        // alert(localStorage.getItem("mUserInfo"))
-                        // alert(JSON.parse(localStorage.getItem("mUserInfo")))
+                    if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null && localStorage.getItem("mUserInfo") !== "null") {
                         console.log(1)
                         let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                         console.log(mUserInfo)
@@ -364,7 +360,7 @@
 
                     //默认省
                     if(proCode!==""){
-                        let proObj = codeToAreaObj(proCode);
+                        let proObj = getProvObj(proCode);
                         _self.defaultArea.text = proObj.name; 
                         _self.defaultArea.code = proObj.code; 
                         // _self.defaultArea.text = "";

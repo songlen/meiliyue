@@ -2,6 +2,7 @@ let Global = (function () {
 
     let GlobalHost="http://meiliyue.caapa.org";
 
+
     function openLoading(msg = "处理中") {
         if ($(".mLoadingMask").length == 0) {
             $("body").append($('<div class="mLoadingMask"></div>'));
@@ -403,7 +404,7 @@ let Global = (function () {
             let obj={};
             obj.width=this.width;
             obj.height=this.height;
-            console.log(obj.width,obj.height)
+            // console.log(obj.width,obj.height)
             callback(obj);
         }
         img.src=src;
@@ -509,7 +510,7 @@ let Global = (function () {
     }
 })();
 
-// ---------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------
 
 //上传文件的回调 args 文件路径
 function getJavaFiles(args,thumb) { // 路径/plulic/../..

@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <title>编辑资料</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../static/css-min/user-editHomePage.min.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/wode-common.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css-min/user-editHomePage.min.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
-    <script src="../static/js/Global.js"></script>
+    <script src="__STATIC__/js/Global.js"></script>
 </head>
 
 <body class="editHome-page">
@@ -51,7 +51,7 @@
                         <div class="editItemContent changeHeadpicEnter">
                             <span class="avatar-pic-wrap">
                                 <div class="avatar-pic">
-                                    <img src="../static/images/icon/tx.png" onload="Global.resizeHeadpic(this)">
+                                    <img src="__STATIC__/images/icon/tx.png" onload="Global.resizeHeadpic(this)">
                                 </div>
                             </span>
                         </div>
@@ -242,7 +242,7 @@
     </div>
 
 
-    <script src="../static/js-min/user-editHomePage.min.js"></script>
+    <script src="__STATIC__/js-min/user-editHomePage.min.js"></script>
     <script>
         var EditHome = {
             user_id: "",
@@ -351,8 +351,9 @@
                 // data.baseinfo.permanent_province = "辽宁省"; //测试用
                 // data.baseinfo.permanent_city = "沈阳市"; //测试用
                 if (data.baseinfo.permanent_province && data.baseinfo.permanent_province !== "" && data.baseinfo.permanent_city && data.baseinfo.permanent_city !== "") {
-                    let provObj=getProObj(data.baseinfo.permanent_province);
+                    let provObj=getProvObj(data.baseinfo.permanent_province);
                     let cityObj=getCityObj(data.baseinfo.permanent_city);
+                    console.log(provObj,cityObj)
                     EditHome.curPermanent_province = provObj.name; 
                     EditHome.curPermanent_city = cityObj.name; 
                     console.log(EditHome.curPermanent_province,EditHome.curPermanent_city)

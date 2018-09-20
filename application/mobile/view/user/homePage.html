@@ -379,12 +379,12 @@
                         break;
                 }
                 //地区
-                let provinceName=codeToAreaObj(data.baseinfo.province.toString()).name;
-                let cityName=codeToAreaObj(data.baseinfo.city.toString()).name;
+                let provinceName=getProvObj(data.baseinfo.province.toString()).name;
+                let cityName=getCityObj(data.baseinfo.city.toString()).name;
                 console.log(provinceName,cityName)
                 if(provinceName||cityName){
-                    $(".province").html(codeToAreaObj(data.baseinfo.province.toString()).name);
-                    $(".province-city").html(codeToAreaObj(data.baseinfo.city.toString()).name);
+                    $(".province").html(getProvObj(data.baseinfo.province.toString()).name);
+                    $(".province-city").html(getCityObj(data.baseinfo.city.toString()).name);
                     $(".edit-personal-areaWrap").show();
                 }
                 //个人相册
