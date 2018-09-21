@@ -307,7 +307,8 @@
                 let userInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
                 $(":input[name='longitude']").val(userInfo.longitude);
                 $(":input[name='latitude']").val(userInfo.latitude);
-                alert(userInfo.longitude,userInfo.latitude)
+                alert(userInfo.longitude)
+                alert(userInfo.latitude)
                 
                 //图片
                 let srcArr = [];
