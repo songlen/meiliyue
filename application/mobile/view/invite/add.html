@@ -227,7 +227,7 @@
                 }
 
                 //根据sex 修改选项
-                if(ReleInvite._user_sex==1){
+                if(Number(ReleInvite._user_sex)==1){
                     //买单
                     $(".payMoneyText").html("我买单");
                     //接送
@@ -301,14 +301,14 @@
                 $(":input[name='pay']").val($(".payMoney .choose .active").text());
                 $(":input[name='is_jiesong']").val($("#myCheck").is(':checked') ? 1 : 0);
                 $(":input[name='with_confidante']").val($("#myCheck1").is(':checked') ? 1 : 0);
-                // $(":input[name='longitude']").val("");
-                // $(":input[name='latitude']").val("");
+                // $(":input[name='longitude']").val("123.4606860");
+                // $(":input[name='latitude']").val("41.7329370");
                 //经纬度
                 let userInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
                 $(":input[name='longitude']").val(userInfo.longitude);
                 $(":input[name='latitude']").val(userInfo.latitude);
-                alert(userInfo.longitude)
-                alert(userInfo.latitude)
+                // alert(userInfo.longitude)
+                // alert(userInfo.latitude)
                 
                 //图片
                 let srcArr = [];
@@ -326,8 +326,8 @@
 
                 $("#releInviteForm").ajaxSubmit(function (result) {  
                     console.log(result) 
-                    alert(result)  
-                    alert(result.msg)
+                    // alert(result)  
+                    // alert(result.msg)
                     if (result.msg == "操作成功") {
                         Global.closeLoading("发布成功", function () {
                             //关闭 返回
