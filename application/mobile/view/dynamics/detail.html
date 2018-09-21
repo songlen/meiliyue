@@ -64,8 +64,8 @@
                 </div>
                 <div class="details-flower">
                     <div class="giveFlower">
-                        <img class="noFlower" src="__STATIC__/images/icon/花1.png">
-                        <img class="haveFlower" src="__STATIC__/images/icon/花2.png" style="display: none;">
+                        <!-- <img class="noFlower" src="__STATIC__/images/icon/花1.png"> -->
+                        <img class="haveFlower" src="__STATIC__/images/icon/花2.png">
                     </div>
                     <span class="flowerCount">{$info.flower_num}</span>
                 </div>
@@ -281,10 +281,10 @@
                             //小花池数量加一
                             $(".flowerPool-count").html(Number($(".flowerPool-count").html()) + 1)
                             //小花样式
-                            if ($(".haveFlower").css("display") == "none") {
-                                $(".haveFlower").show()
-                                $(".noFlower").hide()
-                            }
+                            // if ($(".haveFlower").css("display") == "none") {
+                            //     $(".haveFlower").show()
+                            //     $(".noFlower").hide()
+                            // }
                             //已有小花数量加一
                             $(".flowerCount").html(Number($(".flowerCount").html()) + 1)
                         } else {
