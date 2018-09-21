@@ -318,7 +318,7 @@
                 }
                 if (data.baseinfo.income && data.baseinfo.income !== "") {
                     var incomeStr = ""
-                    switch (data.baseinfo.income) {
+                    switch (Number(data.baseinfo.income)) {
                         case 1:
                             incomeStr = "3000元以上/月"
                             break;
@@ -868,7 +868,7 @@
 
                                 //更新原网页
                                 let realStr
-                                switch (valueStr) {
+                                switch (Number(valueStr)) {
                                     case 1:
                                         realStr = "3000元以上/月"
                                         break;
@@ -1304,8 +1304,7 @@
             },
             init: function () {
                 //得到user_id
-                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
-                    localStorage.getItem("mUserInfo") !== "null") {
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     EditHome.user_id = Number(mUserInfo.user_id);

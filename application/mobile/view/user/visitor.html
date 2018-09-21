@@ -115,7 +115,7 @@
                             $li.find(".videoStatus").show();
                         }
                         //sex
-                        if (item.sex == 1) {
+                        if (Number(item.sex) == 1) {
                             $li.find(".sexAge").addClass("male");
                         } else {
                             $li.find(".sexAge").addClass("female");
@@ -257,8 +257,7 @@
             },
             init: function () {
                 //我的user_id
-                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
-                    localStorage.getItem("mUserInfo") !== "null") {
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     Visitors.user_id = Number(mUserInfo.user_id);
@@ -269,8 +268,7 @@
                 Visitors.initPullToRefresh();
 
                 //从session拿到之前页面数据
-                if (sessionStorage.getItem("visitorPage") && sessionStorage.getItem("visitorPage") !== null &&
-                    sessionStorage.getItem("visitorPage") !== "null") {
+                if (sessionStorage.getItem("visitorPage") && sessionStorage.getItem("visitorPage") !== null &&sessionStorage.getItem("visitorPage") !== "null") {
                     let pageData = JSON.parse(sessionStorage.getItem("visitorPage"))
                     console.log(pageData)
 

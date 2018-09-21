@@ -148,8 +148,7 @@
             //获取一些页面参数
             getPageData: function () {
                 //originUserId我自己的user_id
-                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
-                    localStorage.getItem("mUserInfo") !== "null") {
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     Interested.originUserId = Number(mUserInfo.user_id);
@@ -196,7 +195,7 @@
             updateDom: function (data) {
                 console.log(data)
                 //右上角a标签
-                if(Interested.originUserId==Interested.toUserId){
+                if(Number(Interested.originUserId)==Number(Interested.toUserId)){
                     $("header a.operate").show()
                 }
                 //头像
@@ -280,8 +279,6 @@
                 }
                 //----------------------------------------
                 //不是自己的邀约
-                alert(Interested.originUserId)
-                alert(Interested.toUserId)
                 if (Number(Interested.originUserId) !== Number(Interested.toUserId)) {
                     $(".interest").show(); //btn
                     $(".invitation-enrollWrap").css("bottom","0.43rem"); //有btn挡着
@@ -383,7 +380,7 @@
                                     });
                                 }
                                 //sex
-                                if (item.sex == 1) { //男
+                                if (Number(item.sex) == 1) { //男
                                     $liTemp.find(".sexAge").addClass("male");
                                 } else {
                                     $liTemp.find(".sexAge").addClass("female");
@@ -461,7 +458,7 @@
                 $(".interested .img-box").click(function (event) {
                     event.stopPropagation();
                     let url = "";
-                    if (Interested.originUserId !== Interested.toUserId) {
+                    if (Number(Interested.originUserId) !== Number(Interested.toUserId)) {
                         url = Global.host + "/index.php/mobile/user/homePage/user_id/" + Interested.originUserId +
                             "/toUserId/" + Interested.toUserId + ".html";
                     } else {

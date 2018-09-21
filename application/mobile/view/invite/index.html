@@ -339,7 +339,6 @@
                     //userInfo user_id province
                     let proCode;
                     if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null && localStorage.getItem("mUserInfo") !== "null") {
-                        console.log(1)
                         let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                         console.log(mUserInfo)
                         this.user_id = Number(mUserInfo.user_id);
@@ -391,8 +390,7 @@
                     });
 
                     //先查session,把session的值放到data里
-                    if (sessionStorage.getItem("inviIndexPage") && sessionStorage.getItem("inviIndexPage") !==
-                        null && sessionStorage.getItem("inviIndexPage") !== "null") {
+                    if (sessionStorage.getItem("inviIndexPage") && sessionStorage.getItem("inviIndexPage") !==null && sessionStorage.getItem("inviIndexPage") !== "null") {
                         let inviIndexPageData = JSON.parse(sessionStorage.getItem("inviIndexPage"))
                         console.log(inviIndexPageData)
 
@@ -442,8 +440,7 @@
                     } = {}, isScroll) {
                         let _self = this;
                         //任何情况都需要经纬度
-                        if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !==
-                            null && localStorage.getItem("mUserInfo") !== "null") {
+                        if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !==null && localStorage.getItem("mUserInfo") !== "null") {
                             let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem(
                                 "mUserInfo")));
                             console.log(mUserInfo)
@@ -751,7 +748,7 @@
                         let user_id = this.user_id;
                         let toUserId = item.user_id;
                         let url = "";
-                        if (user_id === toUserId) {
+                        if (Number(user_id) === Number(toUserId)) {
                             url = Global.host + "/index.php/mobile/user/myHomePage.html";
                         } else {
                             url = Global.host + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";

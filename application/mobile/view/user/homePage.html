@@ -307,9 +307,7 @@
 
             getUserId: function () {
                 //得到user_id
-                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
-                    localStorage
-                    .getItem("mUserInfo") !== "null") {
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     Homepage.mUserInfo = mUserInfo;
@@ -350,7 +348,7 @@
                     $(".edit-personal-avatar .videoStatus").show();
                 }
                 //sex
-                let sexClass = data.baseinfo.sex == "1" ? "male" : "female";
+                let sexClass = Number(data.baseinfo.sex) == 1 ? "male" : "female";
                 $(".avatar-content .sexAge").addClass(sexClass);
                 //age
                 $(".avatar-content .sexAge .age").html(data.baseinfo.age)
@@ -362,7 +360,7 @@
                 //星座
                 // $(".edit-personal-constellation").html()
                 //关注状态
-                switch (data.baseinfo.attention) {
+                switch (Number(data.baseinfo.attention)) {
                     case 0: //未关注
                         $(".haveAttend").find(".attend").show()
                         break;
@@ -468,7 +466,7 @@
                     //$(".myApprove-video+.approveBtn").show()
                 }
 
-                if (data.baseinfo.auth_identity_status == 2) {
+                if (Number(data.baseinfo.auth_identity_status) == 2) {
                     $(".myApprove-identity").prev(".myApprove-pic").find("img").attr("src",
                         "__STATIC__/images/icon/身份未认真@2x.png")
                     $(".myApprove-identity").html("身份已认证")
@@ -504,7 +502,7 @@
                 }
                 //收入
                 if (data.baseinfo.income && data.baseinfo.income !== "") {
-                    switch (data.baseinfo.income) {
+                    switch (Number(data.baseinfo.income)) {
                         case 1:
                             $(".income").html("3000元以上/月")
                             break;
