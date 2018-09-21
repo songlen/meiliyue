@@ -280,6 +280,8 @@
                 }
                 //----------------------------------------
                 //不是自己的邀约
+                alert(Interested.originUserId)
+                alert(Interested.toUserId)
                 if (Interested.originUserId !== Interested.toUserId) {
                     $(".interest").show(); //btn
                     $(".invitation-enrollWrap").css("bottom","0.43rem"); //有btn挡着
