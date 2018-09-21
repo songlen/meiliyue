@@ -526,3 +526,4 @@ function uploadPhotos2(){
     }
 }
 
+//gotoNewWebView
