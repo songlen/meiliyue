@@ -734,7 +734,7 @@ class User extends Base {
         if($count) response_error('', '您今天已签到');
 
         $setInc = array(
-            'flower_num' => array('exp', 'flower_num+1'),
+            'flower_num' => array('exp', 'flower_num+10'),
             'signInDays' => array('exp', 'signInDays+1'),
         );
         Db::name('users')->where('user_id', $user_id)->update($setInc);
