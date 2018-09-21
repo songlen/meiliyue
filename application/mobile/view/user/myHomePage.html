@@ -1196,7 +1196,7 @@
                 $(".addMyPhotos1").click(function () {
                     // Homepage.addMyPhotos(this);
                     if(Global.isIOS()){
-
+                        Homepage.addMyPhotos(this);
                     }else{
                         window.Android.androidMulUpload(1,"uploadPhotos") //参数1：1图片 2视频  参数2：调用的js方法的名称
                     }
@@ -1204,7 +1204,7 @@
                 //添加图片 精华照片
                 $(".addMyPhotos2").click(function () {
                     if(Global.isIOS()){
-                        
+                        Homepage.addMyPhotos(this);
                     }else{
                         window.Android.androidMulUpload(1,"uploadPhotos2")
                     }
