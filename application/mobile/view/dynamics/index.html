@@ -57,7 +57,7 @@
                                         <img v-cloak v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg" onload="Global.resizeHeadpic(this)">
                                         <img v-cloak v-else src="/application/mobile/view/static/images/icon/tx.png">
                                     </div>
-                                    <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click.stop="openVideoScreen(item)"></span>
+                                    <span class="videoStatus" v-cloak v-show="Number(item.auth_video_status)==2" @click.stop="openVideoScreen(item)"></span>
                                 </div>
 
                                 <div class="item-head-text">
@@ -117,7 +117,7 @@
                                         <img v-cloak v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg" onload="Global.resizeHeadpic(this)">
                                         <img v-cloak v-else src="/application/mobile/view/static/images/icon/tx.png">
                                     </div>
-                                    <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click.stop="openVideoScreen(item)"></span>
+                                    <span class="videoStatus" v-cloak v-show="Number(item.auth_video_status)==2" @click.stop="openVideoScreen(item)"></span>
                                     <!-- 测试用 -->
                                     <!-- <span class="videoStatus" @click.stop="openVideoScreen(item)"></span> -->
                                 </div>

@@ -309,7 +309,7 @@
                     $(".avatar-pic img").attr("src", head_pic);
                 }
                 //视频认证
-                if (data.baseinfo.auth_video_status === 2) {
+                if (Number(data.baseinfo.auth_video_status) == 2) {
                     $(".edit-personal-avatar .videoStatus").show();
                 }
                 //sex
@@ -405,7 +405,7 @@
                     $(".myApprove-phone").html("手机号已认证")
                 }
 
-                if (data.baseinfo.auth_video_status == 2) { //视频已认证
+                if (Number(data.baseinfo.auth_video_status) == 2) { //视频已认证
                     $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
                         "__STATIC__/images/icon/视频已认证@2x.png")
                     $(".myApprove-video").html("形象视频已认证")

@@ -118,7 +118,7 @@
                         `
                         );
                         //视频认证
-                        if (item.auth_video_status == 2) {
+                        if (Number(item.auth_video_status) == 2) {
                             $li.find(".videoStatus").show();
 
                             $li.find(".videoStatus").click(function(){

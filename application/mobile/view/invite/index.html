@@ -110,18 +110,18 @@
                                             <img v-if="item.head_pic&&item.head_pic!==''" :src="item.head_pic | ifHttpImg" onload="Global.resizeHeadpic(this)">
                                             <img v-else src="/application/mobile/view/static/images/icon/tx.png">
                                         </div>
-                                        <span class="videoStatus" v-cloak v-show="item.auth_video_status==2" @click="showVideo(item)"></span>
+                                        <span class="videoStatus" v-cloak v-show="Number(item.auth_video_status)==2" @click="showVideo(item)"></span>
                                     </div>
     
                                     <div class="details">
                                         <div class="person">
                                             <span class="name">{{item.nickname}}</span>
-                                            <span class="sexAge" :class="{female:item.sex==2,male:item.sex==1}">
+                                            <span class="sexAge" :class="{female:Number(item.sex)==2,male:Number(item.sex)==1}">
                                                 <i class="sex"></i>
                                                 <span class="age">{{item.age}}</span>
                                             </span>
                                             <span class="img">
-                                                <img v-cloak v-if="item.auth_video_status==2" src="__STATIC__/images/icon/camera.png">
+                                                <img v-cloak v-if="Number(item.auth_video_status)==2" src="__STATIC__/images/icon/camera.png">
                                             </span>
                                             <span class="job" style="display: none;">职业经理人</span>
                                         </div>

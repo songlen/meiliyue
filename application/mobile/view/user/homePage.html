@@ -346,7 +346,7 @@
                     Homepage.head_pic = head_pic;
                 }
                 //视频认证
-                if (data.baseinfo.auth_video_status === 2) {
+                if (Number(data.baseinfo.auth_video_status) === 2) {
                     $(".edit-personal-avatar .videoStatus").show();
                 }
                 //sex
@@ -456,7 +456,7 @@
                     //     }
                     // });
                 }
-                if (data.baseinfo.auth_video_status == 2) {
+                if (Number(data.baseinfo.auth_video_status) == 2) {
                     $(".myApprove-video").prev(".myApprove-pic").find("img").attr("src",
                         "__STATIC__/images/icon/小视频@2x.png")
                     $(".myApprove-video").html("形象视频已认证")
@@ -734,14 +734,14 @@
                         }, 3000)
 
                         $(".attend").hide()
-                        if (Homepage.attentionStatus == 2) { //本来就是已被关注了
+                        if (Number(Homepage.attentionStatus) == 2) { //本来就是已被关注了
                             $(".attendAll").show()
 
-                            Homepage.attentionStatus = 3
+                            Number(Homepage.attentionStatus) = 3
                         } else {
                             $(".attended").show()
 
-                            Homepage.attentionStatus = 1
+                            Number(Homepage.attentionStatus) = 1
                         }
                     })
                 })
@@ -752,7 +752,7 @@
                             $(".attended").hide()
                             $(".attend").show()
 
-                            Homepage.attentionStatus = 0
+                            Number(Homepage.attentionStatus) = 0
                         })
                     })
                 })
@@ -763,7 +763,7 @@
                             $(".attendAll").hide()
                             $(".attend").show()
 
-                            Homepage.attentionStatus = 2
+                            Number(Homepage.attentionStatus) = 2
                         })
                     })
                 })

@@ -196,7 +196,7 @@
                     );
 
                     //视频认证状态
-                    if (data.auth_video_status === 2) {
+                    if (Number(data.auth_video_status) === 2) {
                         $li.find(".videoStatus").show();
 
                         $li.find(".videoStatus").click(function(){
