@@ -222,12 +222,12 @@
                     if (result.msg == "操作成功") {
                         Global.closeLoading("发布成功", function () {
                             //关闭 返回
-                            window.history.back(-1);
-                            // if(Global.isIOS()){
-
-                            // }else{
-                            //     window.Android.goback()
-                            // }
+                            // window.history.back(-1);
+                            if(Global.isIOS()){
+                                window.history.back(-1);
+                            }else{
+                                window.Android.goback()
+                            }
                         });
                     }  
                 });
@@ -312,8 +312,7 @@
                 Edit.bindLimitCount()
                 //发动态
                 $(".save").click(function () {
-                    // Edit.sendDynamic()
-                    window.history.back(-1)
+                    Edit.sendDynamic()
                 })
                 //返回
                 $(".cancel").click(function () {
