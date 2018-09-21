@@ -13,7 +13,13 @@ class Invite extends Base{
         $keywords && $where.=" and title like '%$keywords%' ";
        
        	$pagesize = 20;
-        $lists = M('invite')->where($where)->order('id desc')->page("$p, $pagesize")->select();
+        $lists = M('invite')->alias('i')
+        	->join('users u', 'i.user_id=u.user_id', 'left')
+        	->where($where)
+        	->order('id desc')
+        	->page("$p, $pagesize")
+        	->field('nickname, uuid, i.title, i.time, i.status, i.add_time')
+        	->select();
         $count = M('invite')->where($where)->count();// 查询满足要求的总记录数
         $Page = new Page($count, $pagesize);// 实例化分页类 传入总记录数和每页显示的记录数
 

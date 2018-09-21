@@ -13,10 +13,15 @@ class Dynamics extends Base{
         $keywords && $where.=" and title like '%$keywords%' ";
        
        	$pagesize = 20;
-        $lists = M('dynamics')->where($where)->order('id desc')->page("$p, $pagesize")->select();
+        $lists = M('dynamics')->alias('d')
+        	->join('users u', 'd.user_id=u.user_id', 'left')
+        	->where($where)
+        	->order('id desc')
+        	->page("$p, $pagesize")
+        	->field('nickname, uuid, description, content, d.status, d.add_time')
+        	->select();
         $count = M('dynamics')->where($where)->count();// 查询满足要求的总记录数
         $Page = new Page($count, $pagesize);// 实例化分页类 传入总记录数和每页显示的记录数
-
 
         $this->assign('lists', $lists);
         $this->assign('Page', $Page);

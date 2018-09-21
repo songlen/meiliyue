@@ -52,6 +52,12 @@
                 <div style="width: 24px;"><i class="ico-check"></i></div>
               </th>
               <th align="left" abbr="article_title" axis="col3" class="">
+                <div style="text-align: left; width: 100px;" class="">昵称</div>
+              </th>
+              <th align="left" abbr="article_title" class="">
+                <div style="text-align: left; width: 100px;" class="">uuid</div>
+              </th>
+              <th align="left" abbr="article_title" axis="col3" class="">
                 <div style="text-align: left; width: 240px;" class="">内容</div>
               </th>
               <th align="center" abbr="article_show" axis="col5" class="">
@@ -89,6 +95,16 @@
                 <td class="sign" >
                   <div style="width: 24px;"><i class="ico-check"></i></div>
                   <input type="hidden" name="id" value="{$vo.id}">
+                </td>
+                <td align="center">
+                    <div style="width: 100px;">
+                        {$vo.nickname}
+                    </div>
+                </td>
+                <td align="center">
+                    <div style="width: 100px;">
+                        {$vo.uuid}
+                    </div>
                 </td>
                 <td align="left" class="">
                   <div style="text-align: left; width: 240px;">
