@@ -325,7 +325,8 @@
                 Global.openLoading();
 
                 $("#releInviteForm").ajaxSubmit(function (result) {  
-                    console.log(result)   
+                    console.log(result) 
+                    alert(result)  
                     alert(result.msg)
                     if (result.msg == "操作成功") {
                         Global.closeLoading("发布成功", function () {
