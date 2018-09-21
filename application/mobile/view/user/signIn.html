@@ -73,10 +73,8 @@
                     num=0
                 }
                 let numStr=num+"";
-                if(numStr.length<3){
-                    while (numStr.length<3){
-                        numStr="0"+numStr
-                    }
+                while (numStr.length<3){
+                    numStr="0"+numStr
                 }
                 console.log(numStr)
                 $(".daysNumReal1").html(numStr[0])
@@ -108,9 +106,9 @@
                         Global.messageWin("签到成功")
                         if(result.code==200){
                             //签到成功updateDom、更新userInfo
-                            SignIn.userInfo.signInDays=SignIn.userInfo.signInDays+1
+                            SignIn.userInfo.signInDays=Number(SignIn.userInfo.signInDays)+1
                             SignIn.updateSignInDays(SignIn.userInfo.signInDays)
-                            SignIn.userInfo.flower_num=SignIn.userInfo.flower_num+10
+                            SignIn.userInfo.flower_num=Number(SignIn.userInfo.flower_num)+10
                             $(".flowerCount").html(SignIn.userInfo.flower_num)
                             $(".signInBtn").addClass("gray")
 
