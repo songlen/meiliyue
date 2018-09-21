@@ -625,7 +625,7 @@
                             console.log(result)
                             if (result.msg == "操作成功" && result.code !== 400) {
                                 //小花数量加一
-                                item.flower_num = item.flower_num + 1;
+                                item.flower_num = Number(item.flower_num) + 1;
                             } else { //送花失败
                                 Global.messageWin("您的小花数量不足！");
                             }
