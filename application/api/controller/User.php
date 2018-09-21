@@ -767,4 +767,16 @@ class User extends Base {
 
         response_success($users);
     }
+
+    // 删除相册里的图片
+    public function delPhoto(){
+        $user_id = I('user_id');
+        $id = I('id');
+
+        if(Db::name('user_photo')->where(array('user_id'=>$user_id, 'id'=>$id))->delete()){
+            response_success();
+        } else {
+            response_error();
+        }
+    }
 }
