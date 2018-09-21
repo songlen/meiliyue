@@ -9,10 +9,13 @@ var areaCodeArr=[{name:"北京",code:"110000",sub:[{name:"北京市",code:"11010
 
 //获取省对象
 function getProvObj(code){ //字符串
-    let arr=areaCodeArr.filter(function(prov){
-        return prov.code==code
+    let obj={}
+    areaCodeArr.forEach(function(prov){
+        if(prov.code==code){
+            obj=prov
+        }
     })
-    return arr[0]
+    return obj
 }
 //获取市对象
 function getCityObj(code){
