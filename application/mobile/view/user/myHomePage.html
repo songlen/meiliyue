@@ -329,7 +329,7 @@
                 }
                 //个人相册
                 if (data.photos && data.photos !== "" && data.photos.length !== 0) {
-                    let showArr = data.photos.length >= 3 ? data.photos.slice(0, 3) : data.photos;
+                    let showArr = data.photos.length >= 20 ? data.photos.slice(0, 20) : data.photos;
                     //图片升序排列
                     showArr.sort(function (a, b) {
                         return a.id - b.id;
@@ -352,7 +352,7 @@
                 $(".picCount").html(data.count.normalPhotoCount);
                 //精华照片
                 if (data.quintessence_photos && data.quintessence_photos !== "" && data.quintessence_photos.length !==0) {
-                    let showArr = data.quintessence_photos.length >= 3 ? data.quintessence_photos.slice(0, 3) :
+                    let showArr = data.quintessence_photos.length >= 20 ? data.quintessence_photos.slice(0, 20) :
                         data.quintessence_photos;
                     //图片升序排列
                     showArr.sort(function (a, b) {
@@ -606,7 +606,7 @@
                                     <div>${Global.host+src}</div>
                                 `
                                 //更新dom
-                                if ($(ul).find("li").length >= 3) {
+                                if ($(ul).find("li").length >= 20) {
                                     $(ul).find("li:last").remove();
                                 }
                                 $(ul).prepend($(li))
@@ -663,7 +663,7 @@
                         //上传图片+回调
                         Homepage.uploadPic(type, $liTemp, function (src) {
                             //更新dom
-                            if ($curUl.find("li").length >= 3) {
+                            if ($curUl.find("li").length >= 20) {
                                 $curUl.find("li:last").remove();
                             }
 
