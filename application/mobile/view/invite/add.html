@@ -178,6 +178,8 @@
 
             _theme: "",
 
+            isFromHomePage:false, //是否是从我的个人主页跳过来的
+
 
 
             //获取页面基本参数
@@ -196,6 +198,9 @@
 
                 //type
                 var ulrStr = window.location.href;
+                if(ulrStr.indexOf("fromHomePage")>-1){
+                    ReleInvite.isFromHomePage=true
+                }
                 if (!(ulrStr.indexOf(".html") > -1)) { //后面不带.html
                     ulrStr = ulrStr + ".html";
                 }
@@ -203,7 +208,7 @@
                     ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html" //测试用
                 }
                 var strTemp = ulrStr.split("/add/type/")[1];
-                ReleInvite._type = Number(strTemp.substr(0, strTemp.length - 5));
+                ReleInvite._type = Number(strTemp.substr(0, 1));
 
                 //更新dom
                 ReleInvite.updateDom();
@@ -323,10 +328,13 @@
                 Global.openLoading();
 
                 $("#releInviteForm").ajaxSubmit(function (result) {  
-                    alert(Number(result.code)) 
                     if (Number(result.code) == 200) {
                         Global.closeLoading("发布成功", function () {
                             //关闭 返回
+                            if(ReleInvite.isFromHomePage){
+                                window.history.back(-1)
+                                return
+                            }
                             // window.history.back(-1);
                             if(Global.isIOS()){
                                 window.history.back(-1);
