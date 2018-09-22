@@ -85,13 +85,16 @@ let Global = (function () {
 
         function limitCount(el) {
             // el.value = el.value.substring(0, textCount)
-            el.value = el.value.substr(0, textCount);
+            // el.value = el.value.substr(0, textCount);
             let count = el.value.length
             if (showElement) {
                 showElement.innerHTML = count
             }
             if (count >= textCount) {
                 messageWin(`最多输入${textCount}个字符`);
+
+                el.value = el.value.substr(0, textCount);
+                return
             }
         }
     }
