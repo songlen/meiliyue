@@ -323,8 +323,11 @@
                 let provinceObj=getProvObj(data.baseinfo.province.toString())
                 let cityObj=getCityObj(data.baseinfo.city.toString())
                 console.log(provinceObj,cityObj)
-                let provCityStr=(JSON.stringify(provinceObj)!=="{}"?provinceObj.name:"")+(JSON.stringify(cityObj)!=="{}"?cityObj.name:"")
-                if(provCityStr.trim()!==""){
+                if(JSON.stringify(provinceObj)!=="{}"&&JSON.stringify(cityObj)!=="{}"){
+                    let provStr=JSON.stringify(provinceObj)!=="{}"?provinceObj.name:""
+                    let cityStr=JSON.stringify(cityObj)!=="{}"?cityObj.name:""
+                    $("span.province").html(provStr)
+                    $("span.province-city").html(cityStr)
                     $(".edit-personal-areaWrap").show();
                 }
                 //个人相册
