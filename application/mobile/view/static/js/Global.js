@@ -530,3 +530,9 @@ function uploadPhotos2(){
 }
 
 //gotoNewWebView
+
+//原生上传多张图片
+// window.Android.androidMulUpload(1,"uploadPhotos") //参数1：1图片 2视频  参数2：调用的js方法的名称
+
+//原生上传单张图片
+// window.Android.androidOneUpload(1,"uploadPhotos") //参数1：1图片 2视频  参数2：调用的js方法的名称
