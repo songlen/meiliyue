@@ -136,7 +136,7 @@ class Auth extends Base {
         
         $userInfo = M('users')->where('user_id', $user_id)->find();
         unset($userInfo['password']);
-        return response_success($userInfo, '注册成功');
+        response_success($userInfo, '注册成功');
     }
 
     // 忘记密码
