@@ -3,8 +3,15 @@
 namespace app\api\controller;
 use think\Db;
 
-class Task {
+class Task extends Base {
+    public function __construct(){
+        // 设置所有方法的默认请求方式
+        $this->method = 'GET';
 
+        parent::__construct();
+    }
+
+    // 没5分钟更新一次 人气代表大会数据
 	public function generateCongress(){
         $users = Db::name('users')->where('is_lock', 0)->order('fansNum desc')->field('user_id, head_pic, nickname, sex, birthday, age, auth_video_status')->limit(50)->select();
 
@@ -14,6 +21,8 @@ class Task {
                 unset($item['birthday']);
             }
         }
+
+        $filepath = RUNTIME_PATH . 'congress.php';
 
         file_put_contents($filepath, "<?php \r\n return ".var_export($users, true).';');
 	}
