@@ -139,7 +139,7 @@
                             });
                         }
                         //sex
-                        if (item.sex == 1) {
+                        if (Number(item.sex) == 1) {
                             $li.find(".sexAge").addClass("male");
                         } else {
                             $li.find(".sexAge").addClass("female");
@@ -305,7 +305,7 @@
                     let user_id = Comments.user_id;
                     let toUserId = Number($(this).closest(".comments-item").attr("data-userId"));
                     let url = "";
-                    if (user_id === toUserId) {
+                    if (Number(user_id) === Number(toUserId)) {
                         url = Global.host + "/index.php/mobile/user/myHomePage.html";
                     } else {
                         url = Global.host + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
@@ -315,8 +315,7 @@
             },
             init: function () {
                 //user_id
-                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
-                    localStorage.getItem("mUserInfo") !== "null") {
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     Comments.user_id = Number(mUserInfo.user_id);

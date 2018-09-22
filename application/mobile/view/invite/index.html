@@ -19,9 +19,9 @@
         <span class="title">邀约</span>
     </header>
 
-    <div id="indexPageApp">
+    <div id="indexPageApp" @click="closeReleasing">
 
-        <div class="main-content invitation indexPage" @click="closeReleasing">
+        <div class="main-content invitation indexPage">
 
             <div class="blurDiv" :class="{blur:isPlusing}">
     
@@ -339,7 +339,6 @@
                     //userInfo user_id province
                     let proCode;
                     if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null && localStorage.getItem("mUserInfo") !== "null") {
-                        console.log(1)
                         let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                         console.log(mUserInfo)
                         this.user_id = Number(mUserInfo.user_id);
@@ -391,8 +390,7 @@
                     });
 
                     //先查session,把session的值放到data里
-                    if (sessionStorage.getItem("inviIndexPage") && sessionStorage.getItem("inviIndexPage") !==
-                        null && sessionStorage.getItem("inviIndexPage") !== "null") {
+                    if (sessionStorage.getItem("inviIndexPage") && sessionStorage.getItem("inviIndexPage") !==null && sessionStorage.getItem("inviIndexPage") !== "null") {
                         let inviIndexPageData = JSON.parse(sessionStorage.getItem("inviIndexPage"))
                         console.log(inviIndexPageData)
 
@@ -442,8 +440,7 @@
                     } = {}, isScroll) {
                         let _self = this;
                         //任何情况都需要经纬度
-                        if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !==
-                            null && localStorage.getItem("mUserInfo") !== "null") {
+                        if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !==null && localStorage.getItem("mUserInfo") !== "null") {
                             let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem(
                                 "mUserInfo")));
                             console.log(mUserInfo)
@@ -546,8 +543,8 @@
                         if(Global.isIOS()){
                             window.location.href = toUrl;
                         }else{
-                            // window.Android.gotoNewWebView(toUrl)
-                            window.location.href = toUrl;
+                            window.Android.gotoNewWebView(toUrl)
+                            // window.location.href = toUrl;
                         }
                     },
                     //控制筛选栏的位置
@@ -751,7 +748,7 @@
                         let user_id = this.user_id;
                         let toUserId = item.user_id;
                         let url = "";
-                        if (user_id === toUserId) {
+                        if (Number(user_id) === Number(toUserId)) {
                             url = Global.host + "/index.php/mobile/user/myHomePage.html";
                         } else {
                             url = Global.host + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
@@ -760,8 +757,8 @@
                         if(Global.isIOS()){
                             window.location.href = url;
                         }else{
-                            // window.Android.gotoNewWebView(url)
-                            window.location.href = url;
+                            window.Android.gotoNewWebView(url)
+                            // window.location.href = url;
                         }
                         
                     },
@@ -781,8 +778,10 @@
                     },
                     closeReleasing: function () {
                         if (this.isPlusing) {
+                            // alert(1)
                             console.log(event)
                             if ($(event.target).closest(".release-start").length == 0) {
+                                // alert(2)
                                 this.isPlusing = false;
                             }
                         }

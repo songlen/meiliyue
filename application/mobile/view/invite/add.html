@@ -183,14 +183,13 @@
             //获取页面基本参数
             getPageData: function () {
                 //user_id sex
-                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
-                    localStorage.getItem("mUserInfo") !== "null") {
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     ReleInvite._user_id = Number(mUserInfo.user_id);
                     ReleInvite._user_sex = Number(mUserInfo.sex);
                 } else {
-                    ReleInvite._user_id = 1; //测试用
+                    ReleInvite._user_id = 3; //测试用
                     ReleInvite._user_sex = 1; //测试用 男
                 }
                 console.log(ReleInvite._user_id)
@@ -212,7 +211,7 @@
             updateDom: function () {
                 //主题
                 ReleInvite.inviteList.forEach(function (obj) {
-                    if (obj.type == ReleInvite._type) {
+                    if (Number(obj.type) == Number(ReleInvite._type)) {
                         ReleInvite._theme = obj.title
                     }
                 });
@@ -235,7 +234,7 @@
                     //带闺蜜
                     $(".with_confidante_text").html("对方可携带一名闺蜜");
                 }else{
-                    $(".payMoneyText").html("当然你买");
+                    $(".payMoneyText").html("当然你买单");
                     $(".jiesongText").html("需要接送");
                     $(".with_confidante_text").html("对方可携带三两好友");
                 }
@@ -298,6 +297,7 @@
                 $(":input[name='city']").val(cityCode);
                 $(":input[name='place']").val($(".detailPlace-inputWrap>input").val().trim());
                 $(":input[name='object']").val($(".otherSide .choose .active").text());
+                console.log($(".payMoney .choose .active").text())
                 $(":input[name='pay']").val($(".payMoney .choose .active").text());
                 $(":input[name='is_jiesong']").val($("#myCheck").is(':checked') ? 1 : 0);
                 $(":input[name='with_confidante']").val($("#myCheck1").is(':checked') ? 1 : 0);
@@ -307,8 +307,6 @@
                 let userInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
                 $(":input[name='longitude']").val(userInfo.longitude);
                 $(":input[name='latitude']").val(userInfo.latitude);
-                // alert(userInfo.longitude)
-                // alert(userInfo.latitude)
                 
                 //图片
                 let srcArr = [];
@@ -326,14 +324,25 @@
 
                 $("#releInviteForm").ajaxSubmit(function (result) {  
                     console.log(result) 
-                    // alert(result)  
-                    // alert(result.msg)
-                    if (result.msg == "操作成功") {
+                    
+               // alert(result)  
+                  //  alert(result.msg)
+                    if (result.code == 200) {
                         Global.closeLoading("发布成功", function () {
                             //关闭 返回
-                            window.history.back(-1);
+                            // window.history.back(-1);
+                            if(Global.isIOS()){
+                                window.history.back(-1);
+                            }else{
+                                // alert("anzhuo back")
+                                // window.Android.goBack()
+                                window.history.back(-1);
+                            }
                         });
-                    }  
+                    }else{
+                        Global.closeLoadingNow()
+                        Global.messageWin(result.msg)
+                    }
                 });
 
             },

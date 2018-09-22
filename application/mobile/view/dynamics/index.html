@@ -63,7 +63,7 @@
                                 <div class="item-head-text">
                                     <div>
                                         <span class="listName">{{item.nickname}}</span>
-                                        <span class="sexAge" :class="{female:item.sex==2,male:item.sex==1}">
+                                        <span class="sexAge" :class="{female:Number(item.sex)==2,male:Number(item.sex)==1}">
                                             <i class="sex"></i>
                                             <span class="age">{{item.age}}</span>
                                         </span>
@@ -125,7 +125,7 @@
                                 <div class="item-head-text">
                                     <div>
                                         <span class="listName">{{item.nickname}}</span>
-                                        <span class="sexAge" :class="{female:item.sex==2,male:item.sex==1}">
+                                        <span class="sexAge" :class="{female:Number(item.sex)==2,male:Number(item.sex)==1}">
                                             <i class="sex"></i>
                                             <span class="age">{{item.age}}</span>
                                         </span>
@@ -184,7 +184,7 @@
 
                             <div style="width:80%;margin: 0.05rem 0 0.15rem;">
                                 <div>
-                                    <span class="sexAge fr" :class="{female:item.sex==2,male:item.sex==1}" style="margin-top: 0.02rem;">
+                                    <span class="sexAge fr" :class="{female:Number(item.sex)==2,male:Number(item.sex)==1}" style="margin-top: 0.02rem;">
                                         <i class="sex"></i>
                                         <span class="age">{{item.age}}</span>
                                     </span>
@@ -293,7 +293,7 @@
                 //----------------------------------------
 
                 //先查session,把session的值放到data里
-                if (sessionStorage.getItem("dongtaiPage") && sessionStorage.getItem("dongtaiPage") !== null) {
+                if (sessionStorage.getItem("dongtaiPage") && sessionStorage.getItem("dongtaiPage") !== null && sessionStorage.getItem("dongtaiPage") !== "null") {
                     let dongtaiPageData = JSON.parse(sessionStorage.getItem("dongtaiPage"))
                     console.log(dongtaiPageData)
 
@@ -526,8 +526,8 @@
                     if(Global.isIOS()){
                         window.location.href = url;
                     }else{
-                        // window.Android.gotoNewWebView(url)
-                        window.location.href = url;
+                        window.Android.gotoNewWebView(url)
+                        // window.location.href = url;
                     }
                 },
                 //打开全屏小视频
@@ -554,7 +554,7 @@
                     let user_id = this.user_id;
                     let toUserId = item.user_id;
                     let url = "";
-                    if (user_id === toUserId) {
+                    if (Number(user_id) === Number(toUserId)) {
                         url = this.GlobalHost + "/index.php/mobile/user/myHomePage.html";
                     } else {
                         url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" + user_id + "/toUserId/" + toUserId + ".html";
@@ -563,8 +563,8 @@
                     if(Global.isIOS()){
                         window.location.href = url;
                     }else{
-                        // window.Android.gotoNewWebView(url)
-                        window.location.href = url;
+                        window.Android.gotoNewWebView(url)
+                        // window.location.href = url;
                     }
                 },
                 //初始化下拉刷新

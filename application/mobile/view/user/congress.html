@@ -112,7 +112,7 @@
                             <div class="nameNcharm">
                                 <div class="nickName">
                                     <span v-cloak>{{item.nickname}}</span>
-                                    <span class="sexAge" :class="{female:item.sex==2,male:item.sex==1}">
+                                    <span class="sexAge" :class="{female:Number(item.sex)==2,male:Number(item.sex)==1}">
                                         <i class="sex"></i>
                                         <span class="age" v-cloak>{{item.age}}</span>
                                     </span>

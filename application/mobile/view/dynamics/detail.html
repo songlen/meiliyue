@@ -216,8 +216,7 @@
 
             getPageInfo: function () {
                 //user_id
-                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
-                    localStorage.getItem("mUserInfo") !== "null") {
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     Details.user_id = Number(mUserInfo.user_id);
@@ -243,7 +242,7 @@
                 console.log("动态发布者：" + Details.dynamic_origin_id)
                 
                 //是否是自己的动态 updateDom
-                if(Details.user_id==Details.dynamic_origin_id){
+                if(Number(Details.user_id)==Number(Details.dynamic_origin_id)){
                     $("header a.isOperate").addClass("operate")
                 }
             },
@@ -346,8 +345,7 @@
                             // console.log(event)
                             console.log(item)
                             var el = event.target; //点击那条评论dom
-                            if (item && item.commentator_id && Number(item.commentator_id) ==
-                                Number(Details.user_id)) { //点击的是自己评论的，提问是否删除 //需要和自己的nickname对比？
+                            if (item && item.commentator_id && Number(item.commentator_id) == Number(Details.user_id)) { //点击的是自己评论的，提问是否删除 //需要和自己的nickname对比？
                                 this.toggleDelete(el);
                             } else {
                                 if (type == 0) {
@@ -426,7 +424,7 @@
                                     $(".sendComment").removeClass("eventsDisabled")
                                     console.log(result)
                                     //放数据
-                                    if (result.msg == "操作成功") {
+                                    if (result.code == 200) {
 
                                         self.getCommentsList();
 
@@ -456,7 +454,7 @@
                             let user_id = Details.user_id;
                             let toUserId = item.commentator_id;
                             let url = "";
-                            if (user_id === toUserId) {
+                            if (Number(user_id) === Number(toUserId)) {
                                 url = this.GlobalHost + "/index.php/mobile/user/myHomePage.html";
                             } else {
                                 url = this.GlobalHost + "/index.php/mobile/user/homePage/user_id/" +
@@ -562,7 +560,7 @@
                     let user_id = Details.user_id;
                     let toUserId = Details.dynamic_origin_id;
                     let url = "";
-                    if (user_id === toUserId) {
+                    if (Number(user_id) === Number(toUserId)) {
                         url = Global.host + "/index.php/mobile/user/myHomePage.html";
                     } else {
                         url = Global.host + "/index.php/mobile/user/homePage/user_id/" + user_id +"/toUserId/" + toUserId + ".html";

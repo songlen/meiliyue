@@ -130,13 +130,13 @@
                             });
                         }
                         //sex
-                        if (item.sex == 1) {
+                        if (Number(item.sex) == 1) {
                             $li.find(".sexAge").addClass("male");
                         } else {
                             $li.find(".sexAge").addClass("female");
                         }
                         //是否为好友(相互关注)
-                        if (item.twoway == 1) {
+                        if (Number(item.twoway) == 1) {
                             $li.find(".attentionOperate").show();
                         }
 
@@ -248,8 +248,7 @@
             },
             init: function () {
                 //user_id
-                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
-                    localStorage.getItem("mUserInfo") !== "null") {
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                     console.log(mUserInfo)
                     // alert(JSON.stringify(mUserInfo))
@@ -262,8 +261,7 @@
                 Attend.initPullToRefresh();
 
                 //从session获取之前的页面数据
-                if (sessionStorage.getItem("myAttentionPage") && sessionStorage.getItem("myAttentionPage") !== null &&
-                    sessionStorage.getItem("myAttentionPage") !== "null") {
+                if (sessionStorage.getItem("myAttentionPage") && sessionStorage.getItem("myAttentionPage") !== null && sessionStorage.getItem("myAttentionPage") !== "null") {
                     // alert("有session")
                     Attend.seesionToDom();
                 } else {

@@ -362,8 +362,7 @@
                         let strTemp=ulrStr.split("/user_id/")[1]
                         this.user_id=Number(strTemp.substr(0, strTemp.length - 5));
                     }else{
-                        if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
-                            localStorage.getItem("mUserInfo") !== "null") {
+                        if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
                             let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
                             console.log(mUserInfo)
                             this.user_id = Number(mUserInfo.user_id);
