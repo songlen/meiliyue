@@ -65,7 +65,15 @@
                 <div class="details-flower">
                     <div class="giveFlower">
                         <!-- <img class="noFlower" src="__STATIC__/images/icon/花1.png"> -->
-                        <img class="haveFlower" src="__STATIC__/images/icon/花2.png">
+                        <!-- <img class="haveFlower" src="__STATIC__/images/icon/花2.png"> -->
+
+                        <if condition="$info.flower_num gt 0">
+                            <img class="haveFlower" src="__STATIC__/images/icon/花2.png">
+                        </if>
+
+                        <if condition="$info.flower_num == 0">
+                            <img class="noFlower" src="__STATIC__/images/icon/花1.png">
+                        </if>
                     </div>
                     <span class="flowerCount">{$info.flower_num}</span>
                 </div>
