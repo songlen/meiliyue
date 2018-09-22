@@ -299,6 +299,8 @@
             _mTimer: null,
             user_id: "",
 
+            falseFile:"", //假的file值
+
 
             updateDom: function (data) {
                 //昵称
@@ -1161,6 +1163,7 @@
             //点击头像input file选择图片了，修改头像
             editHeadpic: function (input) { //input file
                 let fileList=input.files;
+                alert(Homepage.falseFile.name)
                 alert(input.files[0].name)
                 if (fileList.length > 0) {
                     //修改头像
@@ -1319,9 +1322,10 @@
                 //头像 修改头像
                 $(".editHeadpic").click(function () {
                     $('.home-cancel')[0].click(); //关闭弹窗
-                    alert("1:"+$("#editHeadpic")[0].files[0])
+                    // alert("1:"+$("#editHeadpic")[0].files[0])
                     $("#editHeadpic")[0].click();
-                   
+
+                    Homepage.falseFile=$("#editHeadpic")[0].files[0]
                 });
             },
             init: function () {
