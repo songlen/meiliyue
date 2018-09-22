@@ -303,7 +303,7 @@
                 $(":input[name='with_confidante']").val($("#myCheck1").is(':checked') ? 1 : 0);
                 // $(":input[name='longitude']").val("123.4606860");
                 // $(":input[name='latitude']").val("41.7329370");
-                //经纬度
+                经纬度
                 let userInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
                 $(":input[name='longitude']").val(userInfo.longitude);
                 $(":input[name='latitude']").val(userInfo.latitude);
@@ -323,7 +323,7 @@
                 Global.openLoading();
 
                 $("#releInviteForm").ajaxSubmit(function (result) {  
-                    console.log(result) 
+                    alert(result.code) 
                     if (result.code == 200) {
                         Global.closeLoading("发布成功", function () {
                             //关闭 返回
