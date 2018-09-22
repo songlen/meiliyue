@@ -22,7 +22,7 @@ class Task extends Base {
             }
         }
 
-        $filepath = RUNTIME_PATH . 'congress.php';
+        $filepath = RUNTIME_PATH . 'cache/congress.php';
 
         file_put_contents($filepath, "<?php \r\n return ".var_export($users, true).';');
 	}
