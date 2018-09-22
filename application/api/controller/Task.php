@@ -13,7 +13,7 @@ class Task extends Base {
 
     // 没5分钟更新一次 人气代表大会数据
 	public function generateCongress(){
-        $users = Db::name('users')->where('is_lock', 0)->order('fansNum desc')->field('user_id, head_pic, nickname, sex, birthday, age, auth_video_status')->limit(50)->select();
+        $users = Db::name('users')->where(array('is_lock'=>0, 'sex'=>2))->order('fansNum desc')->field('user_id, head_pic, nickname, sex, birthday, age, auth_video_status')->limit(50)->select();
 
         if(is_array($users) && is_array($users)){
             foreach ($users as &$item) {
