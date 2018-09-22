@@ -324,8 +324,9 @@
 
                 $("#releInviteForm").ajaxSubmit(function (result) {  
                     console.log(result) 
-                    alert(result)  
-                    alert(result.msg)
+                    
+               // alert(result)  
+                  //  alert(result.msg)
                     if (result.code == 200) {
                         Global.closeLoading("发布成功", function () {
                             //关闭 返回
