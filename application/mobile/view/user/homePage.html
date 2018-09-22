@@ -377,12 +377,14 @@
                         break;
                 }
                 //地区
-                let provinceName=getProvObj(data.baseinfo.province.toString()).name;
-                let cityName=getCityObj(data.baseinfo.city.toString()).name;
-                console.log(provinceName,cityName)
-                if(provinceName||cityName){
-                    $(".province").html(getProvObj(data.baseinfo.province.toString()).name);
-                    $(".province-city").html(getCityObj(data.baseinfo.city.toString()).name);
+                let provinceObj=getProvObj(data.baseinfo.province.toString())
+                let cityObj=getCityObj(data.baseinfo.city.toString())
+                console.log(provinceObj,cityObj)
+                if(JSON.stringify(provinceObj)!=="{}"&&JSON.stringify(cityObj)!=="{}"){
+                    let provStr=JSON.stringify(provinceObj)!=="{}"?provinceObj.name:""
+                    let cityStr=JSON.stringify(cityObj)!=="{}"?cityObj.name:""
+                    $("span.province").html(provStr)
+                    $("span.province-city").html(cityStr)
                     $(".edit-personal-areaWrap").show();
                 }
                 //个人相册
