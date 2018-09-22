@@ -18,7 +18,7 @@
     <form id="editHeapicForm" action="http://meiliyue.caapa.org/index.php/Api/user/uploadFile" method="post" enctype="multipart/form-data"
         style="display:none;">
         <input type="text" name="user_id" style="display:none;">
-        <input id="editHeadpic" type="file" name="file" accept="image/*" value="111" style="display: none;">
+        <input id="editHeadpic" type="file" name="file" accept="image/*" style="display: none;">
         <input type="text" name="type" value="head_pic" style="display:none;">
         <input type="text" name="action" value="edit" style="display:none;">
     </form>
@@ -298,8 +298,6 @@
         var Homepage = {
             _mTimer: null,
             user_id: "",
-
-            falseFile:"", //假的file值
 
 
             updateDom: function (data) {
@@ -1163,8 +1161,7 @@
             //点击头像input file选择图片了，修改头像
             editHeadpic: function (input) { //input file
                 let fileList=input.files;
-                alert(Homepage.falseFile.name)
-                alert(input.files[0].name)
+                // alert(input.files[0].name)
                 if (fileList.length > 0) {
                     //修改头像
                     //jquery.form.js方法
@@ -1323,8 +1320,6 @@
                 $(".editHeadpic").click(function () {
                     $('.home-cancel')[0].click(); //关闭弹窗
                     $("#editHeadpic")[0].click();
-
-                    Homepage.falseFile=$("#editHeadpic")[0].files[0]
                 });
             },
             init: function () {
