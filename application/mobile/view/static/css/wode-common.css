@@ -271,8 +271,8 @@ a.close {
 
 .myHomepage .publicPic ul>a>img,
 .myHomepage .edit-pic-item img {
-    width: calc(100% - 0.1rem);
-    margin: 0.05rem;
+    /* width: calc(100% - 0.1rem);
+    margin: 0.05rem; */
 }
 
 .edit-pic-item .edit-closePic {
