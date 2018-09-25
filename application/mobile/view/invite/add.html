@@ -391,10 +391,12 @@
                     }
                     if(Global.isIOS()){
                         // alert("ios")
-                        jumpIOS(1);
+                        // jumpIOS(1);
+                        jumpIOS(1,"uploadOne") //参数1：1图片 2视频  参数2：调用的js方法的名称
                     }else{
                         // alert("android")
-                        window.Android.gotoJavaCamera(1);
+                        // window.Android.gotoJavaCamera(1); //参数1：1图片 3视频
+                        window.Android.gotoJavaCamera(1,"uploadOne"); //参数1：1图片 2视频  参数2：调用的js方法的名称
                     }
                 });
                 //点击图片显示大图
