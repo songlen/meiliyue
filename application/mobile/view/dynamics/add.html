@@ -244,7 +244,7 @@
                 console.log(srcArr)
                 let swiper = $.photoBrowser({
                     items: srcArr,
-                    initIndex:$(el).attr("data-index")
+                    initIndex:Number($(el).attr("data-index"))
                 });
                 swiper.open();
             },

@@ -1145,13 +1145,12 @@
                 let $curUl = $(el).closest(".myPhotos");
                 $curUl.find("img.showPic").each(function (index,element) {
                     $(this).attr("data-index",index);
-                    let src=$(this).attr("src")+"?rd="+Math.random().toFixed(3)
-                    srcArr.push(src);
+                    srcArr.push($(this).attr("src"));
                 });
                 console.log(srcArr)
                 let swiper = $.photoBrowser({
                     items: srcArr,
-                    initIndex:$(el).attr("data-index")
+                    initIndex:Number($(el).attr("data-index"))
                 });
                 // swiper.open(index);
                 swiper.open();
@@ -1342,7 +1341,7 @@
                     console.log(mUserInfo)
                     Homepage.user_id = Number(mUserInfo.user_id);
                 } else {
-                    Homepage.user_id = 7; //测试用
+                    Homepage.user_id = 1; //测试用
                 }
 
                 //获取用户信息，绑定dom
