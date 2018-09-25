@@ -87,12 +87,12 @@ class User extends Base {
             if($type == 'auth_video'){
                 $video_thumb = $FileLogic->video2thumb($fullPath);
 
-                $count = Db::name('users_auth_video')->where('user_id', $user_id)->count();
-                if($count){
-                    Db::name('users_auth_video')->where('user_id', $user_id)->update(array('auth_video_url'=> $fullPath, 'video_thumb'=>$video_thumb, 'add_time' => time()));
-                } else {
-                    Db::name('users_auth_video')->insert(array('user_id'=>$user_id, 'auth_video_url'=> $fullPath, 'video_thumb'=>$video_thumb, 'add_time' => time()));
+                $oldAuthVideo = Db::name('users_auth_video')->where('user_id', $user_id)->find();
+                if($oldAuthVideo){
+                    Db::name('users_auth_video')->where('id', $oldAuthVideo['id'])->delete();
                 }
+
+                Db::name('users_auth_video')->insert(array('user_id'=>$user_id, 'auth_video_url'=> $fullPath, 'video_thumb'=>$video_thumb, 'add_time' => time()));
                 // 更新用户表视频认证状态
                 Db::name('users')->where('user_id', $user_id)->setField('auth_video_status', 1);
 
