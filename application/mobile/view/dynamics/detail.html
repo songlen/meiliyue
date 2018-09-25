@@ -13,7 +13,7 @@
     <script src="__STATIC__/js/Global.js"></script>
 </head>
 
-<body class="details" style="height:100vh;">
+<body class="details">
 
     <div class="vueWrap" id="vueApp">
         <header>
@@ -252,9 +252,6 @@
                 //是否是自己的动态 updateDom
                 if(Number(Details.user_id)==Number(Details.dynamic_origin_id)){
                     $("header a.isOperate").addClass("operate")
-                }
-                if(Global.isIOS()){
-                    $("body").css("height","calc(100vh + 47px)")
                 }
             },
             //送花
