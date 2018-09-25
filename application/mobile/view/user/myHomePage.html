@@ -1145,7 +1145,8 @@
                 let $curUl = $(el).closest(".myPhotos");
                 $curUl.find("img.showPic").each(function (index,element) {
                     $(this).attr("data-index",index);
-                    srcArr.push($(this).attr("src"));
+                    let src=$(this).attr("src")+"?rd="+Math.random().toFixed(3)
+                    srcArr.push(src);
                 });
                 console.log(srcArr)
                 let swiper = $.photoBrowser({
