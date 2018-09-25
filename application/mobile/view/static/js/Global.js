@@ -376,6 +376,7 @@ let Global = (function () {
             dataType: "json",
             success: function (result) {
                 console.log(result)
+                alert("找到url")
                 if(result.data&&result.data.video_url&&result.data.video_url!==""){
                     callback(result.data.video_url);
                 }else{
