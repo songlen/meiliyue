@@ -173,7 +173,7 @@ let Global = (function () {
 
                 <div class="fullScreenScroll">
                     <div class="fullScreenWrap">
-                        <video id="video1" width="100%" height="100%" src="${src}" poster=${posterSrc} autoplay="autoplay" loop ></video>
+                        <video id="video1" width="100%" height="100%" src="${src}" poster=${posterSrc} autoplay="autoplay" loop></video>
                     </div>
                 </div>
             </div>
@@ -376,7 +376,7 @@ let Global = (function () {
             dataType: "json",
             success: function (result) {
                 console.log(result)
-                alert("找到url")
+                // alert("找到url")
                 if(result.data&&result.data.video_url&&result.data.video_url!==""){
                     callback(result.data.video_url);
                 }else{

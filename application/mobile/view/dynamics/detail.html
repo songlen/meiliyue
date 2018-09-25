@@ -525,13 +525,13 @@
                     console.log(data)
                     data.areaDataList.list.forEach(function(obj){
                         if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
-                            obj.flower_num=Number(obj.flower_num)-1
+                            obj.flower_num=Number(obj.flower_num)+1
                             console.log("+++")
                         }
                     })
                     data.attendedDataList.list.forEach(function(obj){
                         if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
-                            obj.flower_num=Number(obj.flower_num)-1
+                            obj.flower_num=Number(obj.flower_num)+1
                         }
                     })
                     sessionStorage.setItem("dongtaiPage",JSON.stringify(data))
