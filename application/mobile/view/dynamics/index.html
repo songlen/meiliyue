@@ -643,7 +643,7 @@
                 updateLocalFlower:function(){
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                         let mUserInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
-                        mUserInfo.flower_num=Number(mUserInfo.flower_num)+1
+                        mUserInfo.flower_num=Number(mUserInfo.flower_num)-1
                         localStorage.setItem("mUserInfo",JSON.stringify(JSON.stringify(mUserInfo)))
                     }
                 },

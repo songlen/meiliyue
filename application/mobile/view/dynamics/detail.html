@@ -525,13 +525,13 @@
                     console.log(data)
                     data.areaDataList.list.forEach(function(obj){
                         if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
-                            obj.flower_num=Number(obj.flower_num)+1
+                            obj.flower_num=Number(obj.flower_num)-1
                             console.log("+++")
                         }
                     })
                     data.attendedDataList.list.forEach(function(obj){
                         if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
-                            obj.flower_num=Number(obj.flower_num)+1
+                            obj.flower_num=Number(obj.flower_num)-1
                         }
                     })
                     sessionStorage.setItem("dongtaiPage",JSON.stringify(data))
@@ -541,7 +541,7 @@
             updateLocalFlower:function(){
                 if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                     let mUserInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
-                    mUserInfo.flower_num=Number(mUserInfo.flower_num)+1
+                    mUserInfo.flower_num=Number(mUserInfo.flower_num)-1
                     localStorage.setItem("mUserInfo",JSON.stringify(JSON.stringify(mUserInfo)))
                 }
             },
