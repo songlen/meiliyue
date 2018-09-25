@@ -140,16 +140,8 @@ class User extends Base {
         
         // 发表动态
         if($file_type == 1){
-            $description = $type == '1' ? '上传了照片到相册' : '上传了精华照片到相册';
-            $dynamics_data = array(
-                'user_id' => $user_id,
-                'type' => 2,
-                'description' => $description,
-                'image' => $files,
-                'origin' => 4,
-                'add_time' => time(),
-            );
-            D('dynamics')->add($dynamics_data);
+            $DynamicLogic = new DynamicLogic();
+            $DynamicLogic->add($user_id, 4, $files);
         }
 
         response_success('', '上传成功');
