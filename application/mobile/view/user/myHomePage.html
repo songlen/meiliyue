@@ -1205,7 +1205,8 @@
                 $(".addMyPhotos1").click(function () {
                     // Homepage.addMyPhotos(this);
                     if(Global.isIOS()){
-                        Homepage.addMyPhotos(this);
+                        // Homepage.addMyPhotos(this);
+                        iosMulUpload(1,"uploadPhotos2")
                     }else{
                         window.Android.androidMulUpload(1,"uploadPhotos") //参数1：1图片 2视频  参数2：调用的js方法的名称
                     }
