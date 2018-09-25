@@ -54,7 +54,7 @@ class User extends Base {
     }
 
     /**
-     * [uploadFile 上传头像/认证视频]
+     * [uploadFile 上传头像/认证视频 app 原生调用]
      * @param [type] $[type] [文件类型 head_pic 头像 auth_video 视频认证]
      * @param  $[action] [ 默认 add 添加 edit 修改]
      * @return [type] [description]
@@ -107,6 +107,23 @@ class User extends Base {
             
         } else {
             response_error('', '提交失败');
+        }
+    }
+
+    // h5 修改头像
+    public function editHeadPic(){
+        $user_id = I('user_id/d');
+        $file = I('file');
+
+        /**************** 修改用户表 头像记录 ************/
+        if(false !== Db::name('users')->update(array('user_id'=>$user_id, 'head_pic'=>$file))){
+            // 更新上传头像动态
+            $DynamicLogic = new DynamicLogic();
+            $DynamicLogic->add($user_id, 2, array($file));
+
+            response_success('', '修改成功');
+        } else{
+            response_error('', '修改失败');
         }
     }
 
