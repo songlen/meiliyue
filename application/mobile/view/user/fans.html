@@ -264,7 +264,13 @@
 
                     let user_id = Fans.user_id;
                     let toUserId = $(this).attr("data-userId");
-                    window.location.href = Global.host + "/index.php/mobile/user/homePage/user_id/" +user_id + "/toUserId/" + toUserId + ".html";
+
+                    let url=Global.host + "/index.php/mobile/user/homePage/user_id/" +user_id + "/toUserId/" + toUserId + ".html"
+                    if(Global.isIOS()){
+                        window.location.href = url
+                    }else{
+                        window.Android.gotoNewWebView(url)
+                    }
                 });
             },
             init: function () {
