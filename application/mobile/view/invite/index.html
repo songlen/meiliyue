@@ -347,7 +347,7 @@
                             // proCode = "370000"; //山东 测试用
                             proCode=""; //测试用
                         } else {
-                            proCode = mUserInfo.province.toString();
+                            // proCode = mUserInfo.province.toString(); //测试用 先注释掉
                         }
                     } else {
                         // alert("无localStorage")
@@ -366,7 +366,8 @@
                         _self.defaultArea.code = "";  //人太少测试用 先用全国
                         // _self.defaultArea.text = "";
                         // _self.defaultArea.code = "";
-                        _self.selectedText = proObj.name;
+                        // _self.selectedText = proObj.name;
+                        _self.selectedText = "全国"; //人太少测试用 先用全国
                         console.log(_self.selectedText)
                         // _self.nowProvince = proObj.code; //人太少测试用 先用全国
                     }else{

@@ -441,6 +441,9 @@
                                         self.placeHolder = "输入评论";
                                         self.replyItem = null;
                                         self.isWhisper = false;
+                                        
+                                        //更新session里的评论数量
+                                        Details.plusCommentCount()
                                     }
                                 }
                             })
@@ -490,6 +493,25 @@
                         }
                     }
                 })
+            },
+            //修改动态index session的评论数量
+            plusCommentCount:function(){
+                //动态index
+                if(sessionStorage.getItem("dongtaiPage")&&sessionStorage.getItem("dongtaiPage")!==null&&sessionStorage.getItem("dongtaiPage")!=="null"){
+                    let data=JSON.parse(sessionStorage.getItem("dongtaiPage"))
+                    console.log(data)
+                    data.areaDataList.list.forEach(function(obj){
+                        if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
+                            obj.comment_count=(obj.comment_count)+1
+                        }
+                    })
+                    data.attendedDataList.list.forEach(function(obj){
+                        if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
+                            obj.comment_count=(obj.comment_count)+1
+                        }
+                    })
+                    sessionStorage.setItem("dongtaiPage",JSON.stringify(data))
+                }
             },
             showFullPic: function (el) {
                 let srcArr = [];

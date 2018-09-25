@@ -451,12 +451,18 @@ let Global = (function () {
 //上传文件的回调 args 文件路径
 function uploadOne(args,thumb) { // 路径/plulic/../..
     // alert("getJavaFiles")
-    alert(args)
+    // alert(args)
     // alert(thumb)
+    $("body").append($('<div>'+args+'</div>')) //测试用
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
     let src = Global.host + args; //video或img src
+    $("body").append($('<div>'+src+'</div>')) //测试用
+
+    // $("body").append($('<img src="'+src+'">')) //测试用
+    // $("body").append($('<div>'+aaa+'</div>')) //测试用
+
     let srcThumb=""; 
     if(thumb&&thumb!==""){
         srcThumb=Global.host + thumb; //thumb的src
