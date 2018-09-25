@@ -307,6 +307,9 @@
                 if (Edit._type !== 1) {
                     $(".edit-pic").show();
                 }
+                if(Global.isIOS()){
+                    $(".details-input").css("left","-47px")
+                }
             },
             eventsBind: function () {
                 //限制字数
