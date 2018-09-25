@@ -390,7 +390,7 @@
                 //我的动态
                 if (data.dynamics) {
                     let title=data.dynamics.content+data.dynamics.description;
-                    title=title.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "");
+                    title=title.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "").replace(/<img[^>]*>/g, "").trim()
                     let dynamics_id=data.dynamics.id;
                     $(".myTalkSome").append($('<p class="inviDetail" data-id="' + dynamics_id + '">' +title + '</p>'))
                 }else{
@@ -1341,7 +1341,7 @@
                     console.log(mUserInfo)
                     Homepage.user_id = Number(mUserInfo.user_id);
                 } else {
-                    Homepage.user_id = 1; //测试用
+                    Homepage.user_id = 7; //测试用
                 }
 
                 //获取用户信息，绑定dom
