@@ -319,6 +319,11 @@
             }
         }
         
+        //修改头像回调
+        function uploadHeadPic(args){
+            alert(args)
+        }
+        
         var Homepage = {
             _mTimer: null,
             user_id: "",
@@ -1342,13 +1347,18 @@
                     Global.fullScreenImg(src);
                 });
                 //头像 修改头像 隐藏域 input
-                $("#editHeadpic").change(function () {
-                    Homepage.editHeadpic(this);
-                });
+                // $("#editHeadpic").change(function () {
+                //     Homepage.editHeadpic(this);
+                // });
                 //头像 修改头像
                 $(".editHeadpic").click(function () {
-                    $('.home-cancel')[0].click(); //关闭弹窗
-                    $("#editHeadpic")[0].click();
+                    // $('.home-cancel')[0].click(); //关闭弹窗
+                    // $("#editHeadpic")[0].click();
+                    if(Global.isIOS()){
+                        //
+                    }else{
+                        window.Android.gotoJavaCamera(1,"uploadHeadPic"); //参数1：1图片 2视频  参数2：调用的js方法的名称
+                    }
                 });
             },
             init: function () {
