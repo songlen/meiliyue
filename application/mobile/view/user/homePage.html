@@ -344,9 +344,9 @@
                     Homepage.head_pic = head_pic;
                 }
                 //视频认证
-                if (Number(data.baseinfo.auth_video_status) === 2) {
-                    $(".edit-personal-avatar .videoStatus").show();
-                }
+                // if (Number(data.baseinfo.auth_video_status) === 2) {
+                //     $(".edit-personal-avatar .videoStatus").show();
+                // }
                 //sex
                 let sexClass = Number(data.baseinfo.sex) == 1 ? "male" : "female";
                 $(".avatar-content .sexAge").addClass(sexClass);
