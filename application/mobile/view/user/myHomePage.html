@@ -324,12 +324,10 @@
             alert(src)
             let postData={
                 user_id:Homepage.user_id,
-                type:"head_pic",
-                action:"edit",
-                file:""
+                file:src
             }
             console.log(postData)
-            let url = Global.host + "/index.php/Api/user/uploadFile";
+            let url = Global.host + "/index.php/Api/User/editHeadPic";
             Global.openLoading();
             $.ajax({
                 type: "POST",
