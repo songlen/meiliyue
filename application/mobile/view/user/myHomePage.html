@@ -295,9 +295,28 @@
 
     <script src="__STATIC__/js-min/user-myHomePage.min.js"></script>
     <script>
-        //上传头像 回调
-        function uploadHeadCallback(){
-            
+        //个人相册原生回调
+        function uploadPhotos(){
+            // alert(1)
+            if(true){ //安卓
+                var res=arguments[0] //图片路径数组
+
+                Homepage.uploadPic(res,1)
+            }else{ //ios
+
+            }
+        }
+
+        //精华照片原生回调
+        function uploadPhotos2(){
+            // alert(2)
+            if(true){ //安卓
+                var res=arguments[0] //图片路径数组
+
+                Homepage.uploadPic(res,2)
+            }else{ //ios
+
+            }
         }
         
         var Homepage = {
@@ -1205,7 +1224,8 @@
                 $(".addMyPhotos1").click(function () {
                     // Homepage.addMyPhotos(this);
                     if(Global.isIOS()){
-                        Homepage.addMyPhotos(this);
+                        // Homepage.addMyPhotos(this);
+                        iosMulUpload(1,"uploadPhotos")
                     }else{
                         window.Android.androidMulUpload(1,"uploadPhotos") //参数1：1图片 2视频  参数2：调用的js方法的名称
                     }
@@ -1213,7 +1233,8 @@
                 //添加图片 精华照片
                 $(".addMyPhotos2").click(function () {
                     if(Global.isIOS()){
-                        Homepage.addMyPhotos(this);
+                        // Homepage.addMyPhotos(this);
+                        iosMulUpload(1,"uploadPhotos2")
                     }else{
                         window.Android.androidMulUpload(1,"uploadPhotos2")
                     }

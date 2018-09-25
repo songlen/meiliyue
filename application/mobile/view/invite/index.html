@@ -360,8 +360,10 @@
                     //默认省
                     if(proCode!==""){
                         let proObj = getProvObj(proCode);
-                        _self.defaultArea.text = proObj.name; 
-                        _self.defaultArea.code = proObj.code; 
+                        // _self.defaultArea.text = proObj.name; 
+                        _self.defaultArea.text = "全国";  //人太少测试用 先用全国
+                        // _self.defaultArea.code = proObj.code; 
+                        _self.defaultArea.code = "";  //人太少测试用 先用全国
                         // _self.defaultArea.text = "";
                         // _self.defaultArea.code = "";
                         _self.selectedText = proObj.name;
