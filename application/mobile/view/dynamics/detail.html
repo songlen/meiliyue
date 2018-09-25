@@ -441,9 +441,20 @@
                                         self.placeHolder = "输入评论";
                                         self.replyItem = null;
                                         self.isWhisper = false;
+                                        
+                                        //更新session里的评论数量
+                                        Details.plusCommentCount()
                                     }
                                 }
                             })
+                        },
+                        //修改动态index session的评论数量
+                        plusCommentCount(){
+                            console.log()
+                            if(sessionStorage.getItem("dongtaiPage")&&sessionStorage.getItem("dongtaiPage")!==null&&sessionStorage.getItem("dongtaiPage")!=="null"){
+                                let data=JSON.parse(sessionStorage.getItem("dongtaiPage"))
+                                console.log(data)
+                            }
                         },
                         //头像加载失败，默认图片
                         defaultImg: function (event) {
