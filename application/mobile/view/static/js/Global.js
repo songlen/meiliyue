@@ -451,58 +451,61 @@ let Global = (function () {
 //上传文件的回调 args 文件路径
 function uploadOne(args,thumb) { // 路径/plulic/../..
     // alert("getJavaFiles")
-    alert(args)
+    // alert(args)
     // alert(thumb)
 
     // args="/public/upload/files/20180820/a706d74e6e9e4bc8c1d5e52b984047ab.jpg"; //测试用
 
     let src = Global.host + args; //video或img src
-    let srcThumb=""; 
-    if(thumb&&thumb!==""){
-        srcThumb=Global.host + thumb; //thumb的src
-    }
-    let url = args.toLowerCase();
+
+    $("body").append($('<img src="'+src+'">'))
+
+    // let srcThumb=""; 
+    // if(thumb&&thumb!==""){
+    //     srcThumb=Global.host + thumb; //thumb的src
+    // }
+    // let url = args.toLowerCase();
 
     //是图片
-    if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) {
-        let $liTemp = $(`
-            <li class="edit-pic-item">
-                <img class="showPic" data-index=${$(".edit-pic-item").length} src="${src}">
-                <a href="javascript:void(0)" class="edit-closePic"></a>
-            </li>
-        `);
+    // if (url.indexOf(".jpg") > -1 || url.indexOf(".jpeg") > -1 || url.indexOf(".gif") > -1 || url.indexOf(".png") > -1 || url.indexOf(".bmp") > -1 || url.indexOf(".tga") > -1 || url.indexOf(".svg") > -1) {
+    //     let $liTemp = $(`
+    //         <li class="edit-pic-item">
+    //             <img class="showPic" data-index=${$(".edit-pic-item").length} src="${src}">
+    //             <a href="javascript:void(0)" class="edit-closePic"></a>
+    //         </li>
+    //     `);
 
-        //取消图片
-        $liTemp.find("a.edit-closePic").click(function (event) {
-            event.stopPropagation();
-            let self = this;
-            Global.messageConfirWin("尚未发布，确认删除？", function () {
-                $(self).closest('.edit-pic-item').remove();
-            });
-        })
-        // alert("增加图片")
-        $(".showPicUl").prepend($liTemp);
-    }
-    //是视频
-    else if (url.indexOf(".mp4") > -1 || url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1 || url.indexOf(".mov") > -1) {
-        let $liTemp = $(`
-            <li class="edit-pic-item">
-                <img class="showPicVideo" src="${srcThumb}" data-src=${src} width="100%" height="100%"></img>
-                <a href="javascript:void(0)" class="edit-closePic"></a>
-            </li>
-        `);
+    //     //取消图片
+    //     $liTemp.find("a.edit-closePic").click(function (event) {
+    //         event.stopPropagation();
+    //         let self = this;
+    //         Global.messageConfirWin("尚未发布，确认删除？", function () {
+    //             $(self).closest('.edit-pic-item').remove();
+    //         });
+    //     })
+    //     // alert("增加图片")
+    //     $(".showPicUl").prepend($liTemp);
+    // }
+    // //是视频
+    // else if (url.indexOf(".mp4") > -1 || url.indexOf(".rm") > -1 || url.indexOf(".rmvb") > -1 || url.indexOf(".avi") > -1 || url.indexOf(".wmv") > -1 || url.indexOf(".mpg") > -1 || url.indexOf(".mpeg") > -1 || url.indexOf(".flv") > -1 || url.indexOf(".3gp") > -1 || url.indexOf(".mov") > -1) {
+    //     let $liTemp = $(`
+    //         <li class="edit-pic-item">
+    //             <img class="showPicVideo" src="${srcThumb}" data-src=${src} width="100%" height="100%"></img>
+    //             <a href="javascript:void(0)" class="edit-closePic"></a>
+    //         </li>
+    //     `);
 
-        //取消视频
-        $liTemp.find("a.edit-closePic").click(function (event) {
-            event.stopPropagation();
-            let self = this;
-            Global.messageConfirWin("尚未发布，确认删除？", function () {
-                $(self).closest('.edit-pic-item').remove();
-            });
-        })
-        // alert("增加视频")
-        $(".showPicUl").prepend($liTemp);
-    }
+    //     //取消视频
+    //     $liTemp.find("a.edit-closePic").click(function (event) {
+    //         event.stopPropagation();
+    //         let self = this;
+    //         Global.messageConfirWin("尚未发布，确认删除？", function () {
+    //             $(self).closest('.edit-pic-item').remove();
+    //         });
+    //     })
+    //     // alert("增加视频")
+    //     $(".showPicUl").prepend($liTemp);
+    // }
 }
 
 
