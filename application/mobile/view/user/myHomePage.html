@@ -1391,13 +1391,14 @@
                 url: url,
                 data: postData,
                 success: function (res) {
-                    if (result.code==200) {
+                    
+                    // if (result.code==200) {
                         Global.closeLoading("修改成功", function () {
                             //更新页面的头像
                             let head_pic_src=Global.host+src
                             $(".avatar-pic").find("img").attr("src",head_pic_src);
                         });
-                    }  
+                    // }  
                 }
             });
         }
