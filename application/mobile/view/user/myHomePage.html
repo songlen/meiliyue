@@ -390,6 +390,7 @@
                 //我的动态
                 if (data.dynamics) {
                     let title=data.dynamics.content+data.dynamics.description;
+                    title=title.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "");
                     let dynamics_id=data.dynamics.id;
                     $(".myTalkSome").append($('<p class="inviDetail" data-id="' + dynamics_id + '">' +title + '</p>'))
                 }else{
