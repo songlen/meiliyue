@@ -612,7 +612,7 @@
                 },
                 //动态列表送花
                 giveFlower: function (item) {
-                    var _self = this;
+                    var self = this;
                     console.log(item)
                     //用户id  动态id
                     var postData = {
@@ -622,7 +622,7 @@
                     console.log(postData)
                     $.ajax({
                         type: "POST",
-                        url: _self.GlobalHost + "/index.php/Api/Dynamics/giveFlower",
+                        url: self.GlobalHost + "/index.php/Api/Dynamics/giveFlower",
                         data: postData,
                         dataType: "json",
                         success: function (result) {
@@ -630,11 +630,22 @@
                             if (result.msg == "操作成功" && result.code !== 400) {
                                 //小花数量加一
                                 item.flower_num = Number(item.flower_num) + 1;
+                                
+                                //修改localstorage小花数量
+                                self.updateLocalFlower()
                             } else { //送花失败
                                 Global.messageWin("您的小花数量不足！");
                             }
                         }
                     });
+                },
+                //修改localstorage的小花数量
+                updateLocalFlower:function(){
+                    if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
+                        let mUserInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
+                        mUserInfo.flower_num=Number(mUserInfo.flower_num)-1
+                        localStorage.setItem("mUserInfo",JSON.stringify(JSON.stringify(mUserInfo)))
+                    }
                 },
                 closeReleasing: function () {
                     if (this.isReleasing) {

@@ -294,6 +294,11 @@
                             // }
                             //已有小花数量加一
                             $(".flowerCount").html(Number($(".flowerCount").html()) + 1)
+                            
+                            //修改session小花数量
+                            Details.plusSesstionFlower()
+                            //修改localstorage小花数量
+                            Details.updateLocalFlower()
                         } else {
                             Global.messageWin("您的小花数量不足！");
                         }
@@ -502,15 +507,42 @@
                     console.log(data)
                     data.areaDataList.list.forEach(function(obj){
                         if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
-                            obj.comment_count=(obj.comment_count)+1
+                            obj.comment_count=Number(obj.comment_count)+1
                         }
                     })
                     data.attendedDataList.list.forEach(function(obj){
                         if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
-                            obj.comment_count=(obj.comment_count)+1
+                            obj.comment_count=Number(obj.comment_count)+1
                         }
                     })
                     sessionStorage.setItem("dongtaiPage",JSON.stringify(data))
+                }
+            },
+            //修改session的小花数量
+            plusSesstionFlower:function(){
+                if(sessionStorage.getItem("dongtaiPage")&&sessionStorage.getItem("dongtaiPage")!==null&&sessionStorage.getItem("dongtaiPage")!=="null"){
+                    let data=JSON.parse(sessionStorage.getItem("dongtaiPage"))
+                    console.log(data)
+                    data.areaDataList.list.forEach(function(obj){
+                        if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
+                            obj.flower_num=Number(obj.flower_num)-1
+                            console.log("+++")
+                        }
+                    })
+                    data.attendedDataList.list.forEach(function(obj){
+                        if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
+                            obj.flower_num=Number(obj.flower_num)-1
+                        }
+                    })
+                    sessionStorage.setItem("dongtaiPage",JSON.stringify(data))
+                }
+            },
+            //修改localstorage的小花数量
+            updateLocalFlower:function(){
+                if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
+                    let mUserInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
+                    mUserInfo.flower_num=Number(mUserInfo.flower_num)-1
+                    localStorage.setItem("mUserInfo",JSON.stringify(JSON.stringify(mUserInfo)))
                 }
             },
             showFullPic: function (el) {
