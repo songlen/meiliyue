@@ -322,7 +322,9 @@
                 //添加图片
                 $(".addPic").click(function () {
                     //视频
+                    let type
                     if(Edit._type==3){
+                        type=2
                         if ($("img.showPicVideo").length >= 1) {
                             Global.messageWin("视频最多上传一个");
                             return;
@@ -330,19 +332,17 @@
                     }
                     //图片
                     else{
+                        type=1
                         if ($("img.showPic").length >= 9) {
                             Global.messageWin("最多上传9张图片");
                             return;
                         }
                     }
 
-                    // alert(Global.isIOS())
-
                     if(Global.isIOS()){
-                        jumpIOS(Edit._type);
+                        jumpIOS(type,"uploadOne")
                     }else{
-                        window.Android.gotoJavaCamera(Edit._type); //type为3是拍视频，不为3是拍照
-                        // getJavaFiles(""); //测试用
+                        window.Android.gotoJavaCamera(type,"uploadOne")
                     }
                 });
                 //点击图片显示大图
