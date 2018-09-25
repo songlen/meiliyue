@@ -295,56 +295,6 @@
 
     <script src="__STATIC__/js-min/user-myHomePage.min.js"></script>
     <script>
-        //个人相册原生回调
-        function uploadPhotos(){
-            // alert(1)
-            if(true){ //安卓
-                var res=arguments[0] //图片路径数组
-
-                Homepage.uploadPic(res,1)
-            }else{ //ios
-
-            }
-        }
-
-        //精华照片原生回调
-        function uploadPhotos2(){
-            // alert(2)
-            if(true){ //安卓
-                var res=arguments[0] //图片路径数组
-
-                Homepage.uploadPic(res,2)
-            }else{ //ios
-
-            }
-        }
-        
-        //修改头像回调
-        function uploadHeadPic(src){
-            alert(src)
-            let postData={
-                user_id:Homepage.user_id,
-                file:src
-            }
-            console.log(postData)
-            let url = Global.host + "/index.php/Api/User/editHeadPic";
-            Global.openLoading();
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: postData,
-                success: function (res) {
-                    if (result.code==200&&result.data&&result.data!=="") {
-                        Global.closeLoading("修改成功", function () {
-                            //更新页面的头像
-                            let head_pic_src=Global.host+src
-                            $(".avatar-pic").find("img").attr("src",head_pic_src);
-                        });
-                    }  
-                }
-            });
-        }
-        
         var Homepage = {
             _mTimer: null,
             user_id: "",
@@ -1401,6 +1351,56 @@
         $(function () {
             Homepage.init();
         });
+
+         //个人相册原生回调
+         function uploadPhotos(){
+            // alert(1)
+            if(true){ //安卓
+                var res=arguments[0] //图片路径数组
+
+                Homepage.uploadPic(res,1)
+            }else{ //ios
+
+            }
+        }
+
+        //精华照片原生回调
+        function uploadPhotos2(){
+            // alert(2)
+            if(true){ //安卓
+                var res=arguments[0] //图片路径数组
+
+                Homepage.uploadPic(res,2)
+            }else{ //ios
+
+            }
+        }
+        
+        //修改头像回调
+        function uploadHeadPic(src){
+            alert(src)
+            let postData={
+                user_id:Homepage.user_id,
+                file:src
+            }
+            console.log(postData)
+            let url = Global.host + "/index.php/Api/User/editHeadPic";
+            Global.openLoading();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: postData,
+                success: function (res) {
+                    if (result.code==200) {
+                        Global.closeLoading("修改成功", function () {
+                            //更新页面的头像
+                            let head_pic_src=Global.host+src
+                            $(".avatar-pic").find("img").attr("src",head_pic_src);
+                        });
+                    }  
+                }
+            });
+        }
     </script>
 </body>
 
