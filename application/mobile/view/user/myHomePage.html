@@ -1326,6 +1326,7 @@
                     $('.home-cancel')[0].click(); //关闭弹窗
                     // $("#editHeadpic")[0].click();
                     if(Global.isIOS()){
+                        console.log("ios")
                         jumpIOS(1,"uploadHeadPic");
                     }else{
                         window.Android.gotoJavaCamera(1,"uploadHeadPic"); //参数1：1图片 2视频  参数2：调用的js方法的名称
