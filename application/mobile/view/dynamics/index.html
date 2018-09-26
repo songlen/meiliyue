@@ -75,8 +75,8 @@
                                 <p v-cloak v-else v-html="toHtml(item.content)"></p>
                                 <!-- 图片 -->
                                 <div v-cloak v-if="item.image&&item.image.length!==0">
-                                    <div class="dynamicImgBox">
-                                        <img v-for="(item,index) in item.image" :key="index" :src="GlobalHost+item">
+                                    <div class="dynamicImgBox" v-for="(item,index) in item.image" :key="index" style="display:inline-block;">
+                                        <img :src="GlobalHost+item">
                                     </div>
                                 </div>
                                 <!-- video -->
@@ -137,8 +137,8 @@
                                 <p v-cloak v-else v-html="toHtml(item.content)"></p>
                                 <!-- 图片 -->
                                 <div v-cloak v-if="item.image&&item.image.length!==0">
-                                    <div class="dynamicImgBox">
-                                        <img v-for="(item,index) in item.image" :key="index" :src="GlobalHost+item">
+                                    <div class="dynamicImgBox" v-for="(item,index) in item.image" :key="index" style="display:inline-block;">
+                                        <img :src="GlobalHost+item">
                                     </div>
                                 </div>
                                 <!-- video -->
