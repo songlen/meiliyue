@@ -245,6 +245,9 @@
                 }
             },
             initSomeDom: function () {
+                //设置地区选择器
+                ReleInvite.setAreaDefault()
+
                 //地点选择器
                 $("#city-picker").cityPicker({
                     title: "请选择地区",
@@ -263,7 +266,19 @@
             },
             //改变 地址 选择器默认值
             setAreaDefault: function () {
-
+                if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
+                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                    console.log(mUserInfo)
+                    let provCode=mUserInfo.permanent_province
+                    let cityCode=mUserInfo.permanent_city
+                    if(provCode&&provCode.length==6&&cityCode&&cityCode.length==6){
+                        let provObj=getProvObj(provCode)
+                        let cityObj=getCityObj(cityCode)
+                        if(JSON.stringify(provObj)!=="{}"&&JSON.stringify(cityObj)!=="{}"){
+                            document.getElementById("city-picker").value = provObj.name + " " +cityObj.name
+                        }
+                    }
+                }
             },
             //发布邀约
             publishInvit: function () {
