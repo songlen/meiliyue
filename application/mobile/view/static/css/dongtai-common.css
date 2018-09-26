@@ -674,14 +674,12 @@ a.operate {
 
 .detailImgBox {
     display: inline-block;
-    width: calc(33% - 5px);
+    width: calc(33% - 6px);
     /* max-height: 80px; */
-    /* height: 1rem; */
+    height: 1rem;
     overflow: hidden;
     margin-top: 5px;
     position: relative;
-    height: 0;
-    padding: 32%;
 }
 
 .details-content .details-content-text img {
