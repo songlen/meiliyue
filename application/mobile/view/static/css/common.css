@@ -468,8 +468,10 @@ footer li a {
 }
 
 .invitation .items li .bottom .more>div {
-  width: 0.43rem;
-  height: 0.43rem;
+  /* width: 0.43rem;
+  height: 0.43rem; */
+  width: 0.75rem;
+  height: 0.75rem;
   overflow: hidden;
   border: 1px solid #f1f1f1;
 }
