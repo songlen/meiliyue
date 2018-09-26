@@ -99,7 +99,7 @@
                                     <div class="friendHeadWrap">
                                         <img src=${headUrl} onload="Global.resizeHeadpic(this)">
                                     </div>
-                                    <span class="videoStatus" style="display:none;"></span>
+                                    <span class="videoStatus" style="width:0.18rem;height:0.18rem;right:-0.02rem;bottom:-0.02rem;display:none;"></span>
                                 </div>
 
                                 <div class="comments-text">
@@ -121,13 +121,13 @@
                         if (Number(item.auth_video_status) == 2) {
                             $li.find(".videoStatus").show();
 
-                            $li.find(".videoStatus").click(function(){
-                                let user_id=$li.attr("data-userId");
-                                Global.getAuthVideoUrl(user_id,function(url){
-                                    let src=Global.host+url;
-                                    Global.fullScreen(src);
-                                });
-                            });
+                            // $li.find(".videoStatus").click(function(){
+                            //     let user_id=$li.attr("data-userId");
+                            //     Global.getAuthVideoUrl(user_id,function(url){
+                            //         let src=Global.host+url;
+                            //         Global.fullScreen(src);
+                            //     });
+                            // });
                         }
                         //sex
                         if (Number(item.sex) == 1) {
