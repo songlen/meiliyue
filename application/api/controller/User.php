@@ -689,6 +689,8 @@ class User extends Base {
         $data['user_id'] = I('user_id');
         $data['content'] = I('content');
 
+        $data['add_time'] = time();
+
         if($_FILES['image']){
             $FileLogic = new FileLogic();
             $uploadPath = UPLOAD_PATH.'feedback';

@@ -3,6 +3,7 @@ return	array(
 	'system'=>array('name'=>'系统','child'=>array(
 				array('name' => '设置','child' => array(
 						array('name'=>'网站设置','act'=>'index','op'=>'System'),
+						array('name'=>'意见反馈','act'=>'index','op'=>'Feedback'),
 						// array('name'=>'友情链接','act'=>'linkList','op'=>'Article'),
 						array('name'=>'清除缓存','act'=>'cleanCache','op'=>'System'),
 				)),

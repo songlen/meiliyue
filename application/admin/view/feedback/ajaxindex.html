@@ -1,48 +1,31 @@
 <div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
     <table>
         <tbody>
-        <volist name="userList" id="list">
-            <tr data-id="{$list['user_id']}">
+        <volist name="lists" id="list">
+            <tr data-id="{$list['id']}" user_id="{$list['user_id']}">
                 <td class="sign">
                     <div style="width: 24px;"><i class="ico-check"></i></div>
                 </td>
                 <td align="left" class="">
-                    <div style="text-align: center; width: 40px;">{$list.user_id}</div>
+                    <div style="text-align: center; width: 40px;">{$list.id}</div>
                 </td>
                 <td align="left" class="">
                     <div style="text-align: center; width: 150px;">{$list.nickname}</div>
                 </td>
-                <!-- <td align="left" class="">
-                    <div style="text-align: center; width: 50px;">{$level[$list[level]]}</div>
+                <td align="left" class="">
+                    <div style="text-align: center; width: 80px;">{$list.uuid}</div>
                 </td>
                 <td align="left" class="">
-                    <div style="text-align: center; width: 50px;">{$list.total_amount}</div>
-                </td>
-                <td align="left" class="">
-                    <div style="text-align: center; width: 150px;">{$list.email}
-                        <if condition="($list['email_validated'] eq 0) AND ($list['email'])">
-                            (未验证)
-                        </if>
-                    </div>
-                </td> -->
-                <td align="left" class="">
-                    <div style="text-align: center; width: 80px;">{$list.account_mobile}
-
+                    <div style="text-align: center; width: 300px;">
+                        {$list.content}
                     </div>
                 </td>
-               <!--  <td align="left" class="">
-                   <div style="text-align: center; width: 60px;">{$list.user_money}</div>
-               </td>
-               <td align="left" class="">
-                   <div style="text-align: center; width: 60px;">{$list.pay_points}</div>
-               </td> -->
                 <td align="left" class="">
-                    <div style="text-align: center; width: 120px;">{$list.reg_time|date='Y-m-d H:i',###}</div>
+                    <div style="text-align: center; width: 120px;">{$list.add_time|date='Y-m-d H:i',###}</div>
                 </td>
                 <td align="center" class="handle">
                     <div style="text-align: center; width: 170px; max-width:250px;">
-                        <a class="btn blue" href="{:U('Admin/user/detail',array('id'=>$list['user_id']))}"><i class="fa fa-pencil-square-o"></i>详情</a>
-                        <!-- <a class="btn blue" href="{:U('Admin/user/account_log',array('id'=>$list['user_id']))}"><i class="fa fa-search"></i>资金</a> -->
+                        <a class="btn blue" href="{:U('Admin/feedback/detail',array('id'=>$list['id']))}">查看详情</a>
                         
                     </div>
                 </td>
@@ -90,4 +73,20 @@
         }, function () {
         });
     }
+
+
+    // 修改状态
+    $('select[name=status]').change(function(){
+        var user_id = $(this).parents('tr').attr('user_id');
+        var id = $(this).parents('tr').attr('data-id');
+        var status = $(this).val();
+
+        $.ajax({
+            url: "index.php/admin/CarAuth/changeStatus/id/"+id+"/user_id/"+user_id+"/status/"+status,
+            type: 'get',
+            success:function(data){
+                layer.msg('操作成功');
+            }
+        })
+    })
 </script>
