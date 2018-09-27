@@ -371,13 +371,13 @@
                                 if(Number(item.auth_video_status)==2){
                                     $liTemp.find(".videoStatus").show();
 
-                                    $liTemp.find(".videoStatus").click(function(){
-                                        let user_id=$liTemp.attr("data-toUserId");
-                                        Global.getAuthVideoUrl(user_id,function(url){
-                                            let src=Global.host+url;
-                                            Global.fullScreen(src);
-                                        });
-                                    });
+                                    // $liTemp.find(".videoStatus").click(function(){
+                                    //     let user_id=$liTemp.attr("data-toUserId");
+                                    //     Global.getAuthVideoUrl(user_id,function(url){
+                                    //         let src=Global.host+url;
+                                    //         Global.fullScreen(src);
+                                    //     });
+                                    // });
                                 }
                                 //sex
                                 if (Number(item.sex) == 1) { //男
@@ -485,11 +485,11 @@
                 });
                 //点击认证视频
                 $(".videoStatusWrap").delegate(".videoStatus","click",function(){
-                    let user_id=Interested.toUserId;
-                    Global.getAuthVideoUrl(user_id,function(url){
-                        let src=Global.host+url;
-                        Global.fullScreen(src);
-                    });
+                    // let user_id=Interested.toUserId;
+                    // Global.getAuthVideoUrl(user_id,function(url){
+                    //     let src=Global.host+url;
+                    //     Global.fullScreen(src);
+                    // });
                 });
                 //点击删除
                 $(".deleteDetail").click(function(){

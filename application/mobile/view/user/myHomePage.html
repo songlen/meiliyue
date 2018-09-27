@@ -1269,11 +1269,11 @@
                 })
                 //点击视频认证
                 $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
-                    let user_id=Homepage.user_id;
-                    Global.getAuthVideoUrl(user_id,function(url){
-                        let src=Global.host+url;
-                        Global.fullScreen(src);
-                    });
+                    // let user_id=Homepage.user_id;
+                    // Global.getAuthVideoUrl(user_id,function(url){
+                    //     let src=Global.host+url;
+                    //     Global.fullScreen(src);
+                    // });
                 });
                 //点击我的邀约，跳邀约详情
                 $(".myInviteSome").delegate("p.inviDetail", "click", function () {

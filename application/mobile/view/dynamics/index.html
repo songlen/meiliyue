@@ -75,8 +75,8 @@
                                 <p v-cloak v-else v-html="toHtml(item.content)"></p>
                                 <!-- 图片 -->
                                 <div v-cloak v-if="item.image&&item.image.length!==0">
-                                    <div class="dynamicImgBox">
-                                        <img v-for="(item,index) in item.image" :key="index" :src="GlobalHost+item">
+                                    <div class="dynamicImgBox" v-for="(item,index) in item.image" :key="index" style="display:inline-block;margin-right: 3px;">
+                                        <img :src="GlobalHost+item">
                                     </div>
                                 </div>
                                 <!-- video -->
@@ -137,8 +137,8 @@
                                 <p v-cloak v-else v-html="toHtml(item.content)"></p>
                                 <!-- 图片 -->
                                 <div v-cloak v-if="item.image&&item.image.length!==0">
-                                    <div class="dynamicImgBox">
-                                        <img v-for="(item,index) in item.image" :key="index" :src="GlobalHost+item">
+                                    <div class="dynamicImgBox" v-for="(item,index) in item.image" :key="index" style="display:inline-block;margin-right: 3px;">
+                                        <img :src="GlobalHost+item">
                                     </div>
                                 </div>
                                 <!-- video -->
@@ -604,11 +604,11 @@
                     });
                 },
                 openVideoScreen(item) {
-                    let user_id=item.user_id;
-                    Global.getAuthVideoUrl(user_id,function(url){
-                        let src=Global.host+url;
-                        Global.fullScreen(src);
-                    });
+                    // let user_id=item.user_id;
+                    // Global.getAuthVideoUrl(user_id,function(url){
+                    //     let src=Global.host+url;
+                    //     Global.fullScreen(src);
+                    // });
                 },
                 //动态列表送花
                 giveFlower: function (item) {

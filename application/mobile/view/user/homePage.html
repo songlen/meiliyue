@@ -771,12 +771,12 @@
                 //点击 “关注” 系列 end
                 //点击视频认证
                 $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
-                    Global.getAuthVideoUrl(Homepage.toUserId,function(url){
-                        console.log(url)
-                        //全屏预览视频
-                        let src=Global.host+url;
-                        Global.fullScreen(src);
-                    });
+                    // Global.getAuthVideoUrl(Homepage.toUserId,function(url){
+                    //     console.log(url)
+                    //     //全屏预览视频
+                    //     let src=Global.host+url;
+                    //     Global.fullScreen(src);
+                    // });
                 });
                 //点击我的邀约，跳邀约详情
                 $(".myInviteSome").delegate("p.inviDetail", "click", function () {

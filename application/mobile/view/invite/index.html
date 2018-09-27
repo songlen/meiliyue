@@ -142,7 +142,7 @@
                                         </ul>
                                         <!-- 图片 -->
                                         <div v-cloak v-if="item.image&&item.image!==''">
-                                            <img :src="GlobalHost+item.image">
+                                            <img :src="GlobalHost+item.image" onload="Global.resizeHeadpic(this)">
                                         </div>
                                     </div>
                                 </div>
@@ -774,11 +774,11 @@
                         });
                     },
                     showVideo: function (item) {
-                        let user_id=item.user_id;
-                        Global.getAuthVideoUrl(user_id,function(url){
-                            let src=Global.host+url;
-                            Global.fullScreen(src);
-                        });
+                        // let user_id=item.user_id;
+                        // Global.getAuthVideoUrl(user_id,function(url){
+                        //     let src=Global.host+url;
+                        //     Global.fullScreen(src);
+                        // });
                     },
                     closeReleasing: function () {
                         if (this.isPlusing) {

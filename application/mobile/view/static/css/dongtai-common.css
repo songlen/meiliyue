@@ -674,7 +674,7 @@ a.operate {
 
 .detailImgBox {
     display: inline-block;
-    width: calc(33.3333% - 1px);
+    width: calc(33% - 6px);
     /* max-height: 80px; */
     height: 1rem;
     overflow: hidden;
