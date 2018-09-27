@@ -250,10 +250,8 @@
     <script src="__STATIC__/js-min/dynamics-index.min.js"></script>
     <!-- 页面--js -->
     <script>
+        //刷新页面
         function reloadIndex(){
-            alert("刷新webviewA")
-            // window.location.reload() 
-
             $('.pageWrap').pullToRefresh('triggerPullToRefresh')
         }
         var dongtaiVm = new Vue({

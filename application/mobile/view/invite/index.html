@@ -284,6 +284,9 @@
 
     <script src="__STATIC__/js-min/invite-index.min.js"></script>
     <script>
+        function reloadInviteIndex(){
+            $('.dropRefresh').pullToRefresh('triggerPullToRefresh')
+        }
         $(function () {
             //页面宽高
             $(".options li").width($(".optionsWrap").width() / 6)
