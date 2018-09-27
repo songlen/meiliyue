@@ -277,7 +277,11 @@
                         let provObj=getProvObj(provCode)
                         let cityObj=getCityObj(cityCode)
                         if(JSON.stringify(provObj)!=="{}"&&JSON.stringify(cityObj)!=="{}"){
-                            document.getElementById("city-picker").value = provObj.name + " " +cityObj.name
+                            let picker=document.getElementById("city-picker")
+                            picker.value = provObj.name + " " +cityObj.name
+                            picker.setAttribute("data-code",cityCode)
+                            picker.setAttribute("data-codes",provCode+","+cityCode)
+                            // data-code="140100" data-codes="140000,140100"
                         }
                     }
                 }
