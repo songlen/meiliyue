@@ -523,6 +523,6 @@ function uploadOne(args,thumb) { // 路径/plulic/../..
 //原生上传单张图片
 // window.Android.androidOneUpload(1,"uploadPhotos") //参数1：1图片 2视频  参数2：调用的js方法的名称
 
-function reloadIndex(){
-    alert("刷新webviewA")
-}
+// function reloadIndex(){
+//     alert("刷新webviewA")
+// }
