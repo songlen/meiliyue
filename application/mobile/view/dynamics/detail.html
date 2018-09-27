@@ -268,10 +268,11 @@
                     data: postData,
                     dataType: "json",
                     success: function (result) {
+                        console.log(result)
                         //这里需要更多信息？？
                         // let sendedFlowersCount = 2 //已送2朵小花
                         // let leftFlowersCount = 99 //自己剩余99朵小花
-                        if (result.msg == "操作成功" && result.code !== 400) {
+                        if (Number(result.code) == 200) {
                             // //显示提示弹窗
                             // $(".flowerDialog .sendSuccessCount").text(sendedFlowersCount)
                             // $(".flowerDialog .dialogLeftFlowers").text(leftFlowersCount)
@@ -298,7 +299,7 @@
                             //修改session小花数量
                             Details.plusSesstionFlower()
                             //修改localstorage小花数量
-                            Details.updateLocalFlower()
+                            Details.updateLocalFlower(result.data.flower_num)
                         } else {
                             Global.messageWin("您的小花数量不足！");
                         }
@@ -538,10 +539,10 @@
                 }
             },
             //修改localstorage的小花数量
-            updateLocalFlower:function(){
+            updateLocalFlower:function(num){
                 if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                     let mUserInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
-                    mUserInfo.flower_num=Number(mUserInfo.flower_num)-1
+                    mUserInfo.flower_num=num
                     localStorage.setItem("mUserInfo",JSON.stringify(JSON.stringify(mUserInfo)))
                 }
             },
