@@ -406,7 +406,7 @@ let Global = (function () {
     }
 
     function resizeHeadpic(imgEle){
-        console.log(imgEle.width,imgEle.height)
+        // console.log(imgEle.width,imgEle.height)
         if(imgEle.width>imgEle.height){
             imgEle.style.width="auto"
             imgEle.style.height="100%"

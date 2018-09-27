@@ -141,8 +141,13 @@
                                                 <span class="smallDot"></span>{{item.place}}</li>
                                         </ul>
                                         <!-- 图片 -->
-                                        <div v-cloak v-if="item.image&&item.image!==''">
+                                        <div v-cloak v-if="item.image&&item.image!==''" style="position:relative;">
                                             <img :src="GlobalHost+item.image" onload="Global.resizeHeadpic(this)">
+
+                                            <span class="showImgNum" v-cloak v-if="item.image_num&&Number(item.image_num)>1">
+                                                <img src="__STATIC__/images/icon/添加白色.png">
+                                                <span class="showImgNumCount">{{item.image_num}}</span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

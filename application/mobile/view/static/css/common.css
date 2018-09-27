@@ -1943,3 +1943,20 @@ li.edit-pic-item {
   overflow: hidden;
   height: 100px;
 }
+/* 邀约详情图片 数量 */
+.showImgNum{
+  position: absolute;
+  top: 0;
+  right: 1px;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  display: flex;
+}
+.showImgNum>img{
+  width: 0.16rem;
+  height: 0.12rem;
+  margin: 1px;
+}
+.showImgNumCount{
+  color: #fff;
+}
