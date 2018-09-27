@@ -72,6 +72,7 @@ class Invite extends Base {
                 // 反序列化图片
                 $image = $item['image'] ? unserialize($item['image']) : '';
                 $item['image'] = $image ? $image[0] : '';
+                $item['image_num'] = count($image);
 
                 // 计算用户和发布者之间的距离，sql计算出来的是米 这里转换成 km
                 $item['distance'] = round($item['distance']/1000, 2); 
