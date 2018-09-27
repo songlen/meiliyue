@@ -206,7 +206,8 @@ class Dynamics extends Base {
         Db::name('users')->where('user_id', $user_id)->setDec('flower_num', 1);
         Db::name('dynamics')->where('id', $dynamic_id)->setInc('flower_num', 1);
 
-        response_success('', '操作成功');
+        $flower_num  = $user['flower_num']-1;
+        response_success(array('flower_num'=>$flower_num), '操作成功');
     }
 
     /**
