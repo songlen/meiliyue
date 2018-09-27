@@ -250,6 +250,10 @@
     <script src="__STATIC__/js-min/dynamics-index.min.js"></script>
     <!-- 页面--js -->
     <script>
+        //刷新页面
+        function reloadIndex(){
+            $('.pageWrap').pullToRefresh('triggerPullToRefresh')
+        }
         var dongtaiVm = new Vue({
             el: "#dongtaiApp",
             data: {
@@ -627,12 +631,12 @@
                         dataType: "json",
                         success: function (result) {
                             console.log(result)
-                            if (result.msg == "操作成功" && result.code !== 400) {
+                            if (Number(result.code) == 200) {
                                 //小花数量加一
                                 item.flower_num = Number(item.flower_num) + 1;
                                 
                                 //修改localstorage小花数量
-                                self.updateLocalFlower()
+                                self.updateLocalFlower(result.data.flower_num)
                             } else { //送花失败
                                 Global.messageWin("您的小花数量不足！");
                             }
@@ -640,10 +644,10 @@
                     });
                 },
                 //修改localstorage的小花数量
-                updateLocalFlower:function(){
+                updateLocalFlower:function(num){
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                         let mUserInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
-                        mUserInfo.flower_num=Number(mUserInfo.flower_num)-1
+                        mUserInfo.flower_num=num
                         localStorage.setItem("mUserInfo",JSON.stringify(JSON.stringify(mUserInfo)))
                     }
                 },
