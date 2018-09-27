@@ -252,7 +252,9 @@
     <script>
         function reloadIndex(){
             alert("刷新webviewA")
-            window.location.reload() 
+            // window.location.reload() 
+
+            $('.pageWrap').pullToRefresh('triggerPullToRefresh')
         }
         var dongtaiVm = new Vue({
             el: "#dongtaiApp",
