@@ -39,7 +39,7 @@
                                 <div class="img-box">
                                     <img src="__STATIC__/images/icon/tx.png" onload="Global.resizeHeadpic(this)">
                                 </div>
-                                <span class="videoStatus" style="display:none;"></span>
+                                <span class="videoStatus" style="display:none;width: 0.18rem;height: 0.18rem;right: -0.02rem;bottom: 0;"></span>
                             </div>
                                 
                             <div class="details">
@@ -516,10 +516,6 @@
         }
         $(function () {
             Interested.init()
-
-            if(Global.isIOS()){
-                $("html").css("height","calc(100vh + 50px)")
-            }
         })
     </script>
 </body>
