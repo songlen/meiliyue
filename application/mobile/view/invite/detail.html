@@ -72,7 +72,7 @@
                                 <span class="description"></span>
                             </li>
                             <!-- 图片 -->
-                            <li class="detailImages" style="display:none;">
+                            <li class="detailImages" style="display:none;font-size:0;">
                             </li>
                             <!-- 付钱 -->
                             <li class="payTypeLi" style="display:none;">
@@ -243,7 +243,7 @@
                     data.image.forEach(function (src, index) {
                         $(".detailImages").append($(
                             `
-                                <div class="inviImgWrap">
+                                <div class="inviImgWrap" style="font-size:0;">
                                     <img class="inviImg" data-index=${index} src=${Global.host+src}>
                                 </div>
                             `
