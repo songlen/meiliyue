@@ -1938,7 +1938,7 @@ li.edit-pic-item {
 /* 邀约详情图片 */
 .inviImgWrap {
   display: inline-block;
-  width: calc(30% - 5px);
+  width: calc(30% - 16px);
   margin: 5px;
   overflow: hidden;
   height: 100px;

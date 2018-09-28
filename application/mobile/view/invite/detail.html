@@ -11,6 +11,14 @@
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
     </script>
     <script src="__STATIC__/js/Global.js"></script>
+    <style>
+        html{
+            height: 100vh;
+        }
+        body{
+            height: 100%;
+        }
+    </style>
 </head>
 
 <body class="interested">
@@ -508,6 +516,10 @@
         }
         $(function () {
             Interested.init()
+
+            if(Global.isIOS()){
+                $("html").css("height","calc(100vh + 50px)")
+            }
         })
     </script>
 </body>
