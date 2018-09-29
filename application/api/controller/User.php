@@ -792,7 +792,7 @@ class User extends Base {
     }
 
     // 我的账户页面
-    public function myacount(){
+    public function myaccount(){
         $user_id = I('user_id');
 
         $user = M('users')->where('user_id', $user_id)
