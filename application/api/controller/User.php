@@ -803,6 +803,7 @@ class User extends Base {
         $goldcoin = M('goldcoin')
                         ->where('is_delete', 0)
                         ->order('sort desc, id asc')
+                        ->field('id, num, give_num, price, thumb')
                         ->find();
 
         $user['withdraw'] = $user['goldcoin']/100;
