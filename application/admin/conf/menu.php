@@ -85,6 +85,10 @@ return	array(
 			//array('name'=>'会员整合','act'=>'integrate','op'=>'User'),
 			// array('name'=>'会员签到','act'=>'signList','op'=>'User'),
 		)),
+		array('name'=>'金币', 'child'=>array(
+			array('name'=>'金币商品','act'=>'index','op'=>'goldcoin'),
+			
+		)),
 		array('name'=>'邀约', 'child'=>array(
 			array('name'=>'邀约列表','act'=>'index','op'=>'Invite'),
 			

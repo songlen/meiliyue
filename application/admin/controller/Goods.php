@@ -8,7 +8,7 @@ use think\Loader;
 use think\Page;
 use think\Db;
 
-class Goods extends Base {
+class Goodcoin extends Base {
     
     /**
      *  商品分类列表
@@ -46,7 +46,7 @@ class Goods extends Base {
                 }
                 
                 //$cat_list = M('goods_category')->where("parent_id = 0")->select(); 
-                //$this->assign('cat_list',$cat_list);         
+                //$this->assign('cat_list',$cat_list);
                 return $this->fetch('_category');
                 exit;
             }
