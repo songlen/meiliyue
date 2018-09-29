@@ -74,53 +74,23 @@ class Rocket extends Base {
 
 	public function IOSCallback(){
 		$user_id = I('user_id');
-		$level = I('level');
 
-		// 计算到期日期
-		$user = Db::name('users')->where('user_id', $user_id)->field('vip_expire_date')->find();
-		$old_date = $user['vip_expire_date'] ? $user['vip_expire_date'] : date('Y-m-d');
-		$enum = Config::load(APP_PATH.'enum.php', ture);
-		$vip_config = $enum['vip'];
-		$num = $vip_config[$level]['num'];
-		$unit = $vip_config[$level]['unit'];
-		$expire_date = date('Y-m-d', strtotime('+'.$num.$unit, strtotime($old_date)));
+		// 启动事务
+		Db::startTrans();
+		try{
+		    Db::name('users')->where('user_id', $user_id)->setDec('goldcoin', 1800);
 
-		Db::name('users')->where('user_id', $user_id)->update(array('level'=>$level, 'vip_expire_date'=>$expire_date));
+		   	// 记录金币变动日志
+			goldcoin_log($user_id, '-1800', 1, '购买火箭置顶');
+		    
+		    // 提交事务
+		    Db::commit();
+		} catch (\Exception $e) {
+		    // 回滚事务
+		    Db::rollback();
+		}
 
-		// ios没走下单接口，这里支付成功记录一下
-		$order_no = $this->generateOrderno();
-		$data = array(
-			'order_no' => $order_no,
-			'user_id' => $user_id,
-			'level' => $level,
-			'createtime' => time(),
-		);
-		Db::name('vip_order')->insert($data);
 
 		response_success();
-	}
-
-	private function changeVip($order_no, $user_id, $level){
-
-		Db::name('vip_order')->where('order_no', $order_no)->update(array('paystatus'=>'1', 'paytime'=>time()));
-		// 计算到期日期
-		$user = Db::name('users')->where('user_id', $user_id)->field('vip_expire_date')->find();
-		$old_date = $user['vip_expire_date'] ? $user['vip_expire_date'] : date('Y-m-d');
-		$enum = Config::load(APP_PATH.'enum.php', ture);
-		$vip_config = $enum['vip'];
-		$num = $vip_config[$level]['num'];
-		$unit = $vip_config[$level]['unit'];
-		$expire_date = date('Y-m-d', strtotime('+'.$num.$unit, strtotime($old_date)));
-
-		Db::name('users')->where('user_id', $user_id)->update(array('level'=>$level, 'vip_expire_date'=>$expire_date));
-	}
-
-	private function generateOrderno(){
-		$order_no = date('YmdHis').mt_rand(1000, 9999);
-
-		$count = Db::name('vip_order')->where('order_no', $order_no)->count();
-
-		if($count) $this->generateOrderno();
-		return $order_no;
 	}
 }
