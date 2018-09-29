@@ -5,7 +5,7 @@ use think\Db;
 use think\Config;
 use app\api\logic\AlipayLogic;
 
-class Vip extends Base {
+class Rocket extends Base {
 
 	public function __construct(){
 		// 设置所有方法的默认请求方式
@@ -14,38 +14,13 @@ class Vip extends Base {
 		parent::__construct();
 	}
 
-	// 修改vip级别 0 普通会员 1 白金 2 黄金 3 vip
-	// public function change(){
-	// 	$user_id = I('user_id');
-	// 	$level = I('level');
-
-	// 	if(M('users')->where('user_id', $user_id)->setField('level', $level) !== false){
-	// 		response_success('', '修改成功');
-	// 	} else {
-	// 		response_error('', '修改失败');
-	// 	}
-	// }
-
 
 	// 下单
-	public function placeOrder(){		
-
+	public function placeOrder(){
 		$user_id = I('user_id');
-		$level = I('level');
 
-		$order_no = $this->generateOrderno();
-		$data = array(
-			'order_no' => $order_no,
-			'user_id' => $user_id,
-			'level' => $level,
-			'createtime' => time(),
-		);
-
-		if(Db::name('vip_order')->insert($data)){
-			response_success(array('order_no'=>$order_no));
-		} else {
-			response_error('', '下单失败');
-		}
+		$order_no = 'top'.date('YmdHis').$user_id;
+		response_success(array('order_no'=>$order_no));
 	}
 
 	// 选择支付方式去支付
@@ -58,60 +33,42 @@ class Vip extends Base {
 		if(empty($order)) response_error('', '该订单不存在');
 		if($order['paystatus'] == 1) response_error('', '该订单已支付');
 
-		switch ($order['level']) {
-			case '1':
-				$total_amount = '0.01';
-				break;
-			
-			case '2':
-				$total_amount = '0.01';
-				break;
-			
-			case '3':
-				$total_amount = '0.01';
-				break;
-			
-			case '4':
-				$total_amount = '0.01';
-				break;
-		}
+		$total_amount = 0.01; // 购买金币 1800
 
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
-			$notify_url = 'http://meiliyue.caapa.org/index.php/api/vip/callback?paymentMethod=alipay';
+			$notify_url = 'http://meiliyue.caapa.org/index.php/api/rocket/callback?paymentMethod=alipay';
 			$AlipayLogic = new AlipayLogic($notify_url);
-			$orderStr = $AlipayLogic->generateOrderStr($order_no, $total_amount, '购买VIP', '购买VIP');
+			$orderStr = $AlipayLogic->generateOrderStr($order_no, $total_amount, '购买金币', '购买金币');
 			return $orderStr;
 		}
 	}
 
 	// 购买vip后的支付回调接口
 	public function Callback(){
-		$paymentMethod = input('post.paymentMethod');
 		$order_no = input('post.out_trade_no');
-		$trade_status = input('post.trade_status');
-
-		if($paymentMethod == 'alipay'){
-			$AlipayLogic = new AlipayLogic();
-			//验签失败
-
-			/*$param = $_POST;
-			$param['fund_bill_list'] = html_entity_decode($param['fund_bill_list']);
-			$_POST = $param;
-			if( ! $AlipayLogic->checkSign()) die('error');*/
-		}
+		$trade_status = input('post.trade_status');	
 		
-		
-		
-		$order = Db::name('vip_order')->where('order_no', $order_no)->find();
-		if(empty($order)) goto finish;
-		if($order['paystatus'] == 1) goto finish;
+		$user_id = substr($order_no, 17);
 		// 回调后的业务流程
 		if($trade_status == 'TRADE_SUCCESS'){
-			$this->changeVip($order_no, $order['user_id'], $order['level']);
+			// 启动事务
+			Db::startTrans();
+			try{
+			    Db::name('users')->where('user_id', $user_id)->setDec('goldcoin', 1800);
+
+			   	// 记录金币变动日志
+				goldcoin_log($user_id, '-1800', 1, '购买火箭置顶');
+			    
+			    // 提交事务
+			    Db::commit();
+			} catch (\Exception $e) {
+			    // 回滚事务
+			    Db::rollback();
+			}
+
 		}
 
-		finish:
 		echo 'success';
 	}
 

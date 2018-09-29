@@ -17,11 +17,14 @@ class AlipayLogic {
 	private $charset = 'UTF-8';
 	private $signType = 'RSA2';
 	private $alipayrsaPublicKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArOIQAl26+RNfue1KYYWGGE1TWAC6BcnxMkygw2GbWGO3SXSz8rqO7Pj+YW8mGqH5WfYektk0ZT/HjJXjh0jbQQrFoXpfVkp9yqY8qXFBUcCBhghi587OKFD/ZyD9v6lewTVWgJjqXnsmZjPj4DhalzaRKHwtQ0R9zo1SLMpRGbEtCUhJPWTLVYOGVGSL+EkGQi5D/auOvoAEmNh9qf+aOz6z00SoqP8KpsNzIWjjqkapNzj+f5CU4iIBpnGf+uMu/ovWo1VnLHOTUvHR1KxA9+x9DO20hnwJFF+PzZuN+9lm0ORh0qai8dXc0wv7sa3xFoaYMCLlcGfCnX0FDjq+JwIDAQAB';
-	private $notify_url = 'http://meiliyue.caapa.org/index.php/api/vip/callback?paymentMethod=alipay';
+	private $notify_url;
 
+	public function __construct($notify_url){
+		$this->notify_url = $notify_url;
+	}
 
 	// 生成客户端需要的orderStr
-	public function generateOrderStr($out_trade_no, $total_amount){
+	public function generateOrderStr($out_trade_no, $total_amount, $body, $subject){
 
 		$aop = new \AopClient;
 		$aop->gatewayUrl = $this->gatewayUrl;
@@ -35,8 +38,8 @@ class AlipayLogic {
 		$request = new \AlipayTradeAppPayRequest();
 		//SDK已经封装掉了公共参数，这里只需要传入业务参数
 		$bizcontent = array(
-			'body' => '购买VIP',
-			'subject' => '购买VIP',
+			'body' => $body,
+			'subject' => $subject,
 			'out_trade_no' => $out_trade_no,
 			'total_amount' => $total_amount,
 			'product_code' => 'QUICK_MSECURITY_PAY'

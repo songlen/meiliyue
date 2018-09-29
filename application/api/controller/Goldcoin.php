@@ -5,7 +5,7 @@ use think\Db;
 use think\Config;
 use app\api\logic\AlipayLogic;
 
-class Vip extends Base {
+class Goldcoin extends Base {
 
 	public function __construct(){
 		// 设置所有方法的默认请求方式
@@ -14,38 +14,13 @@ class Vip extends Base {
 		parent::__construct();
 	}
 
-	// 修改vip级别 0 普通会员 1 白金 2 黄金 3 vip
-	// public function change(){
-	// 	$user_id = I('user_id');
-	// 	$level = I('level');
-
-	// 	if(M('users')->where('user_id', $user_id)->setField('level', $level) !== false){
-	// 		response_success('', '修改成功');
-	// 	} else {
-	// 		response_error('', '修改失败');
-	// 	}
-	// }
-
 
 	// 下单
-	public function placeOrder(){		
-
+	public function placeOrder(){
 		$user_id = I('user_id');
-		$level = I('level');
 
-		$order_no = $this->generateOrderno();
-		$data = array(
-			'order_no' => $order_no,
-			'user_id' => $user_id,
-			'level' => $level,
-			'createtime' => time(),
-		);
-
-		if(Db::name('vip_order')->insert($data)){
-			response_success(array('order_no'=>$order_no));
-		} else {
-			response_error('', '下单失败');
-		}
+		$order_no = 'top'.date('YmdHis').$user_id;
+		response_success(array('order_no'=>$order_no));
 	}
 
 	// 选择支付方式去支付
@@ -58,29 +33,13 @@ class Vip extends Base {
 		if(empty($order)) response_error('', '该订单不存在');
 		if($order['paystatus'] == 1) response_error('', '该订单已支付');
 
-		switch ($order['level']) {
-			case '1':
-				$total_amount = '0.01';
-				break;
-			
-			case '2':
-				$total_amount = '0.01';
-				break;
-			
-			case '3':
-				$total_amount = '0.01';
-				break;
-			
-			case '4':
-				$total_amount = '0.01';
-				break;
-		}
+		$total_amount = 0.01; // 购买金币 1800
 
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
-			$notify_url = 'http://meiliyue.caapa.org/index.php/api/vip/callback?paymentMethod=alipay';
+			$notify_url = 'http://meiliyue.caapa.org/index.php/api/Goldcoin/callback?paymentMethod=alipay';
 			$AlipayLogic = new AlipayLogic($notify_url);
-			$orderStr = $AlipayLogic->generateOrderStr($order_no, $total_amount, '购买VIP', '购买VIP');
+			$orderStr = $AlipayLogic->generateOrderStr($order_no, $total_amount, '购买金币', '购买金币');
 			return $orderStr;
 		}
 	}

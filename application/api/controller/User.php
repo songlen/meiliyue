@@ -811,6 +811,5 @@ class User extends Base {
         $result['user'] = $user;
         $result['goldcoin'] = $goldcoin;
         response_success($result);
-
     }
 }
