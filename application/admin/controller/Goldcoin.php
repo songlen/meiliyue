@@ -1,10 +1,7 @@
 <?php
 
 namespace app\admin\controller;
-use app\admin\logic\GoodsLogic;
-use app\admin\logic\SearchWordLogic;
-use think\AjaxPage;
-use think\Loader;
+
 use think\Page;
 use think\Db;
 
@@ -15,7 +12,7 @@ class Goldcoin extends Base {
         $p = $this->request->param('p');
         $list = M('Goldcoin')
             ->where('is_delete', 0)
-            ->order('sort desc, id desc')
+            ->order('sort desc, id asc')
             ->page($p.',10')
             ->select();
 
