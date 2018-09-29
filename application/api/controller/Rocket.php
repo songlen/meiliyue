@@ -14,10 +14,11 @@ class Rocket extends Base {
 		parent::__construct();
 	}
 
-
 	// 下单
 	public function placeOrder(){
 		$user_id = I('user_id');
+		$user = M('users')->where('user_id', $user_id)->field('goldcoin')->find();
+		if($user['goldcoin'] < 1800) response_error(array('status'=>1), '您的金币不足');
 
 		$order_no = 'top'.date('YmdHis').$user_id;
 		response_success(array('order_no'=>$order_no));
@@ -55,11 +56,15 @@ class Rocket extends Base {
 			// 启动事务
 			Db::startTrans();
 			try{
+				// 扣除金币
 			    Db::name('users')->where('user_id', $user_id)->setDec('goldcoin', 1800);
-
 			   	// 记录金币变动日志
 				goldcoin_log($user_id, '-1800', 1, '购买火箭置顶');
-			    
+			    // 置顶
+			    $sort = M('users')->max('sort');
+	            $sort = $sort+1;
+	            M('users')->where('user_id', $user_id)->update(array('sort'=> $sort));	
+
 			    // 提交事务
 			    Db::commit();
 			} catch (\Exception $e) {

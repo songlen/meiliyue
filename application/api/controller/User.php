@@ -804,7 +804,7 @@ class User extends Base {
                         ->where('is_delete', 0)
                         ->order('sort desc, id asc')
                         ->field('id, num, give_num, price, thumb')
-                        ->find();
+                        ->select();
 
         $user['withdraw'] = $user['goldcoin']/100;
         
