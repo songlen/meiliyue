@@ -806,8 +806,10 @@ class User extends Base {
                         ->find();
 
         $user['withdraw'] = $user['goldcoin']/100;
-        $this->assign('user', $user);
-        $this->assign('goldcoin', $goldcoin);
-        return $this->fetch();
+        
+        $result['user'] = $user;
+        $result['goldcoin'] = $goldcoin;
+        response_success($result);
+
     }
 }
