@@ -1046,21 +1046,34 @@ function timeFormat($time)
  * @return [type]           [description]
  */
 function getAge($birthday) {
-        $age = 0;
-        if(!empty($birthday)){
-            $age = strtotime($birthday);
-            if($age === false){
-                return 0;
-            }
-            
-            list($y1,$m1,$d1) = explode("-",date("Y-m-d", $age));
-            
-            list($y2,$m2,$d2) = explode("-",date("Y-m-d"), time());
-            
-            $age = $y2 - $y1;
-            if((int)($m2.$d2) < (int)($m1.$d1)){
-                $age -= 1;
-            }
+    $age = 0;
+    if(!empty($birthday)){
+        $age = strtotime($birthday);
+        if($age === false){
+            return 0;
         }
-        return $age;
+        
+        list($y1,$m1,$d1) = explode("-",date("Y-m-d", $age));
+        
+        list($y2,$m2,$d2) = explode("-",date("Y-m-d"), time());
+        
+        $age = $y2 - $y1;
+        if((int)($m2.$d2) < (int)($m1.$d1)){
+            $age -= 1;
+        }
     }
+    return $age;
+}
+
+
+function goldcoin_log($user_id, $num, $type, $description, $relation_id=null){
+    $data = array(
+        'user_id' => $user_id,
+        'num' => $num,
+        'type' => $type,
+        'description' => $description,
+        'relation_id' => $relation_id,
+        'changetime' => time(),
+    );
+    M('goldcoin_log')->insert($data);
+}

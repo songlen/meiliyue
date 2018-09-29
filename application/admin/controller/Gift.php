@@ -12,7 +12,7 @@ class Gift extends Base {
         $p = $this->request->param('p');
         $list = M('Gift')
             ->where('is_delete', 0)
-            ->order('sort desc, id asc')
+            ->order('sort desc, id desc')
             ->page($p.',10')
             ->select();
 

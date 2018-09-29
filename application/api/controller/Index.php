@@ -131,4 +131,35 @@ class Index extends Base {
         
         response_success();
     }
+
+    // 花费金币置顶
+    public function goldcoin_settop(){
+        $user_id = I('user_id');
+
+        $user = Db::name('users')->where('user_id', $user_id)->field('goldcoin')->find();
+        if($user['goldcoin'] < 1800) response_error('', '您从金币不足');
+
+        // 启动事务
+        Db::startTrans();
+        try{
+            // 扣除金币
+            Db::name('users')->where('user_id', $user_id)->setDec('goldcoin', 1800);
+            // 记录金币变动日志
+            goldcoin_log($user_id, '-1800', 1, '购买火箭置顶');
+            // 置顶
+            $sort = M('users')->max('sort');
+            $sort = $sort+1;
+            M('users')->where('user_id', $user_id)->update(array('sort'=> $sort));  
+
+            // 提交事务
+            Db::commit();
+
+            response_success('', '操作成功');
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+
+            response_error('', '操作失败');
+        }
+    }
 }
