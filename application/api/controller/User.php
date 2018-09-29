@@ -790,4 +790,23 @@ class User extends Base {
             response_error();
         }
     }
+
+    // 我的账户页面
+    public function myacount(){
+        $user_id = I('user_id');
+
+        $user = M('users')->where('user_id', $user_id)
+                        ->where('user_id', $user_id)
+                        ->field('goldcoin, glamour, flower_num, level')
+                        ->find();
+
+        $goldcoin = M('goldcoin')
+                        ->where('is_delete', 0)
+                        ->order('sort desc, id asc')
+                        ->find();
+
+        $this->assign('user', $user);
+        $this->assign('goldcoin', $goldcoin);
+        return $this->fetch();
+    }
 }
