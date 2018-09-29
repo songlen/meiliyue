@@ -41,13 +41,13 @@
 							<div style="text-align: left; width: 200px;" class="">礼物名称</div>
 						</th>
 						<th align="left" abbr="ac_id" axis="col4" class="">
-							<div style="text-align: left; width: 100px;" class="">图片</div>
+							<div style="text-align: left; width: 80px;" class="">图片</div>
 						</th>
 						<th align="center" abbr="article_show" axis="col5" class="">
 							<div style="text-align: center; width: 100px;" class="">价格</div>
 						</th>
 						<th align="center" abbr="article_time" axis="col6" class="">
-							<div style="text-align: center; width: 100px;" class="">图标</div>
+							<div style="text-align: center; width: 100px;" class="">魅力值</div>
 						</th>
 						<th align="center" axis="col1" class="handle">
 							<div style="text-align: center; width: 150px;">操作</div>
@@ -62,7 +62,7 @@
 		</div>
 		<div class="tDiv">
 			<div class="tDiv2">
-				<div class="fbutton"> <a href="{:U('goldcoin/add')}">
+				<div class="fbutton"> <a href="{:U('gift/add')}">
 					<div class="add" title="新增礼物">
 						<span><i class="fa fa-plus"></i>新增礼物</span>
 					</div>
@@ -80,10 +80,10 @@
 								<div style="width: 24px;"><i class="ico-check"></i></div>
 							</td>
 							<td align="left" class="">
-								<div style="text-align: left; width: 100px;">{$vo.num}</div>
+								<div style="text-align: left; width: 200px;">{$vo.name}</div>
 							</td>
 							<td align="left" class="">
-								<div style="text-align: left; width: 100px;">{$vo.give_num}</div>
+								<div style="text-align: left; width: 80px;"><img src="{$vo.image}" alt="" width="30" height="30"></div>
 							</td>
 							<td align="center" class="">
 								<div style="text-align: center; width: 100px;">
@@ -91,12 +91,12 @@
 								</div>
 							</td>
 							<td align="center" class="">
-								<div style="text-align: center; width: 100px;"><img src="{$vo.thumb}" alt="" width="30" height="30"></div>
+								<div style="text-align: center; width: 100px;">{$vo.glamour}</div>
 							</td>
 							<td align="center" class="handle">
 								<div style="text-align: center; width: 170px; max-width:170px;">
-									<a href="{:U('goldcoin/edit',array('id'=>$vo['id']))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a>
-									<a class="btn red"  href="javascript:void(0)" data-url="{:U('goldcoin/del')}" data-id="{$vo.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a>
+									<a href="{:U('gift/edit',array('id'=>$vo['id']))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a>
+									<a class="btn red"  href="javascript:void(0)" data-url="{:U('gift/del')}" data-id="{$vo.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a>
 								</div>
 							</td>
 							<td align="" class="" style="width: 100%;">
