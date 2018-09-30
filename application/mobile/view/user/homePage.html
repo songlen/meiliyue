@@ -428,6 +428,7 @@
                 }
                 //个人相册
                 if (data.photos && data.photos !== "" && data.photos.length !== 0) {
+                    $(".myPhotos").html("")
                     let showArr = data.photos.length >= 20 ? data.photos.slice(0, 20) : data.photos;
                     //图片升序排列
                     showArr.sort(function (a, b) {
@@ -973,7 +974,7 @@
                     Global.messageConfirWin("您的金币不足，立即购买金币",function(){
                         //去购买金币页面
                         if(Global.isIOS()){
-
+                            goBuyCoin()
                         }else{
                             document.getElementsByClassName("cancelGiveGift")[0].click()
                             window.Android.goBuyCoin()
@@ -1030,12 +1031,15 @@
             },
             eventsBind(){
                 //点击礼物selected
+                $(".giftUl").undelegate()
                 $(".giftUl").delegate(".gift-item","click",function(event){
                     event.stopPropagation()
                     //目前认为只能选择一个
                     if($(this).hasClass("selected")){
+                        console.log(1)
                         $(this).removeClass("selected")
                     }else{
+                        console.log(2)
                         $(this).addClass("selected").siblings().removeClass("selected")
                     }
                 })
