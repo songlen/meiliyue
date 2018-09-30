@@ -971,7 +971,11 @@
                 if(Number(Gift.goldcoin)<price){
                     Global.messageConfirWin("您的金币不足，立即购买金币",function(){
                         //去购买金币页面
-                        //?
+                        if(Global.isIOS()){
+
+                        }else{
+                            window.Android.goBuyCoin()
+                        }
                     })
                     return false
                 }else{
