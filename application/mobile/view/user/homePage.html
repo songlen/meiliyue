@@ -973,7 +973,7 @@
                     Global.messageConfirWin("您的金币不足，立即购买金币",function(){
                         //去购买金币页面
                         if(Global.isIOS()){
-
+                            goBuyCoin()
                         }else{
                             document.getElementsByClassName("cancelGiveGift")[0].click()
                             window.Android.goBuyCoin()
