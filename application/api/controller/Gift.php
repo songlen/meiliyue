@@ -66,7 +66,7 @@ class Gift extends Base {
 
 			// 站内消息
 			$MessageLogic = new MessageLogic();
-			$MessageLogic->add($to_user_id, '有人送您礼物，请注意查收哦');
+			$MessageLogic->add($to_user_id, '您收到了一个礼物');
 
 		    // 提交事务
 		    Db::commit();
