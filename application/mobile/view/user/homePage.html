@@ -1015,7 +1015,9 @@
                             $(".submit").removeClass("eventsDisabled")
                             console.log(res)
                             if(Number(res.code)==200){
+                                //更新goldcoin
                                 Gift.goldcoin=Gift.goldcoin-Number($("li.selected").find(".priceCount").html())
+                                $(".leftCoinCount").html(Gift.goldcoin)
                                 //关闭礼物页面
                                 document.getElementsByClassName("cancelGiveGift")[0].click()
                                 //刷新主页
