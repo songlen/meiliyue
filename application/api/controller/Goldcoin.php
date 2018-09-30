@@ -68,16 +68,6 @@ class Goldcoin extends Base {
 		$paymentMethod = input('post.paymentMethod');
 		$order_no = input('post.out_trade_no');
 		$trade_status = input('post.trade_status');
-
-		if($paymentMethod == 'alipay'){
-			$AlipayLogic = new AlipayLogic();
-			//验签失败
-
-			/*$param = $_POST;
-			$param['fund_bill_list'] = html_entity_decode($param['fund_bill_list']);
-			$_POST = $param;
-			if( ! $AlipayLogic->checkSign()) die('error');*/
-		}
 		
 		
 		
