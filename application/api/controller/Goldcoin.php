@@ -85,11 +85,25 @@ class Goldcoin extends Base {
 		$user_id = I('user_id');
 		$goldcoin_id = I('goldcoin_id');
 
+
+		$goldcoin = M('goldcoin')->where(array('id'=>$goldcoin_id, 'is_delete'=>0))->find();
 		// ios没走下单接口，这里支付成功记录一下
 		$order_no = $this->generateOrderno();
-		$this->operation($order_no);
+		$data = array(
+			'order_no' => $order_no,
+			'user_id' => $user_id,
+			'goldcoin_id' => $goldcoin_id,
+			'num' => $goldcoin['num'],
+			'give_num' => $goldcoin['give_num'],
+			'price' => $goldcoin['price'],
+			'createtime' => time(),
+		);
 
-		response_success();
+		if(Db::name('goldcoin_order')->insert($data)){
+			$this->operation($order_no);
+		}
+
+		response_success('', '操作成功');
 	}
 
 	public function operation($order_no){
@@ -107,7 +121,7 @@ class Goldcoin extends Base {
 		    Db::name('users')->where('user_id', $goldcoin_order['user_id'])->setInc('goldcoin', $total_goldcoin);
 		   
 		   	// 记录金币变动日志
-			goldcoin_log($user_id, "+{$goldcoin_order['num']}", 2, '购买金币', $goldcoin_order['id']);
+			goldcoin_log($user_id, "+{$total_goldcoin}", 2, '购买金币', $goldcoin_order['id']);
 
 		    // 提交事务
 		    Db::commit();

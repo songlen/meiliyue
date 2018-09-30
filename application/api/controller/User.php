@@ -815,7 +815,7 @@ class User extends Base {
                         ->field('id, num, give_num, price, thumb')
                         ->select();
 
-        $user['withdraw'] = $user['goldcoin']/100;
+        $user['withdraw'] = $user['glamour']/100;
         
         $result['user'] = $user;
         $result['goldcoin'] = $goldcoin;
