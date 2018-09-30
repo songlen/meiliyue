@@ -938,6 +938,7 @@
                             }
                             //我的金币
                             Gift.goldcoin=Number(res.data.user.goldcoin)
+                            $(".leftCoinCount").html(Gift.goldcoin)
                             // Gift.goldcoin=100000000 //测试用
                         }
                     }
@@ -988,6 +989,7 @@
                     Global.messageWin("请选择礼物")
                 }else{
                     let flag=Gift.checkMyCoin()
+                    flag=false //测试用
                     if(!flag){
                         return
                     }
