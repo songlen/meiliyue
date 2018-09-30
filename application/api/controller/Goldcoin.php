@@ -67,8 +67,7 @@ class Goldcoin extends Base {
 	public function alipayCallback(){
 		$order_no = input('post.out_trade_no');
 		$trade_status = input('post.trade_status');
-		$order_no = '201809301136156006';
-		$trade_status = 'TRADE_SUCCESS';
+
 		$order = Db::name('goldcoin_order')->where('order_no', $order_no)->find();
 		if(empty($order)) goto finish;
 		if($order['paystatus'] == 1) goto finish;
