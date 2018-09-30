@@ -100,4 +100,9 @@ class User extends Base {
     public function gift(){
         return $this->fetch();
     }
+    
+    // 礼物页面 toUserId
+    public function mygiftlist(){
+        return $this->fetch();
+    }
 }
