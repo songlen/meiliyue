@@ -471,13 +471,18 @@ class User extends Base {
         Db::name('user_visitor')->insert($visitordata);
 
         /************** 他收到的礼物 *********************/
-        
-        $data['gift'] = M('gift_gived')
-            ->where('to_user_id', $toUserId)
+        $toUserId = 2;
+        $subQuery = M('gift_gived')->where('to_user_id', $toUserId)->order('id desc')->buildSql();
+        $data['gift'] = Db::table($subQuery.' sub')
             ->field('image, count(*) count')
             ->group('gift_id')
-            ->order('id desc')
             ->select();
+        // $data['gift'] = M('gift_gived')
+        //     ->where('to_user_id', $toUserId)
+        //     ->field('image, count(*) count')
+        //     ->group('gift_id')
+        //     ->order('id desc')
+        //     ->select();
 
         /************** 统计数量 *************/
         $data['count']['normalPhotoCount'] = Db::name('user_photo')->where(array('user_id'=>$toUserId, 'type'=>1))->count();
