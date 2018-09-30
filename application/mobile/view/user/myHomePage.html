@@ -156,7 +156,7 @@
                     <div class="myGiftSome" style="padding:0.1rem 0.05rem;">
                         <p class="noInvite noGiftSome" style="display: none;">还没有收到任何礼物</p>
                     </div>
-                    <!-- <a href="javascript:void(0)" id="gotoGift">送礼得TA的青睐</a> -->
+                    <a href="javascript:void(0)" id="lookMyGift">我收到的礼物</a>
                 </div>
             </div>
 
@@ -300,9 +300,7 @@
 
             <!-- 修改个人资料div wrap -->
             <div class="modifyDataWrap" style="display: none;"></div>
-
         </div>
-
     </div>
 
     <!-- ------------------------------------- -->
@@ -1367,6 +1365,10 @@
                         window.Android.gotoJavaCamera(1,"uploadHeadPic"); //参数1：1图片 2视频  参数2：调用的js方法的名称
                     }
                 });
+                //点击查看我收到的礼物
+                document.getElementById("lookMyGift").onclick=function(){
+                    window.location.href=Global.host+"/index.php/mobile/user/mygiftlist";
+                }
             },
             init: function () {
                 //得到user_id
@@ -1375,7 +1377,7 @@
                     console.log(mUserInfo)
                     Homepage.user_id = Number(mUserInfo.user_id);
                 } else {
-                    Homepage.user_id = 1; //测试用
+                    Homepage.user_id = 2; //测试用
                 }
 
                 //获取用户信息，绑定dom
