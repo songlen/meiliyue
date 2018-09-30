@@ -24,7 +24,7 @@ class Goldcoin extends Base {
 		$goldcoin = M('goldcoin')->where(array('id'=>$goldcoin_id, 'is_delete'=>0))->find();
 		if(empty($goldcoin)) response_error('', '该金币商品不存在');
 
-		$order_no = $this->generateOrderno();
+		$order_no = 'g'.$this->generateOrderno();
 		$data = array(
 			'order_no' => $order_no,
 			'user_id' => $user_id,
@@ -56,7 +56,7 @@ class Goldcoin extends Base {
 
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
-			$notify_url = 'http://meiliyue.caapa.org/index.php/api/goldcoin/callback?paymentMethod=alipay';
+			$notify_url = 'http://meiliyue.caapa.org/index.php/api/goldcoin/alipayCallback';
 			$AlipayLogic = new AlipayLogic($notify_url);
 			$orderStr = $AlipayLogic->generateOrderStr($order_no, $total_amount, '购买金币', '购买金币');
 			return $orderStr;
@@ -64,18 +64,17 @@ class Goldcoin extends Base {
 	}
 
 	// 购买vip后的支付回调接口
-	public function Callback(){
-		$paymentMethod = input('post.paymentMethod');
+	public function alipayCallback(){
 		$order_no = input('post.out_trade_no');
 		$trade_status = input('post.trade_status');
-		
 		
 		$order = Db::name('goldcoin_order')->where('order_no', $order_no)->find();
 		if(empty($order)) goto finish;
 		if($order['paystatus'] == 1) goto finish;
+
 		// 回调后的业务流程
 		if($trade_status == 'TRADE_SUCCESS'){
-			$this->operation($order_no, $order['user_id']);
+			$this->operation($order_no);
 		}
 
 		finish:
@@ -88,13 +87,12 @@ class Goldcoin extends Base {
 
 		// ios没走下单接口，这里支付成功记录一下
 		$order_no = $this->generateOrderno();
-		$this->operation($order_no, $user_id);
+		$this->operation($order_no);
 
 		response_success();
 	}
 
-	private function operation($order_no, $user_id){
-
+	public function operation($order_no){
 		// 启动事务
 		Db::startTrans();
 		try{
@@ -103,7 +101,7 @@ class Goldcoin extends Base {
 		    $goldcoin_order = M('goldcoin_order')->where('order_no', $order_no)->find();
 
             // 加金币
-		    Db::name('users')->where('user_id', $user_id)->setInc('goldcoin', $goldcoin_order['price']);
+		    Db::name('users')->where('user_id', $order['user_id'])->setInc('goldcoin', $goldcoin_order['price']);
 		   
 		   	// 记录金币变动日志
 			goldcoin_log($user_id, "+{$giftinfo['price']}", 2, '购买金币', $goldcoin_order['id']);
@@ -111,12 +109,9 @@ class Goldcoin extends Base {
 		    // 提交事务
 		    Db::commit();
 
-		    response_success('', '购买成功');
 		} catch (\Exception $e) {
 		    // 回滚事务
 		    Db::rollback();
-
-		    response_error('', '购买失败');
 		}
 	}
 
