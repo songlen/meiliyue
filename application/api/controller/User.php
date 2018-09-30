@@ -524,12 +524,20 @@ class User extends Base {
             ->field('id, thumb, url, type, file_type')
             ->order('id desc')
             ->select();
+        /************** 他收到的礼物 *********************/
+        $data['gift'] = M('gift_gived')
+            ->where('to_user_id', $user_id)
+            ->field('image, count(*) count')
+            ->group('gift_id')
+            ->order('id desc')
+            ->select();
 
         /************** 统计数量 *************/
         $data['count']['normalPhotoCount'] = Db::name('user_photo')->where(array('user_id'=>$user_id, 'type'=>1))->count();
         $data['count']['jinghuaPhotoCount'] = Db::name('user_photo')->where(array('user_id'=>$user_id, 'type'=>2))->count();
         $data['count']['inviteCount'] = Db::name('invite')->where(array('status'=>2, 'user_id'=>$user_id))->count();
         $data['count']['dynamicsCount'] = Db::name('dynamics')->where(array('status'=>2, 'user_id'=>$user_id))->count();
+        $data['count']['giftCount'] = Db::name('gift_gived')->where(array('to_user_id'=>$user_id))->count();
 
         response_success($data);
     }
@@ -669,7 +677,6 @@ class User extends Base {
         $user_id = I('user_id', 1);
         $type = I('type', 1);
         $page = I('page', 1);
-
 
         if($type == '1'){
             $join_on = 'f.friend_id = u.user_id';

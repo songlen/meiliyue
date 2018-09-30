@@ -74,4 +74,26 @@ class Gift extends Base {
 		    response_error('', '赠送失败');
 		}
 	}
+
+	// 我的礼物页面
+	public function mygiftlist(){
+		$user_id = I('user_id');
+		$page = I('page', 1);
+
+		$limit_start = ($page-1)*10;
+		$list = M('gift_gived')->alias('gg')
+			->join('users u', 'gg.user_id=u.user_id', 'left')
+			->where('gg.to_user_id', $user_id)
+			->limit($limit_start, 10)
+			->field('head_pic, nickname, birthday, gg.goldcoin, gg.image')
+			->select();
+
+		if(is_array($list) && !empty($list)){
+			foreach ($list as &$item) {
+				$item['age'] = getAge($image['birthday']);
+			}
+		}
+
+		response_success($list);
+	}
 }
