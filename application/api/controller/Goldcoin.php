@@ -107,7 +107,7 @@ class Goldcoin extends Base {
 		    Db::name('users')->where('user_id', $goldcoin_order['user_id'])->setInc('goldcoin', $total_goldcoin);
 		   
 		   	// 记录金币变动日志
-			goldcoin_log($user_id, "+{$goldcoin_order['price']}", 2, '购买金币', $goldcoin_order['id']);
+			goldcoin_log($user_id, "+{$goldcoin_order['num']}", 2, '购买金币', $goldcoin_order['id']);
 
 		    // 提交事务
 		    Db::commit();
