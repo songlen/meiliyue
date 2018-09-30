@@ -2,6 +2,7 @@
 
 namespace app\api\controller;
 use think\Db;
+use app\api\logic\MessageLogic;
 
 class Gift extends Base {
 
@@ -62,6 +63,10 @@ class Gift extends Base {
 		    Db::name('users')->where('user_id', $to_user_id)->setInc('glamour', $giftinfo['glamour']);
 		   	// 记录金币变动日志
 			goldcoin_log($user_id, "-{$giftinfo['price']}", 3, '赠送礼物', $insert_id);
+
+			// 站内消息
+			$MessageLogic = new MessageLogic();
+			$MessageLogic->add($to_user_id, '有人送您礼物，请注意查收哦');
 
 		    // 提交事务
 		    Db::commit();
