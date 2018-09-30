@@ -117,7 +117,7 @@ class Index extends Base {
         } else {
             $sort = M('users')->max('sort');
             $sort = $sort+1;
-            M('users')->where('user_id', $user_id)->update(array('sort'=> $sort));
+            M('users')->where('user_id', $user_id)->update(array('sort'=> $sort, 'active_time'=>time()));
             $rocket_log_data = array(
                 'user_id' => $user_id,
                 'used_date' => date('Y-m-d'),
@@ -149,7 +149,7 @@ class Index extends Base {
             // 置顶
             $sort = M('users')->max('sort');
             $sort = $sort+1;
-            M('users')->where('user_id', $user_id)->update(array('sort'=> $sort));  
+            M('users')->where('user_id', $user_id)->update(array('sort'=> $sort, 'active_time'=>time()));
 
             // 提交事务
             Db::commit();
