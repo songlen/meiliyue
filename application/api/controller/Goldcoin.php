@@ -70,7 +70,6 @@ class Goldcoin extends Base {
 		$trade_status = input('post.trade_status');
 		
 		
-		
 		$order = Db::name('goldcoin_order')->where('order_no', $order_no)->find();
 		if(empty($order)) goto finish;
 		if($order['paystatus'] == 1) goto finish;

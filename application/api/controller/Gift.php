@@ -68,6 +68,7 @@ class Gift extends Base {
 
 		    response_success('', '赠送成功');
 		} catch (\Exception $e) {
+			p($e->getMessage());
 		    // 回滚事务
 		    Db::rollback();
 
