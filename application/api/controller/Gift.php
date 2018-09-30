@@ -49,6 +49,7 @@ class Gift extends Base {
 		    	'user_id' => $user_id,
 		    	'to_user_id' => $to_user_id,
 		    	'gift_id' => $gift_id,
+		    	'image' => $giftinfo['image'],
 		    	'goldcoin' => $giftinfo['price'],
 		    	'glamour' => $giftinfo['glamour'],
 		    	'add_time' => time(),
@@ -57,6 +58,8 @@ class Gift extends Base {
 
             // 扣除金币
 		    Db::name('users')->where('user_id', $user_id)->setDec('goldcoin', $giftinfo['price']);
+		    // 给受赠者增加魅力值
+		    Db::name('users')->where('user_id', $to_user_id)->setInc('glamour', $giftinfo['glamour']);
 		   	// 记录金币变动日志
 			goldcoin_log($user_id, "-{$giftinfo['price']}", 3, '赠送礼物', $insert_id);
 

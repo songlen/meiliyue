@@ -17,10 +17,29 @@ class Goldcoin extends Base {
 
 	// 下单
 	public function placeOrder(){
-		$user_id = I('user_id');
 
-		$order_no = 'top'.date('YmdHis').$user_id;
-		response_success(array('order_no'=>$order_no));
+		$user_id = I('user_id');
+		$goldcoin_id = I('goldcoin_id');
+
+		$goldcoin = M('goldcoin')->where(array('id'=>$goldcoin_id, 'is_delete'=>0))->find();
+		if(empty($goldcoin)) response_error('', '该金币商品不存在');
+
+		$order_no = $this->generateOrderno();
+		$data = array(
+			'order_no' => $order_no,
+			'user_id' => $user_id,
+			'goldcoin_id' => $goldcoin_id,
+			'num' => $goldcoin['num'],
+			'give_num' => $goldcoin['give_num'],
+			'price' => $goldcoin['price'],
+			'createtime' => time(),
+		);
+
+		if(Db::name('goldcoin_order')->insert($data)){
+			response_success(array('order_no'=>$order_no));
+		} else {
+			response_error('', '下单失败');
+		}
 	}
 
 	// 选择支付方式去支付
@@ -29,15 +48,15 @@ class Goldcoin extends Base {
 		$paymentMethod = I('paymentMethod');
 
 		/********* 判断订单信息 **************/
-		$order = Db::name('vip_order')->where('order_no', $order_no)->find();
+		$order = Db::name('goldcoin_order')->where('order_no', $order_no)->find();
 		if(empty($order)) response_error('', '该订单不存在');
 		if($order['paystatus'] == 1) response_error('', '该订单已支付');
 
-		$total_amount = 0.01; // 购买金币 1800
+		$total_amount = 0.01;//$order['price'];
 
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
-			$notify_url = 'http://meiliyue.caapa.org/index.php/api/Goldcoin/callback?paymentMethod=alipay';
+			$notify_url = 'http://meiliyue.caapa.org/index.php/api/goldcoin/callback?paymentMethod=alipay';
 			$AlipayLogic = new AlipayLogic($notify_url);
 			$orderStr = $AlipayLogic->generateOrderStr($order_no, $total_amount, '购买金币', '购买金币');
 			return $orderStr;
@@ -62,12 +81,12 @@ class Goldcoin extends Base {
 		
 		
 		
-		$order = Db::name('vip_order')->where('order_no', $order_no)->find();
+		$order = Db::name('goldcoin_order')->where('order_no', $order_no)->find();
 		if(empty($order)) goto finish;
 		if($order['paystatus'] == 1) goto finish;
 		// 回调后的业务流程
 		if($trade_status == 'TRADE_SUCCESS'){
-			$this->changeVip($order_no, $order['user_id'], $order['level']);
+			$this->operation($order_no, $order['user_id']);
 		}
 
 		finish:
@@ -97,30 +116,42 @@ class Goldcoin extends Base {
 			'level' => $level,
 			'createtime' => time(),
 		);
-		Db::name('vip_order')->insert($data);
+		Db::name('goldcoin_order')->insert($data);
 
 		response_success();
 	}
 
-	private function changeVip($order_no, $user_id, $level){
+	private function operation($order_no, $user_id){
 
-		Db::name('vip_order')->where('order_no', $order_no)->update(array('paystatus'=>'1', 'paytime'=>time()));
-		// 计算到期日期
-		$user = Db::name('users')->where('user_id', $user_id)->field('vip_expire_date')->find();
-		$old_date = $user['vip_expire_date'] ? $user['vip_expire_date'] : date('Y-m-d');
-		$enum = Config::load(APP_PATH.'enum.php', ture);
-		$vip_config = $enum['vip'];
-		$num = $vip_config[$level]['num'];
-		$unit = $vip_config[$level]['unit'];
-		$expire_date = date('Y-m-d', strtotime('+'.$num.$unit, strtotime($old_date)));
+		// 启动事务
+		Db::startTrans();
+		try{
+			
+		    // 记录赠送
+		    $goldcoin_order = M('goldcoin_order')->where('order_no', $order_no)->find();
 
-		Db::name('users')->where('user_id', $user_id)->update(array('level'=>$level, 'vip_expire_date'=>$expire_date));
+            // 加金币
+		    Db::name('users')->where('user_id', $user_id)->setInc('goldcoin', $goldcoin_order['price']);
+		   
+		   	// 记录金币变动日志
+			goldcoin_log($user_id, "+{$giftinfo['price']}", 2, '购买金币', $goldcoin_order['id']);
+
+		    // 提交事务
+		    Db::commit();
+
+		    response_success('', '购买成功');
+		} catch (\Exception $e) {
+		    // 回滚事务
+		    Db::rollback();
+
+		    response_error('', '购买失败');
+		}
 	}
 
 	private function generateOrderno(){
 		$order_no = date('YmdHis').mt_rand(1000, 9999);
 
-		$count = Db::name('vip_order')->where('order_no', $order_no)->count();
+		$count = Db::name('goldcoin_order')->where('order_no', $order_no)->count();
 
 		if($count) $this->generateOrderno();
 		return $order_no;

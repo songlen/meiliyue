@@ -470,11 +470,20 @@ class User extends Base {
         Db::name('user_visitor')->where(array('user_id'=>$user_id, 'to_user_id'=>$toUserId))->delete();
         Db::name('user_visitor')->insert($visitordata);
 
+        /************** 他收到的礼物 *********************/
+        $data['gift'] = M('gift_gived')
+            ->where('to_user_id', $toUserId)
+            ->field('image, count(*) count')
+            ->group('gift_id')
+            ->order('id desc')
+            ->select();
+
         /************** 统计数量 *************/
         $data['count']['normalPhotoCount'] = Db::name('user_photo')->where(array('user_id'=>$toUserId, 'type'=>1))->count();
         $data['count']['jinghuaPhotoCount'] = Db::name('user_photo')->where(array('user_id'=>$toUserId, 'type'=>2))->count();
         $data['count']['inviteCount'] = Db::name('invite')->where(array('status'=>2, 'user_id'=>$toUserId))->count();
         $data['count']['dynamicsCount'] = Db::name('dynamics')->where(array('status'=>2, 'user_id'=>$toUserId))->count();
+        $data['count']['giftCount'] = Db::name('gift_gived')->where(array('to_user_id'=>$toUserId))->count();
 
         response_success($data);
     }
