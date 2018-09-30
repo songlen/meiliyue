@@ -78,6 +78,7 @@
 
                 <div class="myInvite-content">
                     <div class="myInvite-tip myInviteSome">
+                        <div class="myInviteSomeContent"></div>
                         <p class="noInvite noInviteSome" style="display: none;">未发布任何邀约</p>
                     </div>
                     <div class="inviteToMine" style="display: none;">
@@ -94,6 +95,7 @@
 
                 <div class="myInvite-content">
                     <div class="myInvite-tip myTalkSome">
+                        <div class="myTalkSomeContent"></div>
                         <p class="noInvite noTalkSome" style="display: none;">未发布任何动态</p>
                     </div>
                 </div>
@@ -134,6 +136,20 @@
                         <a href="javascript:void(0)" class="approveBtn" style="display:none;">邀请认证</a>
                     </li> -->
                 </ul>
+            </div>
+
+            <div class="myGift" style="padding-bottom:0.1rem;">
+                <div class="myGift-title">
+                    <p class="myGiftText">礼物</p>
+                    <p class="myGiftCount"></p>
+                </div>
+
+                <div class="myInvite-content">
+                    <div class="myGiftSome" style="padding:0.05rem 0;">
+                        <p class="noInvite noGiftSome" style="display: none;">TA还没有收到任何礼物</p>
+                    </div>
+                    <a href="javascript:void(0)" id="gotoGift">送礼得TA的青睐</a>
+                </div>
             </div>
 
             <div class="aboutMe">
@@ -290,6 +306,29 @@
         <span class="closeChatFisrt"></span>
     </div>
 
+    <!-- 送礼物页面 -->
+    <div class="gift-page" style="display:none;">
+        <header>
+            <!-- <a href="javascript:void(0)" class="back"></a> -->
+            <div class="title">礼物</div>
+        </header>
+    
+    
+        <div class="giftWrap">
+            <div class="leftCoin">剩余：<span class="leftCoinCount">0</span> 金币</div>
+    
+            <div class="giftList">
+                <ul class="giftUl">
+                </ul>
+            </div>
+    
+            <div class="btnBox">
+                <button class="btn cancelGiveGift">取消</button>
+                <button class="btn submit">发送</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ----------------------------------------------- -->
 
     <script src="__STATIC__/js-min/user-homePage.min.js"></script>
@@ -313,7 +352,7 @@
                     Homepage.mUserInfo = mUserInfo;
                     Homepage.user_id = Number(mUserInfo.user_id);
                 } else {
-                    Homepage.user_id = 21; //测试用
+                    Homepage.user_id = 1; //测试用
                     Homepage.mUserInfo.level = 0; //测试用
                 }
                 var ulrStr = window.location.href;
@@ -322,7 +361,7 @@
                 }
                 if (ulrStr.indexOf("file://") > -1) {
                     ulrStr =
-                        "http://meiliyue.caapa.org/index.php/mobile/user/homePage/user_id/21/toUserId/1.html" //测试用 如果是1去1 就有问题了
+                        "http://meiliyue.caapa.org/index.php/mobile/user/homePage/user_id/1/toUserId/2.html" //测试用 如果是1去1 就有问题了
                 }
                 var strTemp = ulrStr.split("/toUserId/")[1];
                 console.log(strTemp)
@@ -413,8 +452,9 @@
                 if (data.invite.length == 0) {
                     $(".noInviteSome").show()
                 } else {
+                    $(".myInviteSomeContent").html("")
                     data.invite.forEach(function (value, index) {
-                        $(".myInviteSome").append($('<p class="inviDetail" data-id="' + value.id + '">' +value.title + '</p>'))
+                        $(".myInviteSomeContent").append($('<p class="inviDetail" data-id="' + value.id + '">' +value.title + '</p>'))
                     })
                 }
                 //TA的邀约数量
@@ -424,12 +464,34 @@
                     let title=data.dynamics.content+data.dynamics.description;
                     title=title.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "").replace(/<img[^>]*>/g, "").trim()
                     let dynamics_id=data.dynamics.id;
-                    $(".myTalkSome").append($('<p class="inviDetail" data-id="' +dynamics_id + '">' +title + '</p>'))
+                    $(".myTalkSomeContent").html("")
+                    $(".myTalkSomeContent").append($('<p class="inviDetail" data-id="' +dynamics_id + '">' +title + '</p>'))
                 }else{
                     $(".noTalkSome").show();
                 }
                 //TA的动态数量
                 $(".myTalkCount").html(data.count.dynamicsCount)
+                //礼物
+                if(data.gift&&data.gift.length>0){
+                    let arr=data.gift.slice(0,4) //取前四个
+                    console.log(arr)
+                    let myGiftSome=document.getElementsByClassName("myGiftSome")[0]
+                    myGiftSome.innerHTML=""
+                    arr.forEach(function(obj){
+                        let div=document.createElement("div")
+                        div.innerHTML=`
+                            <img src=${Global.host+obj.image}>
+                            <span class="giftCount">${obj.count}</span>
+                        `
+                        div.className="myGiftSomeItemWrap"
+                        myGiftSome.appendChild(div)
+                    })
+                }else{ //没收到礼物
+                    $(".noGiftSome").show()
+                }
+                //礼物数量
+                $(".myGiftCount").html(data.gift.length)
+                
                 //手机号
                 if (data.baseinfo.mobile_validated == 0) {
                     $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
@@ -560,6 +622,7 @@
 
                 //最满意部位
                 if (data.baseinfo.satisfactory_parts && data.baseinfo.satisfactory_parts !== "") {
+                    $(".satisfactory_parts").html("")
                     $(".satisfactory_parts").append($('<ul class="clearfix"></ul>'))
                     var partsArr = data.baseinfo.satisfactory_parts.split(",")
                     partsArr.forEach(function (value) {
@@ -695,38 +758,38 @@
                 //     $('.avatarOperating').show()
                 // })
                 //点击弹出的 取消
-                $('.home-cancel').click(function () {
+                $('.home-cancel')[0].onclick=function(){
                     $('.mask').remove()
                     $('.avatarOperating').hide()
                     $('.gotoEditHome').hide()
-                })
+                }
 
-                $('.sayHi').click(function () {
-                    if ($(".mask").length == 0) {
-                        $('body').append($('<div class="mask"></div>'))
-                    }
-                    $('.greet').show()
-                })
+                // $('.sayHi')[0].onclick=function(){
+                //     if ($(".mask").length == 0) {
+                //         $('body').append($('<div class="mask"></div>'))
+                //     }
+                //     $('.greet').show()
+                // }
 
-                $('.tryChat').click(function () {
+                $('.tryChat')[0].onclick=function(){
                     $('.greet').hide()
                     $('.chatFirst').show()
                     $('.allWrap').addClass('blur')
-                })
+                }
 
-                $('.closeChatFisrt').click(function () {
+                $('.closeChatFisrt')[0].onclick=function(){
                     $('.mask').remove()
                     $('.chatFirst').hide()
                     $('.allWrap').removeClass('blur')
-                })
+                }
 
                 //返回
-                $(".homepageBack").click(function () {
+                $(".homepageBack")[0].click=function(){
                     window.history.back(-1)
-                })
+                }
                 //点击 “关注” 系列
                 //点击 加关注
-                $(".attend").click(function () {
+                $(".attend")[0].onclick=function(){
                     Homepage.addAttention(function () {
                         $('.attendSuccess').show().addClass('mfadeout')
                         clearTimeout(Homepage._mTimer)
@@ -745,9 +808,9 @@
                             Number(Homepage.attentionStatus) = 1
                         }
                     })
-                })
+                }
                 //点击 已关注
-                $(".attended").click(function () {
+                $(".attended")[0].onclick=function(){
                     Global.messageConfirWin("确认取消关注？",function(){
                         Homepage.cancelAttention(function () {
                             $(".attended").hide()
@@ -756,9 +819,9 @@
                             Number(Homepage.attentionStatus) = 0
                         })
                     })
-                })
+                }
                 //点击 相互关注
-                $(".attendAll").click(function () {
+                $(".attendAll")[0].onclick=function(){
                     Global.messageConfirWin("确认取消关注？",function(){
                         Homepage.cancelAttention(function () {
                             $(".attendAll").hide()
@@ -767,9 +830,10 @@
                             Number(Homepage.attentionStatus) = 2
                         })
                     })
-                })
+                }
                 //点击 “关注” 系列 end
                 //点击视频认证
+                $(".edit-personal-avatar").undelegate()
                 $(".edit-personal-avatar").delegate(".videoStatus", "click", function () {
                     // Global.getAuthVideoUrl(Homepage.toUserId,function(url){
                     //     console.log(url)
@@ -779,6 +843,7 @@
                     // });
                 });
                 //点击我的邀约，跳邀约详情
+                $(".myInviteSome").undelegate()
                 $(".myInviteSome").delegate("p.inviDetail", "click", function () {
                     let detailId = $(this).attr("data-id");
                     let url = Global.host + "/index.php/mobile/invite/detail/id/" + detailId + ".html";
@@ -791,16 +856,16 @@
                 //         detailId +
                 //         '.html';
                 // });
-                $(".myTalkSome").click(function () {
+                $(".myTalkSome")[0].onclick=function(){
                     let displayStatus=$(this).find(".noTalkSome").css("display");
                     if(displayStatus!=="none"){ //这个人没动态
                         return;
                     }
                     //去他的动态列表页面
                     window.location.href = `${Global.host}/index.php/mobile/user/myDynamicList/user_id/${Homepage.toUserId}.html`;
-                });
+                }
                 //点击查看最近活跃时间
-                $(".active_time").click(function () {
+                $(".active_time")[0].onclick=function(){
                     // if(Homepage.mUserInfo.level<3){
                     //     Global.messageConfirWin("您好，该项目为会员专享服务，立即升级成为会员",function(){
                     //         //去vip申请页面
@@ -812,16 +877,32 @@
                     // }
                     let timeStr = Global.stampToStr(Homepage.baseinfo.active_time);
                     Global.messageWin(`最近活跃时间：${timeStr}`);
-                });
+                }
                 //点击图片显示大图 -- 精华图片
+                $(".myPhotos").undelegate()
                 $(".myPhotos").delegate("img.showPic", "click", function () {
                     Homepage.showFullPic(this);
                 });
                 //头像 查看大图
-                $(".avatar-pic").click(function () {
+                $(".avatar-pic")[0].onclick=function(){
                     let src = $(".avatar-pic").find("img").attr("src");
                     Global.fullScreenImg(src);
-                });
+                }
+                //点击送礼物
+                document.getElementById("gotoGift").onclick=function(){
+                    // let toUserId=Homepage.toUserId
+                    // let url=Global.host + "/index.php/mobile/User/gift/toUserId/"+toUserId+".html"
+                    // window.location.href=url
+                    Homepage.initGift()
+                    $(".gift-page").show()
+                }
+            },
+            initGift(){
+                let giftUl=document.getElementsByClassName("giftUl")[0]
+                if($("li.gift-item").length==0){
+                    console.log("加载礼物呀页面")
+                    Gift.init()
+                }
             },
             init: function () {
                 //获取user_id
@@ -831,6 +912,150 @@
                 Homepage.getDataUpdateDom();
             }
         }
+        //赠送礼物页面
+        var Gift = {
+            goldcoin:"", //我的金币
+
+            
+            //获取礼物列表,自己的金币数
+            getGift(){
+                let postData={
+                    user_id:Number(Homepage.user_id)
+                    // user_id:1 //测试用
+                }
+                console.log(postData)
+                $.ajax({
+                    type: "POST",
+                    url: Global.host + "/index.php/Api/Gift/alllist",
+                    data: postData,
+                    success: function (res) {
+                        console.log(res)
+                        if(Number(res.code)==200){
+                            //礼物列表
+                            if(res.data.gift.length>0){
+                                let arr=res.data.gift
+                                Gift.updateDomGift(arr)
+                            }
+                            //我的金币
+                            Gift.goldcoin=Number(res.data.user.goldcoin)
+                            $(".leftCoinCount").html(Gift.goldcoin)
+                            // Gift.goldcoin=100000000 //测试用
+                        }
+                    }
+                })
+            },
+            updateDomGift(arr){
+                if(arr.length>0){
+                    let giftUl=document.getElementsByClassName("giftUl")[0]
+                    giftUl.innerHTML=""
+                    arr.forEach(function(obj){
+                        let li=document.createElement("li")
+                        li.innerHTML=`
+                            <div class="gift-item-content">
+                                <img src=${Global.host+obj.image}>
+                                <p class="glamour">+<span class="glamourCount">${obj.glamour}</span>魅力</p>
+                            </div>
+                            <p class="price"><span class="priceCount">${obj.price}</span>金币</p>
+                            <span class="selectedIcon"></span>
+                        `
+                        li.className="gift-item"
+                        li.setAttribute("data-giftId",obj.id)
+                        giftUl.appendChild(li)
+                    })
+                }
+            },
+            checkMyCoin(){
+                //当前选择的礼物价格
+                let price=Number($("li.selected").find(".priceCount").text())
+                // console.log(price)
+                // console.log(Number(Gift.goldcoin))
+                if(Number(Gift.goldcoin)<price){
+                    Global.messageConfirWin("您的金币不足，立即购买金币",function(){
+                        //去购买金币页面
+                        if(Global.isIOS()){
+
+                        }else{
+                            window.Android.goBuyCoin()
+                        }
+                    })
+                    return false
+                }else{
+                    return true
+                }
+            },
+            //发送礼物
+            submit(){
+                if($("li.selected").length==0){
+                    Global.messageWin("请选择礼物")
+                }else{
+                    let flag=Gift.checkMyCoin()
+                    if(!flag){
+                        return
+                    }
+                    let $giftArr=$("li.selected")
+                    let giftIdArr=[]
+                    $giftArr.each(function(){
+                        giftIdArr.push($(this).attr("data-giftId"))
+                    })
+                    console.log(giftIdArr)
+                    //赠送礼物ajax
+                    let postData={
+                        user_id:Number(Homepage.user_id),
+                        // user_id:1, //测试用
+                        to_user_id:Number(Homepage.toUserId),
+                        gift_id:Number(giftIdArr[0]),
+                    }
+                    console.log(postData)
+                    $(".submit").addClass("eventsDisabled")
+                    $.ajax({
+                        type: "POST",
+                        url: Global.host + "/index.php/Api/Gift/give",
+                        data: postData,
+                        success: function (res) {
+                            $(".submit").removeClass("eventsDisabled")
+                            console.log(res)
+                            if(Number(res.code)==200){
+                                //更新goldcoin
+                                Gift.goldcoin=Gift.goldcoin-Number($("li.selected").find(".priceCount").html())
+                                $(".leftCoinCount").html(Gift.goldcoin)
+                                //关闭礼物页面
+                                document.getElementsByClassName("cancelGiveGift")[0].click()
+                                //刷新主页
+                                Homepage.init()
+                            }
+                        }
+                    })
+                }
+            },
+            eventsBind(){
+                //点击礼物selected
+                $(".giftUl").delegate(".gift-item","click",function(event){
+                    event.stopPropagation()
+                    //目前认为只能选择一个
+                    if($(this).hasClass("selected")){
+                        $(this).removeClass("selected")
+                    }else{
+                        $(this).addClass("selected").siblings().removeClass("selected")
+                    }
+                })
+                //点击发送
+                document.getElementsByClassName("submit")[0].onclick=function(){
+                    Gift.submit()
+                }
+                //礼物页面 取消页面
+                document.getElementsByClassName("cancelGiveGift")[0].onclick=function(){
+                    if($("li.selected").length>0){
+                        $("li.selected").removeClass("selected")
+                    }
+                    $(".gift-page").hide()
+                }
+            },
+            init(){
+                Gift.getGift()
+
+                Gift.eventsBind()
+            }
+        };
         $(function () {
             Homepage.init()
         });
