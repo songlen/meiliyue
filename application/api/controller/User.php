@@ -471,11 +471,10 @@ class User extends Base {
         Db::name('user_visitor')->insert($visitordata);
 
         /************** 他收到的礼物 *********************/
-        $data['gift'] = M('gift_gived')
-            ->where('to_user_id', $toUserId)
+        $subQuery = M('gift_gived')->where('to_user_id', $toUserId)->order('id desc')->buildSql();
+        $data['gift'] = Db::name($subQuery, 'sub')
             ->field('image, count(*) count')
             ->group('gift_id')
-            ->order('id desc')
             ->select();
 
         /************** 统计数量 *************/
@@ -842,6 +841,7 @@ class User extends Base {
             ->where('gg.to_user_id', $user_id)
             ->limit($limit_start, 10)
             ->field('head_pic, nickname, birthday, gg.goldcoin, gg.image')
+            ->order('id desc')
             ->select();
 
         if(is_array($list) && !empty($list)){
