@@ -95,28 +95,11 @@ class Goldcoin extends Base {
 
 	public function IOSCallback(){
 		$user_id = I('user_id');
-		$level = I('level');
-
-		// 计算到期日期
-		$user = Db::name('users')->where('user_id', $user_id)->field('vip_expire_date')->find();
-		$old_date = $user['vip_expire_date'] ? $user['vip_expire_date'] : date('Y-m-d');
-		$enum = Config::load(APP_PATH.'enum.php', ture);
-		$vip_config = $enum['vip'];
-		$num = $vip_config[$level]['num'];
-		$unit = $vip_config[$level]['unit'];
-		$expire_date = date('Y-m-d', strtotime('+'.$num.$unit, strtotime($old_date)));
-
-		Db::name('users')->where('user_id', $user_id)->update(array('level'=>$level, 'vip_expire_date'=>$expire_date));
+		$goldcoin_id = I('goldcoin_id');
 
 		// ios没走下单接口，这里支付成功记录一下
 		$order_no = $this->generateOrderno();
-		$data = array(
-			'order_no' => $order_no,
-			'user_id' => $user_id,
-			'level' => $level,
-			'createtime' => time(),
-		);
-		Db::name('goldcoin_order')->insert($data);
+		$this->operation($order_no, $user_id);
 
 		response_success();
 	}

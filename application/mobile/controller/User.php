@@ -95,4 +95,9 @@ class User extends Base {
     public function congress(){
         return $this->fetch();
     }
+
+    // 礼物页面 toUserId
+    public function gift(){
+        return $this->fetch();
+    }
 }
