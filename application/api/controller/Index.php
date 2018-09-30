@@ -137,7 +137,7 @@ class Index extends Base {
         $user_id = I('user_id');
 
         $user = Db::name('users')->where('user_id', $user_id)->field('goldcoin')->find();
-        if($user['goldcoin'] < 1800) response_error('', '您从金币不足');
+        if($user['goldcoin'] < 1800) response_error(array('status'=>1), '您的金币不足'); // status=1 金币不足
 
         // 启动事务
         Db::startTrans();
