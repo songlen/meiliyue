@@ -146,6 +146,20 @@
                 </ul>
             </div>
 
+            <div class="myGift" style="padding-bottom:0.1rem;">
+                <div class="myGift-title">
+                    <p class="myGiftText">礼物</p>
+                    <p class="myGiftCount"></p>
+                </div>
+
+                <div class="myInvite-content">
+                    <div class="myGiftSome" style="padding:0.1rem 0.05rem;">
+                        <p class="noInvite noGiftSome" style="display: none;">还没有收到任何礼物</p>
+                    </div>
+                    <!-- <a href="javascript:void(0)" id="gotoGift">送礼得TA的青睐</a> -->
+                </div>
+            </div>
+
             <div class="aboutMe">
                 <div class="aboutMe-title">
                     <p class="aboutText">关于我</p>
@@ -398,6 +412,26 @@
                 }
                 //我的动态数量
                 $(".myTalkCount").html(data.count.dynamicsCount)
+                //礼物
+                if(data.gift&&data.gift.length>0){
+                    let arr=data.gift.slice(0,4) //取前四个
+                    console.log(arr)
+                    let myGiftSome=document.getElementsByClassName("myGiftSome")[0]
+                    myGiftSome.innerHTML=""
+                    arr.forEach(function(obj){
+                        let div=document.createElement("div")
+                        div.innerHTML=`
+                            <img src=${Global.host+obj.image}>
+                            <span class="giftCount">${obj.count}</span>
+                        `
+                        div.className="myGiftSomeItemWrap"
+                        myGiftSome.appendChild(div)
+                    })
+                }else{ //没收到礼物
+                    $(".noGiftSome").show()
+                }
+                //礼物数量
+                $(".myGiftCount").html(data.gift.length)
                 //认证
                 if (Number(data.baseinfo.mobile_validated) == 0) {
                     $(".myApprove-phone").prev(".myApprove-pic").find("img").attr("src",
