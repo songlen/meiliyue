@@ -472,6 +472,7 @@ class User extends Base {
 
         /************** 他收到的礼物 *********************/
         $subQuery = M('gift_gived')->where('to_user_id', $toUserId)->order('id desc')->buildSql();
+        p($subQuery);
         $data['gift'] = Db::name($subQuery, 'sub')
             ->field('image, count(*) count')
             ->group('gift_id')
