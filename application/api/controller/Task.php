@@ -26,4 +26,15 @@ class Task extends Base {
 
         file_put_contents($filepath, "<?php \r\n return ".var_export($users, true).';');
 	}
+
+    public function test(){
+        $toUserId = 2;
+        $subQuery = M('gift_gived')->where('to_user_id', $toUserId)->order('id desc')->buildSql();
+        $data['gift'] = Db::name($subQuery, 'sub')
+            ->field('image, count(*) count')
+            ->group('gift_id')
+            ->select();
+
+        p($data);
+    }
 }
