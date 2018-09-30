@@ -969,7 +969,7 @@
                 let price=Number($("li.selected").find(".priceCount").text())
                 // console.log(price)
                 // console.log(Number(Gift.goldcoin))
-                // if(Number(Gift.goldcoin)<price){
+                if(Number(Gift.goldcoin)<price){
                     Global.messageConfirWin("您的金币不足，立即购买金币",function(){
                         //去购买金币页面
                         if(Global.isIOS()){
@@ -979,9 +979,9 @@
                         }
                     })
                     return false
-                // }else{
-                //     return true
-                // }
+                }else{
+                    return true
+                }
             },
             //发送礼物
             submit(){
