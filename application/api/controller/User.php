@@ -471,7 +471,6 @@ class User extends Base {
         Db::name('user_visitor')->insert($visitordata);
 
         /************** 他收到的礼物 *********************/
-        $toUserId = 2;
         $subQuery = M('gift_gived')->where('to_user_id', $toUserId)->order('id desc')->buildSql();
         $data['gift'] = Db::table($subQuery.' sub')
             ->field('image, count(*) count')
@@ -530,12 +529,11 @@ class User extends Base {
             ->field('id, thumb, url, type, file_type')
             ->order('id desc')
             ->select();
-        /************** 他收到的礼物 *********************/
-        $data['gift'] = M('gift_gived')
-            ->where('to_user_id', $user_id)
+        /************** 我收到的礼物 *********************/
+        $subQuery = M('gift_gived')->where('to_user_id', $user_id)->order('id desc')->buildSql();
+        $data['gift'] = Db::table($subQuery.' sub')
             ->field('image, count(*) count')
             ->group('gift_id')
-            ->order('id desc')
             ->select();
 
         /************** 统计数量 *************/

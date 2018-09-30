@@ -34,7 +34,7 @@ class Task extends Base {
             ->field('image, count(*) count')
             ->group('gift_id')
             ->select();
-
+p(Db::name('gift_gived')->getLastSql());
         p($data);
     }
 }
