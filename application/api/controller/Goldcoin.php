@@ -103,7 +103,8 @@ class Goldcoin extends Base {
 		    $goldcoin_order = M('goldcoin_order')->where('order_no', $order_no)->find();
 
             // 加金币
-		    Db::name('users')->where('user_id', $goldcoin_order['user_id'])->setInc('goldcoin', $goldcoin_order['price']);
+            $total_goldcoin = $goldcoin_order['num'] + $goldcoin_order['give_num'];
+		    Db::name('users')->where('user_id', $goldcoin_order['user_id'])->setInc('goldcoin', $total_goldcoin);
 		   
 		   	// 记录金币变动日志
 			goldcoin_log($user_id, "+{$goldcoin_order['price']}", 2, '购买金币', $goldcoin_order['id']);
