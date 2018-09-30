@@ -25,7 +25,7 @@ let Global = (function () {
         $(".mLoadingMask").add($(".mLoading")).remove();
     }
 
-    function messageWin(msg) {
+    function messageWin(msg,callback) {
         if ($(".msgWrap").length == 0) {
             let $msgDiv = $(
                 `
@@ -41,6 +41,10 @@ let Global = (function () {
             );
             $msgDiv.find(".closeMsg").click(function () {
                 $msgDiv.remove();
+
+                if(callback){
+                    callback()
+                }
             });
             $("body").append($msgDiv);
         }
@@ -415,7 +419,15 @@ let Global = (function () {
             imgEle.style.height="auto"
         }
     }
-
+    //获取自己的用户信息
+    function getMyInfo(){
+        if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
+            let mUserInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
+            return mUserInfo
+        }else{
+            return false
+        }
+    }
     //Global暴露的接口------------------------
     return {
         //值
@@ -424,7 +436,7 @@ let Global = (function () {
         openLoading, //msg
         closeLoading, //msg:完成瞬间显示的文字;callback;delay:人工设定延迟
         closeLoadingNow, //单纯的关闭loding，没有参数
-        messageWin, //msg
+        messageWin, //msg,callback可选参数回调
         messageConfirWin, //msg;callback：点击确定的回调
         bindLimitCount, //element:textarea元素;textCount:限制的字数;showElement:实时显示字数的元素  注:没有表情插件的
         stampToDate, //stamp  注:10位或13位都可以
@@ -440,6 +452,7 @@ let Global = (function () {
         updateLocalUserinfo, //更新本地的userinfo key,value
         getAuthVideoUrl, //获取认证视频url; user_id callback(url)
         resizeHeadpic, //设置头像style
+        getMyInfo, //获取自己mUserInfo
 
         //单独功能
         fullScreenVideo, //全屏叽喳视频（有去动态详情的按钮）
