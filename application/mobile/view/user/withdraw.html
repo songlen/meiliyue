@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>收到的礼物</title>
+    <title>魅力兑换</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/withdraw.css">
@@ -14,7 +14,7 @@
 </head>
 
 <body class="withdraw-page">
-    <header>
+    <!-- <header>
         <a href="javascript:void(0)" class="back"></a>
         <div class="title">收到的礼物</div>
     </header>
@@ -34,12 +34,12 @@
                 <a href="javascript:void(0)" id="withdrawBtn">提现</a>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- 提现页面 -->
-    <div class="info-page" style="display: none;">
+    <div class="info-page">
         <header>
-            <a href="javascript:void(0)" class="info-back"></a>
+            <a href="javascript:void(0)" class="back"></a>
             <div class="title">魅力兑换</div>
         </header>
     
@@ -94,7 +94,7 @@
                     user_id:Number(Withdraw.userInfo.user_id)
                 }
                 console.log(postData)
-                $("#withdrawBtn").addClass("eventsDisabled")
+                $("#infoBtn").addClass("eventsDisabled")
                 $.ajax({
                     type: "POST",
                     url: Global.host + "/index.php/Api/User/withdraw",
@@ -110,7 +110,7 @@
                             //最低提现金额
                             Withdraw.money_min=Number(res.data.money_min)
 
-                            $("#withdrawBtn").removeClass("eventsDisabled")
+                            $("#infoBtn").removeClass("eventsDisabled")
                         }
                     }
                 })
@@ -118,7 +118,7 @@
             //验证
             validWithdraw(){
                 //余额不到可提取金额
-                if(Number($(".canWithdraw-count").html())<Withdraw.money_min){
+                if(Number($(".infoMoney").html())<Withdraw.money_min){
                     Global.messageWin("对不起，您的可提现金额少于最低提现金额("+Withdraw.money_min+"元)")
                     return false
                 }
@@ -172,12 +172,12 @@
             },  
             //更新魅力
             updateGlamour(num){
-                document.getElementsByClassName("board-content")[0].innerHTML=num
+                // document.getElementsByClassName("board-content")[0].innerHTML=num
                 document.getElementsByClassName("infoGlamour")[0].innerHTML=num
             },
             //更新可提现金额
             updateMoney(num){
-                document.getElementsByClassName("canWithdraw-count")[0].innerHTML=num
+                // document.getElementsByClassName("canWithdraw-count")[0].innerHTML=num
                 document.getElementsByClassName("infoMoney")[0].innerHTML=num
             },  
             eventsBind(){
@@ -185,16 +185,16 @@
                 $("header .back").click(function(){
                     window.history.back(-1)
                 })
-                //点击提现
-                document.getElementById("withdrawBtn").onclick=function(){
-                    if(!Withdraw.validWithdraw()){
-                        return
-                    }
-                    $(".info-page").show()
-                }
-                document.getElementsByClassName("info-back")[0].onclick=function(){
-                    $(".info-page").hide()
-                }
+                // //点击提现
+                // document.getElementById("withdrawBtn").onclick=function(){
+                //     if(!Withdraw.validWithdraw()){
+                //         return
+                //     }
+                //     $(".info-page").show()
+                // }
+                // document.getElementsByClassName("info-back")[0].onclick=function(){
+                //     $(".info-page").hide()
+                // }
                 //点击兑换至支付宝账号
                 document.getElementsByClassName("infoBtn")[0].onclick=function(){
                     Withdraw.withdraw()
