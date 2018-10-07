@@ -244,7 +244,7 @@
                         $(".detailImages").append($(
                             `
                                 <div class="inviImgWrap" style="font-size:0;">
-                                    <img class="inviImg" data-index=${index} src=${Global.host+src}>
+                                    <img class="inviImg" data-index=${index} src=${Global.host+src} onload="Global.resizeHeadpic(this)">
                                 </div>
                             `
                         ));
