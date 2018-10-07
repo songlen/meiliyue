@@ -843,7 +843,7 @@ class User extends Base {
 
         $data = array(
             'glamour' => $user['glamour'],
-            'money' => $user['money']/100, // 可提现金额
+            'money' => $user['glamour']/100, // 可提现金额
             'money_min' => 10, // 最低提现金额
         );
         
