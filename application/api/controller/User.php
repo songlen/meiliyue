@@ -815,7 +815,7 @@ class User extends Base {
     public function myaccount(){
         $user_id = I('user_id');
 
-        $user = M('users')->where('user_id', $user_id)
+        $user = M('users')
                         ->where('user_id', $user_id)
                         ->field('goldcoin, glamour, flower_num, level')
                         ->find();
@@ -831,6 +831,58 @@ class User extends Base {
         $result['user'] = $user;
         $result['goldcoin'] = $goldcoin;
         response_success($result);
+    }
+
+    // 申请提现
+    public function withdraw(){
+        $user_id = I('user_id');
+
+        $user = M('users')->where('user_id', $user_id)
+                            ->field('glamour')
+                            ->find();
+
+        $data = array(
+            'glamour' => $user['glamour'],
+            'money' => $user['money']/100, // 可提现金额
+            'money_min' => 10, // 最低提现金额
+        );
+        
+        response_success($data);
+    }
+
+    public function doWithdraw(){
+        $user_id = I('user_id');
+        $money = I('money');
+        $account = I('account');
+        $name = I('name');
+
+        if($money < 10) response_error('', '对不起，提现金额不能少于10元');
+        if(empty($account)) response_error('', '请填写支付宝信息');
+
+        $user = M('users')->where('user_id', $user_id)
+                            ->field('glamour')
+                            ->find();
+
+        $xiaofei_glamour = $money*100;
+        if($xiaofei_glamour > $user['glamour']) response_error('', '超出可提现金额');
+
+        $data = array(
+            'user_id' => $user_id,
+            'money' => $money,
+            'account' => $account,
+            'name' => $name,
+            'createtime' => time(),
+        );
+
+        if(Db::name('withdraw')->insert($data)){
+            Db::name('users')->where('user_id', $user_id)
+                ->inc('frozen_glamour', $xiaofei_glamour)
+                ->dec('glamour', $xiaofei_glamour)
+                ->update();
+            response_success('', '申请提现成功，请注意查收');
+        } else {
+            response_error('', '操作失败');
+        }
     }
 
     

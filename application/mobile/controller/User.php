@@ -105,4 +105,9 @@ class User extends Base {
     public function mygiftlist(){
         return $this->fetch();
     }
+
+    // 申请提现页面
+    public function withdraw(){
+        return $this->fetch();
+    }
 }
