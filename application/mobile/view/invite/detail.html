@@ -516,6 +516,8 @@
         }
         $(function () {
             Interested.init()
+
+            window.addEventListener('touchmove', evt => evt.preventDefault())
         })
     </script>
 </body>
