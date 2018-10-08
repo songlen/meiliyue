@@ -57,7 +57,7 @@
                             详细地点
                         </div>
                         <div class="detailPlace-inputWrap">
-                            <input type="text" placeholder="填写详细地点..." />
+                            <input id="detailPlaceInput" type="text" placeholder="填写详细地点..." />
                         </div>
                     </li>
                     <li class="clearfix">
@@ -312,6 +312,15 @@
                     Global.messageWin("地点和时间请填写完整");
                     return;
                 }
+                
+                //详细地点
+                if($("#detailPlaceInput").val().trim()==""){
+                    Global.messageWin("请填写详细地点")
+                    return
+                }
+                
+                //--------------------------
+
 
                 //jquery.form.js方法
                 $(":input[name='user_id']").val(ReleInvite._user_id);
