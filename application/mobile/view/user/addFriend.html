@@ -103,8 +103,10 @@
                     AddFriend.user_id = Number(mUserInfo.user_id);
                     AddFriend.uuid = Number(mUserInfo.uuid);
                 } else {
-                    AddFriend.user_id = 1; //测试用
-                    AddFriend.uuid = 83886073; //测试用
+                    // AddFriend.user_id = 1; //测试用
+                    // AddFriend.uuid = 83886073; //测试用
+                    alert("请求失败")
+                    return
                 }
             },
             //验证

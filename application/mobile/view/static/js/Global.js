@@ -425,6 +425,7 @@ let Global = (function () {
             let mUserInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
             return mUserInfo
         }else{
+            alert("请求失败")
             return false
         }
     }

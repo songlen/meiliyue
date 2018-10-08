@@ -319,7 +319,9 @@
                     console.log(mUserInfo)
                     Comments.user_id = Number(mUserInfo.user_id);
                 } else {
-                    Comments.user_id = 1; //测试用
+                    // Comments.user_id = 1; //测试用
+                    alert("请求失败")
+                    return
                 }
 
                 // //

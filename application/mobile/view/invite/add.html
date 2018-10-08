@@ -193,8 +193,11 @@
                     ReleInvite._user_id = Number(mUserInfo.user_id);
                     ReleInvite._user_sex = Number(mUserInfo.sex);
                 } else {
-                    ReleInvite._user_id = 3; //测试用
-                    ReleInvite._user_sex = 1; //测试用 男
+                    // ReleInvite._user_id = 3; //测试用
+                    // ReleInvite._user_sex = 1; //测试用 男
+
+                    alert("请求失败")
+                    return
                 }
                 console.log(ReleInvite._user_id)
 
@@ -207,7 +210,9 @@
                     ulrStr = ulrStr + ".html";
                 }
                 if (ulrStr.indexOf("file://") > -1) {
-                    ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html" //测试用
+                    // ulrStr = "http://meiliyue.caapa.org/index.php/mobile/invite/add/type/3.html" //测试用
+                    alert("请求失败")
+                    return
                 }
                 var strTemp = ulrStr.split("/add/type/")[1];
                 ReleInvite._type = Number(strTemp.substr(0, 1));

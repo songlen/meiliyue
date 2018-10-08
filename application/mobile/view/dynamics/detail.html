@@ -229,7 +229,9 @@
                     console.log(mUserInfo)
                     Details.user_id = Number(mUserInfo.user_id);
                 } else {
-                    Details.user_id = 1; //测试用
+                    // Details.user_id = 1; //测试用
+                    alert("请求失败")
+                    return
                 }
                 // alert("user_id:"+Details.user_id)
                 //dynamic_id
@@ -238,7 +240,9 @@
                     ulrStr = ulrStr + ".html";
                 }
                 if (ulrStr.indexOf("file://") > -1) {
-                    ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/22.html" //测试用
+                    // ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/22.html" //测试用
+                    alert("请求失败")
+                    return
                 }
                 var strTemp = ulrStr.split("/detail/id/")[1];
                 Details.dynamic_id = Number(strTemp.substr(0, strTemp.length - 5));

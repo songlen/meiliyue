@@ -278,7 +278,9 @@
                     console.log(mUserInfo)
                     Edit._user_id = Number(mUserInfo.user_id);
                 } else {
-                    Edit._user_id = 1; //测试用
+                    // Edit._user_id = 1; //测试用
+                    alert("请求失败")
+                    return
                 }
 
                 //_type
@@ -291,7 +293,9 @@
                     url = url + ".html";
                 }
                 if (url.indexOf("file://") > -1) {
-                    url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/2.html"; //测试用
+                    // url = "http://meiliyue.caapa.org/index.php/mobile/dynamics/add/type/2.html"; //测试用
+                    alert("请求失败")
+                    return
                 }
                 // alert(url)
                 let strTemp = url.split("/add/type/")[1];
