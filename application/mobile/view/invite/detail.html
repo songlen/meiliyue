@@ -22,13 +22,13 @@
 </head>
 
 <body class="interested">
-    <header>
+    <header style="position:absolute;left: 0;right: 0;">
         <a href="javascript:void(0)" class="back fl"></a>
         <span class="title">邀约详情</span>
         <a href="javascript:void(0)" class="operate fr" style="display: none;"></a>
     </header>
 
-    <div class="invitation-enrollWrap">
+    <div class="invitation-enrollWrap" style="position:absolute;">
 
         <div class="main-content invitation">
             <div class="items invite-detail">
@@ -244,12 +244,12 @@
                         $(".detailImages").append($(
                             `
                                 <div class="inviImgWrap" style="font-size:0;">
-                                    <img class="inviImg" data-index=${index} src=${Global.host+src}>
+                                    <img class="inviImg" data-index=${index} src=${Global.host+src} onload="Global.resizeHeadpic(this)">
                                 </div>
                             `
                         ));
                     });
-                    $(".detailImages").show();
+                    $(".detailImages").css("display","flex");
                 }
                 //买单
                 if(data.pay&&data.pay!==""){
@@ -516,6 +516,10 @@
         }
         $(function () {
             Interested.init()
+
+            // window.addEventListener('touchmove', evt => evt.preventDefault())
+            window.addEventListener('touchstart',function(e){e.preventDefault();});
+            window.addEventListener('touchmove',function(e){e.preventDefault();});
         })
     </script>
 </body>

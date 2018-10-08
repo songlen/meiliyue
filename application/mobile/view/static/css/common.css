@@ -1938,10 +1938,13 @@ li.edit-pic-item {
 /* 邀约详情图片 */
 .inviImgWrap {
   display: inline-block;
-  width: calc(30% - 16px);
+  /* width: calc(30% - 16px); */
+  width: 28%;
   margin: 5px;
   overflow: hidden;
-  height: 100px;
+  /* height: 100px; */
+  height: 0;
+  padding-bottom: 28%;
 }
 /* 邀约详情图片 数量 */
 .showImgNum{
