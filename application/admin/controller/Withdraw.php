@@ -9,36 +9,97 @@ use app\api\logic\MessageLogic;
 class Withdraw extends Base {
 
     public function index(){
+        $searchtype = I('searchtype');
+        $keyword = I('keyword', '');
+        $start_time = I('start_time');
+        $end_time = I('end_time');
+        $status = I('status');
+
+        // 搜索条件
+        $where = array();
+        if($keyword){
+            if($searchtype == 'nickname') $where['nickname'] = array('like', "%$keyword%");
+            if($searchtype == 'uuid') $where['uuid'] = $keyword;
+        }
+
+        if($start_time && $end_time){
+            $start_time = strtotime($start_time);
+            $end_time = strtotime($end_time);
+
+            $where['createtime'] = array('BETWEEN', array($start_time, $end_time));
+
+            $start_time = date('Y-m-d H:i:s', $start_time);
+            $end_time = date('Y-m-d H:i:s', $end_time);
+        }
+
+        if($status || $status != '') $where['status'] = $status;
+        
+        $count = M('Withdraw')->alias('w')
+            ->join('users u', 'w.user_id=u.user_id', 'left')
+            ->where($where)
+            ->count();
+
+        $Page = new Page($count,10);
+        $show = $Page->show();
+
+        $lists = M('Withdraw')->alias('w')
+            ->join('users u', 'w.user_id=u.user_id', 'left')
+            ->where($where)
+            ->order('w.id desc')
+            ->limit($Page->firstRow.','.$Page->listRows)
+            ->field('u.user_id, u.nickname, u.uuid, w.id, w.money, w.account, w.name, w.createtime, w.status, w.mark')
+            ->select();
+                           
+        $this->assign('lists',$lists);
+        $this->assign('show', $show);
+        $this->assign('searchtype', $searchtype);
+        $this->assign('keyword', $keyword);
+        $this->assign('start_time', $start_time);
+        $this->assign('end_time', $end_time);
+        $this->assign('status', $status);
         return $this->fetch();
     }
-
-    public function ajaxindex(){
-        // 搜索条件
-        $condition = array();
-        I('mobile') ? $condition['mobile'] = I('mobile') : false;
-        I('email') ? $condition['email'] = I('email') : false;
-
-        $model = M('Withdraw');
-        $count = $model->where($condition)->count();
-        $Page  = new AjaxPage($count,10);
-        //  搜索条件下 分页赋值
-        foreach($condition as $key=>$val) {
-            $Page->parameter[$key]   =   urlencode($val);
+    
+    public function export(){
+        $strTable ='<table width="500" border="1">';
+        $strTable .= '<tr>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="100">会员昵称</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;width:80px;">uuid</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">提现金额</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付宝账号</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">姓名</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">申请日期</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">状态</td>';
+        $strTable .= '</tr>';
+        $count = M('withdraw')->count();
+        $p = ceil($count/5000);
+        for($i=0;$i<$p;$i++){
+            $start = $i*5000;
+            $end = ($i+1)*5000;
+            $list = M('withdraw')->alias('w')
+                ->join('users u', 'w.user_id=u.user_id', 'left')
+                ->order('w.id desc')
+                ->limit($start.','.$end)
+                ->select();
+            if(is_array($list)){
+                foreach($list as $k=>$val){
+                    $status = $val['status'] == 1 ? '已处理' : '待处理';
+                    $strTable .= '<tr>';
+                    $strTable .= '<td style="text-align:center;font-size:12px;">'.$val['nickname'].'</td>';
+                    $strTable .= '<td style="text-align:left;font-size:12px;">'.$val['uuid'].' </td>';
+                    $strTable .= '<td style="text-align:left;font-size:12px;">'.$val['money'].'</td>';
+                    $strTable .= '<td style="text-align:left;font-size:12px;">'.$val['account'].'</td>';
+                    $strTable .= '<td style="text-align:left;font-size:12px;">'.$val['name'].'</td>';
+                    $strTable .= '<td style="text-align:left;font-size:12px;">'.date('Y-m-d H:i',$val['createtime']).'</td>';
+                    $strTable .= '<td style="text-align:left;font-size:12px;">'.$status.'</td>';
+                    $strTable .= '</tr>';
+                }
+                unset($list);
+            }
         }
-        
-        $lists = $model->alias('w')->where($condition)
-        	->join('users u', 'w.user_id=u.user_id', 'left')
-        	->order('id desc')
-        	->limit($Page->firstRow.','.$Page->listRows)
-        	->field('u.user_id, u.nickname, u.uuid, w.id, w.money, w.account, w.name, w.createtime, w.status, w.mark')
-        	->select();
-
-                           
-        $show = $Page->show();
-        $this->assign('lists',$lists);
-        $this->assign('page',$show);// 赋值分页输出
-        $this->assign('pager',$Page);
-        return $this->fetch();
+        $strTable .='</table>';
+        downloadExcel($strTable,'提现申请'.$i);
+        exit();
     }
 
     public function detail(){

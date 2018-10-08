@@ -25,9 +25,30 @@
 		<div class="mDiv">
 			<div class="ftitle">
 				<h3>金币购买记录</h3>
-				<h5>(共{$list|count}条记录)</h5>
+				<h5>(共{$list|count}条记录 总金额：￥{$total_money})</h5>
 			</div>
 			<div title="刷新数据" class="pReload"><i class="fa fa-refresh"></i></div>
+			<form class="navbar-form form-inline"  id="search-form2" method="get" action="{:U('admin/goldcoin/order')}" onsubmit="return check_form();">
+
+                <div class="sDiv">
+                    <div class="sDiv2">
+                    	<div class="sDiv2" style="margin-right: 10px;">
+	                        <input type="text" size="30" id="start_time" name="start_time" value="{$start_time}" placeholder="起始时间" class="qsbox">
+	                        <input type="button" class="btn" value="起始时间">
+	                    </div>
+	                    <div class="sDiv2" style="margin-right: 10px;">
+	                        <input type="text" size="30" id="end_time" name="end_time" value="{$end_time}" placeholder="截止时间" class="qsbox">
+	                        <input type="button" class="btn" value="截止时间">
+	                    </div>
+                    	<select name="searchtype" class="select">
+                    		<option value="nickname" <if condition="$searchtype == 'nickname'">selected=selected</if>>用户昵称</option>
+                    		<option value="uuid" <if condition="$searchtype == 'uuid'">selected=selected</if>>uuid</option>
+                    	</select>
+                        <input type="text" id="keyword" size="30" name="keyword" class="qsbox" placeholder="请输入关键字" value="{$keyword}">
+                        <input type="submit" class="btn" value="搜索">
+                    </div>
+                </div>
+            </form>
 		</div>
 		<div class="hDiv">
 			<div class="hDivBox">
@@ -38,7 +59,7 @@
 							<div style="width: 24px;"><i class="ico-check"></i></div>
 						</th>
 						<th align="left" abbr="article_title" axis="col3" class="">
-							<div style="text-align: left; width: 100px;" class="">用户昵称</div>
+							<div style="text-align: left; width: 150px;" class="">用户昵称</div>
 						</th>
 						<th align="left" abbr="article_title" axis="col3" class="">
 							<div style="text-align: left; width: 100px;" class="">uuid</div>
@@ -82,7 +103,7 @@
 								<div style="width: 24px;"><i class="ico-check"></i></div>
 							</td>
 							<td align="left" class="">
-								<div style="text-align: left; width: 100px;">{$vo.nickname}</div>
+								<div style="text-align: left; width: 150px;">{$vo.nickname}</div>
 							</td>
 							<td align="left" class="">
 								<div style="text-align: left; width: 100px;">{$vo.uuid}</div>
@@ -100,10 +121,10 @@
 								<div style="text-align: center; width: 120px;">{$vo.paytime|date='Y-m-d H:i',###}</div>
 							</td>
 							<td align="center" class="handle">
-								<div style="text-align: center; width: 170px; max-width:170px;">
+								<!-- <div style="text-align: center; width: 170px; max-width:170px;">
 									<a href="{:U('goldcoin/edit',array('id'=>$vo['id']))}" class="btn blue"><i class="fa fa-pencil-square-o"></i>编辑</a>
 									<a class="btn red"  href="javascript:void(0)" data-url="{:U('goldcoin/del')}" data-id="{$vo.id}" onClick="delfun(this)"><i class="fa fa-trash-o"></i>删除</a>
-								</div>
+								</div> -->
 							</td>
 							<td align="" class="" style="width: 100%;">
 								<div>&nbsp;</div>
@@ -112,12 +133,14 @@
 					</foreach>
 					</tbody>
 				</table>
+
 			</div>
 			<div class="iDiv" style="display: none;"></div>
 		</div>
 		<!--分页位置-->
 		{$show} </div>
 </div>
+<script src="__ROOT__/public/static/js/layer/laydate/laydate.js"></script>
 <script>
 	$(document).ready(function(){
 
@@ -125,6 +148,9 @@
 		$('.fa-refresh').click(function(){
 			location.href = location.href;
 		});
+
+		$('#start_time').layDate();
+        $('#end_time').layDate();
 
 	});
 
@@ -153,6 +179,17 @@
 			layer.closeAll();
 		});
 	}
+
+	function check_form(){
+        var start_time = $.trim($('#start_time').val());
+        var end_time =  $.trim($('#end_time').val());
+        if(start_time == '' ^ end_time == ''){
+            layer.alert('请选择完整的时间间隔', {icon: 2});
+            return false;
+        }
+
+        return true;
+    }
 </script>
 </body>
 </html>
