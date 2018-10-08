@@ -49,7 +49,7 @@ class Vip extends Base {
             ->where('paystatus', 1)
             ->order('id desc')
             ->limit($Page->firstRow.','.$Page->listRows)
-            ->field('u.user_id, u.nickname, u.vip_expire_date, u.uuid, vo.id, vo.level, vo.paystatus, vo.paytime')
+            ->field('u.user_id, u.nickname, u.vip_expire_date, u.uuid, vo.id, vo.amount, vo.level, vo.paystatus, vo.paytime')
             ->select();
 
         // 统计vip购买数量
@@ -77,6 +77,7 @@ class Vip extends Base {
         $strTable .= '<td style="text-align:center;font-size:12px;" width="100">会员昵称</td>';
         $strTable .= '<td style="text-align:center;font-size:12px;width:80px;">uuid</td>';
         $strTable .= '<td style="text-align:center;font-size:12px;" width="*">会员级别</td>';
+        $strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付金额</td>';
         $strTable .= '<td style="text-align:center;font-size:12px;" width="*">支付时间</td>';
         $strTable .= '</tr>';
         $count = M('vip_order')->where('paystatus', 1)->count();
@@ -111,6 +112,7 @@ class Vip extends Base {
                     $strTable .= '<td style="text-align:center;font-size:12px;">'.$val['nickname'].'</td>';
                     $strTable .= '<td style="text-align:left;font-size:12px;">'.$val['uuid'].' </td>';
                     $strTable .= '<td style="text-align:left;font-size:12px;">'.$level_name.'</td>';
+                    $strTable .= '<td style="text-align:left;font-size:12px;">'.$val['amount'].' </td>';
                     $strTable .= '<td style="text-align:left;font-size:12px;">'.date('Y-m-d H:i',$val['paytime']).'</td>';
                     $strTable .= '</tr>';
                 }
