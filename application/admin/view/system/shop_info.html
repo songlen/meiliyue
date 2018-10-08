@@ -59,6 +59,22 @@
                     <input name="examine_dynamic" type="radio" value="0" <if condition="$config.examine_dynamic eq 0"> checked="checked" </if> /> 否
                 </dd>
             </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="min_money">最低提现金额(元)</label>
+                </dt>
+                <dd class="opt">
+                    <input name="min_money" type="text" value="{$config.min_money}">
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="tit">
+                    <label for="poundage">提现手续费(%)</label>
+                </dt>
+                <dd class="opt">
+                    <input name="poundage" type="text" value="{$config.poundage}">
+                </dd>
+            </dl>
 
             <!-- <dl class="row">
                 <dt class="tit">
