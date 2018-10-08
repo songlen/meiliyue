@@ -7,14 +7,11 @@
 
 <body>
     <script>
-        alert(1)
-        var userinfoStr = {$userinfo};
-        console.log(userinfoStr)
-        // var userinfoStr=
-        alert(userinfoStr)
+        var userinfo = {$userinfo};
+        console.log(userinfo)
 
-        localStorage["mUserInfo"] = JSON.stringify(userinfoStr);
-        localStorage.setItem("mUserInfo", JSON.stringify(userinfoStr));
+        localStorage["mUserInfo"] = JSON.stringify(userinfo);
+        localStorage.setItem("mUserInfo", JSON.stringify(userinfo));
 
         // window.onbeforeunload = function () {
         //     if (sessionStorage["mUserInfo"]) {
