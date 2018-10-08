@@ -71,6 +71,9 @@
                             <div style="text-align: center; width: 120px;" class="">支付时间</div>
                         </th>
                         <th align="center" abbr="reg_time" axis="col6" class="">
+                            <div style="text-align: center; width: 120px;" class="">支付金额</div>
+                        </th>
+                        <th align="center" abbr="reg_time" axis="col6" class="">
                             <div style="text-align: center; width: 120px;" class="">会员级别</div>
                         </th>
                         <th align="center" abbr="reg_time" axis="col6" class="">
@@ -94,7 +97,7 @@
             <div class="tDiv2">
 
                 <div class="fbutton">
-                    <a href="{:U('Withdraw/export')}">
+                    <a href="{:U('vip/export')}">
                         <div title="导出">
                             <span><i class="fa fa-share"></i>导出</span>
                         </div>
@@ -123,6 +126,9 @@
                 </td>
                 <td align="left" class="">
                     <div style="text-align: center; width: 120px;">{$list.paytime|date='Y-m-d H:i',###}</div>
+                </td>
+                <td align="left" class="">
+                    <div style="text-align: center; width: 80px;">{$list.amount}</div>
                 </td>
                 <td align="left" class="">
                     <div style="text-align: center; width: 120px;">
