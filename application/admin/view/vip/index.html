@@ -71,13 +71,13 @@
                             <div style="text-align: center; width: 120px;" class="">支付时间</div>
                         </th>
                         <th align="center" abbr="reg_time" axis="col6" class="">
-                            <div style="text-align: center; width: 120px;" class="">支付金额</div>
+                            <div style="text-align: center; width: 80px;" class="">支付金额</div>
                         </th>
                         <th align="center" abbr="reg_time" axis="col6" class="">
-                            <div style="text-align: center; width: 120px;" class="">会员级别</div>
+                            <div style="text-align: center; width: 100px;" class="">会员级别</div>
                         </th>
                         <th align="center" abbr="reg_time" axis="col6" class="">
-                            <div style="text-align: center; width: 120px;" class="">支付状态</div>
+                            <div style="text-align: center; width: 100px;" class="">支付状态</div>
                         </th>
                         <th align="center" abbr="reg_time" axis="col6" class="">
                             <div style="text-align: center; width: 120px;" class="">到期日期</div>
@@ -131,7 +131,7 @@
                     <div style="text-align: center; width: 80px;">{$list.amount}</div>
                 </td>
                 <td align="left" class="">
-                    <div style="text-align: center; width: 120px;">
+                    <div style="text-align: center; width: 100px;">
                         <if condition="$list.level eq 1">白银VIP</if>
                         <if condition="$list.level eq 2">黄金VIP</if>
                         <if condition="$list.level eq 3">铂金VIP</if>
@@ -139,7 +139,7 @@
                     </div>
                 </td>
                 <td align="left" class="">
-                    <div style="text-align: center; width: 120px;">
+                    <div style="text-align: center; width: 100px;">
                         <if condition="$list.paystatus eq 1">已支付</if>
                         <if condition="$list.paystatus eq 0">未支付</if>
                     </div>
