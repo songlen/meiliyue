@@ -841,10 +841,14 @@ class User extends Base {
                             ->field('glamour')
                             ->find();
 
+        // 获取系统设置
+        $shopinfo_config = tpCache('shop_info');
+        $min_money = $shopinfo_config['min_money']; // 最低提现金额
+
         $data = array(
             'glamour' => $user['glamour'],
             'money' => $user['glamour']/100, // 可提现金额
-            'money_min' => 10, // 最低提现金额
+            'money_min' => $min_money, // 最低提现金额
         );
         
         response_success($data);
@@ -856,7 +860,12 @@ class User extends Base {
         $account = I('account');
         $name = I('name');
 
-        if($money < 10) response_error('', '对不起，提现金额不能少于10元');
+        // 获取系统设置
+        $shopinfo_config = tpCache('shop_info');
+        $min_money = $shopinfo_config['min_money']; // 最低提现金额
+        $poundage = $shopinfo_config['poundage'];  // 提现手续费率（%）
+
+        if($money < $money_min) response_error('', '对不起，提现金额不能少于'.$min_money.'元');
         if(empty($account)) response_error('', '请填写支付宝信息');
 
         $user = M('users')->where('user_id', $user_id)
@@ -866,12 +875,17 @@ class User extends Base {
         $xiaofei_glamour = $money*100;
         if($xiaofei_glamour > $user['glamour']) response_error('', '超出可提现金额');
 
+        // 提现手续费
+        $poundage_money = round($money*$poundage/100, 2);
+        $money = round($money-$poundage_money);
         $data = array(
             'user_id' => $user_id,
             'money' => $money,
             'account' => $account,
             'name' => $name,
             'createtime' => time(),
+            'poundage' => $poundage,
+            'poundage_money' => $poundage_money,
         );
 
         if(Db::name('withdraw')->insert($data)){
