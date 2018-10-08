@@ -88,6 +88,7 @@ return	array(
 		)),
 		array('name'=>'金币', 'child'=>array(
 			array('name'=>'金币商品','act'=>'index','op'=>'goldcoin'),
+			array('name'=>'购买记录','act'=>'order','op'=>'goldcoin'),
 			
 		)),
 		array('name'=>'礼物', 'child'=>array(

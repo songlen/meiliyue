@@ -65,4 +65,29 @@ class Goldcoin extends Base {
             $this->ajaxReturn(array('status'=>0, 'msg'=>'操作失败'));
         }
     }
+
+    // 购买记录
+    public function order(){
+
+        $p = I('p', 1);
+
+        $where = array(
+            'paystatus'=>1,
+        );
+        $list = Db::name('goldcoin_order')->alias('go')
+            ->join('users u', 'go.user_id=u.user_id', 'left')
+            ->where($where)
+            ->order('id desc')
+            ->page($p.',1')
+            ->field('u.nickname, u.uuid, go.num, go.give_num, go.price, go.paytime')
+            ->select();
+        
+        $count = Db::name('goldcoin_order')->where($where)->count();
+        $Page = new Page($count,1);
+        $show = $Page->show();
+
+        $this->assign('list', $list);
+        $this->assign('show', $show);
+        return $this->fetch();
+    }
 }
