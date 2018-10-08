@@ -8,7 +8,9 @@
 <body>
     <script>
         alert(1)
-        var userinfoStr = '{$userinfo}';
+        var userinfoStr = {$userinfo};
+        console.log(userinfoStr)
+        // var userinfoStr=
         alert(userinfoStr)
 
         localStorage["mUserInfo"] = JSON.stringify(userinfoStr);
