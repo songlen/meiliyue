@@ -28,10 +28,27 @@ class Vip extends Base {
 
 
 	// 下单
-	public function placeOrder(){		
+	public function placeOrder(){
 
 		$user_id = I('user_id');
 		$level = I('level');
+		switch ($level) {
+			case '1':
+				$amount = '0.01';
+				break;
+			
+			case '2':
+				$amount = '0.01';
+				break;
+			
+			case '3':
+				$amount = '0.01';
+				break;
+			
+			case '4':
+				$amount = '0.01';
+				break;
+		}
 
 		$order_no = $this->generateOrderno();
 		$data = array(
@@ -39,6 +56,7 @@ class Vip extends Base {
 			'user_id' => $user_id,
 			'level' => $level,
 			'createtime' => time(),
+			'amount' => $amount,
 		);
 
 		if(Db::name('vip_order')->insert($data)){
@@ -130,6 +148,23 @@ class Vip extends Base {
 
 		Db::name('users')->where('user_id', $user_id)->update(array('level'=>$level, 'vip_expire_date'=>$expire_date));
 
+		switch ($level) {
+			case '1':
+				$amount = '0.01';
+				break;
+			
+			case '2':
+				$amount = '0.01';
+				break;
+			
+			case '3':
+				$amount = '0.01';
+				break;
+			
+			case '4':
+				$amount = '0.01';
+				break;
+		}
 		// ios没走下单接口，这里支付成功记录一下
 		$order_no = $this->generateOrderno();
 		$data = array(
@@ -137,6 +172,7 @@ class Vip extends Base {
 			'user_id' => $user_id,
 			'level' => $level,
 			'createtime' => time(),
+			'amount' => $amount,
 		);
 		Db::name('vip_order')->insert($data);
 
