@@ -844,11 +844,13 @@ class User extends Base {
         // 获取系统设置
         $shopinfo_config = tpCache('shop_info');
         $min_money = $shopinfo_config['min_money']; // 最低提现金额
+        $poundage = $shopinfo_config['poundage'];  // 提现手续费率（%）
 
         $data = array(
             'glamour' => $user['glamour'],
             'money' => $user['glamour']/100, // 可提现金额
             'money_min' => $min_money, // 最低提现金额
+            'poundage' => $poundage, // 提现手续费率（%）
         );
         
         response_success($data);
@@ -877,7 +879,7 @@ class User extends Base {
 
         // 提现手续费
         $poundage_money = round($money*$poundage/100, 2);
-        $money = round($money-$poundage_money);
+        $money = round($money-$poundage_money, 2);
         $data = array(
             'user_id' => $user_id,
             'money' => $money,
