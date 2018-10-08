@@ -312,6 +312,13 @@
                     setTimeout(function () {
                         document.getElementsByClassName('pageWrap')[0].scrollTop = dongtaiPageData.pageScrollTop
                     }, 1)
+                    
+                    //ios返回刷新
+                    if(localStorage.getItem("isFromAdd")&&Number(localStorage.getItem("isFromAdd"))==1){
+                        reloadIndex()
+                        localStorage.setItem("isFromAdd",0)
+                    }
+                    //ios返回刷新 end
 
                     return;
                 }
@@ -504,8 +511,8 @@
                     if(Global.isIOS()){
                         window.location.href = url;
                     }else{
-                        // window.Android.gotoNewWebView(url)
-                        window.location.href = url;
+                        window.Android.gotoNewWebView(url)
+                        // window.location.href = url;
                     }
                     this.isReleasing = false;
                 },

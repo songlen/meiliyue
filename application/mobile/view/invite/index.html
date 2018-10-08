@@ -420,6 +420,13 @@
                                 inviIndexPageData.pageScrollTop
                         }, 0);
 
+                        //ios返回刷新
+                        if(localStorage.getItem("isFromAdd")&&Number(localStorage.getItem("isFromAdd"))==1){
+                            reloadInviteIndex()
+                            localStorage.setItem("isFromAdd",0)
+                        }
+                        //ios返回刷新 end
+
                         return;
                     }
                     
