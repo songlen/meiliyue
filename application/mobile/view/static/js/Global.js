@@ -421,7 +421,7 @@ let Global = (function () {
     //获取自己的用户信息
     function getMyInfo(){
         if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
-            let mUserInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
+            let mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
             return mUserInfo
         }else{
             alert("请求失败")
