@@ -222,13 +222,13 @@
                     if (result.code == 200) {
                         Global.closeLoading("发布成功", function () {
                             //关闭 返回
-                            // window.history.back(-1);
                             if(Global.isIOS()){
-                                window.history.back(-1);
-                            }else{
-                                // window.Android.goback("reloadIndex")
                                 localStorage.setItem("isFromAdd",1)
                                 window.history.back(-1);
+                            }else{
+                                window.Android.goback("reloadIndex")
+                                // localStorage.setItem("isFromAdd",1)
+                                // window.history.back(-1);
                             }
                         });
                     }  

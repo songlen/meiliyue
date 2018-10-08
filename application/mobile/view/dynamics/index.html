@@ -318,6 +318,7 @@
                         reloadIndex()
                         localStorage.setItem("isFromAdd",0)
                     }
+                    //ios返回刷新 end
 
                     return;
                 }
@@ -510,8 +511,8 @@
                     if(Global.isIOS()){
                         window.location.href = url;
                     }else{
-                        // window.Android.gotoNewWebView(url)
-                        window.location.href = url;
+                        window.Android.gotoNewWebView(url)
+                        // window.location.href = url;
                     }
                     this.isReleasing = false;
                 },
