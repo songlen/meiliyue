@@ -482,6 +482,7 @@
                 });
                 //点击邀约详情的图片 查看大图
                 $(".inviteDetail-list").delegate("img.inviImg", "click", function () {
+                    alert(6666)
                     console.log($(this).attr("src"))
                     Interested.showFullPic(this);
                 });
