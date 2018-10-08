@@ -47,7 +47,7 @@
         <div class="contentWrap" style="font-size:15px;">
             <div style="padding:0.1rem;">
                 <div>我的魅力：<span class="infoGlamour" style="color:#000;">0</span></div>
-                <div>共可兑换：<span class="infoMoney" style="color:#f76496;">0</span>元</div>
+                <div>共可兑换：<span class="infoMoney" style="color:#f76496;">0</span>元<span class="moneymintip" style="font-size:13px;">最低提现金额<span class="moneymintipCount">0</span>元</span></div>
             </div>
 
             <div style="padding:0 0.1rem;background-color:#fff;">
@@ -69,7 +69,7 @@
                 兑换至支付宝账号
             </div>
 
-            <p class="tip">1-3个工作日，收取10%手续费</p>
+            <p class="tip">1-3个工作日，收取<span id="poundageCount">0</span>%手续费</p>
         </div>
     </div>
 
@@ -108,9 +108,12 @@
                             Withdraw.updateGlamour(res.data.glamour)
                             //更新可提取现金
                             Withdraw.updateMoney(res.data.money)
+                            //更新手续费
+                            Withdraw.updatePoundage(res.data.poundage)
 
                             //最低提现金额
                             Withdraw.money_min=Number(res.data.money_min)
+                            Withdraw.updateMoneymin(res.data.money_min)
 
                             $("#infoBtn").removeClass("eventsDisabled")
                         }
@@ -153,7 +156,7 @@
                 $(".infoBtn").addClass("eventsDisabled")
                 $.ajax({
                     type: "POST",
-                    url: Global.host + "/index.php/Api/User/withdraw",
+                    url: Global.host + "/index.php/Api/User/doWithdraw",
                     data: postData,
                     success: function (res) {
                         console.log(res)
@@ -182,6 +185,14 @@
                 // document.getElementsByClassName("canWithdraw-count")[0].innerHTML=num
                 document.getElementsByClassName("infoMoney")[0].innerHTML=num
             },  
+            //更新手续费
+            updatePoundage(num){
+                document.getElementById("poundageCount").innerHTML=num
+            },
+            //更新最低提取金额
+            updateMoneymin(num){
+                document.getElementsByClassName("moneymintipCount")[0].innerHTML=num
+            },
             eventsBind(){
                 //back
                 $("header .back").click(function(){
