@@ -93,7 +93,45 @@
 			</div>
 			<div style="clear:both"></div>
 		</div>
-		
+		<div class="bDiv" style="height: auto;">
+			<div id="flexigrid" cellpadding="0" cellspacing="0" border="0">
+				<table>
+					<tbody>
+					<foreach name="list" item="vo" key="k" >
+						<tr>
+							<td class="sign">
+								<div style="width: 24px;"><i class="ico-check"></i></div>
+							</td>
+							<td align="left" class="">
+								<div style="text-align: left; width: 150px;">{$vo.nickname}</div>
+							</td>
+							<td align="left" class="">
+								<div style="text-align: left; width: 100px;">{$vo.uuid}</div>
+							</td>
+							<td align="left" class="">
+								<div style="text-align: left; width: 100px;">{$vo.num}</div>
+							</td>
+							<td align="left" class="">
+								<div style="text-align: left; width: 100px;">{$vo.give_num}</div>
+							</td>
+							<td align="center" class="">
+								<div style="text-align: center; width: 100px;"> {$vo.price} </div>
+							</td>
+							<td align="center" class="">
+								<div style="text-align: center; width: 120px;">{$vo.paytime|date='Y-m-d H:i',###}</div>
+							</td>
+							
+							<td align="" class="" style="width: 100%;">
+								<div>&nbsp;</div>
+							</td>
+						</tr>
+					</foreach>
+					</tbody>
+				</table>  
+
+			</div>
+			<div class="iDiv" style="display: none;"></div>
+		</div>
 		<!--分页位置-->
 		{$show} </div>
 </div>
