@@ -155,7 +155,6 @@
 
             //获取一些页面参数
             getPageData: function () {
-                alert(1)
                 //originUserId我自己的user_id
                 if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
                     let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
@@ -464,6 +463,7 @@
                     $("._shade").add($('.avatarOperating')).hide()
                 })
                 //我感兴趣
+                alert(44)
                 $(".interest").click(function () {
                     Interested.getInterested();
                 });
@@ -515,7 +515,7 @@
             init: function () {
                 //获取传来的邀约item信息
                 Interested.getPageData()
-                alert(55)
+
                 Interested.eventsBind()
             }
         }
