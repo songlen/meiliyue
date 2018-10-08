@@ -877,7 +877,7 @@ class User extends Base {
 
         // 提现手续费
         $poundage_money = round($money*$poundage/100, 2);
-        $money = $money-$poundage_money;
+        $money = round($money-$poundage_money);
         $data = array(
             'user_id' => $user_id,
             'money' => $money,
