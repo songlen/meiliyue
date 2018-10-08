@@ -10,37 +10,64 @@ use app\api\logic\MessageLogic;
 class Vip extends Base {
 
     public function index(){
-    	
-        return $this->fetch();
-    }
+    	$searchtype = I('searchtype');
+        $keyword = I('keyword', '');
+        $start_time = I('start_time');
+        $end_time = I('end_time');
+        $status = I('status');
 
-    public function ajaxindex(){
         // 搜索条件
-        $condition = array();
-        // I('mobile') ? $condition['mobile'] = I('mobile') : false;
-        // I('email') ? $condition['email'] = I('email') : false;
-               
-        $model = M('vip_order');
-        $count = $model->where($condition)->count();
-        $Page  = new AjaxPage($count,10);
-        //  搜索条件下 分页赋值
-        foreach($condition as $key=>$val) {
-            $Page->parameter[$key]   =   urlencode($val);
+        $where = array();
+        if($keyword){
+            if($searchtype == 'nickname') $where['nickname'] = array('like', "%$keyword%");
+            if($searchtype == 'uuid') $where['uuid'] = $keyword;
         }
-        
-        $lists = $model->alias('vo')->where($condition)
-        	->join('users u', 'vo.user_id=u.user_id', 'left')
+
+        if($start_time && $end_time){
+            $start_time = strtotime($start_time);
+            $end_time = strtotime($end_time);
+
+            $where['paytime'] = array('BETWEEN', array($start_time, $end_time));
+
+            $start_time = date('Y-m-d H:i:s', $start_time);
+            $end_time = date('Y-m-d H:i:s', $end_time);
+        }
+
+
+        $count = M('vip_order')->alias('vo')
+            ->join('users u', 'vo.user_id=u.user_id', 'left')
+            ->where($where)
             ->where('paystatus', 1)
-        	->order('id desc')
-        	->limit($Page->firstRow.','.$Page->listRows)
-        	->field('u.user_id, u.nickname, u.vip_expire_date, u.uuid, vo.id, vo.level, vo.paystatus, vo.paytime')
-        	->select();
+            ->count();
+
+        $Page = new Page($count,1);
+        $show = $Page->show();
+
+        $lists = M('vip_order')->alias('vo')
+            ->where($where)
+            ->join('users u', 'vo.user_id=u.user_id', 'left')
+            ->where('paystatus', 1)
+            ->order('id desc')
+            ->limit($Page->firstRow.','.$Page->listRows)
+            ->field('u.user_id, u.nickname, u.vip_expire_date, u.uuid, vo.id, vo.level, vo.paystatus, vo.paytime')
+            ->select();
+
+        // 统计vip购买数量
+        $total_amount = M('vip_order')->alias('vo')
+            ->join('users u', 'vo.user_id=u.user_id', 'left')
+            ->where($where)
+            ->where('paystatus', 1)
+            ->sum('amount');
 
                            
         $show = $Page->show();
         $this->assign('lists',$lists);
-        $this->assign('page',$show);// 赋值分页输出
-        $this->assign('pager',$Page);
+        $this->assign('show', $show);
+        $this->assign('searchtype', $searchtype);
+        $this->assign('keyword', $keyword);
+        $this->assign('start_time', $start_time);
+        $this->assign('end_time', $end_time);
+        $this->assign('total_amount', $total_amount);
         return $this->fetch();
     }
  }
