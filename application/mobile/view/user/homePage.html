@@ -347,7 +347,7 @@
             getUserId: function () {
                 //得到user_id
                 if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
-                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                    let mUserInfo = JSON.parse(localStorage.getItem("mUserInfo"))
                     console.log(mUserInfo)
                     Homepage.mUserInfo = mUserInfo;
                     Homepage.user_id = Number(mUserInfo.user_id);

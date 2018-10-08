@@ -60,7 +60,7 @@
             //userInfo
             getPageInfo(){
                 if (localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!== null&&localStorage.getItem("mUserInfo") !== "null") {
-                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                    let mUserInfo = JSON.parse(localStorage.getItem("mUserInfo"))
                     console.log(mUserInfo)
                     SignIn.userInfo = mUserInfo;
                 } else {
@@ -115,7 +115,7 @@
                             $(".signInBtn").addClass("gray")
 
                             //更新localStorage
-                            localStorage.setItem("mUserInfo",JSON.stringify(JSON.stringify(SignIn.userInfo)))
+                            localStorage.setItem("mUserInfo",JSON.stringify(SignIn.userInfo))
                         }
                     }
                 })

@@ -353,16 +353,15 @@ let Global = (function () {
 
     //更新本地的userinfo
     function updateLocalUserinfo(key,value){
-        if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&
-            localStorage.getItem("mUserInfo") !== "null") {
-            let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+        if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
+            let mUserInfo = JSON.parse(localStorage.getItem("mUserInfo"))
             console.log(mUserInfo)
             
             //更新key value
             mUserInfo[key]=value;
 
-            localStorage["mUserInfo"] = JSON.stringify(JSON.stringify(mUserInfo));
-            localStorage.setItem("mUserInfo", JSON.stringify(JSON.stringify(mUserInfo)));
+            localStorage["mUserInfo"] = JSON.stringify(mUserInfo)
+            localStorage.setItem("mUserInfo", JSON.stringify(mUserInfo))
         }
     }
 

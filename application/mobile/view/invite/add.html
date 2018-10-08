@@ -188,7 +188,7 @@
             getPageData: function () {
                 //user_id sex
                 if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
-                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                    let mUserInfo = JSON.parse(localStorage.getItem("mUserInfo"))
                     console.log(mUserInfo)
                     ReleInvite._user_id = Number(mUserInfo.user_id);
                     ReleInvite._user_sex = Number(mUserInfo.sex);
@@ -274,7 +274,7 @@
             //改变 地址 选择器默认值
             setAreaDefault: function () {
                 if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null &&localStorage.getItem("mUserInfo") !== "null") {
-                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                    let mUserInfo = JSON.parse(localStorage.getItem("mUserInfo"))
                     console.log(mUserInfo)
                     let provCode=mUserInfo.permanent_province
                     let cityCode=mUserInfo.permanent_city
@@ -335,7 +335,7 @@
                 // $(":input[name='longitude']").val("123.4606860");
                 // $(":input[name='latitude']").val("41.7329370");
                 // 经纬度
-                let userInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
+                let userInfo=JSON.parse(localStorage.getItem("mUserInfo"))
                 $(":input[name='longitude']").val(userInfo.longitude);
                 $(":input[name='latitude']").val(userInfo.latitude);
                 

@@ -318,7 +318,7 @@
 
                 //获取user_id
                 if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null && localStorage.getItem("mUserInfo") !== "null") {
-                    let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                    let mUserInfo = JSON.parse(localStorage.getItem("mUserInfo"))
                     console.log(mUserInfo)
                     this.user_id = Number(mUserInfo.user_id);
                 } else {
@@ -648,9 +648,9 @@
                 //修改localstorage的小花数量
                 updateLocalFlower:function(num){
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
-                        let mUserInfo=JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")))
+                        let mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
                         mUserInfo.flower_num=num
-                        localStorage.setItem("mUserInfo",JSON.stringify(JSON.stringify(mUserInfo)))
+                        localStorage.setItem("mUserInfo",JSON.stringify(mUserInfo))
                     }
                 },
                 closeReleasing: function () {

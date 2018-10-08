@@ -347,7 +347,7 @@
                     //userInfo user_id province
                     let proCode;
                     if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !== null && localStorage.getItem("mUserInfo") !== "null") {
-                        let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem("mUserInfo")));
+                        let mUserInfo = JSON.parse(localStorage.getItem("mUserInfo"))
                         console.log(mUserInfo)
                         this.user_id = Number(mUserInfo.user_id);
                         //默认省
@@ -358,7 +358,6 @@
                             // proCode = mUserInfo.province.toString(); //测试用 先注释掉
                         }
                     } else {
-                        // // alert("无localStorage")
                         // console.log("无session/local")
                         // this.user_id = 3; //测试用
                         // // proCode = "370000"; //山东 测试用
@@ -455,8 +454,7 @@
                         let _self = this;
                         //任何情况都需要经纬度
                         if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !==null && localStorage.getItem("mUserInfo") !== "null") {
-                            let mUserInfo = JSON.parse(JSON.parse(localStorage.getItem(
-                                "mUserInfo")));
+                            let mUserInfo = JSON.parse(localStorage.getItem("mUserInfo"))
                             console.log(mUserInfo)
 
                             longitude = mUserInfo.longitude;
