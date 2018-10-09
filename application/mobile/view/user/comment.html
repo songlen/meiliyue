@@ -95,36 +95,36 @@
                         }
                         let $li = $(
                             `
-                            <li class="comments-item" 
-                                data-dynamicId=${item.dynamic_id} 
-                                data-type=${item.type}
-                                data-userId=${item.user_id}
-                                data-parentId=${item.parent_id}
+                                <li class="comments-item" 
+                                    data-dynamicId=${item.dynamic_id} 
+                                    data-type=${item.type}
+                                    data-userId=${item.user_id}
+                                    data-parentId=${item.parent_id}
                                 >
-                                <div class="comments-avatar">
-                                    <div class="comments-avatar-wrap">
-                                        <img src="${headUrl}" onload="Global.resizeHeadpic(this)">
+                                    <div class="comments-avatar">
+                                        <div class="comments-avatar-wrap">
+                                            <img src="${headUrl}" onload="Global.resizeHeadpic(this)">
+                                        </div>
+                                        <span class="videoStatus" style="display:none;"></span>
                                     </div>
-                                    <span class="videoStatus" style="display:none;"></span>
-                                </div>
 
-                                <div class="comments-text">
-                                    <div>
-                                        <span class="listName">${item.nickname}</span>
-                                        <span class="sexAge">
-                                            <i class="sex"></i>
-                                            <span class="age">${item.age}</span>
-                                        </span>
+                                    <div class="comments-text">
+                                        <div>
+                                            <span class="listName">${item.nickname}</span>
+                                            <span class="sexAge">
+                                                <i class="sex"></i>
+                                                <span class="age">${item.age}</span>
+                                            </span>
+                                        </div>
+                                        <span class="">${timeStr}</span>
+                                        <p class="comment-content">${item.content}</p>
                                     </div>
-                                    <span class="">${timeStr}</span>
-                                    <p class="comment-content">${item.content}</p>
-                                </div>
 
-                                <div class="comments-pic" style="display:none;">
-                                    <img src="__STATIC__/images/pic/pic2.png">
-                                </div>
-                            </li>
-                        `
+                                    <div class="comments-pic" style="display:none;">
+                                        <img src="">
+                                    </div>
+                                </li>
+                            `
                         );
                         //视频认证
                         if (Number(item.auth_video_status) == 2) {
@@ -145,6 +145,10 @@
                             $li.find(".sexAge").addClass("female");
                         }
                         //图片?
+                        if(Number(item.type)==2&&item.image!==""){
+                            $li.find(".comments-pic img").attr("src",Global.host+item.image)
+                            $li.find(".comments-pic").show()
+                        }
 
                         $(".commentsList").append($li);
                     });
@@ -303,6 +307,9 @@
                 $(".commentsList").delegate(".comments-avatar-wrap", "click", function () {
                     event.stopPropagation();
                     let user_id = Comments.user_id;
+                    if($(this).closest(".comments-item").attr("data-userId")==""){
+                        return
+                    }
                     let toUserId = Number($(this).closest(".comments-item").attr("data-userId"));
                     let url = "";
                     if (Number(user_id) === Number(toUserId)) {
@@ -324,12 +331,6 @@
                     alert("请求失败")
                     return
                 }
-
-                // //
-                // if(){
-
-                // }
-
 
                 Comments.initPullToRefresh();
 
