@@ -97,7 +97,7 @@
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
-                                    <div class="flowerWrap" @click.stop="giveFlower(item)">
+                                    <div class="flowerWrap" @click.stop="giveFlower(item,index)">
                                         <img v-cloak v-if="Number(item.flower_num)>0" src="__STATIC__/images/icon/花2.png">
                                         <img v-cloak v-else src="__STATIC__/images/icon/花1.png">
                                     </div>
@@ -159,7 +159,7 @@
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
-                                    <div class="flowerWrap" @click.stop="giveFlower(item)">
+                                    <div class="flowerWrap" @click.stop="giveFlower(item,index)">
                                         <img v-cloak v-if="item.flower_num>0" src="__STATIC__/images/icon/花2.png">
                                         <img v-cloak v-else src="__STATIC__/images/icon/花1.png">
                                     </div>
@@ -289,6 +289,9 @@
 
                 isReleasing: false,
                 isLoading: false,
+
+                //送小花
+                clickItemIndex:"",
             },
             computed: {
                 nowDataList() {
@@ -647,34 +650,45 @@
                     // });
                 },
                 giveFlowerAjax(){
+                    let self=this
                     //用户id  动态id
+                    // console.log(this[this.nowDataList].list[this.clickItemIndex])
+                    let item=this[this.nowDataList].list[this.clickItemIndex]
                     var postData = {
-                        user_id: this.user_id,
-                        dynamic_id: item.dynamic_id
+                        user_id: Number(this.user_id),
+                        dynamic_id: Number(item.dynamic_id),
+                        num:clickIndex
                     }
                     console.log(postData)
+                    isGivingFlower=true
                     $.ajax({
                         type: "POST",
-                        url: self.GlobalHost + "/index.php/Api/Dynamics/giveFlower",
+                        url: Global.host + "/index.php/Api/Dynamics/giveFlower",
                         data: postData,
                         dataType: "json",
                         success: function (result) {
                             console.log(result)
                             if (Number(result.code) == 200) {
-                                //小花数量加一
-                                item.flower_num = Number(item.flower_num) + 1;
+                                // //小花数量加一
+                                // item.flower_num = Number(item.flower_num) + clickIndex;
                                 
                                 //修改localstorage小花数量
                                 self.updateLocalFlower(result.data.flower_num)
                             } else { //送花失败
                                 Global.messageWin("您的小花数量不足！");
                             }
+
+                            //重置上次点击时间为无穷,重置赠送小花数量
+                            lastClickTime=longtime
+                            clickIndex=0
+                            isGivingFlower=false //送花结束
                         }
                     });
                 },
                 //动态列表送花
-                giveFlower: function (item) {
+                giveFlower: function (item,index) {
                     var self = this;
+                    this.clickItemIndex=index
                     //判断一下
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                         var mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
@@ -682,6 +696,9 @@
                         if(myFlower_num-1>=0){
                             clickIndex++
                             lastClickTime=new Date().getTime()
+
+                            //小花数量加一
+                            item.flower_num = Number(item.flower_num) + 1;
                         }else{
                             Global.messageWin("您的小花数量不足")
                         }
