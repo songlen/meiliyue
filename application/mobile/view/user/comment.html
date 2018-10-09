@@ -119,8 +119,12 @@
                                         <span class="">${timeStr}</span>
                                         <p class="comment-content">${item.content}</p>
                                     </div>
+                                    
+                                    <div class="comments-pic comments-pic1" style="display:none;">
+                                        ${item.dynamic_content}
+                                    </div>
 
-                                    <div class="comments-pic" style="display:none;position:relative;">
+                                    <div class="comments-pic comments-pic2" style="display:none;position:relative;">
                                         <img src="" onload="Global.resizeHeadpic(this)">
 
                                         <span class="commentVideoCtrl" style="display:none;"></span>
@@ -148,17 +152,18 @@
                         } else {
                             $li.find(".sexAge").addClass("female");
                         }
-                        //图片?
+
+                        //图片
                         if(Number(item.type)==2&&item.image!==""){
-                            $li.find(".comments-pic img").attr("src",Global.host+item.image)
-                            $li.find(".comments-pic").show()
+                            $li.find(".comments-pic2 img").attr("src",Global.host+item.image)
+                            $li.find(".comments-pic2").show()
                             $li.find(".commentVideoCtrl").hide()
-                        }
-                        //视频
-                        if(Number(item.type)==3&&item.video!==""){
-                            $li.find(".comments-pic img").attr("src",Global.host+item.image)
-                            $li.find(".comments-pic").show()
+                        }else if(Number(item.type)==3&&item.video!==""){ //视频
+                            $li.find(".comments-pic2 img").attr("src",Global.host+item.image)
+                            $li.find(".comments-pic2").show()
                             $li.find(".commentVideoCtrl").show()
+                        }else{ //文字
+                            $li.find(".comments-pic1").show()
                         }
 
                         $(".commentsList").append($li);
