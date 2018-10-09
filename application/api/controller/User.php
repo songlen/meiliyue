@@ -281,15 +281,18 @@ class User extends Base {
         response_success($message);
     }
 
+    // type 1 普通评论 2 送花朵 3 所有类型
     public function commentList(){
         $user_id = I('user_id');
         $page = I('page', 1);
+        $type = I('type', 3);
 
         $start_limit = ($page-1)*20;
         $lists =  M('dynamics_comment')->alias('dc')
             ->join('dynamics d', 'd.id=dc.dynamic_id', 'left')
             ->join('users u', 'u.user_id=dc.commentator_id', 'left')
             ->where('dc.reply_user_id', $user_id)
+            ->where('dc.type', $type)
             ->field('d.type, d.description, d.content,u.user_id, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.birthday, u.age, dc.dynamic_id, dc.content, dc.parent_id, dc.add_time')
             ->limit($start_limit, 20)
             ->order('dc.id desc')
