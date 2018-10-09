@@ -316,7 +316,7 @@
                         // $(".dongtai-detail")[0].click()
                         Comments.savePageData();
 
-                        let dynamicId = $(this).attr("data-dynamicId");
+                        let dynamicId = $(this).closest("li").attr("data-dynamicId");
                         window.location.href = Global.host + "/index.php/mobile/dynamics/detail/id/" +dynamicId + ".html";
                     }else{
                         Comments.openCommentsReply(this)
