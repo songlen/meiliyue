@@ -4,6 +4,7 @@ namespace app\api\controller;
 use think\Db;
 use app\api\logic\FileLogic;
 use app\api\logic\GeographyLogic;
+use app\api\logic\MessageLogic;
 
 class Invite extends Base {
 
@@ -154,6 +155,13 @@ class Invite extends Base {
             'add_time' => time(),
         );
         if(Db::name('invite_enroll')->insert($data)){
+            // 发消息
+            $user = Db::name('users')->where('user_id', $user_id)->field('nickname')->find();
+            $invite = Db::name('invite')->where('id', $invite_id)->field('user_id, title')->find();
+            $message = $user['nickname'].'对您的邀约“'.$invite['title'].'感兴趣';
+            $MessageLogic = new MessageLogic();
+            $MessageLogic->add($invite['user_id'], $message);
+
             response_success('', '操作成功');
         } else {
             response_error('', '操作失败');
