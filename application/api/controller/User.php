@@ -400,7 +400,10 @@ class User extends Base {
             }
 
             // 发消息
-
+            $userinfo = Db::name('users')->where('user_id', $user_id)->field('nickname')->find();
+            $MessageLogic = new MessageLogic();
+            $message = $userinfo['nickname'].'关注了你';
+            $MessageLogic->add($user_id, $message);
 
             response_success('', '关注成功');
         } else {
