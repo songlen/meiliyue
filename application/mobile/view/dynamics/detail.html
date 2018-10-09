@@ -527,7 +527,7 @@
             plusSesstionFlower:function(giveNum){
                 if(sessionStorage.getItem("dongtaiPage")&&sessionStorage.getItem("dongtaiPage")!==null&&sessionStorage.getItem("dongtaiPage")!=="null"){
                     let data=JSON.parse(sessionStorage.getItem("dongtaiPage"))
-                    console.log(data)
+                    // console.log(data)
                     data.areaDataList.list.forEach(function(obj){
                         if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
                             obj.flower_num=Number(obj.flower_num)+Number(giveNum)
