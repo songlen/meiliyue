@@ -664,10 +664,12 @@
                 setInterval(function(){
                     nowTime=new Date().getTime()
                     if(nowTime-lastClickTime>1000){
-                        Details.giveFlower()
-                        // console.log(clickIndex)
-                        // lastClickTime=longtime
-                        // clickIndex=0
+                        console.log(nowTime,lastClickTime)
+                        // Details.giveFlower()
+                        
+                        console.log(clickIndex)
+                        lastClickTime=longtime
+                        clickIndex=0
                     }
                 },50)
             },
