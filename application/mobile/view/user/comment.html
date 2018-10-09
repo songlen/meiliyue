@@ -140,6 +140,7 @@
                                 </li>
                             `
                         );
+                        $li.attr("data-dynamicId",item.dynamic_id) //动态id
                         $li.attr("data-commentType",item.comment_type) //是不是送小花，2就是送小花
 
                         //视频认证
@@ -307,11 +308,16 @@
             },
             eventsBind: function () {
                 //点击li
+                $(".commentsList").undelegate()
                 $(".commentsList").delegate(".comments-text", "click", function (event) {
                     event.stopPropagation()
                     let comment_type=Number($(this).closest("li").attr("data-commentType"))
                     if(comment_type==2){ //送小花
-                        $(".dongtai-detail")[0].click()
+                        // $(".dongtai-detail")[0].click()
+                        Comments.savePageData();
+
+                        let dynamicId = $(this).attr("data-dynamicId");
+                        window.location.href = Global.host + "/index.php/mobile/dynamics/detail/id/" +dynamicId + ".html";
                     }else{
                         Comments.openCommentsReply(this)
                     }
@@ -330,8 +336,7 @@
                     Comments.savePageData();
 
                     let dynamicId = $(".commentsReply-content").attr("data-dynamicId");
-                    window.location.href = Global.host + "/index.php/mobile/dynamics/detail/id/" +
-                        dynamicId + ".html";
+                    window.location.href = Global.host + "/index.php/mobile/dynamics/detail/id/" +dynamicId + ".html";
                 });
                 //点击评论头像去个人主页
                 $(".commentsList").delegate(".comments-avatar-wrap", "click", function () {
