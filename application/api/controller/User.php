@@ -7,6 +7,7 @@ use app\api\logic\FileLogic;
 use app\api\logic\GeographyLogic;
 use app\api\logic\DynamicLogic;
 use think\Image;
+use app\api\logic\MessageLogic;
 
 class User extends Base {
 
@@ -397,6 +398,9 @@ class User extends Base {
             if($friend){
                 M('friend')->where('id', $insert_id)->whereOr('id', $friend['id'])->setField('twoway', 1);
             }
+
+            // 发消息
+
 
             response_success('', '关注成功');
         } else {

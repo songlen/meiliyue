@@ -6,7 +6,6 @@ use think\Db;
 use app\api\logic\FileLogic;
 use app\api\logic\GeographyLogic;
 
-
 class Dynamics extends Base {
 
 	public function __construct(){
@@ -213,7 +212,7 @@ class Dynamics extends Base {
         // 动态评论记录
         $commentdata = array(
             'dynamic_id' => $dynamic_id,
-            'commentator_id' => $commentator_id,
+            'commentator_id' => $user_id,
             'content' => '赠送您'.$num.'小花',
             'add_time' => time(),
             'reply_user_id' => $dynamics['user_id'],
