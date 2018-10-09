@@ -158,7 +158,7 @@ class Invite extends Base {
             // 发消息
             $user = Db::name('users')->where('user_id', $user_id)->field('nickname')->find();
             $invite = Db::name('invite')->where('id', $invite_id)->field('user_id, title')->find();
-            $message = $user['nickname'].'对您的邀约“'.$invite['title'].'感兴趣';
+            $message = $user['nickname'].'对您的邀约“'.$invite['title'].'”感兴趣';
             $MessageLogic = new MessageLogic();
             $MessageLogic->add($invite['user_id'], $message);
 
