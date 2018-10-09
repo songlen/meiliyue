@@ -651,11 +651,11 @@
                 },
                 giveFlowerAjax(){
                     //用户id  动态id
-                    console.log(this[this.nowDataList].list[this.clickItemIndex])
-                    return
+                    // console.log(this[this.nowDataList].list[this.clickItemIndex])
+                    let item=this[this.nowDataList].list[this.clickItemIndex]
                     var postData = {
                         user_id: Number(this.user_id),
-                        dynamic_id: Number(this[this.nowDataList].list[this.clickItemIndex]),
+                        dynamic_id: Number(item.dynamic_id),
                         num:clickIndex
                     }
                     console.log(postData)
@@ -669,7 +669,7 @@
                             console.log(result)
                             if (Number(result.code) == 200) {
                                 //小花数量加一
-                                item.flower_num = Number(item.flower_num) + 1;
+                                item.flower_num = Number(item.flower_num) + clickIndex;
                                 
                                 //修改localstorage小花数量
                                 self.updateLocalFlower(result.data.flower_num)
