@@ -40,7 +40,7 @@ class Vip extends Base {
             ->where('paystatus', 1)
             ->count();
 
-        $Page = new Page($count,1);
+        $Page = new Page($count,10);
         $show = $Page->show();
 
         $lists = M('vip_order')->alias('vo')
