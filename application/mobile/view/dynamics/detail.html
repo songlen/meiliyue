@@ -273,7 +273,7 @@
                     dynamic_id: Details.dynamic_id,
                     num:clickIndex,
                 }
-
+                console.log(postData)
                 $.ajax({
                     type: "POST",
                     url: Global.host + "/index.php/Api/Dynamics/giveFlower",
@@ -506,7 +506,7 @@
                 //动态index
                 if(sessionStorage.getItem("dongtaiPage")&&sessionStorage.getItem("dongtaiPage")!==null&&sessionStorage.getItem("dongtaiPage")!=="null"){
                     let data=JSON.parse(sessionStorage.getItem("dongtaiPage"))
-                    console.log(data)
+                    // console.log(data)
                     data.areaDataList.list.forEach(function(obj){
                         if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
                             obj.comment_count=Number(obj.comment_count)+1
