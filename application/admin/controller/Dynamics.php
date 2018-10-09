@@ -18,7 +18,7 @@ class Dynamics extends Base{
         	->where($where)
         	->order('id desc')
         	->page("$p, $pagesize")
-        	->field('nickname, uuid, description, content, d.status, d.add_time')
+        	->field('nickname, uuid, description, content, d.id, d.status, d.add_time')
         	->select();
         $count = M('dynamics')->where($where)->count();// 查询满足要求的总记录数
         $Page = new Page($count, $pagesize);// 实例化分页类 传入总记录数和每页显示的记录数

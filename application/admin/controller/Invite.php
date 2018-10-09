@@ -18,7 +18,7 @@ class Invite extends Base{
         	->where($where)
         	->order('id desc')
         	->page("$p, $pagesize")
-        	->field('nickname, uuid, i.title, i.time, i.status, i.add_time')
+        	->field('nickname, uuid, i.id, i.title, i.time, i.status, i.add_time')
         	->select();
         $count = M('invite')->where($where)->count();// 查询满足要求的总记录数
         $Page = new Page($count, $pagesize);// 实例化分页类 传入总记录数和每页显示的记录数
