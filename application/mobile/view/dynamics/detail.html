@@ -209,7 +209,7 @@
 
     <script src="__STATIC__/js-min/dynamics-detail.min.js"></script>
     <script>
-        var longtime=9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+        var longtime=999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
         var dynamic_origin_id = '{$info["user_id"]}';
         
         //送小花
@@ -237,9 +237,9 @@
                     console.log(mUserInfo)
                     Details.user_id = Number(mUserInfo.user_id);
                 } else {
-                    Details.user_id = 1; //测试用
-                    // alert("请求失败")
-                    // return
+                    // Details.user_id = 1; //测试用
+                    alert("请求失败")
+                    return
                 }
                 // alert("user_id:"+Details.user_id)
                 //dynamic_id
@@ -248,9 +248,9 @@
                     ulrStr = ulrStr + ".html";
                 }
                 if (ulrStr.indexOf("file://") > -1) {
-                    ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/18.html" //测试用
-                    // alert("请求失败")
-                    // return
+                    // ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/18.html" //测试用
+                    alert("请求失败")
+                    return
                 }
                 var strTemp = ulrStr.split("/detail/id/")[1];
                 Details.dynamic_id = Number(strTemp.substr(0, strTemp.length - 5));
@@ -364,7 +364,8 @@
                             console.log(item)
                             var el = event.target; //点击那条评论dom
                             if (item && item.commentator_id && Number(item.commentator_id) == Number(Details.user_id)) { //点击的是自己评论的，提问是否删除 //需要和自己的nickname对比？
-                                this.toggleDelete(el);
+                                // this.toggleDelete(el);
+                                return
                             } else {
                                 if (type == 0) {
                                     this.placeHolder = "输入评论"
@@ -676,7 +677,7 @@
                         // lastClickTime=longtime
                         // clickIndex=0
                     }
-                },50)
+                },90)
             },
             init: function () {
                 //获取页面基本信息
