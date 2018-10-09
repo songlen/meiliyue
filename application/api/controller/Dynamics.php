@@ -206,8 +206,8 @@ class Dynamics extends Base {
         if($user['flower_num'] < $num) response_error('', '花朵数量不足');
 
         // 用户减去花朵，动态加上花朵
-        Db::name('users')->where('user_id', $user_id)->setDec('flower_num', 1);
-        Db::name('dynamics')->where('id', $dynamic_id)->setInc('flower_num', 1);
+        Db::name('users')->where('user_id', $user_id)->setDec('flower_num', $num);
+        Db::name('dynamics')->where('id', $dynamic_id)->setInc('flower_num', $num);
 
         $dynamics = Db::name('dynamics')->where('id', $dynamic_id)->field('user_id')->find();
         // 动态评论记录
