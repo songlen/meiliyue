@@ -255,6 +255,7 @@ class Dynamics extends Base {
             ->join('users u1', 'dc.commentator_id=u1.user_id', 'left')
             ->join('users u2', 'dc.reply_user_id=u2.user_id', 'left')
             ->where('dynamic_id', $dynamic_id)
+            ->where('type', 1)
             ->field('u1.head_pic, u1.nickname, dc.id comment_id, commentator_id, dc.content, dc.add_time, u2.nickname reply_nickname, dc.parent_id')
             ->order('dc.id desc')
             ->select();
