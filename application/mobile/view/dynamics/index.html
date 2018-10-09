@@ -669,8 +669,8 @@
                         success: function (result) {
                             console.log(result)
                             if (Number(result.code) == 200) {
-                                //小花数量加一
-                                item.flower_num = Number(item.flower_num) + clickIndex;
+                                // //小花数量加一
+                                // item.flower_num = Number(item.flower_num) + clickIndex;
                                 
                                 //修改localstorage小花数量
                                 self.updateLocalFlower(result.data.flower_num)
@@ -696,6 +696,9 @@
                         if(myFlower_num-1>=0){
                             clickIndex++
                             lastClickTime=new Date().getTime()
+
+                            //小花数量加一
+                            item.flower_num = Number(item.flower_num) + clickIndex;
                         }else{
                             Global.messageWin("您的小花数量不足")
                         }
