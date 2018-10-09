@@ -216,6 +216,7 @@
         var clickIndex=0 //几秒之内点击的次数
         var lastClickTime=longtime
         var nowTime=""
+        var isGivingFlower=false
         
 
         var Details = {
@@ -274,6 +275,7 @@
                     num:clickIndex,
                 }
                 console.log(postData)
+                isGivingFlower=true
                 $.ajax({
                     type: "POST",
                     url: Global.host + "/index.php/Api/Dynamics/giveFlower",
@@ -304,6 +306,7 @@
                         //重置上次点击时间为无穷,重置赠送小花数量
                         lastClickTime=longtime
                         clickIndex=0
+                        isGivingFlower=false //送花结束
                     }
                 })
             },
@@ -665,11 +668,13 @@
                     nowTime=new Date().getTime()
                     if(nowTime-lastClickTime>1000){
                         console.log(nowTime,lastClickTime)
-                        // Details.giveFlower()
+                        if(!isGivingFlower){
+                            Details.giveFlower()
+                        }
                         
-                        console.log(clickIndex)
-                        lastClickTime=longtime
-                        clickIndex=0
+                        // console.log(clickIndex)
+                        // lastClickTime=longtime
+                        // clickIndex=0
                     }
                 },50)
             },
