@@ -97,7 +97,7 @@
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
-                                    <div class="flowerWrap" @click.stop="giveFlower(item)">
+                                    <div class="flowerWrap" @click.stop="giveFlower(item,index)">
                                         <img v-cloak v-if="Number(item.flower_num)>0" src="__STATIC__/images/icon/花2.png">
                                         <img v-cloak v-else src="__STATIC__/images/icon/花1.png">
                                     </div>
@@ -159,7 +159,7 @@
                                     <span class="item-comment-count" v-cloak v-if="item.comment_count>0">{{item.comment_count}}</span>
                                 </div>
                                 <div>
-                                    <div class="flowerWrap" @click.stop="giveFlower(item)">
+                                    <div class="flowerWrap" @click.stop="giveFlower(item,index)">
                                         <img v-cloak v-if="item.flower_num>0" src="__STATIC__/images/icon/花2.png">
                                         <img v-cloak v-else src="__STATIC__/images/icon/花1.png">
                                     </div>
@@ -291,7 +291,7 @@
                 isLoading: false,
 
                 //送小花
-                clickDynamicId:"",
+                clickItemIndex:"",
             },
             computed: {
                 nowDataList() {
@@ -651,9 +651,11 @@
                 },
                 giveFlowerAjax(){
                     //用户id  动态id
+                    console.log(this[this.nowDataList].list[this.clickItemIndex])
+                    return
                     var postData = {
                         user_id: Number(this.user_id),
-                        dynamic_id: Number(this.clickDynamicId),
+                        dynamic_id: Number(this[this.nowDataList].list[this.clickItemIndex]),
                         num:clickIndex
                     }
                     console.log(postData)
@@ -683,9 +685,9 @@
                     });
                 },
                 //动态列表送花
-                giveFlower: function (item) {
+                giveFlower: function (item,index) {
                     var self = this;
-                    this.clickDynamicId=item.dynamic_id
+                    this.clickItemIndex=index
                     //判断一下
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                         var mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
