@@ -292,7 +292,7 @@ class User extends Base {
             ->join('dynamics d', 'd.id=dc.dynamic_id', 'left')
             ->join('users u', 'u.user_id=dc.commentator_id', 'left')
             ->where('dc.reply_user_id', $user_id)
-            ->field('d.type, d.description, d.content,u.user_id, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.birthday, u.age, dc.dynamic_id, dc.content, dc.parent_id, dc.add_time, dc.type comment_type')
+            ->field('d.type, d.description, d.content dynamic_content,u.user_id, u.head_pic, u.nickname, u.auth_video_status, u.sex, u.birthday, u.age, dc.dynamic_id, dc.content, dc.parent_id, dc.add_time, dc.type comment_type')
             ->limit($start_limit, 20)
             ->order('dc.id desc')
             ->select();
