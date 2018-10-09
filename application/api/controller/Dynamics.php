@@ -183,6 +183,7 @@ class Dynamics extends Base {
 
         response_success($lists);
     }
+
     public function del(){
         $user_id = I('user_id');
         $dynamic_id = I('dynamic_id');
@@ -198,15 +199,30 @@ class Dynamics extends Base {
     public function giveFlower(){
         $dynamic_id = I('dynamic_id');
         $user_id = I('user_id');
+        $num = I('num');
 
         // 查询用户有没有花朵
         $user = M('users')->where('user_id', $user_id)->field('flower_num')->find();
-        if($user['flower_num'] < 1) response_error('', '花朵数量不足');
+        if($user['flower_num'] < $num) response_error('', '花朵数量不足');
 
+        // 用户减去花朵，动态加上花朵
         Db::name('users')->where('user_id', $user_id)->setDec('flower_num', 1);
         Db::name('dynamics')->where('id', $dynamic_id)->setInc('flower_num', 1);
 
-        $flower_num  = $user['flower_num']-1;
+        $dynamics = Db::name('dynamics')->where('id', $dynamic_id)->field('user_id')->find();
+        // 动态评论记录
+        $commentdata = array(
+            'dynamic_id' => $dynamic_id,
+            'commentator_id' => $commentator_id,
+            'content' => '赠送您'.$num.'小花',
+            'add_time' => time(),
+            'reply_user_id' => $dynamics['user_id'],
+            'type' => 2,
+        );
+        Db::name('dynamics_comment')->insert($commentdata);
+        
+
+        $flower_num  = $user['flower_num']-$num;
         response_success(array('flower_num'=>$flower_num), '操作成功');
     }
 
