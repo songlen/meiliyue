@@ -93,6 +93,12 @@
                         }else{
                             headUrl="__STATIC__/images/icon/tx.png";
                         }
+                        let dynamic_content=""
+                        if(item.dynamic_content.length>14){
+                            dynamic_content=item.dynamic_content.substr(0,14)+"..."
+                        }else{
+                            dynamic_content=item.dynamic_content
+                        }
                         let $li = $(
                             `
                                 <li class="comments-item" 
@@ -120,8 +126,8 @@
                                         <p class="comment-content">${item.content}</p>
                                     </div>
                                     
-                                    <div class="comments-pic comments-pic1" style="display:none;">
-                                        ${item.dynamic_content}
+                                    <div class="comments-pic comments-pic1" style="display:none;position:relative;">
+                                        <span class="display:inline-block;border-radius:3px;position:absolute;left:50%;top:50%;tranform:translate(-50%,-50%);">${dynamic_content}</span>
                                     </div>
 
                                     <div class="comments-pic comments-pic2" style="display:none;position:relative;">
