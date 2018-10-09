@@ -652,8 +652,9 @@
                 giveFlowerAjax(){
                     //用户id  动态id
                     var postData = {
-                        user_id: this.user_id,
-                        dynamic_id: this.clickDynamicId
+                        user_id: Number(this.user_id),
+                        dynamic_id: Number(this.clickDynamicId),
+                        num:clickIndex
                     }
                     console.log(postData)
                     isGivingFlower=true
