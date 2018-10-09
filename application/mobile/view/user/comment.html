@@ -120,8 +120,12 @@
                                         <p class="comment-content">${item.content}</p>
                                     </div>
 
-                                    <div class="comments-pic" style="display:none;">
-                                        <img src="">
+                                    <div class="comments-pic comments-pic1" style="display:none;">
+                                        <img src="" onload="Global.resizeHeadpic(this)">
+                                    </div>
+
+                                    <div class="comments-pic comments-pic2" style="display:none;">
+                                        <img src="" onload="Global.resizeHeadpic(this)">
                                     </div>
                                 </li>
                             `
@@ -146,8 +150,13 @@
                         }
                         //图片?
                         if(Number(item.type)==2&&item.image!==""){
-                            $li.find(".comments-pic img").attr("src",Global.host+item.image)
-                            $li.find(".comments-pic").show()
+                            $li.find(".comments-pic1 img").attr("src",Global.host+item.image)
+                            $li.find(".comments-pic1").show()
+                        }
+                        //视频
+                        if(Number(item.type)==3&&item.video!==""){
+                            $li.find(".comments-pic2 img").attr("src",Global.host+item.image)
+                            $li.find(".comments-pic2").show()
                         }
 
                         $(".commentsList").append($li);

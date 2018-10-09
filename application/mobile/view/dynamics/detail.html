@@ -52,7 +52,7 @@
                     <if condition="$info['type'] == 2 && !empty($info['image'])">
                         <foreach name="$info.image" item="image">
                             <div class="detailImgBox">
-                                <img class="detailImg" src="{$image}">
+                                <img class="detailImg" src="{$image}" onload="Global.resizeHeadpic(this)">
                             </div>
                         </foreach>
                     </if>
