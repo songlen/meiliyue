@@ -2301,3 +2301,18 @@ ul.signatureList li.actived {
     color: #0c7efc;
     text-decoration: underline;
 }
+
+/* 评论页面 小播放按钮 */
+.commentVideoCtrl{
+    display: block;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url(../images/icon/播放.png) center center no-repeat;
+    background-size: 100%;
+}

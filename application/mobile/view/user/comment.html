@@ -120,16 +120,16 @@
                                         <p class="comment-content">${item.content}</p>
                                     </div>
 
-                                    <div class="comments-pic comments-pic1" style="display:none;">
+                                    <div class="comments-pic" style="display:none;">
                                         <img src="" onload="Global.resizeHeadpic(this)">
-                                    </div>
 
-                                    <div class="comments-pic comments-pic2" style="display:none;">
-                                        <img src="" onload="Global.resizeHeadpic(this)">
+                                        <span class="commentVideoCtrl" style="display:none;"></span>
                                     </div>
                                 </li>
                             `
                         );
+                        $li.attr("data-commentType",item.comment_type) //是不是送小花，2就是送小花
+
                         //视频认证
                         if (Number(item.auth_video_status) == 2) {
                             $li.find(".videoStatus").show();
@@ -150,13 +150,15 @@
                         }
                         //图片?
                         if(Number(item.type)==2&&item.image!==""){
-                            $li.find(".comments-pic1 img").attr("src",Global.host+item.image)
-                            $li.find(".comments-pic1").show()
+                            $li.find(".comments-pic img").attr("src",Global.host+item.image)
+                            $li.find(".comments-pic").show()
+                            $li.find(".commentVideoCtrl").hide()
                         }
                         //视频
                         if(Number(item.type)==3&&item.video!==""){
-                            $li.find(".comments-pic2 img").attr("src",Global.host+item.image)
-                            $li.find(".comments-pic2").show()
+                            $li.find(".comments-pic img").attr("src",Global.host+item.image)
+                            $li.find(".comments-pic").show()
+                            $li.find(".commentVideoCtrl").show()
                         }
 
                         $(".commentsList").append($li);
@@ -292,8 +294,14 @@
             },
             eventsBind: function () {
                 //点击li
-                $(".commentsList").delegate(".comments-text", "click", function () {
-                    Comments.openCommentsReply(this)
+                $(".commentsList").delegate(".comments-text", "click", function (event) {
+                    event.stopPropagation()
+                    let comment_type=Number($(this).closest("li").attr("data-commentType"))
+                    if(comment_type==2){ //送小花
+                        $(".dongtai-detail")[0].click()
+                    }else{
+                        Comments.openCommentsReply(this)
+                    }
                 });
                 //点击回复评论的 返回
                 $(".replyBack").click(function () {
