@@ -289,6 +289,9 @@
 
                 isReleasing: false,
                 isLoading: false,
+
+                //送小花
+                clickDynamicId:"",
             },
             computed: {
                 nowDataList() {
@@ -650,9 +653,10 @@
                     //用户id  动态id
                     var postData = {
                         user_id: this.user_id,
-                        dynamic_id: item.dynamic_id
+                        dynamic_id: this.clickDynamicId
                     }
                     console.log(postData)
+                    isGivingFlower=true
                     $.ajax({
                         type: "POST",
                         url: self.GlobalHost + "/index.php/Api/Dynamics/giveFlower",
@@ -669,12 +673,18 @@
                             } else { //送花失败
                                 Global.messageWin("您的小花数量不足！");
                             }
+
+                            //重置上次点击时间为无穷,重置赠送小花数量
+                            lastClickTime=longtime
+                            clickIndex=0
+                            isGivingFlower=false //送花结束
                         }
                     });
                 },
                 //动态列表送花
                 giveFlower: function (item) {
                     var self = this;
+                    this.clickDynamicId=item.dynamic_id
                     //判断一下
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                         var mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
