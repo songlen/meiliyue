@@ -627,6 +627,14 @@
                 giveFlower: function (item) {
                     var self = this;
                     console.log(item)
+                    //判断一下
+                    if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
+                        let mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
+                        if(Number(mUserInfo.flower_num)==0){
+                            Global.messageWin("您的小花数量不足")
+                            return
+                        }
+                    }
                     //用户id  动态id
                     var postData = {
                         user_id: this.user_id,
