@@ -96,7 +96,7 @@ class Dynamics extends Base {
                 // 查看人数
                 $item['viewer_count'] = M('dynamics_viewer')->where('dynamic_id', $item['dynamic_id'])->count();
                 // 评论数 
-                $item['comment_count'] = M('dynamics_comment')->where('dynamic_id', $item['dynamic_id'])->count();
+                $item['comment_count'] = M('dynamics_comment')->where('dynamic_id', $item['dynamic_id'])->where('type'=>1)->count();
             }
         }
 

@@ -909,8 +909,6 @@ class User extends Base {
         }
     }
 
-    
-
     // 我的礼物页面
     public function mygiftlist(){
         $user_id = I('user_id');
