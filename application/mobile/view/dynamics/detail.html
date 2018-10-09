@@ -209,8 +209,16 @@
 
     <script src="__STATIC__/js-min/dynamics-detail.min.js"></script>
     <script>
+        var longtime=9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
         var dynamic_origin_id = '{$info["user_id"]}';
-        // alert(dynamic_origin_id)
+        
+        //送小花
+        var clickIndex=0 //几秒之内点击的次数
+        var lastClickTime=longtime
+        var nowTime=""
+        var isGivingFlower=false
+        
+
         var Details = {
             user_id: "",
             dynamic_origin_id: "",
@@ -229,9 +237,9 @@
                     console.log(mUserInfo)
                     Details.user_id = Number(mUserInfo.user_id);
                 } else {
-                    // Details.user_id = 1; //测试用
-                    alert("请求失败")
-                    return
+                    Details.user_id = 1; //测试用
+                    // alert("请求失败")
+                    // return
                 }
                 // alert("user_id:"+Details.user_id)
                 //dynamic_id
@@ -240,9 +248,9 @@
                     ulrStr = ulrStr + ".html";
                 }
                 if (ulrStr.indexOf("file://") > -1) {
-                    // ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/22.html" //测试用
-                    alert("请求失败")
-                    return
+                    ulrStr = "http://http://meiliyue.caapa.org/index.php/mobile/dynamics/detail/id/18.html" //测试用
+                    // alert("请求失败")
+                    // return
                 }
                 var strTemp = ulrStr.split("/detail/id/")[1];
                 Details.dynamic_id = Number(strTemp.substr(0, strTemp.length - 5));
@@ -263,9 +271,11 @@
                 //用户id  动态id
                 var postData = {
                     user_id: Details.user_id,
-                    dynamic_id: Details.dynamic_id
+                    dynamic_id: Details.dynamic_id,
+                    num:clickIndex,
                 }
-
+                console.log(postData)
+                isGivingFlower=true
                 $.ajax({
                     type: "POST",
                     url: Global.host + "/index.php/Api/Dynamics/giveFlower",
@@ -273,40 +283,30 @@
                     dataType: "json",
                     success: function (result) {
                         console.log(result)
-                        //这里需要更多信息？？
-                        // let sendedFlowersCount = 2 //已送2朵小花
-                        // let leftFlowersCount = 99 //自己剩余99朵小花
                         if (Number(result.code) == 200) {
-                            // //显示提示弹窗
-                            // $(".flowerDialog .sendSuccessCount").text(sendedFlowersCount)
-                            // $(".flowerDialog .dialogLeftFlowers").text(leftFlowersCount)
-                            // $(".flowerDialog").show().addClass('mfadeout')
-                            // clearTimeout(Details._flowerTimer)
-                            // Details._flowerTimer = setTimeout(function () {
-                            //     $('.flowerDialog').hide().removeClass('mfadeout')
-                            // }, 1300)
-                            // //显示提示弹窗 end
                             //小花池里增加一朵小花
-                            $(".flowerPool").prepend($(
-                                '<div class="flowerItem"><img src="__STATIC__/images/icon/花3.png"></div>'
-                            ))
+                            for(let i=0;i<clickIndex;i++){
+                                $(".flowerPool").prepend($(
+                                    '<div class="flowerItem"><img src="__STATIC__/images/icon/花3.png"></div>'
+                                ))
+                            }
                             //小花池数量加一
-                            $(".flowerPool-count").html(Number($(".flowerPool-count").html()) + 1)
-                            //小花样式
-                            // if ($(".haveFlower").css("display") == "none") {
-                            //     $(".haveFlower").show()
-                            //     $(".noFlower").hide()
-                            // }
+                            $(".flowerPool-count").html(Number($(".flowerPool-count").html()) + clickIndex)
                             //已有小花数量加一
-                            $(".flowerCount").html(Number($(".flowerCount").html()) + 1)
+                            $(".flowerCount").html(Number($(".flowerCount").html()) + clickIndex)
                             
                             //修改session小花数量
-                            Details.plusSesstionFlower()
+                            Details.plusSesstionFlower(clickIndex)
                             //修改localstorage小花数量
                             Details.updateLocalFlower(result.data.flower_num)
                         } else {
-                            Global.messageWin("您的小花数量不足！");
+                            Global.messageWin("您的小花数量不足");
                         }
+                        
+                        //重置上次点击时间为无穷,重置赠送小花数量
+                        lastClickTime=longtime
+                        clickIndex=0
+                        isGivingFlower=false //送花结束
                     }
                 })
             },
@@ -509,7 +509,7 @@
                 //动态index
                 if(sessionStorage.getItem("dongtaiPage")&&sessionStorage.getItem("dongtaiPage")!==null&&sessionStorage.getItem("dongtaiPage")!=="null"){
                     let data=JSON.parse(sessionStorage.getItem("dongtaiPage"))
-                    console.log(data)
+                    // console.log(data)
                     data.areaDataList.list.forEach(function(obj){
                         if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
                             obj.comment_count=Number(obj.comment_count)+1
@@ -524,19 +524,18 @@
                 }
             },
             //修改session的小花数量
-            plusSesstionFlower:function(){
+            plusSesstionFlower:function(giveNum){
                 if(sessionStorage.getItem("dongtaiPage")&&sessionStorage.getItem("dongtaiPage")!==null&&sessionStorage.getItem("dongtaiPage")!=="null"){
                     let data=JSON.parse(sessionStorage.getItem("dongtaiPage"))
-                    console.log(data)
+                    // console.log(data)
                     data.areaDataList.list.forEach(function(obj){
                         if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
-                            obj.flower_num=Number(obj.flower_num)+1
-                            console.log("+++")
+                            obj.flower_num=Number(obj.flower_num)+Number(giveNum)
                         }
                     })
                     data.attendedDataList.list.forEach(function(obj){
                         if(Number(obj.dynamic_id)==Number(Details.dynamic_id)){
-                            obj.flower_num=Number(obj.flower_num)+1
+                            obj.flower_num=Number(obj.flower_num)+Number(giveNum)
                         }
                     })
                     sessionStorage.setItem("dongtaiPage",JSON.stringify(data))
@@ -597,7 +596,18 @@
             eventsBind: function () {
                 //点击送花
                 $(".giveFlower").click(function () {
-                    Details.giveFlower()
+                    // Details.giveFlower()
+                    // throttleGiveFlower()
+                    if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
+                        var mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
+                        var myFlower_num=Number(mUserInfo.flower_num)
+                        if(myFlower_num-1>=0){
+                            clickIndex++
+                            lastClickTime=new Date().getTime()
+                        }else{
+                            Global.messageWin("您的小花数量不足")
+                        }
+                    }
                 })
                 //申请查看主页-取消
                 $(".home-cancel").click(function () {
@@ -652,6 +662,21 @@
                         Details.deleteDetail();
                     });
                 });
+
+                //是否送小花 （新增）
+                setInterval(function(){
+                    nowTime=new Date().getTime()
+                    if(nowTime-lastClickTime>1000){
+                        // console.log(nowTime,lastClickTime)
+                        if(!isGivingFlower){
+                            Details.giveFlower()
+                        }
+                        
+                        // console.log(clickIndex)
+                        // lastClickTime=longtime
+                        // clickIndex=0
+                    }
+                },50)
             },
             init: function () {
                 //获取页面基本信息
@@ -662,6 +687,7 @@
                 Details.eventsBind();
             }
         }
+        
         $(function () {
             Details.init()
         });
