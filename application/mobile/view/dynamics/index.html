@@ -254,6 +254,14 @@
         function reloadIndex(){
             $('.pageWrap').pullToRefresh('triggerPullToRefresh')
         }
+        
+        //送小花
+        var longtime=999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+        var clickIndex=0 //几秒之内点击的次数
+        var lastClickTime=longtime
+        var nowTime=""
+        var isGivingFlower=false
+
         var dongtaiVm = new Vue({
             el: "#dongtaiApp",
             data: {
@@ -288,11 +296,26 @@
                 }
             },
             mounted: function () {
-                let _self = this
+                let self = this
                 //监听滚动条
                 document.getElementsByClassName('pageWrap')[0].addEventListener('scroll', this.handleScroll)
                 //下拉刷新
                 this.initPullToRefresh();
+
+                //是否送小花 （新增）
+                setInterval(function(){
+                    nowTime=new Date().getTime()
+                    if(nowTime-lastClickTime>1000){
+                        // console.log(nowTime,lastClickTime)
+                        if(!isGivingFlower){
+                            self.giveFlowerAjax()
+                        }
+                        
+                        // console.log(clickIndex)
+                        // lastClickTime=longtime
+                        // clickIndex=0
+                    }
+                },90)
 
                 //----------------------------------------
 
@@ -623,18 +646,7 @@
                     //     Global.fullScreen(src);
                     // });
                 },
-                //动态列表送花
-                giveFlower: function (item) {
-                    var self = this;
-                    console.log(item)
-                    //判断一下
-                    if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
-                        let mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
-                        if(Number(mUserInfo.flower_num)==0){
-                            Global.messageWin("您的小花数量不足")
-                            return
-                        }
-                    }
+                giveFlowerAjax(){
                     //用户id  动态id
                     var postData = {
                         user_id: this.user_id,
@@ -660,6 +672,21 @@
                         }
                     });
                 },
+                //动态列表送花
+                giveFlower: function (item) {
+                    var self = this;
+                    //判断一下
+                    if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
+                        var mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
+                        var myFlower_num=Number(mUserInfo.flower_num)
+                        if(myFlower_num-1>=0){
+                            clickIndex++
+                            lastClickTime=new Date().getTime()
+                        }else{
+                            Global.messageWin("您的小花数量不足")
+                        }
+                    }
+                },
                 //修改localstorage的小花数量
                 updateLocalFlower:function(num){
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
@@ -684,6 +711,23 @@
                 }
             }
         });
+
+        // $(function(){
+        //     //是否送小花 （新增）
+        //     setInterval(function(){
+        //         nowTime=new Date().getTime()
+        //         if(nowTime-lastClickTime>1000){
+        //             // console.log(nowTime,lastClickTime)
+        //             if(!isGivingFlower){
+        //                 Details.giveFlower()
+        //             }
+                    
+        //             // console.log(clickIndex)
+        //             // lastClickTime=longtime
+        //             // clickIndex=0
+        //         }
+        //     },90)
+        // })
     </script>
 </body>
 
