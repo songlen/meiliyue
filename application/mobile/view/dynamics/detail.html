@@ -602,6 +602,7 @@
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                         var mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
                         var myFlower_num=Number(mUserInfo.flower_num)
+                        $("header .title").html(myFlower_num)
                         if(myFlower_num>0){
                             clickIndex++
                             lastClickTime=new Date().getTime()
