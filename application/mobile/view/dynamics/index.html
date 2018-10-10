@@ -557,10 +557,7 @@
                     sessionStorage.setItem('dongtaiPage', JSON.stringify(pageData))
                 },
                 gotoDongtaiDetail(item) {
-                    console.log(nowTime,lastClickTime)
-                    console.log(Number(nowTime)-Number(lastClickTime))
-
-                    if(isGivingFlower||nowTime-lastClickTime<1000){ //如果正在送花或者点击间隔还没到1秒
+                    if(isGivingFlower||nowTime-lastClickTime<-2000){ //如果正在送花或者点击间隔还没到1秒
                         return
                     }
                     this.savePageToSession();
