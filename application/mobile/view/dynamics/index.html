@@ -694,6 +694,9 @@
                 giveFlower: function (item,index) {
                     var self = this;
                     this.clickItemIndex=index
+                    if(isGivingFlower){
+                        return
+                    }
                     //判断一下
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                         var mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
