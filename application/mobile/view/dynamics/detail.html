@@ -599,6 +599,9 @@
                 //点击送花
                 $(".giveFlower").click(function () {
                     // Details.giveFlower()
+                    if(isGivingFlower){
+                        return
+                    }
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                         var mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
                         var myFlower_num=Number(mUserInfo.flower_num)
