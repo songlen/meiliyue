@@ -76,7 +76,7 @@ class Invite extends Base {
                 $item['image_num'] = count($image);
 
                 // 计算用户和发布者之间的距离，sql计算出来的是米 这里转换成 km
-                $item['distance'] = round($item['distance']/1000, 2); 
+                // $item['distance'] = round($item['distance']/1000, 2); 
 
                 // 计算年龄
                 $item['age'] = getAge($item['birthday']);
