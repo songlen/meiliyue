@@ -256,7 +256,7 @@
         }
         
         //送小花
-        var longtime=999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+        var longtime=99999999999999;
         var clickIndex=0 //几秒之内点击的次数
         var lastClickTime=longtime
         var nowTime=""
@@ -309,7 +309,6 @@
                 setInterval(function(){
                     nowTime=new Date().getTime()
                     if(nowTime-lastClickTime>1000){
-                        // console.log(nowTime,lastClickTime)
                         if(!isGivingFlower){
                             self.giveFlowerAjax()
                         }
@@ -529,7 +528,6 @@
                     }
                 },
                 openEdit(type) { //动态类型
-                    //window.location("edit.html?user_id=" + 123)
                     this.savePageToSession();
 
                     let url= this.GlobalHost + "/index.php/mobile/dynamics/add/type/" + type + ".html";
@@ -559,6 +557,12 @@
                     sessionStorage.setItem('dongtaiPage', JSON.stringify(pageData))
                 },
                 gotoDongtaiDetail(item) {
+                    console.log(nowTime,lastClickTime)
+                    console.log(nowTime-lastClickTime)
+
+                    if(isGivingFlower||nowTime-lastClickTime>0){ //如果正在送花或者点击间隔还没到1秒
+                        return
+                    }
                     this.savePageToSession();
 
                     let url=this.GlobalHost + '/index.php/mobile/dynamics/detail/id/' + item.dynamic_id + '.html'
@@ -652,7 +656,6 @@
                 giveFlowerAjax(){
                     let self=this
                     //用户id  动态id
-                    // console.log(this[this.nowDataList].list[this.clickItemIndex])
                     let item=this[this.nowDataList].list[this.clickItemIndex]
                     var postData = {
                         user_id: Number(this.user_id),
@@ -668,6 +671,12 @@
                         dataType: "json",
                         success: function (result) {
                             console.log(result)
+
+                            //重置上次点击时间为无穷,重置赠送小花数量
+                            lastClickTime=longtime
+                            clickIndex=0
+                            isGivingFlower=false //送花结束
+
                             if (Number(result.code) == 200) {
                                 // //小花数量加一
                                 // item.flower_num = Number(item.flower_num) + clickIndex;
@@ -675,13 +684,9 @@
                                 //修改localstorage小花数量
                                 self.updateLocalFlower(result.data.flower_num)
                             } else { //送花失败
-                                Global.messageWin("您的小花数量不足！");
+                                Global.messageWin("请求失败");
+                                return
                             }
-
-                            //重置上次点击时间为无穷,重置赠送小花数量
-                            lastClickTime=longtime
-                            clickIndex=0
-                            isGivingFlower=false //送花结束
                         }
                     });
                 },
@@ -689,18 +694,27 @@
                 giveFlower: function (item,index) {
                     var self = this;
                     this.clickItemIndex=index
+                    if(isGivingFlower){
+                        return
+                    }
                     //判断一下
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                         var mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
                         var myFlower_num=Number(mUserInfo.flower_num)
-                        if(myFlower_num-1>=0){
+                        if(myFlower_num>0){
                             clickIndex++
                             lastClickTime=new Date().getTime()
 
                             //小花数量加一
                             item.flower_num = Number(item.flower_num) + 1;
+                            
+                            if(clickIndex==myFlower_num){
+                                Global.messageWin("您的小花数量不足")
+                                return
+                            }
                         }else{
                             Global.messageWin("您的小花数量不足")
+                            return
                         }
                     }
                 },
@@ -728,23 +742,6 @@
                 }
             }
         });
-
-        // $(function(){
-        //     //是否送小花 （新增）
-        //     setInterval(function(){
-        //         nowTime=new Date().getTime()
-        //         if(nowTime-lastClickTime>1000){
-        //             // console.log(nowTime,lastClickTime)
-        //             if(!isGivingFlower){
-        //                 Details.giveFlower()
-        //             }
-                    
-        //             // console.log(clickIndex)
-        //             // lastClickTime=longtime
-        //             // clickIndex=0
-        //         }
-        //     },90)
-        // })
     </script>
 </body>
 
