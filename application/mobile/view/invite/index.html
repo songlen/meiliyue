@@ -463,10 +463,11 @@
                         if (localStorage.getItem("mUserInfo") && localStorage.getItem("mUserInfo") !==null && localStorage.getItem("mUserInfo") !== "null") {
                             let mUserInfo = JSON.parse(localStorage.getItem("mUserInfo"))
                             console.log(mUserInfo)
-
+                            alert(1)
                             longitude = mUserInfo.longitude;
                             latitude = mUserInfo.latitude;
                         }
+                        alert(longitude,latitude)
                         // longitude = "117.2100770"; //测试用
                         // latitude ="36.7006690"; //测试用
 
