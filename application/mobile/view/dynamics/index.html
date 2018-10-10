@@ -557,6 +557,9 @@
                     sessionStorage.setItem('dongtaiPage', JSON.stringify(pageData))
                 },
                 gotoDongtaiDetail(item) {
+                    console.log(nowTime,lastClickTime)
+                    console.log(nowTime-lastClickTime)
+
                     if(isGivingFlower||nowTime-lastClickTime<-2000){ //如果正在送花或者点击间隔还没到1秒
                         return
                     }
