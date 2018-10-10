@@ -528,7 +528,6 @@
                     }
                 },
                 openEdit(type) { //动态类型
-                    //window.location("edit.html?user_id=" + 123)
                     this.savePageToSession();
 
                     let url= this.GlobalHost + "/index.php/mobile/dynamics/add/type/" + type + ".html";
@@ -558,7 +557,7 @@
                     sessionStorage.setItem('dongtaiPage', JSON.stringify(pageData))
                 },
                 gotoDongtaiDetail(item) {
-                    if(isGivingFlower){
+                    if(isGivingFlower||nowTime-lastClickTime<1000){ //如果正在送花或者点击间隔还没到1秒
                         return
                     }
                     this.savePageToSession();
