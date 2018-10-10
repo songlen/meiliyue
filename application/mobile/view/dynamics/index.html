@@ -707,6 +707,11 @@
 
                             //小花数量加一
                             item.flower_num = Number(item.flower_num) + 1;
+                            
+                            if(clickIndex==myFlower_num){
+                                Global.messageWin("您的小花数量不足")
+                                return
+                            }
                         }else{
                             Global.messageWin("您的小花数量不足")
                             return

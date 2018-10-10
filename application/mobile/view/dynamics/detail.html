@@ -616,6 +616,11 @@
                             if(src.indexOf("花1")){
                                 $(".giveFlower img").attr("src",src.replace("花1","花2"))
                             }
+
+                            if(clickIndex==myFlower_num){
+                                Global.messageWin("您的小花数量不足")
+                                return
+                            }
                         }else{
                             Global.messageWin("您的小花数量不足")
                             return
