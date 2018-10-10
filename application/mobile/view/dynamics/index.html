@@ -309,7 +309,6 @@
                 setInterval(function(){
                     nowTime=new Date().getTime()
                     if(nowTime-lastClickTime>1000){
-                        // console.log(nowTime,lastClickTime)
                         if(!isGivingFlower){
                             self.giveFlowerAjax()
                         }
@@ -559,6 +558,9 @@
                     sessionStorage.setItem('dongtaiPage', JSON.stringify(pageData))
                 },
                 gotoDongtaiDetail(item) {
+                    if(isGivingFlower){
+                        return
+                    }
                     this.savePageToSession();
 
                     let url=this.GlobalHost + '/index.php/mobile/dynamics/detail/id/' + item.dynamic_id + '.html'
@@ -652,7 +654,6 @@
                 giveFlowerAjax(){
                     let self=this
                     //用户id  动态id
-                    // console.log(this[this.nowDataList].list[this.clickItemIndex])
                     let item=this[this.nowDataList].list[this.clickItemIndex]
                     var postData = {
                         user_id: Number(this.user_id),
