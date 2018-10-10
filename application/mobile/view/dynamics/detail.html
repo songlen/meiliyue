@@ -280,6 +280,12 @@
                     dataType: "json",
                     success: function (result) {
                         console.log(result)
+
+                        //重置上次点击时间为无穷,重置赠送小花数量
+                        lastClickTime=longtime
+                        clickIndex=0
+                        isGivingFlower=false //送花结束
+
                         if (Number(result.code) == 200) {
                             // //已有小花数量加一
                             // $(".flowerCount").html(Number($(".flowerCount").html()) + clickIndex)
@@ -293,19 +299,14 @@
                             //小花池数量加一
                             $(".flowerPool-count").html(Number($(".flowerPool-count").html()) + clickIndex)
                             
-
                             //修改session小花数量
                             Details.plusSesstionFlower()
                             //修改localstorage小花数量
                             Details.updateLocalFlower(result.data.flower_num)
                         } else {
-                            Global.messageWin("您的小花数量不足");
+                            Global.messageWin("请求失败");
+                            return
                         }
-                        
-                        //重置上次点击时间为无穷,重置赠送小花数量
-                        lastClickTime=longtime
-                        clickIndex=0
-                        isGivingFlower=false //送花结束
                     }
                 })
             },
@@ -601,7 +602,7 @@
                     if(localStorage.getItem("mUserInfo")&&localStorage.getItem("mUserInfo")!==null&&localStorage.getItem("mUserInfo")!=="null"){
                         var mUserInfo=JSON.parse(localStorage.getItem("mUserInfo"))
                         var myFlower_num=Number(mUserInfo.flower_num)
-                        if(myFlower_num-1>=0){
+                        if(myFlower_num>0){
                             clickIndex++
                             lastClickTime=new Date().getTime()
 
@@ -613,6 +614,7 @@
                             }
                         }else{
                             Global.messageWin("您的小花数量不足")
+                            return
                         }
                     }
                 })
