@@ -152,7 +152,7 @@
 
                     });
                 } else {
-                    if (Fans.fansList.page == 1) {
+                    if ($(".friendItem").length==0) {
                         $(".no-fans").show();
                     }
                 }
@@ -160,7 +160,8 @@
                 //滚动加载的"正在加载"是否显示
                 if ($curUl[0].scrollHeight > ($(".tabs").height() - 50)) {
                     // $(".weui-loadmore").show();
-                    $curUl.siblings(".weui-loadmore").show();
+
+                    // $curUl.siblings(".weui-loadmore").show();
                 }
 
                 //绑定dom update后才能绑定的事件？
