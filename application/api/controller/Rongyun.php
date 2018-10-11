@@ -41,7 +41,7 @@ class Rongyun extends Base {
 	public function PublishSystemMessage(){
 		$RongyunLogic = new RongyunLogic();
 		$content = json_encode(array('content' => '收到请回复', 'extra' => '你说什么'));
-		$result = $RongyunLogic->PublishSystemMessage('5', ["1", "9" ,"19", "20"], $content);
+		$result = $RongyunLogic->PublishSystemMessage('5', ["1", "9" ,"19", "20", "2"], $content);
 		p($result);
 	}
 }
