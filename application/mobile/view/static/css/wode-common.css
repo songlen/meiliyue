@@ -621,6 +621,8 @@ a.close {
 .friends-content {
     top: 0;
     background-color: #f2f4fc;
+
+    transform: translate3d(0,0,0);
 }
 
 /* 修改下拉刷新 */
@@ -807,6 +809,8 @@ a.close {
 .friends-page {
     background-color: #fff;
     height: 100vh;
+
+    transform: translate3d(0,0,0);
 }
 
 .friends-page header .title {
@@ -860,11 +864,15 @@ a.close {
     right: 0;
     overflow-y: auto;
     background-color: #f2f4fc;
+
+    transform: translate3d(0,0,0);
 }
 
 .friends-list {
     min-height: 2.38rem;
     background-color: #f2f4fc;
+
+    transform: translate3d(0,0,0);
 }
 
 li.newFriendItem,
@@ -884,22 +892,30 @@ li.friendItem {
     border-radius: 0.23rem;
     overflow: hidden;
     margin: 0 0.1rem;
+
+    transform: translate3d(0,0,0);
 }
 
 .friendHeadWrap>img {
     width: 100%;
     height: auto;
+
+    transform: translate3d(0,0,0);
 }
 
 .friendItem-avatar {
     font-size: 0;
     margin: 0 0.1rem;
     position: relative;
+
+    transform: translate3d(0,0,0);
 }
 
 .fans-tab .friendHeadWrap,
 .attention-tab .friendHeadWrap {
     margin: 0;
+
+    transform: translate3d(0,0,0);
 }
 
 .fans-tab .videoStatus {
