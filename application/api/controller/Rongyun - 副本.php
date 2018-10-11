@@ -3,17 +3,28 @@
 namespace app\api\controller;
 
 use think\Db;
-use app\api\logic\RongyunLogic;
+// use app\api\logic\RongyunLogic;
 
-// include PLUGIN_PATH.'rongyun/rongcloud.php';
+include PLUGIN_PATH.'rongyun/rongcloud.php';
 
 class Rongyun extends Base {
+
+
+	private $appKey;
+	private $appSecret;
+	private $jsonPath;
+	private $RongCloud;
 
 	public function __construct(){
 		// 设置所有方法的默认请求方式
 		$this->method = 'POST';
 
 		parent::__construct();
+
+		$this->appKey = 'tdrvipkstxgq5';
+		$this->appSecret = 'F1QPkVpi57B08';
+		$this->jsonPath = "jsonsource/";
+		$this->RongCloud = new \RongCloud($this->appKey,$this->appSecret);
 	}
 
 	public function getToken(){
@@ -25,9 +36,7 @@ class Rongyun extends Base {
 
 		ini_set('safe_mode','Off');
 		// 获取 Token 方法
-		// $result = $this->RongCloud->user()->getToken($user_id, $user['nickname'], 'http://meiliyue.caapa.org/'.$user['head_pic']);
-		$RongyunLogic = new RongyunLogic();
-		$result = $RongyunLogic->getToken($user_id, $user['nickname'], 'http://meiliyue.caapa.org/'.$user['head_pic']);
+		$result = $this->RongCloud->user()->getToken($user_id, $user['nickname'], 'http://meiliyue.caapa.org/'.$user['head_pic']);
 		$result = json_decode($result, true);
 		if($result['code'] == 200){
 			$rongyun_token = $result['token'];
@@ -40,8 +49,6 @@ class Rongyun extends Base {
 
 	public function PublishSystemMessage(){
 		$RongyunLogic = new RongyunLogic();
-		$content = json_encode(array('content' => '收到请回复', 'extra' => '你说什么'));
-		$result = $RongyunLogic->PublishSystemMessage('1', ["9"], $content);
-		p($result);
+		$RongyunLogic->PublishSystemMessage('1', '9', '收到请回复');
 	}
 }

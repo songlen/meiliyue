@@ -102,7 +102,7 @@ class Message{
 	 *
 	 * @return $json
 	 **/
-	public function PublishSystem($fromUserId, $toUserId,  $objectName, $content, $pushContent = '', $pushData = '', $isPersisted, $isCounted) {
+	public function PublishSystem($fromUserId, $toUserId,  $objectName, $content, $pushContent = '', $pushData = '', $isPersisted=1, $isCounted=1) {
     	try{
 			if (empty($fromUserId))
 				throw new Exception('Paramer "fromUserId" is required');
@@ -115,7 +115,6 @@ class Message{
 				
 			if (empty($content))
 				throw new Exception('Paramer "$content" is required');
-				
 	
     		$params = array (
     		'fromUserId' => $fromUserId,
