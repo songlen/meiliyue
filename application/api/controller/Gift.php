@@ -3,6 +3,7 @@
 namespace app\api\controller;
 use think\Db;
 use app\api\logic\MessageLogic;
+use app\api\logic\RongyunLogic;
 
 class Gift extends Base {
 
@@ -67,6 +68,9 @@ class Gift extends Base {
 			// 站内消息
 			$MessageLogic = new MessageLogic();
 			$MessageLogic->add($to_user_id, '您收到了一个礼物');
+			// 融云消息
+			$RongyunLogic = new RongyunLogic();
+			$result = $RongyunLogic->PublishPrivateMessage('1', $to_user_id, '您收到了一个礼物');
 
 		    // 提交事务
 		    Db::commit();

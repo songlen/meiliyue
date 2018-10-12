@@ -8,6 +8,7 @@ use app\api\logic\GeographyLogic;
 use app\api\logic\DynamicLogic;
 use think\Image;
 use app\api\logic\MessageLogic;
+use app\api\logic\RongyunLogic;
 
 class User extends Base {
 
@@ -404,6 +405,9 @@ class User extends Base {
             $MessageLogic = new MessageLogic();
             $message = $userinfo['nickname'].'关注了你';
             $MessageLogic->add($friend_id, $message);
+            // 融云消息
+            $RongyunLogic = new RongyunLogic();
+            $result = $RongyunLogic->PublishPrivateMessage('1', $friend_id, $message);
 
             response_success('', '关注成功');
         } else {

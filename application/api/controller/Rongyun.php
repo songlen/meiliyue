@@ -25,23 +25,28 @@ class Rongyun extends Base {
 
 		ini_set('safe_mode','Off');
 		// 获取 Token 方法
-		// $result = $this->RongCloud->user()->getToken($user_id, $user['nickname'], 'http://meiliyue.caapa.org/'.$user['head_pic']);
 		$RongyunLogic = new RongyunLogic();
-		$result = $RongyunLogic->getToken($user_id, $user['nickname'], 'http://meiliyue.caapa.org/'.$user['head_pic']);
-		$result = json_decode($result, true);
-		if($result['code'] == 200){
-			$rongyun_token = $result['token'];
-			M('users')->where('user_id', $user_id)->setField('rongyun_token', $rongyun_token);
+		$host_url = config('host_url');
+		$rongyun_token = $RongyunLogic->getToken($user_id, $user['nickname'], $user['head_pic']);
+		if($rongyun_token){
 			response_success(array('token'=>$rongyun_token));
 		} else {
-			response_error('', $result['msg']);
+			response_error('', '获取失败');
 		}
 	}
 
+	// 发送系统消息
 	public function PublishSystemMessage(){
 		$RongyunLogic = new RongyunLogic();
 		$content = json_encode(array('content' => '收到请回复', 'extra' => '你说什么'));
 		$result = $RongyunLogic->PublishSystemMessage('5', ["1", "9" ,"19", "20", "2"], $content);
-		p($result);
+	}
+
+	// 发送系统消息
+	public function PublishPrivateMessage(){
+		
+
+		$RongyunLogic = new RongyunLogic();
+		$result = $RongyunLogic->PublishPrivateMessage('5', $users, $content);
 	}
 }

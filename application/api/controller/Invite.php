@@ -5,6 +5,7 @@ use think\Db;
 use app\api\logic\FileLogic;
 use app\api\logic\GeographyLogic;
 use app\api\logic\MessageLogic;
+use app\api\logic\RongyunLogic;
 
 class Invite extends Base {
 
@@ -158,9 +159,13 @@ class Invite extends Base {
             // 发消息
             $user = Db::name('users')->where('user_id', $user_id)->field('nickname')->find();
             $invite = Db::name('invite')->where('id', $invite_id)->field('user_id, title')->find();
+            // 站内消息
             $message = $user['nickname'].'对您的邀约“'.$invite['title'].'”感兴趣';
             $MessageLogic = new MessageLogic();
             $MessageLogic->add($invite['user_id'], $message);
+            // 融云消息
+            $RongyunLogic = new RongyunLogic();
+            $result = $RongyunLogic->PublishPrivateMessage('1', $invite['user_id'], $message);
 
             response_success('', '操作成功');
         } else {

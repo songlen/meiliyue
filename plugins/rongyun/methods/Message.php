@@ -25,7 +25,7 @@ class Message{
 	 *
 	 * @return $json
 	 **/
-	public function publishPrivate($fromUserId, $toUserId,  $objectName, $content, $pushContent = '', $pushData = '', $count = '', $verifyBlacklist, $isPersisted, $isCounted, $isIncludeSender) {
+	public function publishPrivate($fromUserId, $toUserId,  $objectName, $content, $pushContent = '', $pushData = '', $count = '', $verifyBlacklist=0, $isPersisted=1, $isCounted=1, $isIncludeSender=0) {
     	try{
 			if (empty($fromUserId))
 				throw new Exception('Paramer "fromUserId" is required');

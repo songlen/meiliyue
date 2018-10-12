@@ -3,6 +3,7 @@
 namespace app\api\controller;
 use think\Db;
 use app\api\logic\SmsLogic;
+use app\api\logic\RongyunLogic;
 
 class Auth extends Base {
 
@@ -133,6 +134,11 @@ class Auth extends Base {
         if($user_id === false){
            response_error('', '注册失败');
         }
+
+        // 注册融云获取token
+        $RongyunLogic = new RongyunLogic();
+        $RongyunLogic->getToken($user_id, $nickname);
+
         
         $userInfo = M('users')->where('user_id', $user_id)->find();
         unset($userInfo['password']);
@@ -225,6 +231,10 @@ class Auth extends Base {
             $user_id = Db::name('users')->insertGetId($userData);
             // 更新三方登录表记录的user_id
             Db::name('user_third')->where('id', $id)->update(array('user_id'=>$user_id));
+
+            // 注册融云获取token
+            $RongyunLogic = new RongyunLogic();
+            $RongyunLogic->getToken($user_id, $nickname, $head_pic);
         }
 
         $userInfo = M('users')->where('user_id', $user_id)->find();
