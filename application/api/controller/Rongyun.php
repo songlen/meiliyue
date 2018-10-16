@@ -21,7 +21,7 @@ class Rongyun extends Base {
 		$user = M('users')->where('user_id', $user_id)->field('nickname, head_pic, rongyun_token')->find();
 		if(empty($user)) response_error('', '该用户不存在');
 
-		if($user['rongyun_token']) response_success(array('token'=>$user['rongyun_token']));
+		// if($user['rongyun_token']) response_success(array('token'=>$user['rongyun_token']));
 
 		ini_set('safe_mode','Off');
 		// 获取 Token 方法
