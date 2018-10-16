@@ -6,6 +6,7 @@ use think\AjaxPage;
 use think\Page;
 use think\Db;
 use app\api\logic\MessageLogic;
+use app\api\logic\RongyunLogic;
 
 class CarAuth extends Base {
 
@@ -65,11 +66,15 @@ class CarAuth extends Base {
     	$result = M('CarAuth')->where('id', $id)->setField('status', $status);
     	M('users')->where('user_id', $user_id)->setField('auth_car_status', $status);
 
-        // 发送站内消息
         if($result && in_array($status, array(2, 3))){
+             // 发送站内消息
             $messsage = $status == 2 ? '恭喜您，车辆认证已通过' : '很抱歉，车辆认证未通过';
             $MessageLogic = new MessageLogic();
             $MessageLogic->add($user_id, $messsage);
+
+            // 融云消息
+            $RongyunLogic = new RongyunLogic();
+            $result = $RongyunLogic->PublishPrivateMessage('1', $user_id, $messsage);
         }
     }
  }

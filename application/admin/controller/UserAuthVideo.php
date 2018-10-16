@@ -7,6 +7,7 @@ use think\Page;
 use think\Db;
 use app\api\logic\MessageLogic;
 use app\api\logic\DynamicLogic;
+use app\api\logic\RongyunLogic;
 
 class UserAuthVideo extends Base {
 
@@ -60,11 +61,16 @@ class UserAuthVideo extends Base {
     	$result = M('UsersAuthVideo')->where('id', $id)->setField('status', $status);
     	M('users')->where('user_id', $user_id)->setField('auth_video_status', $status);
 
-        // 发送站内消息
+        
         if($result && in_array($status, array(2, 3))){
+            // 发送站内消息
             $messsage = $status == 2 ? '恭喜您，视频认证已通过' : '很抱歉，视频认证未通过';
             $MessageLogic = new MessageLogic();
             $MessageLogic->add($user_id, $messsage);
+
+            // 融云消息
+            $RongyunLogic = new RongyunLogic();
+            $result = $RongyunLogic->PublishPrivateMessage('1', $user_id, $messsage);
         }
 
         // 发布动态

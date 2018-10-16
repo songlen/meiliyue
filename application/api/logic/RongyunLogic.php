@@ -53,6 +53,7 @@ class RongyunLogic extends Controller {
 
 	// 发送单聊消息
 	public function PublishPrivateMessage($toUserId, $content){
+		// 
 		$toUserId = array($toUserId);
 		$content = json_encode(array('content' => $content));
 		return $this->RongCloud->Message()->publishPrivate('5', $toUserId, 'RC:TxtMsg', $content);
