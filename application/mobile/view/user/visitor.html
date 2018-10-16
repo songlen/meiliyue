@@ -133,9 +133,9 @@
 
                 //updateDom后
                 //滚动加载的"正在加载"是否显示
-                if ($curUl[0].scrollHeight > ($(".visitors-page").height() - 50)) {
-                    $(".weui-loadmore").show();
-                }
+                // if ($curUl[0].scrollHeight > ($(".visitors-page").height() - 50)) {
+                //     $(".weui-loadmore").show();
+                // }
 
                 //绑定dom update后才能绑定的事件？
                 // Visitors.eventsBindAfter();
@@ -220,8 +220,7 @@
 
                     let user_id = Visitors.user_id;
                     let toUserId = $(this).attr("data-toUserId");
-                    window.location.href = Global.host + "/index.php/mobile/user/homePage/user_id/" +
-                        user_id + "/toUserId/" + toUserId + ".html";
+                    window.location.href = Global.host + "/index.php/mobile/user/homePage/user_id/" +user_id + "/toUserId/" + toUserId + ".html";
                 });
             },
             eventsBind: function () {
@@ -288,13 +287,9 @@
                     };
 
                     //tab页
-                    // debugger
                     $("header .title a").removeClass("actived");
-                    // debugger
                     $("[data-list='" + Visitors.curList + "']").addClass("actived");
-                    // debugger
                     $("." + Visitors.curList).show().siblings("ul").hide();
-                    // debugger
                     //滚动位置
                     setTimeout(function () {
                         document.getElementsByClassName('comments-content')[0].scrollTop = pageData.scrollTop;
