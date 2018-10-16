@@ -125,9 +125,12 @@
 
                     });
                 } else {
-                    if (Visitors[Visitors.curList].page !== 1) {
-                        //无内容
-                        $(".noComments").show();
+                    // if (Visitors[Visitors.curList].page !== 1) {
+                    //     //无内容
+                    //     $(".noComments").show();
+                    // }
+                    if($("li.comments-item").length==0){
+                      $(".noComments").show();
                     }
                 }
 
