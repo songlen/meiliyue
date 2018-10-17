@@ -78,9 +78,12 @@
             },
 
 
-            updateDom: function (data) {
+            updateDom: function (data,isScroll) {
                 let $wrap=$("." + Visitors.curList)
                 let $curUl = $("." + Visitors.curList).find("."+Visitors.curList+"-ul");
+                if(!isScroll){
+                  $curUl.html("")
+                }
                 if (data && data.length !== 0) {
                     if (!Visitors.isScroll) {
                         $curUl.html("");
@@ -149,9 +152,9 @@
                 // Visitors.eventsBindAfter();
 
             },
-            getListData: function () {
+            getListData: function (isScroll) {
                 let getPage;
-                if (Visitors.isScroll) {
+                if (isScroll) {
                     getPage = Visitors[Visitors.curList].page + 1;
                 } else {
                     getPage = 1;
@@ -172,14 +175,14 @@
                         // result.data=result.data.concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data).concat(result.data);//测试用
                         // result.data=[];//测试用
 
-                        if (Visitors.isScroll) {
-                            if (result.data.length !== 0) {
-                                Visitors[Visitors.curList].page++;
+                        if (result.data.length !== 0) {
+                            Visitors[Visitors.curList].page++;
+                            if(isScroll){
+                              Visitors.updateDom(result.data,true)
+                            }else{
+                              Visitors.updateDom(result.data)
                             }
-                            Visitors.isScroll = false;
                         }
-
-                        Visitors.updateDom(result.data)
 
                         Visitors[Visitors.curList].haveLoad = true;
 
@@ -215,11 +218,10 @@
                 });
                 //滚动加载
                 $(".comments-content").infinite().on("infinite", function () {
-                    Visitors.isScroll = true;
                     //原
                     if (Visitors.loading) return;
                     Visitors.loading = true;
-                    Visitors.getListData();
+                    Visitors.getListData(true);
                 });
                 //点击li去他人的主页
                 $(".visitors-page .comments-content>ul").delegate("li", "click", function () {
@@ -251,15 +253,15 @@
                         Visitors.getListData();
                     }
                 });
-                //点击视频认证
-                $(".visiList").add($(".seenList")).delegate(".videoStatus", "click", function (event) {
-                    // event.stopPropagation();
-                    // let user_id = Number($(this).closest(".comments-item").attr("data-toUserId"));
-                    // Global.getAuthVideoUrl(user_id,function(url){
-                    //     let src=Global.host+url;
-                    //     Global.fullScreen(src);
-                    // });
-                });
+                // //点击视频认证
+                // $(".visiList").add($(".seenList")).delegate(".videoStatus", "click", function (event) {
+                //     event.stopPropagation();
+                //     let user_id = Number($(this).closest(".comments-item").attr("data-toUserId"));
+                //     Global.getAuthVideoUrl(user_id,function(url){
+                //         let src=Global.host+url;
+                //         Global.fullScreen(src);
+                //     });
+                // });
             },
             init: function () {
                 //我的user_id
