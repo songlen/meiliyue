@@ -85,9 +85,6 @@
                   $curUl.html("")
                 }
                 if (data && data.length !== 0) {
-                    if (!Visitors.isScroll) {
-                        $curUl.html("");
-                    }
                     data.forEach(function (item, index) {
                         let timeStr = Global.stampToStr(item.add_time);
                         let headUrl;
@@ -176,8 +173,8 @@
                         // result.data=[];//测试用
 
                         if (result.data.length !== 0) {
-                            Visitors[Visitors.curList].page++;
                             if(isScroll){
+                              Visitors[Visitors.curList].page++;
                               Visitors.updateDom(result.data,true)
                             }else{
                               Visitors.updateDom(result.data)
