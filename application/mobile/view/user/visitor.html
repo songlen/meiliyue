@@ -211,6 +211,7 @@
             initPullToRefresh: function () {
                 //下拉刷新
                 $(".comments-content").pullToRefresh(function () {
+                    Visitors[Visitors.curList].page=1;
                     Visitors.getListData();
                 });
                 //滚动加载
