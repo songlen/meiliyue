@@ -31,21 +31,24 @@
             <div class="refresh">正在刷新</div>
         </div>
 
+        <div class="visiList">
+            <ul class="visiList-ul">
+            </ul>
 
-        <ul class="visiList">
-        </ul>
+            <div class="noComments" style="display: none;">
+                <img src="__STATIC__/images/icon/暂无要找内容.png">
+                <p>暂无任何内容</p>
+            </div>
+        </div>        
+        
+        <div class="seenList" style="display: none;">
+            <ul class="seenList-ul">
+            </ul>
 
-        <ul class="seenList" style="display: none;">
-        </ul>
-
-        <div class="noComments-visiList" style="display: none;">
-            <img src="__STATIC__/images/icon/暂无要找内容.png">
-            <p>暂无任何内容</p>
-        </div>
-
-        <div class="noComments-seenList" style="display: none;">
-            <img src="__STATIC__/images/icon/暂无要找内容.png">
-            <p>暂无任何内容</p>
+            <div class="noComments" style="display: none;">
+                <img src="__STATIC__/images/icon/暂无要找内容.png">
+                <p>暂无任何内容</p>
+            </div>
         </div>
 
 
@@ -76,7 +79,8 @@
 
 
             updateDom: function (data) {
-                let $curUl = $("." + Visitors.curList);
+                let $wrap=$("." + Visitors.curList)
+                let $curUl = $("." + Visitors.curList).find("."+Visitors.curList+"-ul");
                 if (data && data.length !== 0) {
                     if (!Visitors.isScroll) {
                         $curUl.html("");
@@ -131,7 +135,7 @@
                     });
                 } else {
                     if($curUl.find("li.comments-item").length==0){
-                      $(".noComments-"+Visitors.curList).show();
+                      $wrap.find(".noComments").show()
                     }
                 }
 
