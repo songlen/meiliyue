@@ -31,7 +31,7 @@
             <div class="refresh">正在刷新</div>
         </div>
 
-        <div class="visiList">
+        <div class="visiList tab">
             <ul class="visiList-ul">
             </ul>
 
@@ -41,7 +41,7 @@
             </div>
         </div>        
         
-        <div class="seenList" style="display: none;">
+        <div class="seenList tab" style="display: none;">
             <ul class="seenList-ul">
             </ul>
 
@@ -242,7 +242,7 @@
 
                     let className = $(this).attr("data-list");
                     console.log(className)
-                    $("." + className).show().siblings("ul").hide();
+                    $("." + className).show().siblings(".tab").hide();
 
                     Visitors.curList = className;
 
@@ -297,7 +297,7 @@
                     //tab页
                     $("header .title a").removeClass("actived");
                     $("[data-list='" + Visitors.curList + "']").addClass("actived");
-                    $("." + Visitors.curList).show().siblings("ul").hide();
+                    $("." + Visitors.curList).show().siblings(".tab").hide();
                     //滚动位置
                     setTimeout(function () {
                         document.getElementsByClassName('comments-content')[0].scrollTop = pageData.scrollTop;
