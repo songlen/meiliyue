@@ -935,4 +935,21 @@ class User extends Base {
 
         response_success($list);
     }
+
+    // 统计消息数量
+    public function messageCount(){
+        $user_id = I('user_id');
+
+        $count = Db::name('message')->alias('m')
+            ->join('user_message um', 'um.message_id=m.message_id', 'left')
+            ->where(function ($query) use ($user_id){
+                $query->where(array('user_id'=>$user_id, 'type'=>'0', 'status'=>'0'));
+            })
+            ->whereOr(function($query) use ($user_id){
+                $query->where('type', '1')->where('status', null);
+            })
+            ->count();
+
+        response_success(array('count'=>$count));
+    }
 }
