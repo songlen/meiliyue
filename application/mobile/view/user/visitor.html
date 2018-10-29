@@ -222,12 +222,21 @@
                     Visitors.getListData(true);
                 });
                 //点击li去他人的主页
-                $(".visitors-page .comments-content>ul").delegate("li", "click", function () {
-                    //savePageData()
+                $(".visitors-page .comments-content>ul").delegate("li", "click", function (event) {
+                    event.stopPropagation()
                     Visitors.savePageData();
 
                     let user_id = Visitors.user_id;
                     let toUserId = $(this).attr("data-toUserId");
+                    window.location.href = Global.host + "/index.php/mobile/user/homePage/user_id/" +user_id + "/toUserId/" + toUserId + ".html";
+                });
+                //点击头像去他人的主页
+                $(".visitors-page .comments-content>ul").delegate(".comments-avatar", "click", function (event) {
+                    event.stopPropagation()
+                    Visitors.savePageData();
+
+                    let user_id = Visitors.user_id;
+                    let toUserId = $(this).closest("li").attr("data-toUserId");
                     window.location.href = Global.host + "/index.php/mobile/user/homePage/user_id/" +user_id + "/toUserId/" + toUserId + ".html";
                 });
             },
