@@ -136,8 +136,8 @@ class Auth extends Base {
         }
 
         // 注册融云获取token
-        $RongyunLogic = new RongyunLogic();
-        $RongyunLogic->getToken($user_id, $nickname);
+        /*$RongyunLogic = new RongyunLogic();
+        $RongyunLogic->getToken($user_id, $nickname);*/
 
         
         $userInfo = M('users')->where('user_id', $user_id)->find();
@@ -231,10 +231,6 @@ class Auth extends Base {
             $user_id = Db::name('users')->insertGetId($userData);
             // 更新三方登录表记录的user_id
             Db::name('user_third')->where('id', $id)->update(array('user_id'=>$user_id));
-
-            // 注册融云获取token
-            $RongyunLogic = new RongyunLogic();
-            $RongyunLogic->getToken($user_id, $nickname, $head_pic);
         }
 
         $userInfo = M('users')->where('user_id', $user_id)->find();
