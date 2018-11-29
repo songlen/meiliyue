@@ -679,6 +679,16 @@
                         callback()
                     }
                 })
+
+                Homepage.sendAttentionInfo()
+            },
+            //2018.11.29 加关注时，把 用户ID 用户名 头像 三个返回到安卓端
+            sendAttentionInfo:function(){
+              window.follow.get(
+                Homepage.toUserId,
+                Homepage.baseinfo.nickname,
+                Homepage.head_pic
+              )
             },
             cancelAttention: function (callback) {
                 var postData = {
