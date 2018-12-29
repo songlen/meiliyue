@@ -1,6 +1,6 @@
 let Global = (function () {
     let GlobalHost="http://app.yujianhaoshiguang.cn"; //2018.12.29切换域名
-    // let GlobalHost="http://meiliyue.caapa.org";
+    // let GlobalHost="http://app.yujianhaoshiguang.cn";
 
 
     function openLoading(msg = "处理中") {

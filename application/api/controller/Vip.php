@@ -96,7 +96,7 @@ class Vip extends Base {
 
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
-			$notify_url = 'http://meiliyue.caapa.org/index.php/api/vip/callback?paymentMethod=alipay';
+			$notify_url = 'http://app.yujianhaoshiguang.cn/index.php/api/vip/callback?paymentMethod=alipay';
 			$AlipayLogic = new AlipayLogic($notify_url);
 			$orderStr = $AlipayLogic->generateOrderStr($order_no, $total_amount, '购买VIP', '购买VIP');
 			return $orderStr;

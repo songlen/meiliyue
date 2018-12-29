@@ -314,6 +314,6 @@ return [
     'erasable_type' =>['.gif','.jpg','.jpeg','.bmp','.png','.mp4','.3gp','.flv','.avi','.wmv'],
     'COUPON_USER_TYPE'=>['全店通用','指定商品可用','指定分类商品可用'],
     'image_upload_limit_size'=>1024 * 1024 * 5,//上传图片大小限制
-    'host_url' => 'http://meiliyue.caapa.org/',
+    'host_url' => 'http://app.yujianhaoshiguang.cn/',
    
 ];

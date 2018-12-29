@@ -92,4 +92,23 @@ class Common extends Base {
         Log::write($content, 'shantui', true);
         response_success();
     }
+
+    /**
+     * [collect 收藏]
+     * @param table_name [document 在线文档]
+     * @return [type] [description]
+     */
+    public function collect(){
+        $data['user_id'] = I('user_id');
+        $data['table_id'] = I('table_id');
+        $data['table_name'] = I('table_name');
+
+        if(M('user_collect')->where($data)->count()) response_success('已收藏');
+
+        if( false !== M('user_collect')->insert($data)){
+            response_success('', '收藏成功');
+        } else {
+            response_error('', '收藏失败');
+        }
+    }
 }
