@@ -56,7 +56,7 @@ class Goldcoin extends Base {
 
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
-			$notify_url = 'http://meiliyue.caapa.org/index.php/api/goldcoin/alipayCallback';
+			$notify_url = 'http://app.yujianhaoshiguang.cn/index.php/api/goldcoin/alipayCallback';
 			$AlipayLogic = new AlipayLogic($notify_url);
 			$orderStr = $AlipayLogic->generateOrderStr($order_no, $total_amount, '购买金币', '购买金币');
 			return $orderStr;

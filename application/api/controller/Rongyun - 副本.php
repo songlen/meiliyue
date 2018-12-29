@@ -36,7 +36,7 @@ class Rongyun extends Base {
 
 		ini_set('safe_mode','Off');
 		// 获取 Token 方法
-		$result = $this->RongCloud->user()->getToken($user_id, $user['nickname'], 'http://meiliyue.caapa.org/'.$user['head_pic']);
+		$result = $this->RongCloud->user()->getToken($user_id, $user['nickname'], 'http://app.yujianhaoshiguang.cn/'.$user['head_pic']);
 		$result = json_decode($result, true);
 		if($result['code'] == 200){
 			$rongyun_token = $result['token'];
