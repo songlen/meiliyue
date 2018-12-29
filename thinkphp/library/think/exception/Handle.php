@@ -172,7 +172,6 @@ class Handle
         }
 
         $data['echo'] = ob_get_clean();
-        p(Config::get('exception_tmpl'), Config::get('error_tmpl'));
 
         ob_start();
         extract($data);
