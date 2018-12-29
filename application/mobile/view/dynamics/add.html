@@ -21,7 +21,7 @@
     </header>
 
     <div class="edit-page">
-        <form id="dynamicForm" action="http://meiliyue.caapa.org/index.php/Api/Dynamics/add" method="post" enctype="multipart/form-data">
+        <form id="dynamicForm" action="http://app.yujianhaoshiguang.cn/index.php/Api/Dynamics/add" method="post" enctype="multipart/form-data">
             <!-- 隐藏域 -->
             <input type="text" value="" name="user_id" style="display: none;">
             <input type="text" value="" name="type" style="display: none;">
@@ -229,6 +229,15 @@
                                 window.Android.goback("reloadIndex")
                                 // localStorage.setItem("isFromAdd",1)
                                 // window.history.back(-1);
+                                // uploadImgApp(type,callback) //参数1 type：1 单图片 2多张图片 ，类型 string
+                                //                             //参数2 callback：上传完图片后，调用的h5 js方法的名称 ，类型string
+
+                                // {
+                                //       "filepath":[
+                                //         "/public/upload/dynamics/video/20180820/3e0cf14b5c8aafd2bc94d6c769041f07.jpg",
+                                //         "/public/upload/dynamics/video/20180820/3e0cf14b5c8aafd2bc94d6c769041f07.jpg"
+                                //       ]
+                                // }                                                          
                             }
                         });
                     }  
