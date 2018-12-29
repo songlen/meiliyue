@@ -176,6 +176,7 @@ class Handle
         ob_start();
         extract($data);
         
+        p(Config::get('exception_tmpl'), Config::get('error_tmpl'));
         if(true == Config::get('app_debug'))
         include Config::get('exception_tmpl');
         else 
