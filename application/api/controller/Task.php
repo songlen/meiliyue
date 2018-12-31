@@ -28,13 +28,8 @@ class Task extends Base {
 	}
 
     public function test(){
-        $toUserId = 2;
-        $subQuery = M('gift_gived')->where('to_user_id', $toUserId)->order('id desc')->buildSql();
-        $data['gift'] = Db::table($subQuery.' sub')
-            ->field('image, count(*) count')
-            ->group('gift_id')
-            ->select();
-p(Db::name('gift_gived')->getLastSql());
-        p($data);
+        echo date('Y-m-d H:i:s');
+        echo phpinfo();
+
     }
 }
