@@ -381,7 +381,7 @@ class User extends Base {
         $user_id = I('user_id');
         $friend_id = I('friend_id');
 
-        if($user_id == $friend_id) response_error('', '自己不能关注自己');
+        // if($user_id == $friend_id) response_error('', '自己不能关注自己');
 
         // 防止重复关注
         if(M('friend')->where(array('user_id'=>$user_id, 'friend_id'=>$friend_id))->count()){
