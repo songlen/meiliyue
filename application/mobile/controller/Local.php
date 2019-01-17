@@ -18,5 +18,9 @@ class Local extends Base {
 		$this->assign('userinfo', json_encode($userinfo));
 		return $this->fetch();
 	}
+
+	public function downapp(){
+		return $this->fetch();
+	}
 }
 
