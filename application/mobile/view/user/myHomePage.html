@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <title>个人主页</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css-min/user-myHomePage.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="__STATIC__/css-min/user-myHomePage.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/base.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/wode-common.css">
     <script type="text/javascript">
         document.documentElement.style.fontSize = document.documentElement.clientWidth / 375 * 100 + 'px';
@@ -125,7 +127,7 @@
                         </div>
                         <p class="myApprove-phone"></p>
                     </li>
-                    <li class="myApprove-item">
+                    <li class="myApprove-item showVideo">
                         <div class="myApprove-pic">
                             <img src="__STATIC__/images/icon/tx.png">
                         </div>
@@ -252,6 +254,17 @@
                     <li class="home-cancel">取消</li>
                 </ul>
             </div>
+            <!-- 播放认证视频 -->
+            <div class="fullScreen" style="display: none;">
+              <div class="videoHeader">
+                  <div class="closeFullScreen"></div>
+              </div>
+              <div class="fullScreenScroll">
+                  <div class="fullScreenWrap">
+                      <video id="video2" width="100%" height="100%" src="" poster="" loop></video>
+                  </div>
+              </div>
+            </div>
             <!-- 修改头像 -->
             <div class="changeHeadpic" style="display: none;">
                 <ul>
@@ -305,12 +318,19 @@
 
     <!-- ------------------------------------- -->
 
-    <script src="__STATIC__/js-min/user-myHomePage.min.js"></script>
+    <!-- <script src="__STATIC__/js-min/user-myHomePage.min.js"></script> -->
+    <script src="__STATIC__/js/jquery-3.1.1.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/jquery-weui.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery-weui-build/swiper.min.js"></script>
+    <script src="__STATIC__/js/js-plugins/jquery.form.js"></script>
+    <script src="__STATIC__/js/areaCodeArr.js"></script>
     <script>
         var Homepage = {
             _mTimer: null,
             user_id: "",
+            userInfo:{},
 
+            videoUrl:null,
 
             updateDom: function (data) {
                 //昵称
@@ -584,6 +604,8 @@
                     dataType: "json",
                     success: function (result) {
                         console.log(result.data)
+
+                        Homepage.userInfo=result.data
 
                         Homepage.updateDom(result.data);
                     }
@@ -1224,6 +1246,25 @@
                     });
                 }
             },
+            //获取认证视频url
+            getVideoUrl(callback){
+              if(!Homepage.videoUrl){
+                Global.getAuthVideoUrl(Homepage.toUserId,function(url){
+                  console.log(url)
+                  Homepage.videoUrl=url //得到url
+                  let realVideoUrl=Global.host+Homepage.videoUrl
+                  // realVideoUrl="https://media.w3.org/2010/05/sintel/trailer.mp4" //测试
+                  $("#video2").attr("src",realVideoUrl)
+                  if(callback){
+                    callback()
+                  }
+                })
+              }else{
+                if(callback){
+                  callback()
+                }
+              }
+            },
             eventsBind: function () {
                 //返回
                 $(".homepageBack").click(function () {
@@ -1369,6 +1410,22 @@
                 document.getElementById("lookMyGift").onclick=function(){
                     window.location.href=Global.host+"/index.php/mobile/user/mygiftlist";
                 }
+
+                //2019.01.18点击认证视频
+                $(".showVideo").click(function(){
+                  if(Homepage.userInfo.baseinfo.auth_video_status.toString()!=="2"){ //视频未认证
+                    return
+                  }
+                  Homepage.getVideoUrl(function(){
+                    $(".fullScreen").show()
+                    $("#video2")[0].currentTime = 0; 
+                    $("#video2")[0].play()
+                  })
+                })
+                $(".closeFullScreen").click(function(){
+                  $("#video2")[0].pause()
+                  $(".fullScreen").hide()
+                })
             },
             init: function () {
                 // 得到user_id
@@ -1381,6 +1438,10 @@
                     alert("请求失败")
                     return
                 }
+                // Homepage.user_id = 1
+
+                //获取认证视频url
+                Homepage.getVideoUrl()
 
                 //获取用户信息，绑定dom
                 Homepage.getDataUpdateDom();

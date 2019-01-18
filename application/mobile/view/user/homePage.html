@@ -307,7 +307,17 @@
 
         <span class="closeChatFisrt"></span>
     </div>
-
+    <!-- 播放认证视频 -->
+    <div class="fullScreen" style="display: none;">
+      <div class="videoHeader">
+          <div class="closeFullScreen"></div>
+      </div>
+      <div class="fullScreenScroll">
+          <div class="fullScreenWrap">
+              <video id="video2" width="100%" height="100%" src="" poster="" loop></video>
+          </div>
+      </div>
+    </div>
     <!-- 送礼物页面 -->
     <div class="gift-page" style="display:none;">
         <header>
@@ -327,15 +337,6 @@
             <div class="btnBox">
                 <button class="btn cancelGiveGift">取消</button>
                 <button class="btn submit">发送</button>
-            </div>
-        </div>
-
-        <!-- 播放认证视频 -->
-        <div class="fullScreen">
-            <div class="fullScreenScroll">
-                <div class="fullScreenWrap">
-                    <video id="video2" width="100%" height="100%" src="" poster="" loop></video>
-                </div>
             </div>
         </div>
     </div>
@@ -388,6 +389,9 @@
 
                 Homepage.toUserId = Number(strTemp.substr(0, strTemp.length - 5));
                 console.log(Homepage.user_id, Homepage.toUserId)
+
+                // Homepage.user_id=1
+                // Homepage.toUserId=2
             },
             updateDom: function (data) {
                 var dynamicsArr = []
@@ -768,19 +772,21 @@
               if(!Homepage.videoUrl){
                 Global.getAuthVideoUrl(Homepage.toUserId,function(url){
                   console.log(url)
-                  callback()
+                  Homepage.videoUrl=url //得到url
+                  let realVideoUrl=Global.host+Homepage.videoUrl
+                  // realVideoUrl="https://media.w3.org/2010/05/sintel/trailer.mp4" //测试
+                  $("#video2").attr("src",realVideoUrl)
+                  if(callback){
+                    callback()
+                  }
                 })
               }else{
-                callback
+                if(callback){
+                  callback()
+                }
               }
             },
             eventsBind: function () {
-                // $('.operate').click(function () {
-                //     if ($(".mask").length == 0) {
-                //         $('body').append($('<div class="mask"></div>'))
-                //     }
-                //     $('.avatarOperating').show()
-                // })
                 //点击弹出的 取消
                 $('.home-cancel')[0].onclick=function(){
                     $('.mask').remove()
@@ -920,6 +926,22 @@
                     Homepage.initGift()
                     $(".gift-page").show()
                 }
+
+                //2019.01.18点击认证视频
+                $(".showVideo").click(function(){
+                  if(Homepage.baseinfo.auth_video_status.toString()!=="2"){ //视频未认证
+                    return
+                  }
+                  Homepage.getVideoUrl(function(){
+                    $(".fullScreen").show()
+                    $("#video2")[0].currentTime = 0; 
+                    $("#video2")[0].play()
+                  })
+                })
+                $(".closeFullScreen").click(function(){
+                  $("#video2")[0].pause()
+                  $(".fullScreen").hide()
+                })
             },
             initGift(){
                 // let giftUl=document.getElementsByClassName("giftUl")[0]
