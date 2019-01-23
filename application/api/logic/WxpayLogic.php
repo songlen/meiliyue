@@ -84,26 +84,7 @@ class WxpayLogic{
 
         $result = $nodify_data['weixin_postdata'];
 
-        if($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS' ){
-            
-            $order_sn  = $result['out_trade_no'];
-
-            $total_fee = bcmul($result['total_fee'],0.01,0);
-            
-            $mdl_order = app::get('orders')->model('order');
-            $data = array(
-                'pay_status'=>'1',
-                'order_payed'=>$total_fee,
-                'pay_time'=>time(),
-                'pay_id' => WEIXINPAY_APP,
-            );
-            $filter = array(
-                'order_sn'=>$order_sn,
-            );  
-        }
-
-        echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
-        exit();      
+        return $result
     }
 
     /**

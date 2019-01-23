@@ -4,6 +4,7 @@ namespace app\api\controller;
 use think\Db;
 use think\Config;
 use app\api\logic\AlipayLogic;
+use app\api\logic\WxpayLogic;
 
 class Goldcoin extends Base {
 
@@ -52,7 +53,7 @@ class Goldcoin extends Base {
 		if(empty($order)) response_error('', '该订单不存在');
 		if($order['paystatus'] == 1) response_error('', '该订单已支付');
 
-		$total_amount = 0.01;//$order['price'];
+		$total_amount = $order['price'];
 
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
@@ -61,9 +62,16 @@ class Goldcoin extends Base {
 			$orderStr = $AlipayLogic->generateOrderStr($order_no, $total_amount, '购买金币', '购买金币');
 			return $orderStr;
 		}
+
+		if($paymentMethod == 'wxpay'){
+			$WxpayLogic = new WxpayLogic();
+			$WxpayLogic->notify_url = 'http://app.yujianhaoshiguang.cn/index.php/api/goldcoin/wxpayCallback';
+			$param = $WxpayLogic->getPrepayId($order_no, $total_amount, '购买金币');
+			response_success($param);
+		}
 	}
 
-	// 购买vip后的支付回调接口
+	// 购买金币后的支付宝回调接口
 	public function alipayCallback(){
 		$order_no = input('post.out_trade_no');
 		$trade_status = input('post.trade_status');
@@ -79,6 +87,29 @@ class Goldcoin extends Base {
 
 		finish:
 		echo 'success';
+	}
+	// 购买金币后的微信回调接口
+	public function wxpayCallback(){
+		$WxpayLogic = new WxpayLogic();
+		$result = $WxpayLogic->callback();
+
+		if($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS' ){
+            
+            $order_no  = $result['out_trade_no'];
+
+            $order = Db::name('goldcoin_order')->where('order_no', $order_no)->find();
+			if(empty($order)) goto finish;
+			if($order['paystatus'] == 1) goto finish;
+
+			// 回调后的业务流程
+			$this->operation($order_no);
+            
+        }
+
+         
+		finish:
+		echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+        exit();     
 	}
 
 	public function IOSCallback(){
