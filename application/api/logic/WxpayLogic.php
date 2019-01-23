@@ -64,7 +64,6 @@ class WxpayLogic{
             $return_params['sign'] = $return_sign;
             $return_params['_package'] = $return_params['package']; // 客户端关键字字段转换
             unset($return_params['package']);
-            p($return_params);
             return $return_params;
         }else {
             return false;
