@@ -175,7 +175,7 @@ class WxpayLogic{
         curl_setopt($ch, CURLOPT_URL, $url);    // 设置url
         curl_setopt($ch, CURLOPT_POST, 1);  // post 请求
         curl_setopt($ch, CURLOPT_HTTPHEADER, Array("Content-Type:text/xml; charset=utf-8"));    // 一定要定义content-type为xml，要不然默认是text/html！
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $xmlData);//post提交的数据包
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3); // PHP脚本在成功连接服务器前等待多久，单位秒
         curl_setopt($ch, CURLOPT_HEADER, 0);
