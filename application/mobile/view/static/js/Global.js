@@ -377,11 +377,10 @@ let Global = (function () {
             url: url,
             data: postData,
             dataType: "json",
-            success: function (result) {
-                console.log(result)
-                // alert("找到url")
-                if(result.data&&result.data.video_url&&result.data.video_url!==""){
-                    callback(result.data.video_url);
+            success: function (res) {
+                console.log(res)
+                if(res.code==200&&res.data){
+                    callback(res.data.video_url);
                 }else{
                     console.log("请求失败")
                 }
