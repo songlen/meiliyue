@@ -169,7 +169,7 @@ class WxpayLogic{
      *  作用：以post方式提交xml到对应的接口url
      */
     public function postXmlCurl($xmlData, $url)
-    {p($xmlData, $url);
+    {
 
         $ch = curl_init();  // 初始一个curl会话
         curl_setopt($ch, CURLOPT_URL, $url);    // 设置url
