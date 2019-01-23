@@ -180,7 +180,8 @@ class WxpayLogic{
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3); // PHP脚本在成功连接服务器前等待多久，单位秒
         curl_setopt($ch, CURLOPT_HEADER, 0);
         $result = curl_exec($ch);   // 抓取URL并把它传递给浏览器
-        p($result);
+        curl_close($ch);
+        return $result;
     }
 
     /**
