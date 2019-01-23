@@ -48,7 +48,7 @@ class WxpayLogic{
         $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
         $result = $this->postXmlCurl($xml, $url);
         $result = $this->xmlToArray($result);
-p($result);
+
         if($result['return_code'] = 'SUCCESS' && $result['result_code'] == 'SUCCESS'){
             $return_params = array(
                 'appid' => $this->appid,
@@ -64,6 +64,7 @@ p($result);
             $return_params['sign'] = $return_sign;
             $return_params['_package'] = $return_params['package']; // 客户端关键字字段转换
             unset($return_params['package']);
+            p($return_params);
             return $return_params;
         }else {
             return false;
