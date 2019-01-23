@@ -139,28 +139,26 @@ class Vip extends Base {
 
 	// 购买vip后的支付回调接口
 	public function wxpayCallback(){
-		$order_no = input('post.out_trade_no');
-		$trade_status = input('post.trade_status');
+		$WxpayLogic = new WxpayLogic();
+		$result = $WxpayLogic->callback();
 
-		//验签
-		// $AlipayLogic = new AlipayLogic();
-		/*$param = $_POST;
-		$param['fund_bill_list'] = html_entity_decode($param['fund_bill_list']);
-		$_POST = $param;
-		if( ! $AlipayLogic->checkSign()) die('error');*/
-		
-		
-		
-		$order = Db::name('vip_order')->where('order_no', $order_no)->find();
-		if(empty($order)) goto finish;
-		if($order['paystatus'] == 1) goto finish;
-		// 回调后的业务流程
-		if($trade_status == 'TRADE_SUCCESS'){
-			$this->changeVip($order_no, $order['user_id'], $order['level']);
-		}
+		if($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS' ){
+            
+            $order_no  = $result['out_trade_no'];
 
+            $order = Db::name('vip_order')->where('order_no', $order_no)->find();
+            if(empty($order)) goto finish;
+            if($order['paystatus'] == 1) goto finish;
+            
+            // 回调后的业务流程
+            $this->changeVip($order_no, $order['user_id'], $order['level']);
+            
+        }
+
+         
 		finish:
-		echo 'success';
+		echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+        exit();     
 	}
 
 	public function IOSCallback(){

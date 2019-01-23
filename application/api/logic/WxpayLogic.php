@@ -78,18 +78,17 @@ class WxpayLogic{
     function callback(){
         $postData = array();
         $postStr = file_get_contents("php://input");
-        $postArray = kernel::single('front_utility_xml')->xml2array($postStr);
+        $postArray = $this->xmlToArray($postStr);
         $postData['weixin_postdata']  = $postArray['xml'];
         $nodify_data = array_merge($_GET,$postData);
-        kernel::log('post:'.var_export($_POST, true).'\t'.var_export($nodify_data, true));     
 
-        $in = $nodify_data['weixin_postdata'];
+        $result = $nodify_data['weixin_postdata'];
 
-        if($in['return_code'] == 'SUCCESS' && $in['result_code'] == 'SUCCESS' ){
+        if($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS' ){
             
-            $order_sn  = $in['out_trade_no'];
+            $order_sn  = $result['out_trade_no'];
 
-            $total_fee = bcmul($in['total_fee'],0.01,0);
+            $total_fee = bcmul($result['total_fee'],0.01,0);
             
             $mdl_order = app::get('orders')->model('order');
             $data = array(
@@ -100,12 +99,7 @@ class WxpayLogic{
             );
             $filter = array(
                 'order_sn'=>$order_sn,
-            );
-
-            $mdl_order->update($data,$filter);
-
-            // 站内消息
-            kernel::single('front_insidemsg')->applyReturn_order_msg($orderInfo['user_id'], $order_sn);   
+            );  
         }
 
         echo '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
