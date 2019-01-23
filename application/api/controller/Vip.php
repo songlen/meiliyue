@@ -107,7 +107,7 @@ class Vip extends Base {
 			$WxpayLogic = new WxpayLogic();
 			$WxpayLogic->notify_url = 'http://app.yujianhaoshiguang.cn/index.php/api/vip/wxpayCallback';
 			$param = $WxpayLogic->getPrepayId($order_no, $total_amount, '购买VIP');
-			return $param;
+			response_success($param);
 		}
 	}
 
