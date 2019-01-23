@@ -48,7 +48,7 @@ class WxpayLogic{
         $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
         $result = $this->postXmlCurl($xml, $url);
         $result = $this->xmlToArray($result);
-
+p($result);
         if($result['return_code'] = 'SUCCESS' && $result['result_code'] == 'SUCCESS'){
             $return_params = array(
                 'appid' => $this->appid,
