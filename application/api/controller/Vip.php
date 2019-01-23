@@ -4,6 +4,7 @@ namespace app\api\controller;
 use think\Db;
 use think\Config;
 use app\api\logic\AlipayLogic;
+use app\api\logic\WxpayLogic;
 
 class Vip extends Base {
 
@@ -96,28 +97,57 @@ class Vip extends Base {
 
 		/************** 获取订单签名字符串 **************/
 		if($paymentMethod == 'alipay'){
-			$notify_url = 'http://app.yujianhaoshiguang.cn/index.php/api/vip/callback?paymentMethod=alipay';
+			$notify_url = 'http://app.yujianhaoshiguang.cn/index.php/api/vip/alipayCallback';
 			$AlipayLogic = new AlipayLogic($notify_url);
 			$orderStr = $AlipayLogic->generateOrderStr($order_no, $total_amount, '购买VIP', '购买VIP');
 			return $orderStr;
 		}
+
+		if($paymentMethod == 'wxpay'){
+			$WxpayLogic = new WxpayLogic();
+			$WxpayLogic->notify_url = 'http://app.yujianhaoshiguang.cn/index.php/api/vip/wxpayCallback';
+			$param = $WxpayLogic->getPrepayId($order_no, $total_amount, '购买VIP');
+			return $param;
+		}
 	}
 
 	// 购买vip后的支付回调接口
-	public function Callback(){
-		$paymentMethod = input('post.paymentMethod');
+	public function alipayCallback(){
 		$order_no = input('post.out_trade_no');
 		$trade_status = input('post.trade_status');
 
-		if($paymentMethod == 'alipay'){
-			$AlipayLogic = new AlipayLogic();
-			//验签失败
-
-			/*$param = $_POST;
-			$param['fund_bill_list'] = html_entity_decode($param['fund_bill_list']);
-			$_POST = $param;
-			if( ! $AlipayLogic->checkSign()) die('error');*/
+		//验签
+		// $AlipayLogic = new AlipayLogic();
+		/*$param = $_POST;
+		$param['fund_bill_list'] = html_entity_decode($param['fund_bill_list']);
+		$_POST = $param;
+		if( ! $AlipayLogic->checkSign()) die('error');*/
+		
+		
+		
+		$order = Db::name('vip_order')->where('order_no', $order_no)->find();
+		if(empty($order)) goto finish;
+		if($order['paystatus'] == 1) goto finish;
+		// 回调后的业务流程
+		if($trade_status == 'TRADE_SUCCESS'){
+			$this->changeVip($order_no, $order['user_id'], $order['level']);
 		}
+
+		finish:
+		echo 'success';
+	}
+
+	// 购买vip后的支付回调接口
+	public function wxpayCallback(){
+		$order_no = input('post.out_trade_no');
+		$trade_status = input('post.trade_status');
+
+		//验签
+		// $AlipayLogic = new AlipayLogic();
+		/*$param = $_POST;
+		$param['fund_bill_list'] = html_entity_decode($param['fund_bill_list']);
+		$_POST = $param;
+		if( ! $AlipayLogic->checkSign()) die('error');*/
 		
 		
 		
