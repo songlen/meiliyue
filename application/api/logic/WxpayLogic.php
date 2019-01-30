@@ -10,9 +10,9 @@ class WxpayLogic{
     public $submit_charset = 'UTF-8';
     public $signtype = 'sha1';
 
-    public $appid = 'wx9a527a0f8528e1e5';                 //appid
+    public $appid = 'wx14916e24be20671a';                 //appid
     public $key   = 'Qb2Dhci7x1gbJfnN24bc41qeJxriDtQK';   //私钥  
-    public $mch_id = '1487426822';                        //微信支付商户号
+    public $mch_id = '1512749221';                        //微信支付商户号
 
     public function __construct(){
  
@@ -84,7 +84,7 @@ class WxpayLogic{
 
         $result = $nodify_data['weixin_postdata'];
 
-        return $result
+        return $result;
     }
 
     /**
