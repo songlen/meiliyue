@@ -11,7 +11,7 @@ class WxpayLogic{
     public $signtype = 'sha1';
 
     public $appid = 'wx14916e24be20671a';                 //appid
-    public $key   = 'cac8f804565eec7680a5ca72d13e13b1';   //私钥  
+    public $key   = '7YKbxIFif6opt2XyggRCCETfIkLELVsc';   //私钥  
     public $mch_id = '1512749221';                        //微信支付商户号
 
     public function __construct(){
