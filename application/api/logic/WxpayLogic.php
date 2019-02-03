@@ -78,6 +78,7 @@ class WxpayLogic{
     function callback(){
         $postData = array();
         $postStr = file_get_contents("php://input");
+        file_put_contents('runtime/log/request.log', $postStr, FILE_APPEND);
         $postArray = $this->xmlToArray($postStr);
         $postData['weixin_postdata']  = $postArray['xml'];
         $nodify_data = array_merge($_GET,$postData);
