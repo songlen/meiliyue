@@ -78,12 +78,12 @@ class WxpayLogic{
     function callback(){
         $postData = array();
         $postStr = file_get_contents("php://input");
+
         file_put_contents('runtime/log/request.log', $postStr, FILE_APPEND);
         $postArray = $this->xmlToArray($postStr);
-        $postData['weixin_postdata']  = $postArray['xml'];
-        $nodify_data = array_merge($_GET,$postData);
+        $nodify_data = array_merge($_GET,$postArray);
 
-        $result = $nodify_data['weixin_postdata'];
+        $result = $nodify_data;
 
         return $result;
     }
@@ -119,6 +119,7 @@ class WxpayLogic{
     {
         //将XML转为array
         $array_data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+
         return $array_data;
     }
 
