@@ -141,7 +141,7 @@ class Vip extends Base {
 	public function wxpayCallback(){
 		$WxpayLogic = new WxpayLogic();
 		$result = $WxpayLogic->callback();
-
+file_put_contents('runtime/log/request.log', var_export($result, true), FILE_APPEND);
 		if($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS' ){
             
             $order_no  = $result['out_trade_no'];
