@@ -178,12 +178,14 @@
 
     
         <!-- 模态框及其他 -->
-
+    <script type="text/javascript">
         if(Global.isIOS()){
 
         } else {
-            <div class="plus" :class="{actived:isPlusing}" @click.stop="isPlusing=!isPlusing"></div>
+            document.write('<div class="plus" :class="{actived:isPlusing}" @click.stop="isPlusing=!isPlusing"></div>')
         }
+    </script>
+        
 
         <div class="m_shade" v-cloak v-if="isPlusing"></div>
 
