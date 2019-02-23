@@ -63,8 +63,8 @@ class UsersLogic extends Model
 					if ($user['email']) {
 						$query->where('email',$user['email']);
 					}
-					if ($user['mobile']) {
-						$query->whereOr('mobile',$user['mobile']);
+					if ($user['account_mobile']) {
+						$query->whereOr('account_mobile',$user['account_mobile']);
 					}
 				})
 				->count();
