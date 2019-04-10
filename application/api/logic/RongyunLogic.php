@@ -37,7 +37,6 @@ class RongyunLogic extends Controller {
 		// 获取 Token 方法
 		$result = $this->RongCloud->user()->getToken($user_id, $nickname, $head_pic);
 		$result = json_decode($result, true);
-		p($result);
 		if($result['code'] == 200){
 			$rongyun_token = $result['token'];
 			M('users')->where('user_id', $user_id)->setField('rongyun_token', $rongyun_token);
